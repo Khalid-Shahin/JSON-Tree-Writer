@@ -856,10 +856,10 @@ function loopDictionary(json, indent, current_path){
                            json[key] = "";
                         }
                        //TODO to do make sure that the right type is stored in the type field
-                       generatedHTML += '<input id="]....}?|?|?{....[_' + current_path + key.toString() + '" name="' + current_path + key.toString() + '" type="' + inputType + '" value="' + json[key][entry] +'" style="width: 40px; margin-left: 3px;"></input>';
+                       generatedHTML += '<input id="]....}?|?|?{....[_' + current_path + key.toString() + '" name="' + current_path + key.toString() + '" type="' + inputType + '" value="' + json[key][entry] +'" style="width: 80px; margin-left: 3px;"></input>';
                     }
                     //Latest field, without the value, also the ID changed
-                    var latestTextField = '<input id=&quot;]....}?|?|?{....[_' + current_path + key.toString() + '&quot; name=&quot;' + current_path + key.toString() + '&quot; type=&quot;' + inputType + '&quot; style=&quot;width: 40px; margin-left: 3px;&quot;></input>';
+                    var latestTextField = '<input id=&quot;]....}?|?|?{....[_' + current_path + key.toString() + '&quot; name=&quot;' + current_path + key.toString() + '&quot; type=&quot;' + inputType + '&quot; style=&quot;width: 80px; margin-left: 3px;&quot;></input>';
                     //FIX THIS
                     generatedHTML += '<button class="circle plus" onclick="addToInputList(this, \'' + latestTextField + '\');" title="Add another one of this element."></button></span></p>';
 				}
