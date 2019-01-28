@@ -344,9 +344,9 @@ function getCookie(cname) {
 
 /*
 if(window.addEventListener) {
-    window.addEventListener('load', buildTree, false); //W3C
+    window.addEventListener('load', initiatePage, false); //W3C
 } else {
-    window.attachEvent('onload', buildTree); //Older IE
+    window.attachEvent('onload', initiatePage); //Older IE
 }
 */
 
@@ -872,6 +872,11 @@ function loopDictionary(json, indent, current_path){
 
 function addToInputList(plusButton, textField){
    plusButton.insertAdjacentHTML("beforebegin", textField);
+}
+
+function initiatePage(){
+   buildTree();
+   convertTreeToJSON();
 }
 
 function buildTree(){

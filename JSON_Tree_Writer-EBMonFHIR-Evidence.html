@@ -343,9 +343,9 @@ function getCookie(cname) {
 }
 
 if(window.addEventListener) {
-    window.addEventListener('load', buildTree, false); //W3C
+    window.addEventListener('load', initiatePage, false); //W3C
 } else {
-    window.attachEvent('onload', buildTree); //Older IE
+    window.attachEvent('onload', initiatePage); //Older IE
 }
 
 //Only uses this imported script if they're using Internet Explorer.
@@ -872,6 +872,11 @@ function addToInputList(plusButton, textField){
    plusButton.insertAdjacentHTML("beforebegin", textField);
 }
 
+function initiatePage(){
+   buildTree();
+   convertTreeToJSON();
+}
+
 function buildTree(){
 	folderCount = 0;
     var image1 = new Image();
@@ -896,7 +901,6 @@ function buildTree(){
     d1.innerHTML = generatedHTML;
 	//var starting_dict = TreeToJSON();
      hashDict = hashCode(JSON.stringify(TreeToJSON()));
-     convertTreeToJSON();
     //TreeToJSON();
 }
 
