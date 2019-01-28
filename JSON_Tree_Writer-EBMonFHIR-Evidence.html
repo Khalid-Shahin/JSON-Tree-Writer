@@ -403,7 +403,7 @@ function hashCode(dictString) {
 };
 
 window.addEventListener("beforeunload", function (e) {
-    if (hashDict != hashCode(JSON.stringify(TreeToJSON()))) {
+    if (hashDict != 0 && hashDict != hashCode(JSON.stringify(TreeToJSON()))) {
 		var confirmMessage = 'If you leave this page your changes to the form, if any, will be lost.';
 		(e || window.event).returnValue = confirmMessage; //Gecko + IE
 		return confirmMessage; //Gecko + Webkit, Safari, Chrome etc.
