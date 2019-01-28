@@ -850,8 +850,8 @@ function loopDictionary(json, indent, current_path){
                            inputType = 'number' 
                         }
                         //For the "hidden" input type used for the arrays.
-                        if (json[key] != null && json[key] === 0 && (1/json[key]) === -Infinity) {
-                           json[key] = "";
+                        if (json[key][entry] != null && json[key][entry] === 0 && (1/json[key][entry]) === -Infinity) {
+                           json[key][entry] = "";
                         }
                        //TODO to do make sure that the right type is stored in the type field
                        generatedHTML += '<input id="]....}?|?|?{....[_' + current_path + key.toString() + '" name="' + current_path + key.toString() + '" type="' + inputType + '" value="' + json[key][entry] +'" style="width: 80px; margin-left: 3px;"></input>';
