@@ -901,445 +901,286 @@ function buildTree(){
 }
 
 json = {
-    "resourceType": "Evidence",
-    "identifier": "",
-    "title": "",
-    "date": "",
-    "publisher": "",
-    "author": "",
-    "exposureBackground":[ {
-        "subgroupIdentifier": "",
-        "evidenceVariable": {
-            "resourceType": "EvidenceVariable",
-            "identifier": "",
-            "shortTitle": "",
-            "characteristic":[ {
-                "useageContext":[
-                ""],
-                "exclude": "",
-                "definitionCodeableConcept": {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                }
-            }]
-        },
-        "sampleCharacteristic":[ {
+  "resourceType": "Evidence",
+  "identifier": "",
+  "title": "",
+  "date": "",
+  "publisher": "",
+  "author": "",
+  "exposureBackground": [
+    {
+      "description": "",
+      "population": "",
+      "populationSampleSize": {
+        "description": "",
+        "numberOfStudies": -0,
+        "numberOfParticipants": -0
+      },
+      "exposureVariant": [
+        {
+          "id": "",
+          "description": "",
+          "groupByExposure": "",
+          "exposureSubsetSampleSize": {
             "description": "",
-            "evidenceVariable": {
-                "resourceType": "EvidenceVariable",
-                "identifier": "",
-                "shortTitle": "",
-                "characteristic":[ {
-                    "useageContext":[
-                    ""],
-                    "exclude": "",
-                    "definitionCodeableConcept": {
+            "numberOfStudies": -0,
+            "numberOfParticipants": -0
+          },
+          "measuredVariable": [
+            {
+              "description": "",
+              "measuredVariableDefinition": "",
+              "univariateStatistic": [
+                {
+                  "description": "",
+                  "synthesisType": "",
+                  "studyType": "",
+                  "sampleSize": {
+                    "description": "",
+                    "numberOfStudies": -0,
+                    "numberOfParticipants": -0,
+                    "knownDataCount": -0,
+                    "numeratorCount": -0
+                  },
+                  "statistic": [
+                    {
+                      "description": "",
+                      "type": {
                         "coding": {
+                          "system": "http://build.fhir.org/valueset-risk-estimate-type.html",
+                          "code": "",
+                          "display": ""
+                        }
+                      },
+                      "quantity": {
+                        "value": -0,
+                        "comparator": "",
+                        "unit": "",
+                        "system": "",
+                        "code": ""
+                      },
+                      "precisionEstimate": {
+                        "type": {
+                          "coding": {
+                            "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                            "code": "",
+                            "display": ""
+                          }
+                        },
+                        "level": -0,
+                        "from": -0,
+                        "to": -0
+                      }
+                    }
+                  ],
+                  "certainty": [
+                    {
+                      "rating": [
+                        {
+                          "coding": {
                             "system": "",
                             "code": "",
                             "display": ""
+                          }
                         }
+                      ],
+                      "certaintySubcomponent": [
+                        {
+                          "type": {
+                            "coding": {
+                              "system": "",
+                              "code": "",
+                              "display": ""
+                            }
+                          },
+                          "rating": {
+                            "coding": {
+                              "system": "",
+                              "code": "",
+                              "display": ""
+                            }
+                          }
+                        }
+                      ]
                     }
-                }]
-            },
-            "synthesisType": "",
-            "studyType": "",
-            "sampleSize": {
+                  ]
+                }
+              ]
+            }
+          ],
+          "covariantStatistic": [
+            {
+              "description": "",
+              "measuredVariable1": "",
+              "measuredVariable2": "",
+              "synthesisType": "",
+              "studyType": "",
+              "sampleSize": {
                 "description": "",
                 "numberOfStudies": -0,
-                "numberOfParticipants": -0,
-                "numeratorCount": "",
-                "denominatorCount": ""
-            },
-            "statistic":[ {
-                "type": {
+                "numberOfParticipants": -0
+              },
+              "statistic": [
+                {
+                  "description": "",
+                  "type": {
                     "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
+                      "system": "",
+                      "code": "",
+                      "display": ""
                     }
-                },
-                "quantity": {
-                  "value": "",
-                  "comparator": "",
-                  "unit": "",
-                  "system": "",
-                  "code": ""
-                },
-                "range": "",
-                "precisionEstimate": {
-                    "type": "",
-                    "level": "",
-                    "from": "",
-                    "to": ""
-                }
-            }],
-            "certainty":[ {
-                "rating":[ {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                }],
-                "certaintySubcomponent":[ {
-                    "type": {
-                        "coding": {
-                            "system": "",
-                            "code": "",
-                            "display": ""
-                        }
-                    },
-                    "rating": {
-                        "coding": {
-                            "system": "",
-                            "code": "",
-                            "display": ""
-                        }
-                    }
-                }]
-            }]
-        }]
-    }],
-    "exposureVariant":[ {
-        "exposureIdentifier": "",
-        "evidenceVariable": {
-            "resourceType": "EvidenceVariable",
-            "identifier": "",
-            "shortTitle": "",
-            "characteristic": {
-                "exclude": "",
-                "definitionCodeableConcept": {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                }
-            }
-        },
-        "sampleCharacteristic":[ {
-            "description": "",
-            "subgroup": "",
-            "evidenceVariable": {
-                "resourceType": "EvidenceVariable",
-                "identifier": "",
-                "shortTitle": "",
-                "characteristic":[ {
-                    "useageContext":[
-                    ""],
-                    "exclude": "",
-                    "definitionCodeableConcept": {
-                        "coding": {
-                            "system": "",
-                            "code": "",
-                            "display": ""
-                        }
-                    }
-                }]
-            },
-            "synthesisType": "",
-            "studyType": "",
-            "sampleSize": {
-                "description": "",
-                "numberOfStudies": "",
-                "numberOfParticipants": "",
-                "numeratorCount": "",
-                "denominatorCount": ""
-            },
-            "statistic":[ {
-                "type": {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                },
-                "quantity": {
-                  "value": "",
-                  "comparator": "",
-                  "unit": "",
-                  "system": "",
-                  "code": ""
-                },
-                "range": "",
-                "precisionEstimate": {
-                    "type": "",
-                    "level": "",
-                    "from": "",
-                    "to": ""
-                }
-            }],
-            "certainty":[ {
-                "rating":[ {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                }],
-                "certaintySubcomponent":[ {
-                    "type": {
-                        "coding": {
-                            "system": "",
-                            "code": "",
-                            "display": ""
-                        }
-                    },
-                    "rating": {
-                        "coding": {
-                            "system": "",
-                            "code": "",
-                            "display": ""
-                        }
-                    }
-                }]
-            }]
-        }]
-    }],
-    "sampleComparative":[ {
-        "description": "",
-        "subgroup": "",
-        "exposure": "",
-        "exposureAlternative": "",
-        "evidenceVariable": {
-            "resourceType": "EvidenceVariable",
-            "identifier": "",
-            "shortTitle": "",
-            "characteristic":[ {
-                "useageContext":[
-                ""],
-                "exclude": "",
-                "definitionCodeableConcept": {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                }
-            }]
-        },
-        "synthesisType": "",
-        "studyType": "",
-        "sampleSize": {
-            "description": "",
-            "numberOfStudies": "",
-            "numberOfParticipants": "",
-            "numeratorCount": "",
-            "denominatorCount": ""
-        },
-        "statistic":[ {
-            "type": {
-                "coding": {
-                    "system": "",
-                    "code": "",
-                    "display": ""
-                }
-            },
-            "quantity": {
-              "value": "",
-              "comparator": "",
-              "unit": "",
-              "system": "",
-              "code": ""
-            },
-            "range": "",
-            "precisionEstimate": {
-                "type": "",
-                "level": "",
-                "from": "",
-                "to": ""
-            },
-            "pvalue": {
-                "type": "",
-                "value": "",
-                "range": ""
-            }
-        }],
-        "certainty":[ {
-            "rating":[ {
-                "coding": {
-                    "system": "",
-                    "code": "",
-                    "display": ""
-                }
-            }],
-            "certaintySubcomponent":[ {
-                "type": {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                },
-                "rating": {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                }
-            }]
-        }]
-    }],
-    "outcome":[ {
-        "evidenceVariable": {
-            "resourceType": "EvidenceVariable",
-            "identifier": "",
-            "shortTitle": "",
-            "type": "",
-            "characteristic": {
-                "definitionCodeableConcept": {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                },
-                "exclude": "",
-                "timeFromStart": {
-                    "value": "",
+                  },
+                  "quantity": {
+                    "value": -0,
+                    "comparator": "",
                     "unit": "",
-                    "code": "",
-                    "system": ""
-                },
-                "groupMeasure": ""
-            }
-        },
-        "resultSingleState":[ {
-            "description": "",
-            "subgroup": "",
-            "exposure": "",
-            "synthesisType": "",
-            "studyType": "",
-            "sampleSize": {
-                "description": "",
-                "numberOfStudies": "",
-                "numberOfParticipants": "",
-                "denominatorCount": "",
-                "numeratorCount": ""
-            },
-            "statistic":[ {
-                "type": {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                },
-                "quantity": {
-                  "value": "",
-                  "comparator": "",
-                  "unit": "",
-                  "system": "",
-                  "code": ""
-                },
-                "range": "",
-                "precisionEstimate": {
-                    "type": "",
-                    "level": "",
-                    "from": "",
-                    "to": ""
-                }
-            }],
-            "certainty":[ {
-                "rating":[ {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                }],
-                "certaintySubcomponent":[ {
+                    "system": "",
+                    "code": ""
+                  },
+                  "precisionEstimate": {
                     "type": {
-                        "coding": {
-                            "system": "",
-                            "code": "",
-                            "display": ""
-                        }
+                      "coding": {
+                      "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                      "code": "",
+                      "display": ""
+                      }
                     },
-                    "rating": {
-                        "coding": {
-                            "system": "",
-                            "code": "",
-                            "display": ""
-                        }
-                    }
-                }]
-            }]
-        }],
-        "resultComparative": {
-            "description": "",
-            "subgroup": "",
-            "exposure": "",
-            "exposureAlternative": "",
-            "synthesisType": "",
-            "studyType": "",
-            "sampleSize": {
-                "description": "",
-                "numberOfStudies": "",
-                "numberOfParticipants": "",
-                "numeratorCount": "",
-                "denominatorCount": ""
-            },
-            "statistic":[ {
-                "type": {
-                    "coding": {
-                        "system": "",
-                        "code": "",
-                        "display": ""
-                    }
-                },
-                "quantity": {
-                  "value": "",
-                  "comparator": "",
-                  "unit": "",
-                  "system": "",
-                  "code": ""
-                },
-                "range": "",
-                "precisionEstimate": {
+                    "level": -0,
+                    "from": -0,
+                    "to": -0
+                  },
+                  "pvalue": {
                     "type": "",
-                    "level": "",
-                    "from": "",
-                    "to": ""
-                },
-                "pvalue": {
-                    "type": "",
-                    "value": "",
+                    "quantity": {
+                      "value": "",
+                      "comparator": ""
+                    },
                     "range": ""
+                  }
                 }
-            }],
-            "certainty":[ {
-                "rating":[ {
-                    "coding": {
+              ],
+              "certainty": [
+                {
+                  "rating": [
+                    {
+                      "coding": {
                         "system": "",
                         "code": "",
                         "display": ""
+                      }
                     }
-                }],
-                "certaintySubcomponent":[ {
-                    "type": {
+                  ],
+                  "certaintySubcomponent": [
+                    {
+                      "type": {
                         "coding": {
-                            "system": "",
-                            "code": "",
-                            "display": ""
+                          "system": "",
+                          "code": "",
+                          "display": ""
                         }
-                    },
-                    "rating": {
+                      },
+                      "rating": {
                         "coding": {
-                            "system": "",
-                            "code": "",
-                            "display": ""
+                          "system": "",
+                          "code": "",
+                          "display": ""
                         }
+                      }
                     }
-                }]
-            }]
+                  ]
+                }
+              ]
+            }
+          ]
         }
-    }]
+      ],
+      "comparativeStatistic": [
+        {
+          "description": "",
+          "exposure": "",
+          "exposureAlternative": "",
+          "measuredVariable": "",
+          "synthesisType": "",
+          "studyType": "",
+          "sampleSize": {
+            "description": "",
+            "numberOfStudies": -0,
+            "numberOfParticipants": -0
+          },
+          "statistic": [
+            {
+              "description": "",
+              "type": {
+                "coding": {
+                  "system": "http://build.fhir.org/valueset-effect-estimate-type.html",
+                  "code": "",
+                  "display": ""
+                }
+              },
+              "quantity": {
+                "value": -0,
+                "comparator": "",
+                "unit": "",
+                "system": "",
+                "code": ""
+              },
+              "precisionEstimate": {
+                "type": {
+                  "coding": {
+                  "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                  "code": "",
+                  "display": ""
+                  }
+                },
+                "level": -0,
+                "from": -0,
+                "to": -0
+              },
+              "pvalue": {
+                "type": "",
+                "quantity": {
+                  "value": -0,
+                  "comparator": ""
+                },
+                "range": ""
+              }
+            }
+          ],
+          "certainty": [
+            {
+              "rating": [
+                {
+                  "coding": {
+                    "system": "",
+                    "code": "",
+                    "display": ""
+                  }
+                }
+              ],
+              "certaintySubcomponent": [
+                {
+                  "type": {
+                    "coding": {
+                      "system": "",
+                      "code": "",
+                      "display": ""
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "",
+                      "code": "",
+                      "display": ""
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 };
 
 </script>
