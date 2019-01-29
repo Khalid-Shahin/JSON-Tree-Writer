@@ -1,0 +1,14 @@
+<script>
+var x = ["abc", "def[2]", "ghi"];
+
+var keyPath = "";
+for (var i = 0; i < x.length; i++){
+   if (x[i].lastIndexOf("]") == x[i].length - 1) {
+      var path = "[" + x[i].substring(0, x[i].lastIndexOf("[")) + "]" + x[i].substring(x[i].lastIndexOf("["), x[i].length);
+   } else {
+      var path = "[" + x[i] + "]";
+   }
+   keyPath += path;
+}
+console.log(keyPath)
+</script>
