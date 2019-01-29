@@ -761,7 +761,6 @@ function elementAdd(elementNumber){
       tempBlock = tempBlock.substring(tempBlock.indexOf("<div id='folder")+15, tempBlock.length);
 	  var folderFound = tempBlock.substring(0, tempBlock.indexOf("'"));
       if (jsonBlocks[folderFound]) {
-		  var tempReplace = jsonBlocks[folderFound][2]+(jsonBlocks[folderFound][3]).toString();
 		  var tempPath = jsonBlocks[elementNumber][2]+(jsonBlocks[elementNumber][3]).toString();
 		  var tempExten = jsonBlocks[folderFound][2].substring(tempPath.length, jsonBlocks[folderFound][2].length);
 		  jsonBlocks[folderFound][2] = tempPath+"["+num+"]"+tempExten;
