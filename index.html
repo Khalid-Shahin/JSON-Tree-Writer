@@ -527,7 +527,11 @@ function switchReadWrite(){
 		  allInputs[i].style.display = "none";
 		  allInputs[i].nextSibling.nextSibling.style.display = "inline";
           if (allInputs[i].type.toLowerCase() != 'hidden') {
-		     allInputs[i].nextSibling.nextSibling.innerHTML = "(" + allInputs[i].value + ")";
+		     if (typeof allInputs[i].value == typeof "" && allInputs[i].value.substring(0, 4).toLowerCase() == "http"){
+			    allInputs[i].nextSibling.nextSibling.innerHTML = '(' + '<a href="' + allInputs[i].value + '">' + allInputs[i].value + '</a>)';
+			 } else {
+		        allInputs[i].nextSibling.nextSibling.innerHTML = "(" + allInputs[i].value + ")";
+		     }
           } else {
              var allListBoxes = document.getElementsByName(allInputs[i].name);
              var allListBoxValues = [];
