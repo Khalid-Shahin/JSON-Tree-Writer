@@ -631,6 +631,7 @@ function TreeToJSON(){
           } else if(allInputs[x].id.substring(0, 18) != "]....}?|?|?{....[_") {
             
             var inputValue = allInputs[x].value;
+			inputValue = inputValue.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             if (inputValue == "null"){
                eval("dict"+"."+allInputs[x].name + " = " + "null");
             } else if (inputValue.toLowerCase() == "false"){
@@ -649,6 +650,7 @@ function TreeToJSON(){
                      
                      if (allListBoxes[z].type == "number") {
                          var tempValue = allListBoxes[z].value;
+						 tempValue = tempValue.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
                          if (allListBoxes[z].value == ""){
                             tempValue = "'{[{NeGaTiVe!_!0}]}'";
                             //TO DO todo
@@ -665,7 +667,7 @@ function TreeToJSON(){
                          }
                          allListBoxValues.push(parseFloat(tempValue));
                       } else {
-                         var tempValue = allListBoxes[z].value.replace(/'/g, "\\'");
+                         var tempValue = allListBoxes[z].value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
                          allListBoxValues.push(tempValue);
                       }
                         //allListBoxValues.push(allListBoxes[z].value);
@@ -680,6 +682,7 @@ function TreeToJSON(){
                }
             } else if (allInputs[x].type == "number") {
                var tempValue = allInputs[x].value;
+			   tempValue = tempValue.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
                if (allInputs[x].value == ""){
                   tempValue = "'{[{NeGaTiVe!_!0}]}'";
                   //TO DO todo
@@ -696,12 +699,13 @@ function TreeToJSON(){
                }
                eval("dict"+"."+allInputs[x].name + " = " + tempValue);
             } else {
-               var tempValue = allInputs[x].value.replace(/'/g, "\\'");
+               var tempValue = allInputs[x].value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+			   console.log(tempValue);
                eval("dict"+"."+allInputs[x].name + " = " + "'" + tempValue + "'");
             }
           }
-          
         }
+		
         if (!document.getElementById("]....}?|?|?{....[keepFields").checked) {
            dict = cleanDictionary(dict);
         }
@@ -796,7 +800,9 @@ function loopDictionary(json, indent, current_path){
            var inputType = 'text'
            if (typeof(json[key]) == typeof(1)){
               inputType = 'number' 
-           }
+           } else {
+		      json[key] = json[key].replace(/"/g, '&quot;');
+		   }
            //For the "hidden" input type used for the arrays.
            if (json[key] != null && json[key] === 0 && (1/json[key]) === -Infinity) {
              json[key] = "";
@@ -851,10 +857,12 @@ function loopDictionary(json, indent, current_path){
 					var visibility = 'display: inline;'
                     var latestTextField = "";
                     for (var entry in json[key]){
-                        var inputType = 'text'
+                        var inputType = 'text';
                         if (typeof(json[key][entry]) == typeof(1)){
                            inputType = 'number' 
-                        }
+                        } else {
+						   json[key][entry] = json[key][entry].replace(/"/g, '&quot;');
+						}
                         //For the "hidden" input type used for the arrays.
                         if (json[key][entry] != null && json[key][entry] === 0 && (1/json[key][entry]) === -Infinity) {
                            json[key][entry] = "";
