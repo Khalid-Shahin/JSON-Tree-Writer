@@ -702,7 +702,7 @@ function TreeToJSON(){
                eval("dict"+"."+allInputs[x].name + " = " + tempValue);
             } else {
                var tempValue = allInputs[x].value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-			   console.log(tempValue);
+			   
                eval("dict"+"."+allInputs[x].name + " = " + "'" + tempValue + "'");
             }
           }
