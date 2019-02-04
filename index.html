@@ -888,6 +888,20 @@ function addToInputList(plusButton, textField){
    plusButton.insertAdjacentHTML("beforebegin", textField);
 }
 
+function oneInstanceOfEachElementJSON(jsonBlock) {
+	for (var key in jsonBlock) {
+	   if (!(jsonBlock[key] == null || typeof jsonBlock[key] != typeof {})){
+		  if (Array.isArray(jsonBlock[key])){
+			jsonBlock[key] = [jsonBlock[key][0]];
+			if (typeof jsonBlock[key][0] == typeof {}) {
+				jsonBlock[key][0] = oneInstanceOfEachElementJSON(jsonBlock[key][0]);
+			}
+		  }
+	   }
+	}
+	return jsonBlock;
+}
+
 function initiatePage(){
    buildTree();
    convertTreeToJSON();
@@ -901,7 +915,6 @@ function buildTree(){
     image1.src = file;
     image2.src = folder;
     image3.src = closedfolder;
-    
 	var generatedHTML = "";
 	generatedHTML += "<div id='folder" + folderCount.toString() + "'>";
 	folderCount += 1;
@@ -915,11 +928,17 @@ function buildTree(){
 	var d1 = document.getElementById(']....}?|?|?{....[treeChart');
     
     d1.innerHTML = generatedHTML;
-	//var starting_dict = TreeToJSON();
      hashDict = hashCode(JSON.stringify(TreeToJSON()));
 	 document.getElementById("]....}?|?|?{....[treeWriteChecked").checked = true;
 	 document.getElementById("]....}?|?|?{....[treeReadChecked").checked = false;
-    //TreeToJSON();
+	
+	//Puts only one instance of each array for the add button, for example if you're starting json had "Example": {"numbers": [{"letter": "A"}, {"letter": "B"}]},
+	//when a new instance of "Example" is added it would just be "Example": {"numbers": [{"one": ""}]}
+	//If this is undesired then please comment out the code below.
+	for (var block in jsonBlocks){
+	   jsonBlocks[block][0] = oneInstanceOfEachElementJSON(jsonBlocks[block][0]);
+	}
+	
 }
 
 </script>
