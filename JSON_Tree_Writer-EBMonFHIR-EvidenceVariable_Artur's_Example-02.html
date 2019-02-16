@@ -801,7 +801,7 @@ function loopDictionary(json, indent, current_path){
            if (typeof(json[key]) == typeof(1)){
               inputType = 'number' 
            } else {
-		      json[key] = json[key].replace(/"/g, '&quot;');
+		      json[key] = (json[key]).toString().replace(/"/g, '&quot;');
 		   }
            //For the "hidden" input type used for the arrays.
            if (json[key] != null && json[key] === 0 && (1/json[key]) === -Infinity) {
