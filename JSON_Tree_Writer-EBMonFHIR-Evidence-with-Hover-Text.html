@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="JSON_Tree_Writer.css">
+	<title>JSON Tree Writer - EBMonFHIR - Blank Evidence Resource</title>
+</head>
+<body>
+<div class="container">
+     <div class="topArea">
+     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - Blank Evidence Resource</h2>
+	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. This tool can\'t handle field names that begin with a number.\n2. This tool can\'t handle field names with a period in it.\n3. This tool can\'t handle field names with certain special characters.\n4. The field names must be a string.\n5. A field value with &quot;null&quot; in the tree view will be automatically converted to just null in the JSON.')" style="position: absolute; right: 6px; top: 6px;">Limitations</button>
+     <p style="margin-top: 8px;"><input type="file" id="]....}?|?|?{....[jsonFile" style="width: 500px; border: 1px solid #555555;" accept=".txt, .json, .js, .ts, .tex, .rtf, .odt, .wpd, .text"></p>
+	 <button onclick="SaveTreeToJSON()">Save Tree to JSON</button> <button onclick="deleteEmptyFields();">Delete Empty Fields</button> <input onchange="" type="checkbox" id="]....}?|?|?{....[keepFields" name="keepFields" value="keepBlankFields" title="Having this unchecked removes the empty fields from the saved JSON. It also removes empty objects." checked> Keep blank fields when converted to JSON?
+	 <br><br>
+     <span style="display: inline">
+	 <input id="]....}?|?|?{....[treeWriteChecked" type="radio" name="readWriteMode" value="write" onchange="switchReadWrite();" checked="checked"> Write 
+	 <input id="]....}?|?|?{....[treeReadChecked" type="radio" name="readWriteMode" value="read" onchange="switchReadWrite();"> Read
+     <span class="middleButtons">
+     <button class="convertToJSONButton" onclick="convertTreeToJSON()" id="]....}?|?|?{....[convertToJSONButton"><b>Convert Tree to JSON ➡</b></button>
+     <button class="convertToTreeButton" onclick="convertJSONToTree()" id="]....}?|?|?{....[convertToTreeButton"><b>⬅ Convert JSON to Tree</b></button>
+     <button class="swapButton" onclick="swapSides()" style="" title="Swap the sides of the tree and JSON."><b>⇆</b></button>
+     </span>
+     </span>
+          <button class="hideJSONButton" id="]....}?|?|?{....[hideJSONButton" onclick="hideShowJSON()" style=""><b>Hide JSON View</b></button>
+     </div>
+     <div class="bottomSection" id="]....}?|?|?{....[bottomSection">
+       <div class="chart" id="]....}?|?|?{....[treeChart">
+       </div>
+       <div class="jsonArea" id="]....}?|?|?{....[jsonArea">
+       <textarea class="jsonTextArea" id="]....}?|?|?{....[jsonTextArea" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+       </div>
+     </div>
+    <div id="ElementAddedToast">A new element has been added to the end of the list.</div>
+    <div id="NothingToDeleteToast">No blank elements to delete.</div>
+</div>
+
+<!-- Imports lodash only for clearing blank fields -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+<script src="JSON_Tree_Writer.js"></script>
+<script>
+if(window.addEventListener) {
+    window.addEventListener('load', initiatePage, false); //W3C
+} else {
+    window.attachEvent('onload', initiatePage); //Older IE
+}
+
+json = {
+  "resourceType": "Evidence",
+  "resourceType---HoVeR": "",
+  "identifier": "",
+  "identifier---HoVeR": "",
+  "url": "",
+  "url---HoVeR": "",
+  "title": "",
+  "title---HoVeR": "",
+  "date": "",
+  "date---HoVeR": "",
+  "publisher": "",
+  "publisher---HoVeR": "",
+  "author": [
+    ""
+  ],
+  "author---HoVeR": "",
+  "exposureBackground": [
+    {
+      "description": "",
+      "description---HoVeR": "",
+      "population": "",
+      "population---HoVeR": "",
+      "populationSampleSize": {
+        "description": "",
+        "description---HoVeR": "",
+        "numberOfStudies": -0,
+        "numberOfStudies---HoVeR": "",
+        "numberOfParticipants": -0,
+        "numberOfParticipants---HoVeR": "",
+        "note": "",
+        "note---HoVeR": ""
+      },
+      "populationSampleSize---HoVeR": "",
+      "exposureVariant": [
+        {
+          "description": "",
+          "description---HoVeR": "",
+          "groupByExposure": "",
+          "groupByExposure---HoVeR": "",
+          "exposureSubsetSampleSize": {
+            "description": "",
+            "description---HoVeR": "",
+            "numberOfStudies": -0,
+            "numberOfStudies---HoVeR": "",
+            "numberOfParticipants": -0,
+            "numberOfParticipants---HoVeR": ""
+          },
+          "measuredVariable": [
+            {
+              "description": "",
+              "description---HoVeR": "",
+              "measuredVariableDefinition": "",
+              "measuredVariableDefinition---HoVeR": "",
+              "univariateStatistic": [
+                {
+                  "description": "",
+                  "description---HoVeR": "",
+                  "synthesisType": "",
+                  "synthesisType---HoVeR": "",
+                  "studyType": "",
+                  "studyType---HoVeR": "",
+                  "sampleSize": {
+                    "description": "",
+                    "description---HoVeR": "",
+                    "numberOfStudies": -0,
+                    "numberOfStudies---HoVeR": "",
+                    "numberOfParticipants": -0,
+                    "numberOfParticipants---HoVeR": "",
+                    "knownDataCount": -0,
+                    "knownDataCount---HoVeR": "",
+                    "numeratorCount": -0,
+                    "numeratorCount---HoVeR": "",
+                    "note": "",
+                    "note---HoVeR": ""
+                  },
+                  "statistic": [
+                    {
+                      "description": "",
+                      "description---HoVeR": "",
+                      "type": {
+                        "coding": {
+                          "system": "http://build.fhir.org/valueset-risk-estimate-type.html",
+                          "system---HoVeR": "",
+                          "code": "",
+                          "code---HoVeR": "",
+                          "display": "",
+                          "display---HoVeR": ""
+                        }
+                      },
+                      "type---HoVeR": "",
+                      "quantity": {
+                        "value": -0,
+                        "value---HoVeR": "",
+                        "comparator": "",
+                        "comparator---HoVeR": "",
+                        "unit": "",
+                        "unit---HoVeR": "",
+                        "system": "",
+                        "system---HoVeR": "",
+                        "code": "",
+                        "code---HoVeR": ""
+                      },
+                      "quantity---HoVeR": "",
+                      "precisionEstimate": {
+                        "type": {
+                          "coding": {
+                            "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                            "system---HoVeR": "",
+                            "code": "",
+                            "code---HoVeR": "",
+                            "display": "",
+                            "display---HoVeR": ""
+                          },
+                          "coding---HoVeR": ""
+                        },
+                        "type---HoVeR": "",
+                        "level": -0,
+                        "level---HoVeR": "",
+                        "from": -0,
+                        "from---HoVeR": "",
+                        "to": -0,
+                        "to---HoVeR": ""
+                      },
+                      "precisionEstimate---HoVeR": "",
+                      "note": "",
+                      "note---HoVeR": ""
+                    }
+                  ],
+                  "statistic---HoVeR": "",
+                  "certainty": [
+                    {
+                      "rating": [
+                        {
+                          "coding": {
+                            "system": "",
+                            "system---HoVeR": "",
+                            "code": "",
+                            "code---HoVeR": "",
+                            "display": "",
+                            "display---HoVeR": ""
+                          },
+                          "coding---HoVeR": ""
+                        }
+                      ],
+                      "rating---HoVeR": "",
+                      "certaintySubcomponent": [
+                        {
+                          "type": {
+                            "coding": {
+                              "system": "",
+                              "system---HoVeR": "",
+                              "code": "",
+                              "code---HoVeR": "",
+                              "display": "",
+                              "display---HoVeR": ""
+                            },
+                            "coding---HoVeR": ""
+                          },
+                          "type---HoVeR": "",
+                          "rating": {
+                            "coding": {
+                              "system": "",
+                              "system---HoVeR": "",
+                              "code": "",
+                              "code---HoVeR": "",
+                              "display": "",
+                              "display---HoVeR": ""
+                            },
+                            "coding---HoVeR": ""
+                          },
+                          "rating---HoVeR": ""
+                        }
+                      ],
+                      "certaintySubcomponent---HoVeR": ""
+                    }
+                  ],
+                  "certainty---HoVeR": "",
+                  "note": "",
+                  "note---HoVeR": ""
+                }
+              ],
+              "univariateStatistic---HoVeR": "",
+              "note": "",
+              "note---HoVeR": ""
+            }
+          ],
+          "measuredVariable---HoVeR": "",
+          "covariantStatistic": [
+            {
+              "description": "",
+              "description---HoVeR": "",
+              "measuredVariable1": "",
+              "measuredVariable1---HoVeR": "",
+              "measuredVariable2": "",
+              "measuredVariable2---HoVeR": "",
+              "synthesisType": "",
+              "synthesisType---HoVeR": "",
+              "studyType": "",
+              "studyType---HoVeR": "",
+              "sampleSize": {
+                "description": "",
+                "description---HoVeR": "",
+                "numberOfStudies": -0,
+                "numberOfStudies---HoVeR": "",
+                "numberOfParticipants": -0,
+                "numberOfParticipants---HoVeR": "",
+                "note": "",
+                "note---HoVeR": ""
+              },
+              "sampleSize---HoVeR": "",
+              "statistic": [
+                {
+                  "description": "",
+                  "description---HoVeR": "",
+                  "type": {
+                    "coding": {
+                      "system": "",
+                      "system---HoVeR": "",
+                      "code": "",
+                      "code---HoVeR": "",
+                      "display": "",
+                      "display---HoVeR": ""
+                    },
+                    "coding---HoVeR": ""
+                  },
+                  "type---HoVeR": "",
+                  "quantity": {
+                    "value": -0,
+                    "value---HoVeR": "",
+                    "comparator": "",
+                    "comparator---HoVeR": "",
+                    "unit": "",
+                    "unit---HoVeR": "",
+                    "system": "",
+                    "system---HoVeR": "",
+                    "code": "",
+                    "code---HoVeR": ""
+                  },
+                  "quantity---HoVeR": "",
+                  "precisionEstimate": {
+                    "type": {
+                      "coding": {
+                        "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                        "system---HoVeR": "",
+                        "code": "",
+                        "code---HoVeR": "",
+                        "display": "",
+                        "display---HoVeR": ""
+                      },
+                      "coding---HoVeR": ""
+                    },
+                    "type---HoVeR": "",
+                    "level": -0,
+                    "level---HoVeR": "",
+                    "from": -0,
+                    "from---HoVeR": "",
+                    "to": -0,
+                    "to---HoVeR": ""
+                  },
+                  "precisionEstimate---HoVeR": "",
+                  "pValue": {
+                    "type": "",
+                    "type---HoVeR": "",
+                    "quantity": {
+                      "value": -0,
+                      "value---HoVeR": "",
+                      "comparator": "",
+                      "comparator---HoVeR": ""
+                    },
+                    "quantity---HoVeR": "",
+                    "range": "",
+                    "range---HoVeR": ""
+                  },
+                  "pValue---HoVeR": "",
+                  "note": "",
+                  "note---HoVeR": ""
+                }
+              ],
+              "statistic---HoVeR": "",
+              "certainty": [
+                {
+                  "rating": [
+                    {
+                      "coding": {
+                        "system": "",
+                        "system---HoVeR": "",
+                        "code": "",
+                        "code---HoVeR": "",
+                        "display": "",
+                        "display---HoVeR": ""
+                      },
+                      "coding---HoVeR": ""
+                    }
+                  ],
+                  "rating---HoVeR": "",
+                  "certaintySubcomponent": [
+                    {
+                      "type": {
+                        "coding": {
+                          "system": "",
+                          "system---HoVeR": "",
+                          "code": "",
+                          "code---HoVeR": "",
+                          "display": "",
+                          "display---HoVeR": ""
+                        },
+                        "coding---HoVeR": ""
+                      },
+                      "type---HoVeR": "",
+                      "rating": {
+                        "coding": {
+                          "system": "",
+                          "system---HoVeR": "",
+                          "code": "",
+                          "code---HoVeR": "",
+                          "display": "",
+                          "display---HoVeR": ""
+                        },
+                        "coding---HoVeR": ""
+                      },
+                      "rating---HoVeR": "",
+                      "note": "",
+                      "note---HoVeR": ""
+                    }
+                  ],
+                  "certaintySubcomponent---HoVeR": "",
+                  "note": "",
+                  "note---HoVeR": ""
+                }
+              ],
+              "certainty---HoVeR": "",
+              "note": "",
+              "note---HoVeR": ""
+            }
+          ],
+          "covariantStatistic---HoVeR": ""
+        }
+      ],
+      "exposureVariant---HoVeR": "",
+      "comparativeStatistic": [
+        {
+          "description": "",
+          "description---HoVeR": "",
+          "exposure": "",
+          "exposure---HoVeR": "",
+          "exposureAlternative": "",
+          "exposureAlternative---HoVeR": "",
+          "measuredVariable": "",
+          "measuredVariable---HoVeR": "",
+          "synthesisType": "",
+          "synthesisType---HoVeR": "",
+          "studyType": "",
+          "studyType---HoVeR": "",
+          "sampleSize": {
+            "description": "",
+            "description---HoVeR": "",
+            "numberOfStudies": -0,
+            "numberOfStudies---HoVeR": "",
+            "numberOfParticipants": -0,
+            "numberOfParticipants---HoVeR": "",
+            "note": "",
+            "note---HoVeR": ""
+          },
+          "sampleSize---HoVeR": "",
+          "statistic": [
+            {
+              "description": "",
+              "description---HoVeR": "",
+              "type": {
+                "coding": {
+                  "system": "http://build.fhir.org/valueset-effect-estimate-type.html",
+                  "system---HoVeR": "",
+                  "code": "",
+                  "code---HoVeR": "",
+                  "display": "",
+                  "display---HoVeR": ""
+                },
+                "coding---HoVeR": ""
+              },
+              "type---HoVeR": "",
+              "quantity": {
+                "value": -0,
+                "value---HoVeR": "",
+                "comparator": "",
+                "comparator---HoVeR": "",
+                "unit": "",
+                "unit---HoVeR": "",
+                "system": "",
+                "system---HoVeR": "",
+                "code": "",
+                "code---HoVeR": ""
+              },
+              "quantity---HoVeR": "",
+              "precisionEstimate": {
+                "type": {
+                  "coding": {
+                    "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                    "system---HoVeR": "",
+                    "code": "",
+                    "code---HoVeR": "",
+                    "display": "",
+                    "display---HoVeR": ""
+                  },
+                  "coding---HoVeR": ""
+                },
+                "type---HoVeR": "",
+                "level": -0,
+                "level---HoVeR": "",
+                "from": -0,
+                "from---HoVeR": "",
+                "to": -0,
+                "to---HoVeR": ""
+              },
+              "precisionEstimate---HoVeR": "",
+              "pValue": {
+                "type": "",
+                "type---HoVeR": "",
+                "quantity": {
+                  "value": -0,
+                  "value---HoVeR": "",
+                  "comparator": "",
+                  "comparator---HoVeR": ""
+                },
+                "quantity---HoVeR": "",
+                "range": "",
+                "range---HoVeR": ""
+              },
+              "pValue---HoVeR": "",
+              "note": "",
+              "note---HoVeR": ""
+            }
+          ],
+          "statistic---HoVeR": "",
+          "certainty": [
+            {
+              "rating": [
+                {
+                  "coding": {
+                    "system": "",
+                    "system---HoVeR": "",
+                    "code": "",
+                    "code---HoVeR": "",
+                    "display": "",
+                    "display---HoVeR": ""
+                  },
+                  "coding---HoVeR": ""
+                }
+              ],
+              "rating---HoVeR": "",
+              "certaintySubcomponent": [
+                {
+                  "type": {
+                    "coding": {
+                      "system": "",
+                      "system---HoVeR": "",
+                      "code": "",
+                      "code---HoVeR": "",
+                      "display": "",
+                      "display---HoVeR": ""
+                    },
+                    "coding---HoVeR": ""
+                  },
+                  "type---HoVeR": "",
+                  "rating": {
+                    "coding": {
+                      "system": "",
+                      "system---HoVeR": "",
+                      "code": "",
+                      "code---HoVeR": "",
+                      "display": "",
+                      "display---HoVeR": ""
+                    },
+                    "coding---HoVeR": ""
+                  },
+                  "rating---HoVeR": "",
+                  "note": "",
+                  "note---HoVeR": ""
+                }
+              ],
+              "certaintySubcomponent---HoVeR": "",
+              "note": "",
+              "note---HoVeR": ""
+            }
+          ],
+          "certainty---HoVeR": "",
+          "note": "",
+          "note---HoVeR": ""
+        }
+      ],
+      "comparativeStatistic---HoVeR": "",
+      "note": "",
+      "note---HoVeR": ""
+    }
+  ],
+  "exposureBackground---HoVeR": ""
+};
+
+</script>
+
+</body>
+</html>

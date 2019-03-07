@@ -485,9 +485,37 @@ function toastNothingToDelete() {
   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2990);
 }
 
+// HOVER TEXT CODE
+var HoverTextFields = {};
+// END OF HOVER TEXT CODE
+
 function loopDictionary(json, indent, current_path){
    var generatedHTML = "";
-	for (var key in json) {		
+	for (var key in json) {
+		// HOVER TEXT CODE
+		if (typeof key == typeof "" && key.substring(key.length-8, key.length) == "---HoVeR") {		//If the field ends with "---HoVeR" then it will add title text to the normal field
+			if (current_path != "" && current_path[current_path.length - 1] != "."){
+				current_path += ".";
+			}
+			if (generatedHTML.indexOf('<p id="' + current_path + key.substring(0, key.length-8) + '"') == -1){
+				var x = 0;
+				while (true) {
+					if (generatedHTML.indexOf('<p id="' + current_path + key.substring(0, key.length-8) + '[' + x.toString() + ']' + '"') == -1){
+						break;
+					} else {
+						generatedHTML = generatedHTML.replace('<p id="' + current_path + key.substring(0, key.length-8) + '[' + x.toString() + ']' + '"', '<p id="' + current_path + key.substring(0, key.length-8) + '[' + x.toString() + ']'  + '" title="' + json[key] + '"');
+						HoverTextFields[current_path + key.substring(0, key.length-8) + '[' + x.toString() + ']'] = json[key];
+					}
+					x++;
+				}
+			} else {
+				generatedHTML = generatedHTML.replace('<p id="' + current_path + key.substring(0, key.length-8) + '"', '<p id="' + current_path + key.substring(0, key.length-8) + '" title="' + json[key] + '"');
+				HoverTextFields[current_path + key.substring(0, key.length-8)] = json[key];
+			}
+			continue;
+		}
+		// END OF HOVER TEXT CODE
+
 		if (json[key] == null || typeof json[key] != typeof {}){
            var inputType = 'text'
            if (typeof(json[key]) == typeof(1)){
@@ -570,7 +598,13 @@ function loopDictionary(json, indent, current_path){
 			}
 		}
 	}
-   //latestJSON = TreeToJSON();
+   
+   // HOVER TEXT CODE
+   for (var hoverKey in HoverTextFields){
+	   generatedHTML = generatedHTML.replace('<p id="' + hoverKey + '"', '<p id="' + hoverKey + '" title="' + HoverTextFields[hoverKey] + '"');
+   }
+   // END OF HOVER TEXT CODE
+   
    return generatedHTML;
 }
 
