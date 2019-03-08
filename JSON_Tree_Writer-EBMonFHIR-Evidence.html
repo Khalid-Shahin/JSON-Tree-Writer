@@ -47,6 +47,512 @@ if(window.addEventListener) {
 json = {
   "resourceType": "Evidence",
   "identifier": "",
+  "identifier---HoVeR": "",
+  "url": "",
+  "url---HoVeR": "",
+  "title": "",
+  "title---HoVeR": "",
+  "date": "",
+  "date---HoVeR": "",
+  "publisher": "",
+  "publisher---HoVeR": "",
+  "author": [
+    ""
+  ],
+  "author---HoVeR": "An individual or organization primarily involved in the creation and maintenance of the content [0..*]",
+  "exposureBackground": [
+    {
+      "description": "",
+      "description---HoVeR": "Human-readable summary of the population or subpopulation [0..1]",
+      "population": "",
+      "population---HoVeR": "A reference to a Group that defines the population or subpopulation [1..1]",
+      "populationSampleSize": {
+        "description": "",
+        "description---HoVeR": "Human-readable summary of population sample size [0..1]",
+        "numberOfStudies": -0,
+        "numberOfStudies---HoVeR": "Number of studies contributing to this Evidence summary [0..1]",
+        "numberOfParticipants": -0,
+        "numberOfParticipants---HoVeR": "Number of participants in the population [0..1]",
+        "note": "",
+        "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
+      },
+      "populationSampleSize---HoVeR": "[0..1]",
+      "exposureVariant": [
+        {
+          "description": "",
+          "description---HoVeR": "Human-readable summary of the exposure state [0..1]",
+          "groupByExposure": "",
+          "groupByExposure---HoVeR": "A reference to a Group that defines the exposure state (subgroup by exposure within the population) [1..1]",
+          "exposureSubsetSampleSize": {
+            "description": "",
+            "description---HoVeR": "Human-readable summary of sample size with exposure [0..1]",
+            "numberOfStudies": -0,
+            "numberOfStudies---HoVeR": "Number of studies contributing to this Evidence summary [0..1]",
+            "numberOfParticipants": -0,
+            "numberOfParticipants---HoVeR": "Number of participants in the population [0..1]",
+            "note": "",
+            "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
+          },
+          "measuredVariable": [
+            {
+              "description": "",
+              "description---HoVeR": "Human-readable summary of sample characteristic or outcome definition [0..1]",
+              "measuredVariableDefinition": "",
+              "measuredVariableDefinition---HoVeR": "A reference to an EvidenceVariable [1..1]",
+              "univariateStatistic": [
+                {
+                  "description": "",
+                  "description---HoVeR": "A human-readable string to describe the findings [0..1]",
+                  "synthesisType": "",
+                  "synthesisType---HoVeR": "Type of synthesis eg meta-analysis [0..1]",
+                  "studyType": "",
+                  "studyType---HoVeR": "Type of study eg randomized trial [0..1]",
+                  "sampleSize": {
+                    "description": "",
+                    "description---HoVeR": "Human-readable summary of sample size [0..1]",
+                    "numberOfStudies": -0,
+                    "numberOfStudies---HoVeR": "Number of studies contributing to this measurement [0..1]",
+                    "numberOfParticipants": -0,
+                    "numberOfParticipants---HoVeR": "Number of participants in the sample relevant to this measurement. May be used as denominator for intention-to-treat analysis, or analysis with assumptions for missing data. [0..1]",
+                    "knownDataCount": -0,
+                    "knownDataCount---HoVeR": "Number of participants in the sample with measurement value known relevant to this measurement. May be used as denominator for analysis limited to available data. [0..1]",
+                    "numeratorCount": -0,
+                    "numeratorCount---HoVeR": "Number of participants in the sample with measurement value known and \"positive\" or \"present\" for a dichotomous measurement. May be used as numerator for proportion or percentage as statistic type. [0..1]",
+                    "note": "",
+                    "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
+                  },
+                  "statistic": [
+                    {
+                      "description": "",
+                      "description---HoVeR": "A human-readable string to summarize the statistic. May include type, value, units, and precision estimate. [0..1]",
+                      "type": {
+                        "coding": {
+                          "system": "http://build.fhir.org/valueset-risk-estimate-type.html",
+                          "system---HoVeR": "",
+                          "code": "",
+                          "code---HoVeR": "",
+                          "display": "",
+                          "display---HoVeR": ""
+                        }
+                      },
+                      "type---HoVeR": "Coded type of univariate statistic. Extensible codes include mean, median, proportion, percentage, low, high, count. [0..1]",
+                      "quantity": {
+                        "value": -0,
+                        "value---HoVeR": "",
+                        "comparator": "",
+                        "comparator---HoVeR": "",
+                        "unit": "",
+                        "unit---HoVeR": "",
+                        "system": "",
+                        "system---HoVeR": "",
+                        "code": "",
+                        "code---HoVeR": ""
+                      },
+                      "quantity---HoVeR": "Quantity datatype includes value, comparator (=, <, >), and unit [0..1]",
+                      "precisionEstimate": {
+                        "type": {
+                          "coding": {
+                            "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                            "system---HoVeR": "",
+                            "code": "",
+                            "code---HoVeR": "",
+                            "display": "",
+                            "display---HoVeR": ""
+                          },
+                          "coding---HoVeR": ""
+                        },
+                        "type---HoVeR": "Examples include confidence interval and interquartile range [0..1]",
+                        "level": -0,
+                        "level---HoVeR": "Use 0.95 for a 95% confidence interval [0..1]",
+                        "from": -0,
+                        "from---HoVeR": "Lower bound of confidence interval [0..1]",
+                        "to": -0,
+                        "to---HoVeR": "Upper bound of confidence interval [0..1]"
+                      },
+                      "precisionEstimate---HoVeR": "[0..*]",
+                      "note": "",
+                      "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+                    }
+                  ],
+                  "statistic---HoVeR": "[0..*]",
+                  "certainty": [
+                    {
+                      "rating": [
+                        {
+                          "coding": {
+                            "system": "",
+                            "system---HoVeR": "",
+                            "code": "",
+                            "code---HoVeR": "",
+                            "display": "",
+                            "display---HoVeR": ""
+                          },
+                          "coding---HoVeR": ""
+                        }
+                      ],
+                      "rating---HoVeR": "A rating of the certainty of the effect estimate [0..*]",
+                      "certaintySubcomponent": [
+                        {
+                          "type": {
+                            "coding": {
+                              "system": "",
+                              "system---HoVeR": "",
+                              "code": "",
+                              "code---HoVeR": "",
+                              "display": "",
+                              "display---HoVeR": ""
+                            },
+                            "coding---HoVeR": ""
+                          },
+                          "type---HoVeR": "Type of subcomponent of certainty rating [0..1]",
+                          "rating": {
+                            "coding": {
+                              "system": "",
+                              "system---HoVeR": "",
+                              "code": "",
+                              "code---HoVeR": "",
+                              "display": "",
+                              "display---HoVeR": ""
+                            },
+                            "coding---HoVeR": ""
+                          },
+                          "rating---HoVeR": "A rating of a subcomponent of rating certainty [0..*]",
+                          "note": "",
+                          "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
+                        }
+                      ],
+                      "certaintySubcomponent---HoVeR": "A description of a component of the overall certainty [0..*]",
+                      "note": "",
+                      "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
+                    }
+                  ],
+                  "certainty---HoVeR": "A description of the certainty of the effect estimate [0..*]",
+                  "note": "",
+                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+                }
+              ],
+              "univariateStatistic---HoVeR": "Statistic with only 1 variable (non-comparative) to be used for summary statistics of a single variable in a single group.  [0..*]",
+              "note": "",
+              "note---HoVeR": "A human-readable string to clarify or explain concepts about the measured variable [0..*]"
+            }
+          ],
+          "measuredVariable---HoVeR": "[0..*]",
+          "covariantStatistic": [
+            {
+              "description": "",
+              "description---HoVeR": "A human-readable string to describe the findings [0..1]",
+              "measuredVariable1": "",
+              "measuredVariable1---HoVeR": "A reference to an EvidenceVariable [1..1]",
+              "measuredVariable2": "A reference to an EvidenceVariable [1..1]",
+              "measuredVariable2---HoVeR": "A reference to an EvidenceVariable [1..1]",
+              "synthesisType": "",
+              "synthesisType---HoVeR": "Type of synthesis eg meta-analysis [0..1]",
+              "studyType": "",
+              "studyType---HoVeR": "Type of study eg randomized trial [0..1]",
+              "sampleSize": {
+                "description": "",
+                "description---HoVeR": "Human-readable summary of sample size [0..1]",
+                "numberOfStudies": -0,
+                "numberOfStudies---HoVeR": "Number of studies contributing to this measurement [0..1]",
+                "numberOfParticipants": -0,
+                "numberOfParticipants---HoVeR": "Number of participants in the sample relevant to this measurement. [0..1]",
+                "note": "",
+                "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
+              },
+              "sampleSize---HoVeR": "[0..1]",
+              "statistic": [
+                {
+                  "description": "",
+                  "description---HoVeR": "A human-readable string to summarize the statistic. May include type, value, units, precision estimate, and p value. [0..1]",
+                  "type": {
+                    "coding": {
+                      "system": "",
+                      "system---HoVeR": "",
+                      "code": "",
+                      "code---HoVeR": "",
+                      "display": "",
+                      "display---HoVeR": ""
+                    },
+                    "coding---HoVeR": ""
+                  },
+                  "type---HoVeR": "Coded type of covariant statistic. Extensible codes include Pearson correlation coefficient, Spearman's rank-order correlation coefficient. [0..1]",
+                  "quantity": {
+                    "value": -0,
+                    "value---HoVeR": "",
+                    "comparator": "",
+                    "comparator---HoVeR": "",
+                    "unit": "",
+                    "unit---HoVeR": "",
+                    "system": "",
+                    "system---HoVeR": "",
+                    "code": "",
+                    "code---HoVeR": ""
+                  },
+                  "quantity---HoVeR": "Quantity datatype includes value, comparator (=, <, >), and unit [0..1]",
+                  "precisionEstimate": {
+                    "type": {
+                      "coding": {
+                        "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                        "system---HoVeR": "",
+                        "code": "",
+                        "code---HoVeR": "",
+                        "display": "",
+                        "display---HoVeR": ""
+                      },
+                      "coding---HoVeR": ""
+                    },
+                    "type---HoVeR": "Examples include confidence interval and interquartile range [0..1]",
+                    "level": -0,
+                    "level---HoVeR": "Use 95 for a 95% confidence interval [0..1]",
+                    "from": -0,
+                    "from---HoVeR": "Lower bound of confidence interval [0..1]",
+                    "to": -0,
+                    "to---HoVeR": "Upper bound of confidence interval [0..1]"
+                  },
+                  "precisionEstimate---HoVeR": "[0..*]",
+                  "pValue": {
+                    "type": "",
+                    "type---HoVeR": "P values for same statistic may vary based on statistical method used to calculate the p value. [0..1]",
+                    "quantity": {
+                      "value": -0,
+                      "value---HoVeR": "The value of the p value (between 0 and 1) [0..1]",
+                      "comparator": "",
+                      "comparator---HoVeR": "(=, <, >) [0..1]"
+                    },
+                    "quantity---HoVeR": "",
+                    "range": "",
+                    "range---HoVeR": "Used to express p values on one side of a threshold or in a range [0..1]"
+                  },
+                  "pValue---HoVeR": "Number between 0 and 1 related to probability of statistic [0..*]",
+                  "note": "",
+                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+                }
+              ],
+              "statistic---HoVeR": "[0..*]",
+              "certainty": [
+                {
+                  "rating": [
+                    {
+                      "coding": {
+                        "system": "",
+                        "system---HoVeR": "",
+                        "code": "",
+                        "code---HoVeR": "",
+                        "display": "",
+                        "display---HoVeR": ""
+                      },
+                      "coding---HoVeR": ""
+                    }
+                  ],
+                  "rating---HoVeR": "A rating of the certainty of the effect estimate [0..*]",
+                  "certaintySubcomponent": [
+                    {
+                      "type": {
+                        "coding": {
+                          "system": "",
+                          "system---HoVeR": "",
+                          "code": "",
+                          "code---HoVeR": "",
+                          "display": "",
+                          "display---HoVeR": ""
+                        },
+                        "coding---HoVeR": ""
+                      },
+                      "type---HoVeR": "Type of subcomponent of certainty rating [0..1]",
+                      "rating": {
+                        "coding": {
+                          "system": "",
+                          "system---HoVeR": "",
+                          "code": "",
+                          "code---HoVeR": "",
+                          "display": "",
+                          "display---HoVeR": ""
+                        },
+                        "coding---HoVeR": ""
+                      },
+                      "rating---HoVeR": "A rating of a subcomponent of rating certainty [0..*]",
+                      "note": "",
+                      "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty subcomponent [0..*]"
+                    }
+                  ],
+                  "certaintySubcomponent---HoVeR": "A description of a component of the overall certainty [0..*]",
+                  "note": "",
+                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
+                }
+              ],
+              "certainty---HoVeR": "A description of the certainty of the effect estimate [0..*]",
+              "note": "",
+              "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+            }
+          ],
+          "covariantStatistic---HoVeR": "Statistic to be used for summary of relation between 2 variables in a single group.  [0..*]",
+          "note": "",
+          "note---HoVeR": "A human-readable string to clarify or explain concepts about the exposure state [0..*]"
+        }
+      ],
+      "exposureVariant---HoVeR": "The exposure details. Which could be intervention or comparison/control states. [0..*]",
+      "comparativeStatistic": [
+        {
+          "description": "",
+          "description---HoVeR": "A human-readable string to describe the findings [0..1]",
+          "exposure": "",
+          "exposure---HoVeR": "A reference to a Group defining the exposure or intervention state [1..1]",
+          "exposureAlternative": "",
+          "exposureAlternative---HoVeR": "A reference to a Group defining the alternative exposure or control/comparator state [1..1]",
+          "measuredVariable": "",
+          "measuredVariable---HoVeR": "A reference to an EvidenceVariable [1..1]",
+          "synthesisType": "",
+          "synthesisType---HoVeR": "Type of synthesis eg meta-analysis [0..1]",
+          "studyType": "",
+          "studyType---HoVeR": "Type of study eg randomized trial [0..1]",
+          "sampleSize": {
+            "description": "",
+            "description---HoVeR": "Human-readable summary of sample size [0..1]",
+            "numberOfStudies": -0,
+            "numberOfStudies---HoVeR": "Number of studies contributing to this measurement [0..1]",
+            "numberOfParticipants": -0,
+            "numberOfParticipants---HoVeR": "Number of participants in the sample relevant to this measurement. [0..1]",
+            "note": "",
+            "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size. [0..*]"
+          },
+          "sampleSize---HoVeR": "[0..1]",
+          "statistic": [
+            {
+              "description": "",
+              "description---HoVeR": "A human-readable string to summarize the statistic. May include type, value, units, precision estimate, and p value. [0..1]",
+              "type": {
+                "coding": {
+                  "system": "http://build.fhir.org/valueset-effect-estimate-type.html",
+                  "system---HoVeR": "",
+                  "code": "",
+                  "code---HoVeR": "",
+                  "display": "",
+                  "display---HoVeR": ""
+                },
+                "coding---HoVeR": ""
+              },
+              "type---HoVeR": "Coded type of comparative statistic. Extensible codes include relative risk, odds ratio, absolute risk difference, standardized mean difference. [0..1]",
+              "quantity": {
+                "value": -0,
+                "value---HoVeR": "",
+                "comparator": "",
+                "comparator---HoVeR": "",
+                "unit": "",
+                "unit---HoVeR": "",
+                "system": "",
+                "system---HoVeR": "",
+                "code": "",
+                "code---HoVeR": ""
+              },
+              "quantity---HoVeR": "Quantity datatype includes value, comparator (=, <, >), and unit. [0..1]",
+              "precisionEstimate": {
+                "type": {
+                  "coding": {
+                    "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                    "system---HoVeR": "",
+                    "code": "",
+                    "code---HoVeR": "",
+                    "display": "",
+                    "display---HoVeR": ""
+                  },
+                  "coding---HoVeR": ""
+                },
+                "type---HoVeR": "Examples include confidence interval and interquartile range [0..1]",
+                "level": -0,
+                "level---HoVeR": "Use 95 for a 95% confidence interval [0..1]",
+                "from": -0,
+                "from---HoVeR": "Lower bound of confidence interval [0..1]",
+                "to": -0,
+                "to---HoVeR": "Upper bound of confidence interval [0..1]"
+              },
+              "precisionEstimate---HoVeR": "[0..*]",
+              "pValue": {
+                "type": "",
+                "type---HoVeR": "P values for same statistic may vary based on statistical method used to calculate the p value. [0..1]",
+                "quantity": {
+                  "value": -0,
+                  "value---HoVeR": "The value of the p value (between 0 and 1) [0..1]",
+                  "comparator": "",
+                  "comparator---HoVeR": "(=, <, >) [0..1]"
+                },
+                "quantity---HoVeR": "",
+                "range": "",
+                "range---HoVeR": "Used to express p values on one side of a threshold or in a range [0..1]"
+              },
+              "pValue---HoVeR": "number between 0 and 1 related to probability of statistic [0..*]",
+              "note": "",
+              "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+            }
+          ],
+          "statistic---HoVeR": "[0..*]",
+          "certainty": [
+            {
+              "rating": [
+                {
+                  "coding": {
+                    "system": "",
+                    "system---HoVeR": "",
+                    "code": "",
+                    "code---HoVeR": "",
+                    "display": "",
+                    "display---HoVeR": ""
+                  },
+                  "coding---HoVeR": ""
+                }
+              ],
+              "rating---HoVeR": "A rating of the certainty of the effect estimate [0..*]",
+              "certaintySubcomponent": [
+                {
+                  "type": {
+                    "coding": {
+                      "system": "",
+                      "system---HoVeR": "",
+                      "code": "",
+                      "code---HoVeR": "",
+                      "display": "",
+                      "display---HoVeR": ""
+                    },
+                    "coding---HoVeR": ""
+                  },
+                  "type---HoVeR": "Type of subcomponent of certainty rating [0..1]",
+                  "rating": {
+                    "coding": {
+                      "system": "",
+                      "system---HoVeR": "",
+                      "code": "",
+                      "code---HoVeR": "",
+                      "display": "",
+                      "display---HoVeR": ""
+                    },
+                    "coding---HoVeR": ""
+                  },
+                  "rating---HoVeR": "A rating of a subcomponent of rating certainty [0..*]",
+                  "note": "",
+                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty subcomponent [0..*]"
+                }
+              ],
+              "certaintySubcomponent---HoVeR": "A description of a component of the overall certainty [0..*]",
+              "note": "",
+              "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
+            }
+          ],
+          "certainty---HoVeR": "A description of the certainty of the effect estimate [0..*]",
+          "note": "",
+          "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+        }
+      ],
+      "comparativeStatistic---HoVeR": "Statistic to be used for summary of relation between 2 variables in a single group.  [0..*]",
+      "note": "",
+      "note---HoVeR": ""
+    }
+  ],
+  "exposureBackground---HoVeR": "[0..*]"
+};
+
+//json_old isn't loaded
+json_old = {
+  "resourceType": "Evidence",
+  "identifier": "",
   "url": "",
   "title": "",
   "date": "",
