@@ -44,6 +44,65 @@ if(window.addEventListener) {
     window.attachEvent('onload', initiatePage); //Older IE
 }
 
+hovertext_json = {
+  "resourceType": "EvidenceVariable",
+  "id": "",
+  "url": "",
+  "url---HoVeR": "An absolute URI that is used to identify this evidence variable when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this evidence variable is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the evidence variable is stored on different servers. [0..1]",
+  "title": "",
+  "title---HoVeR": "A short, descriptive, user-friendly title for the evidence variable. [0..1]",
+  "name": "",
+  "name---HoVeR": "A natural language name identifying the evidence variable. This name should be usable as an identifier for the module by machine processing applications such as code generation. [0..1]",
+  "date": "",
+  "date---HoVeR": "The date (and optionally time) when the evidence variable was published. The date must change when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the evidence variable changes. [0..1]",
+  "publisher": "",
+  "publisher---HoVeR": "The name of the organization or individual that published the evidence variable. [0..1]",
+  "author": [""],
+  "author---HoVeR": "An individiual or organization primarily involved in the creation and maintenance of the content. [0..*]",
+  "characteristic": [{
+      "description": "",
+      "description---HoVeR": "A short, natural language description of the characteristic that could be used to communicate the criteria to an end-user. [0..1]",
+      "usageContext": [""],
+      "usageContext---HoVeR": "Use UsageContext to define the members of the population, such as Age Ranges, Genders, Settings. [0..*]",
+      "exclude": "",
+      "exclude---HoVeR": "When true, members with this characteristic are excluded from the element. [0..1]",
+      "definitionX": {
+          "defintionReference": "",
+          "definitionCanonical": "",
+          "definitionCodeableConcept": {
+				"coding": {
+					"system": "",
+					"code": "",
+					"display": ""
+				}
+			},
+          "definitionExpression": {
+			"description": "",
+			"name": "",
+			"language": "",
+			"expression": "",
+			"reference": ""
+		  },
+          "definitionDataRequirement": "",
+          "definitionTriggerDefinition": ""
+      },
+      "definitionX---HoVeR": "Define members of the evidence element using Codes (such as condition, medication, or observation), Expressions ( using an expression language such as FHIRPath or CQL) or DataRequirements (such as Diabetes diagnosis onset in the last year). [1..1]",
+      "participantEffectiveX": {
+          "participantEffectiveDateTime": "",
+          "participantEffectivePeriod": "",
+          "participantEffectiveDuration": "",
+          "participantEffectiveTiming": ""
+      },
+      "participantEffectiveX---HoVeR": "Indicates what effective period the study covers. [0..1]",
+      "timeFromStart": "",
+      "timeFromStart---HoVeR": "Indicates duration from the participant's study entry. [0..1]",
+      "groupMeasure": "",
+      "groupMeasure---HoVeR": "Indicates how elements are aggregated within the study effective period. [0..1]",
+      "note": ""
+  }],
+  "characteristic---HoVeR": "A characteristic that defines the members of the evidence element. Multiple characteristics are applied with &quot;and&quot; semantics. [1..*]"
+};
+
 json = {
     "resourceType": "EvidenceVariable",
     "id": "RQLQrhinitisQOL",
