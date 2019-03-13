@@ -44,6 +44,63 @@ if(window.addEventListener) {
     window.attachEvent('onload', initiatePage); //Older IE
 }
 
+hovertext_json = {
+    "resourceType": "Group",
+    "id": "",
+	"id---HoVeR": "",
+    "name": "",
+	"name---HoVeR": "A label assigned to the group for human identification and communication. [0..1]",
+    "type": "",
+	"type---HoVeR": "Identifies the broad classification of the kind of resources the group includes. [1..1]",
+    "code": "",
+	"code---HoVeR": "Provides a specific type of resource the group includes; e.g. &quot;cow&quot;, &quot;syringe&quot;, etc. [0..1]",
+	"actual": "",
+	"actual---HoVeR": "If true, indicates that the resource refers to a specific group of real individuals. If false, the group defines a set of intended individuals. [1..1]",
+    "characteristic":[ {
+        "code": "",
+		"code---HoVeR": "A code that identifies the kind of trait being asserted. [1..1]",
+		"exclude": "",
+		"exclude---HoVeR": "If true, indicates the characteristic is one that is NOT held by members of the group. [1..1]",
+		"usageContext": [""],
+		"usageContext---HoVeR": "[0..*]",
+        "period": "",
+		"period---HoVeR": "The period over which the characteristic is tested; e.g. the patient had an operation during the month of June. [0..1]",
+        "valueX": {
+            "valueCodeableConcept": {
+				"coding": {
+					"system": "",
+					"code": "",
+					"display": ""
+				}
+			},
+            "valueBoolean": "",
+            "valueQuantity": {
+				"value": "",
+				"comparator": "",
+				"unit": "",
+				"system": "",
+				"code": ""
+			},
+            "valueRange": {
+				"low": "",
+				"high": ""
+			},
+            "valueReference": ""
+        },
+		"valueX---HoVeR": "The value of the trait that holds (or does not hold - see 'exclude') for members of the group. [1..1]"
+    } ],
+	"characteristic---HoVeR": "Identifies traits whose presence r absence is shared by members of the group. [0..*]",
+    "member": [{
+        "entity": "",
+		"entity---HoVeR": "A reference to the entity that is a member of the group. Must be consistent with Group.type. If the entity is another group, then the type must be the same. [1..1]",
+        "period": "",
+        "period---HoVeR": "The period that the member was in the group, if known. [0..1]",
+        "inactive": "",
+		"inactive---HoVeR": "A flag to indicate that the member is no longer in the group, but previously may have been a member. [0..1]"
+    }],
+	"member---HoVeR": "Identifies the resource instances that are members of the group. [0..*]"
+};
+
 json = {
     "resourceType": "Group",
     "id": "SLimmunotherapy",
