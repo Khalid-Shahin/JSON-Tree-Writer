@@ -662,6 +662,7 @@ function buildTree(){
     }
 	
 	loopDictionary(hovertext_json, 1, "");
+	hovertext_json = {};
 	generatedHTML += loopDictionary(json, 1, "");
 	generatedHTML += "</div>";
 	var d1 = document.getElementById(']....}?|?|?{....[treeChart');
