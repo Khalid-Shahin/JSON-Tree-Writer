@@ -522,7 +522,7 @@ function loopDictionary(json, indent, current_path){
            var inputType = 'text'
            if (typeof(json[key]) == typeof(1)){
               inputType = 'number' 
-           } else {
+           } else if (json[key] != null) {
 		      json[key] = (json[key]).toString().replace(/"/g, '&quot;');
 		   }
            //For the "hidden" input type used for the arrays.
@@ -582,7 +582,7 @@ function loopDictionary(json, indent, current_path){
                         var inputType = 'text';
                         if (typeof(json[key][entry]) == typeof(1)){
                            inputType = 'number' 
-                        } else {
+                        } else if (json[key][entry] != null) {
 						   json[key][entry] = json[key][entry].replace(/"/g, '&quot;');
 						}
                         //For the "hidden" input type used for the arrays.
