@@ -664,6 +664,7 @@ function buildTree(){
 	loopDictionary(hovertext_json, 1, "");
 	hovertext_json = {};
 	generatedHTML += loopDictionary(json, 1, "");
+	json = {};  //Clears the JSON so the page takes less memory.
 	generatedHTML += "</div>";
 	var d1 = document.getElementById(']....}?|?|?{....[treeChart');
     
