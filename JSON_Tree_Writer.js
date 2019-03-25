@@ -60,7 +60,7 @@ function loadJsonFile(event){
 }
 
 function placeFileContent(file) {
-   readFileContent(file).then(function(content) { json = JSON.parse(content); buildTree(); }).catch( function(error) { console.log(error) });
+   readFileContent(file).then(function(content) { json = JSON.parse(content); buildTree(true); convertTreeToJSON(); }).catch( function(error) { console.log(error) });
 }
 
 function readFileContent(file) {
@@ -78,10 +78,15 @@ function cleanDictionary(el) {
         return;
       }
 
-      _.isArray(result) ? result.push(cleaned) : (result[key] = cleaned);
+      if (_.isArray(result)){
+		  if (typeof cleaned !== "undefined"){
+			  result.push(cleaned);
+		  }
+	  } else {
+		 result[key] = cleaned;
+	  }
     });
   }
-
   return _.isObject(el) ? internalClean(el) : el;
 }
 
@@ -97,26 +102,50 @@ function hashCode(dictString) {
 };
 
 window.addEventListener("beforeunload", function (e) {
+	var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
+	document.getElementById("]....}?|?|?{....[keepFields").checked = true;
     if (hashDict != 0 && hashDict != hashCode(JSON.stringify(TreeToJSON()))) {
-		var confirmMessage = 'If you leave this page your changes to the form, if any, will be lost.';
+		document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
+		var confirmMessage = 'If you leave this page your changes to the form will be lost.';
 		(e || window.event).returnValue = confirmMessage; //Gecko + IE
 		return confirmMessage; //Gecko + Webkit, Safari, Chrome etc.
 	}
+	document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
 }); 
 //END OF NOT MY CODE
 
 function convertTreeToJSON(){
-   var jsonToSave = JSON.stringify(TreeToJSON(), null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/([^\r])\n/g, "$1\r\n");
+   var treeToJsonDict = TreeToJSON();
+   var jsonToSave = JSON.stringify(treeToJsonDict, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/([^\r])\n/g, "$1\r\n");
    jsonToSave = jsonToSave.replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0");
    document.getElementById("]....}?|?|?{....[jsonTextArea").value = jsonToSave;
+   //json = JSON.parse(jsonToSave); //I recently commented out this line, is it not needed at all?
+   return treeToJsonDict;
 }
 function convertJSONToTree(){
      try {
         var convertingJSON = JSON.parse(document.getElementById("]....}?|?|?{....[jsonTextArea").value);
         json = convertingJSON;
-        buildTree();
+        buildTree(true);
      } catch(err){
-        alert("Invalid JSON formatting");
+		 try {
+			//CRASH();
+			var jsonTextAreaChecked = document.getElementById("]....}?|?|?{....[jsonTextArea").value.trim();
+			if (jsonTextAreaChecked[0] === "[" || jsonTextAreaChecked[0] === "{") {
+				var dictionaryParse;
+				eval('dictionaryParse = ' + jsonTextAreaChecked);
+				var dictionaryToJSON = JSON.stringify(dictionaryParse);
+				var convertingJSON = JSON.parse(dictionaryToJSON);
+				json = convertingJSON;
+				buildTree(true);
+				alert("Invalid JSON formatting, but changes have been made to the input to get it to work. The most common problem that gets fixed is having integers as the keyname.");
+				convertTreeToJSON();
+			} else {
+				CRASH();
+			}
+		 } catch(err) {
+			alert("Invalid JSON formatting");
+		 }
      }
 }
 
@@ -177,8 +206,9 @@ function hideShowJSON(){
 }
 
 function deleteEmptyFields (){
-   var hashBefore = hashCode(JSON.stringify(TreeToJSON()));
    var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
+   document.getElementById("]....}?|?|?{....[keepFields").checked = true;
+   var hashBefore = hashCode(JSON.stringify(TreeToJSON()));
    document.getElementById("]....}?|?|?{....[keepFields").checked = false;
    var dict = TreeToJSON();
    var hashAfter = hashCode(JSON.stringify(dict));
@@ -186,7 +216,7 @@ function deleteEmptyFields (){
       //Warning
       if (confirm('Are you sure you want to delete these empty field(s)')) {
         json = dict;
-        buildTree();
+        buildTree(true);
       }
    } else {
       toastNothingToDelete();
@@ -195,12 +225,23 @@ function deleteEmptyFields (){
    document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
 }
 
+function BlankCheckBoxReadWrite(){
+   if (!document.getElementById("]....}?|?|?{....[treeWriteChecked").checked) {
+		document.getElementById("]....}?|?|?{....[treeWriteChecked").checked = true;
+		document.getElementById("]....}?|?|?{....[treeReadChecked").checked = false;
+		switchReadWrite();
+		document.getElementById("]....}?|?|?{....[treeWriteChecked").checked = false;
+		document.getElementById("]....}?|?|?{....[treeReadChecked").checked = true;
+		switchReadWrite();
+   }
+}
+
 function switchReadWrite(){
     var allInputs = document.getElementsByTagName("input");
 	var allButtons = document.getElementsByClassName("addButton");
 	var onlyTextBoxes = [];
 	for (var i = 0; i < allInputs.length; i++) {
-		if((allInputs[i].type.toLowerCase() == 'text' || allInputs[i].type.toLowerCase() == 'number' || allInputs[i].type.toLowerCase() == 'hidden') && (allInputs[i].id.substring(0, 18) != "]....}?|?|?{....[_")) {
+		if((allInputs[i].type.toLowerCase() == 'text' || allInputs[i].type.toLowerCase() == 'number' || allInputs[i].type.toLowerCase() == 'hidden')) {
 			onlyTextBoxes.push(allInputs[i]);
 		}
 	}
@@ -208,35 +249,38 @@ function switchReadWrite(){
 	if (document.getElementById("]....}?|?|?{....[treeWriteChecked").checked) {
 	   for (var i in allInputs) {
 	      allInputs[i].style.display = "inline";
-	      allInputs[i].nextSibling.nextSibling.style.display = "none";
+		  if (allInputs[i].id.substring(0, 18) != "]....}?|?|?{....[_") {
+			allInputs[i].nextSibling.nextSibling.style.display = "none";
+		  }
 	   }
 	   for (var j = 0; j < allButtons.length; j++) {
 		  allButtons[j].style.display = "inline";
 	   }
 	} else {
-		for (var i in allInputs) {
+		var i = 0;
+		while (i < allInputs.length) {
 		  allInputs[i].style.display = "none";
-		  allInputs[i].nextSibling.nextSibling.style.display = "inline";
-          if (allInputs[i].type.toLowerCase() != 'hidden') {
+		  if (allInputs[i].id.substring(0, 18) != "]....}?|?|?{....[_") {
+				allInputs[i].nextSibling.nextSibling.style.display = "inline";
+		  }
+          if (allInputs[i].type.toLowerCase() != 'hidden' && allInputs[i].id.substring(0, 18) != "]....}?|?|?{....[_") {
 		     if (typeof allInputs[i].value == typeof "" && allInputs[i].value.substring(0, 4).toLowerCase() == "http"){
 			    allInputs[i].nextSibling.nextSibling.innerHTML = '(' + '<a href="' + allInputs[i].value + '">' + allInputs[i].value + '</a>)';
 			 } else {
 		        allInputs[i].nextSibling.nextSibling.innerHTML = "(" + allInputs[i].value + ")";
 		     }
           } else {
-             var allListBoxes = document.getElementsByName(allInputs[i].name);
-             var allListBoxValues = [];
-             for (var z = 0; z < allListBoxes.length; z++){
-                if(allListBoxes[z].id  == "]....}?|?|?{....[_" + allInputs[i].name){
-                   if (!document.getElementById("]....}?|?|?{....[keepFields").checked && allListBoxes[z].value == "") {
-                      //Does nothing
-                   } else {
-                      allListBoxValues.push(allListBoxes[z].value);
-                   }
-                }
-             }
-             allInputs[i].nextSibling.nextSibling.innerHTML = "(" + allListBoxValues.toString() + ")";
+			 var numberOfBoxes = simpleArrayTracker[allInputs[i].getAttribute("data-newid")];
+			 var allListBoxValues = [];
+			 for (var j = 0; j < numberOfBoxes; j++) {
+				 i++;
+                 if (!(!document.getElementById("]....}?|?|?{....[keepFields").checked && allInputs[i].value == "")) {
+						allListBoxValues.push(allInputs[i].value);
+				 }
+			 }
+			 allInputs[i-numberOfBoxes].nextSibling.nextSibling.innerHTML = "(" + allListBoxValues.toString() + ")";
           }
+		  i++;
 		}
 	    for (var j = 0; j < allButtons.length; j++) {
 		  allButtons[j].style.display = "none";
@@ -245,7 +289,6 @@ function switchReadWrite(){
 }
 
 function SaveTreeToJSON(){
-
     var saveJSONfile = prompt("Filename for the JSON you're saving", "Resource JSON file.txt");
     
 	if (saveJSONfile != null) {
@@ -274,136 +317,85 @@ function SaveTreeToJSON(){
 }
 
 function TreeToJSON(){
-        var d1 = document.getElementById(']....}?|?|?{....[treeChart');
-        
-        var current_index = -1;
-        
+		var dict = json;
+		if (!document.getElementById("]....}?|?|?{....[keepFields").checked) {;
+			dict = JSON.parse(JSON.stringify(json));			//THIS CODE MIGHT NOT BE NEEDED
+		}
+		
         var allInputs = document.getElementsByTagName("input");
+        		
+		var onlyTextBoxes2 = [];
+		for(var i = 0; i < allInputs.length; i++) {
+            if(allInputs[i].type.toLowerCase() == 'text' || allInputs[i].type.toLowerCase() == 'number') {
+                onlyTextBoxes2.push(allInputs[i]);
+            }
+        }
+
+        allInputs = onlyTextBoxes2;
         
-        var onlyTextBoxes = [];
-        for(var i = 0; i < allInputs.length; i++) {
-            if(allInputs[i].type.toLowerCase() == 'text' || allInputs[i].type.toLowerCase() == 'hidden' || allInputs[i].type.toLowerCase() == 'number') {
-                onlyTextBoxes.push(allInputs[i]);
-            }
-        }
-        allInputs = onlyTextBoxes;
-    
-        var dict = {};
-    
         for (x in allInputs) {
-          var paths = allInputs[x].name.split(".");
-          var current_path = "";
-          
-            for (var y = 0; y < paths.length - 1; y++){
-               var previous_path = current_path;
-               current_path += "." + paths[y];
-               var temp_path = current_path;
-               if (paths[y].indexOf("[") > -1) {
-                  temp_path = current_path.substring(0, current_path.lastIndexOf("["));
-                  temp_previous_path = previous_path.substring(0, previous_path.lastIndexOf("["));
-               }
-               if (eval("dict"+temp_path)) {
-			     if (current_path.indexOf("[") > -1){
-					 array_index = current_path.substring(current_path.lastIndexOf("[")+1, current_path.lastIndexOf("]"));
-					 if (eval("dict"+temp_path).length <= parseInt(array_index)) {
-						eval("dict"+temp_path).push({});
-					 }
-				 }
-               } else {
-                  if (paths[y].indexOf("[") > -1) {
-                     eval("dict"+current_path.substring(0, current_path.lastIndexOf("[")) + " = " + "[{}]");
-                  } else {
-                     eval("dict"+current_path + " = " + "{}")
-                  }
-               }
-            }
-          
-          
-          if (!document.getElementById("]....}?|?|?{....[keepFields").checked && (allInputs[x].value == "" && allInputs[x].type != "hidden")) {
+		
+		  var paths2 = fieldIDs[allInputs[x].getAttribute("data-newid")];
+		  var jsonPath = dict;
+		  for (var y = 0; y < paths2.length - 1; y++){
+			  jsonPath = jsonPath[paths2[y][0]];		  
+			  var pathIndex = paths2[y][1];
+			  if (pathIndex){
+				  jsonPath = jsonPath[pathIndex];
+			  }
+		  }
+		  
+		  pathIndex = paths2[paths2.length - 1][1];
+		  var inputValue = allInputs[x].value;
+		  
+		  if (!document.getElementById("]....}?|?|?{....[keepFields").checked && inputValue == "") {
             //DON'T SAVE THE INPUT IF IT IS BLANK and the checkbox is unchecked
-          } else if(allInputs[x].id.substring(0, 18) != "]....}?|?|?{....[_") {
-            
-            var inputValue = allInputs[x].value;
-			inputValue = inputValue.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-            if (inputValue == "null"){
-               eval("dict"+"."+allInputs[x].name + " = " + "null");
-            } else if (inputValue.toLowerCase() == "false"){
-               eval("dict"+"."+allInputs[x].name + " = " + "false");
-               //Automatically converts false and true to a boolean in the JSON, this unfortunately doesn't allow true and false as a string.
-            } else if (inputValue.toLowerCase() == "true"){
-               eval("dict"+"."+allInputs[x].name + " = " + "true");
-            } else if (allInputs[x].type == "hidden") {
-               var allListBoxes = document.getElementsByName(allInputs[x].name);
-               var allListBoxValues = [];
-               for (var z = 0; z < allListBoxes.length; z++){
-                  if(allListBoxes[z].id  == "]....}?|?|?{....[_" + allInputs[x].name){
-                     if (!document.getElementById("]....}?|?|?{....[keepFields").checked && allListBoxes[z].value == "") {
-                        //Does nothing
-                     } else {
-                     
-                     if (allListBoxes[z].type == "number") {
-                         var tempValue = allListBoxes[z].value;
-						 tempValue = tempValue.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-                         if (allListBoxes[z].value == ""){
-                            tempValue = "'{[{NeGaTiVe!_!0}]}'";
-                            //TO DO todo
-                            //THIS IS POTENTIALLY VERY BAD, and it may not be valid JSON either.
-                            //Would using tempValue = "'{[{NeGaTiVe!_!0pointZERO}]}'" is better? So that it would be -0.0?
-                            //I think it would be smarter to save this as
-                            //tempValue = "null"
-                         } else if (allListBoxes[z].value == "-0") {
-                            tempValue = "'{[{NeGaTiVe!_!0}]}'";
-                            //This negative 0 is fine because this would be the user explicitly typing in -0;
-                         } else if(allListBoxes[z].value == "-0.0"){
-                            tempValue = "'{[{NeGaTiVe!_!0pointZERO}]}'";
-                            //This negative 0 is fine because this would be the user explicitly typing in -0.0;
-                         }
-                         allListBoxValues.push(parseFloat(tempValue));
-                      } else {
-                         var tempValue = allListBoxes[z].value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-                         allListBoxValues.push(tempValue);
-                      }
-                        //allListBoxValues.push(allListBoxes[z].value);
-                     }
-                  }
-               }
-               
-               if (!document.getElementById("]....}?|?|?{....[keepFields").checked && allListBoxValues == []){
-                  //Does nothing
-               } else {
-                  eval("dict"+"."+allInputs[x].name + " = " + JSON.stringify(allListBoxValues));
-               }
-            } else if (allInputs[x].type == "number") {
-               var tempValue = allInputs[x].value;
-			   tempValue = tempValue.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-               if (allInputs[x].value == ""){
-                  tempValue = "'{[{NeGaTiVe!_!0}]}'";
-                  //TO DO todo
-                  //THIS IS POTENTIALLY VERY BAD, and it may not be valid JSON either.
-                  //Would using tempValue = "'{[{NeGaTiVe!_!0pointZERO}]}'" is better? So that it would be -0.0?
-                  //I think it would be smarter to save this as
-                  //tempValue = "null"
-               } else if (allInputs[x].value == "-0") {
-                  tempValue = "'{[{NeGaTiVe!_!0}]}'";
-                  //This negative 0 is fine because this would be the user explicitly typing in -0;
-               } else if(allInputs[x].value == "-0.0"){
-                  tempValue = "'{[{NeGaTiVe!_!0pointZERO}]}'";
-                  //This negative 0 is fine because this would be the user explicitly typing in -0.0;
-               }
-               eval("dict"+"."+allInputs[x].name + " = " + tempValue);
-            } else {
-               var tempValue = allInputs[x].value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-			   
-               eval("dict"+"."+allInputs[x].name + " = " + "'" + tempValue + "'");
-            }
-          }
-        }
+			  if (pathIndex) {
+				  //jsonPath[paths2[paths2.length - 1][0]][pathIndex] = "";
+				  delete jsonPath[paths2[paths2.length - 1][0]][pathIndex];
+			  } else {
+				  //jsonPath[paths2[paths2.length - 1][0]] = "";
+				  delete jsonPath[paths2[paths2.length - 1][0]];
+			  }
+          } else {
+			  
+			  if (inputValue == "null"){
+				  inputValue = null;
+			  } else if (inputValue == "false") {
+				  inputValue = false;
+		      } else if (inputValue == "true") {
+				  inputValue = true;
+			  } else if (allInputs[x].type == "number") {
+				  inputValue = inputValue.replace(/\s+/g, '');
+				  if (inputValue == "" || inputValue == "-0." || inputValue == "-0.0" || inputValue == "-0.00" || inputValue == "-0.000" || inputValue == "-0.0000") {
+					  inputValue = "{[{NeGaTiVe!_!0pointZERO}]}";
+				  } else if (inputValue == "-0") {
+					  inputValue = "{[{NeGaTiVe!_!0}]}";
+				  } else {
+					  if (inputValue.indexOf(".")) {
+						 inputValue = parseFloat(inputValue);
+					  } else {
+						  inputValue = Number(inputValue);
+					  }
+				  }
+			  } else {
+				  //If it's a regular string.
+			  }
+			  			  
+			  var pathIndex = paths2[paths2.length - 1][1];
+			  if (pathIndex) {
+				  jsonPath[paths2[paths2.length - 1][0]][pathIndex] = inputValue;
+			  } else {
+				  jsonPath[paths2[paths2.length - 1][0]] = inputValue;
+			  }
+		  }
+		}
 		
         if (!document.getElementById("]....}?|?|?{....[keepFields").checked) {
            dict = cleanDictionary(dict);
         }
-        
-        return dict;
+		
+		return dict;
 }
 
 function toggleHideShow(folderImage, id){
@@ -416,10 +408,49 @@ function toggleHideShow(folderImage, id){
    }
 }
 
-function elementAdd(elementNumber){
+function clearDictionary(dict){
+	for (var x in dict){
+		if (typeof dict[x]  == typeof "" ){
+			dict[x] = "";
+		} else if (typeof dict[x] == typeof 1){
+			dict[x] = -0;
+		} else if (dict[x] == null || typeof dict[x] != typeof {}) {
+		} else {
+			if (!Array.isArray(dict[x])){
+				//Dictionary
+				clearDictionary(dict[x]);
+			} else if (Array.isArray(dict[x])){
+				//List
+				if (typeof dict[x][0] == typeof {}) {
+					//List of dictionaries
+					for (var entry in dict[x]) {
+						clearDictionary(dict[x][entry]);
+					}
+				} else {
+					//List of other
+					dict[x] = [];
+				}
+			}
+		}
+	}
+	return dict;
+}
+
+
+function elementAdd(elementNumber, elementID){
+   fieldLocation = "";
+   walkJson = json;
+   for (var field = 0; field < fieldIDs[elementID].length - 1; field++){
+	  walkJson = walkJson[fieldIDs[elementID][field][0]][fieldIDs[elementID][field][1]];
+   }
+   walkJson = walkJson[fieldIDs[elementID][fieldIDs[elementID].length - 1][0]];
+   walkJson.push(clearDictionary(JSON.parse(JSON.stringify(jsonBlocks[elementNumber][0]))));
+   //Added a blank backboneElement to the JSON
+   var elementIndex = (walkJson.length - 1).toString();		//The index of the current element
+
    var fullJsonBlock = {};
    fullJsonBlock[jsonBlocks[elementNumber][3]] =  jsonBlocks[elementNumber][0];
-   var htmlBlock = loopDictionary(fullJsonBlock, jsonBlocks[elementNumber][1], jsonBlocks[elementNumber][2]);
+   var htmlBlock = loopDictionary(fullJsonBlock, jsonBlocks[elementNumber][1], jsonBlocks[elementNumber][2], jsonBlocks[elementNumber][5], elementIndex);
    var folder_path = jsonBlocks[elementNumber][2]+jsonBlocks[elementNumber][3].toString();
    
    var num = 1;
@@ -440,16 +471,6 @@ function elementAdd(elementNumber){
 	  }
 	  num += 1;
    }
-   
-    var i = 'input id="' + jsonBlocks[elementNumber][2]+(jsonBlocks[elementNumber][3]).toString();
-    i = i.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    var re = new RegExp(i, 'g');
-    htmlBlock = htmlBlock.replace(re, 'input id="' + jsonBlocks[elementNumber][2]+(jsonBlocks[elementNumber][3]).toString()+"["+num+"]");
-   
-    var i = 'name="' + jsonBlocks[elementNumber][2]+(jsonBlocks[elementNumber][3]).toString();
-    i = i.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    var re = new RegExp(i, 'g');
-    htmlBlock = htmlBlock.replace(re, 'name="' + jsonBlocks[elementNumber][2]+(jsonBlocks[elementNumber][3]).toString()+"["+num+"]");
    
    //Clear the for the inputs
    htmlBlock = htmlBlock.replace(/value=".*?"/g, 'value=""');
@@ -490,12 +511,16 @@ function toastNothingToDelete() {
 var HoverTextFields = {};
 // END OF HOVER TEXT CODE
 
-function loopDictionary(json, indent, current_path){
-   var generatedHTML = "";
+var fieldIDs = {0: [[]]};
+var simpleArrayTracker = {};
+var latestID = 0;
+
+function loopDictionary(json, indent, current_path, current_path_ID, entry_number){
+    var generatedHTML = "";
 	for (var key in json) {
-		
+		key = key.toString();
 		// HOVER TEXT CODE
-		if (typeof key == typeof "" && key.substring(key.length-8, key.length) == "---HoVeR") {		//If the field ends with "---HoVeR" then it will add title text to the normal field
+		if (key.substring(key.length-8, key.length) == "---HoVeR") {		//If the field ends with "---HoVeR" then it will add title text to the normal field
 			if (current_path != "" && current_path[current_path.length - 1] != "."){
 				current_path += ".";
 			}
@@ -514,55 +539,65 @@ function loopDictionary(json, indent, current_path){
 				//generatedHTML = generatedHTML.replace('<p id="' + current_path + key.substring(0, key.length-8) + '"', '<p id="' + current_path + key.substring(0, key.length-8) + '" title="' + json[key] + '"');
 				HoverTextFields[current_path + key.substring(0, key.length-8)] = json[key];
 			}
+			delete json[key]; //Deletes the hover text field from the dictionary. I can have a conditional statement here if I want to keep the hovertext field when the JSON is saved.
 			continue;
 		}
 		// END OF HOVER TEXT CODE
 		
-		if (json[key] == null || typeof json[key] != typeof {}){
+		var keyValue = json[key];
+		if (keyValue == null || typeof keyValue != typeof {}){
            var inputType = 'text'
-           if (typeof(json[key]) == typeof(1)){
+           if (typeof(keyValue) == typeof(1)){
               inputType = 'number' 
-           } else if (json[key] != null) {
-		      json[key] = (json[key]).toString().replace(/"/g, '&quot;');
+		   } else if (keyValue != null) {
+		      keyValue = keyValue.toString().replace(/"/g, '&quot;'); //TO DO todo Comment this line out? Is this line needed?
 		   }
            //For the "hidden" input type used for the arrays.
-           if (json[key] != null && json[key] === 0 && (1/json[key]) === -Infinity) {
-             json[key] = "";
+           if (keyValue != null && keyValue === 0 && (1/keyValue) === -Infinity) {
+             keyValue = "";		//TO DO todo Comment this line out? Is this line needed?
            }
-		   generatedHTML += '<p id="' + current_path+key.toString() +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;' +'"><img src="' + file +'"><b> ' + key.toString() + '</b> <input id="' + current_path + key.toString() + '" name="' + current_path + key.toString() + '" type="' + inputType + '" style="width: 300px;" value="' + json[key] +'"></input> <span style="display: none;">()</span></p>';
+		   latestID += 1;
+		   fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key]]);
+		   generatedHTML += '<p id="' + current_path+key +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;" data-newid="' + latestID.toString() + '"><img src="' + file +'"><b> ' + key + '</b> <input type="' + inputType + '" style="width: 300px;" value="' + keyValue + '" data-newid="' + latestID.toString() + '"></input> <span style="display: none;">()</span></p>';
 		} else {
-			if (!Array.isArray(json[key])){
-				generatedHTML += '<p id="' + current_path+key.toString() + '" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px"><img src="' + folder +'" onclick="toggleHideShow(this, \'folder' + folderCount.toString() + '\');"><b> ' + key.toString() + '</b>' + '</p>';
+			if (!Array.isArray(keyValue)){
+				latestID += 1;
+				if (entry_number){
+					fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key, entry_number]]);
+				} else {
+					fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key]]);
+				}
+				generatedHTML += '<p id="' + current_path+key + '" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img src="' + folder +'" onclick="toggleHideShow(this, \'folder' + folderCount.toString() + '\');"><b> ' + key + '</b>' + '</p>';
                 generatedHTML += "<div id='folder" + folderCount.toString() + "'>";
                 folderCount += 1;
 				indent += 1;
 				if (current_path != "" && current_path[current_path.length - 1] != "."){
 				   current_path += ".";
 				}
-				generatedHTML += loopDictionary(json[key], indent, current_path+key.toString()+".");
+				//hardcoded_path
+				generatedHTML += loopDictionary(keyValue, indent, current_path+key+".", latestID);
 				indent -= 1;
                 generatedHTML += "</div>";
 			} else if (Array.isArray(json[key])){
 				if (typeof json[key][0] == typeof {}) {
 				    var visibilityButton = "";
 					var visibility = 'display: inline;';
-					for (var entry in json[key]) {
-						var sendDict = { };
-						sendDict[key] = json[key][entry];
-						var currentFolderCount = folderCount;
-						jsonBlocks[folderCount] = [json[key][entry], indent, current_path, key, folderCount.toString()];
-						
-						generatedHTML += '<p id="' + current_path+key.toString()+ '[' + entry + ']' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px"><img src="' + folder +'" onclick="toggleHideShow(this, \'folder' + folderCount.toString() + '\');"><b> ' + key + '</b> <span id="buttonAdd' + folderCount.toString() + '" class="addButton' + visibilityButton + '" style="' + visibility + '"><button class="circle plus" onclick="elementAdd(' + folderCount.toString() + ')" title="Add another one of this element."></button></span>' + '</p>';
-                        generatedHTML += "<div id='folder" + folderCount.toString() + "'>";
+					var foldCountString;
+					for (var entry in json[key]) {			
+						latestID += 1;
+						foldCountString = folderCount.toString();
+						fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key, entry]]);
+						jsonBlocks[folderCount] = [json[key][entry], indent, current_path, key, foldCountString, current_path_ID];
+						generatedHTML += '<p id="' + current_path+key+ '[' + entry + ']' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img src="' + folder +'" onclick="toggleHideShow(this, \'folder' + foldCountString + '\');"><b> ' + key + '</b> <span id="buttonAdd' + foldCountString + '" class="addButton' + visibilityButton + '" style="' + visibility + '"><button class="circle plus" onclick="elementAdd(' + foldCountString + ', ' + latestID + ')" title="Add another one of this element."></button></span>' + '</p>';
+                        generatedHTML += "<div id='folder" + foldCountString + "'>";
 						visibilityButton = "Invisible";
-						visibility = 'display: none;'
-						var previous_folderCount = folderCount;
+						visibility = 'display: none;';
                         folderCount += 1;
 						indent += 1;
 						if (current_path != "" && current_path[current_path.length - 1] != "."){
 							current_path += ".";
 						}
-						var returnedHTML = loopDictionary(json[key][entry], indent, current_path+key.toString()+"[" + entry.toString() + "]" + ".");
+						var returnedHTML = loopDictionary(json[key][entry], indent, current_path+key+"[" + entry.toString() + "]" + ".", latestID);
 						generatedHTML += returnedHTML;
 						
 						indent -= 1;
@@ -570,32 +605,41 @@ function loopDictionary(json, indent, current_path){
                         //break;  //This is added to only allow one instance of a field. This could be replaced with code to have an "Add" button for the field.
 					}
 				} else {
-                    //generatedHTML += '<p style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;' +'"><img src="' + file +'"><b> ' + key.toString() + '</b> <input type="text" style="width: 300px;" value="' + json[key] +'"></input> <button style="border-radius: 50%;">+</button></p>';
-					//There's two ways to do this.
                     var visibilityButton = "";
                     var visibility = 'display: inline;';
-					generatedHTML += '<p id="' + current_path+key.toString()+ '[0]' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;' +'"><img src="' + file +'"><b> ' + key.toString() + '</b> <input id="' + current_path + key.toString() + '" name="' + current_path + key.toString() + '" type="hidden" style="width: 300px;"></input><span style="display: none;">()</span><span style="display: none;">()</span><span id="buttonAdd' + folderCount.toString() + '" class="addButton' + visibilityButton + '" style="' + visibility + '">';
+					latestID += 1;
+					fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key]]);
+					var arrayID = latestID;
+					generatedHTML += '<p id="' + current_path+key+ '[0]' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;' +'" ' + 'data-newid="' + latestID.toString() + '" ><img src="' + file + '"><b> ' + key + '</b> <input type="hidden" style="width: 300px;" data-newid="' + latestID.toString() + '"></input><span style="display: none;">()</span><span style="display: none;">()</span><span id="buttonAdd' + folderCount.toString() + '" class="addButton' + visibilityButton + '" style="' + visibility + '">';
 				    var visibilityButton = "";
 					var visibility = 'display: inline;'
                     var latestTextField = "";
+					var entryNumber = 0;
                     for (var entry in json[key]){
                         var inputType = 'text';
                         if (typeof(json[key][entry]) == typeof(1)){
-                           inputType = 'number' 
+                           inputType = 'number';
+						} else if (typeof json[key][entry] == typeof false) {
+							//It's a boolean, don't do anything. 
+							//inputType = 'boolean'; //Not valid HTML and other problems.
                         } else if (json[key][entry] != null) {
 						   json[key][entry] = json[key][entry].replace(/"/g, '&quot;');
 						}
-                        //For the "hidden" input type used for the arrays.
                         if (json[key][entry] != null && json[key][entry] === 0 && (1/json[key][entry]) === -Infinity) {
                            json[key][entry] = "";
                         }
-                       //TODO to do make sure that the right type is stored in the type field
-                       generatedHTML += '<input id="]....}?|?|?{....[_' + current_path + key.toString() + '" name="' + current_path + key.toString() + '" type="' + inputType + '" value="' + json[key][entry] +'" style="width: 80px; margin-left: 3px;"></input>';
+					   latestID += 1;
+					   fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key, entryNumber.toString()]]);
+					   
+                       generatedHTML += '<input id="]....}?|?|?{....[_" type="' + inputType + '" value="' + json[key][entry] +'" style="width: 80px; margin-left: 3px;"  data-newid="' + latestID.toString() + '"></input>';
+					   entryNumber += 1;
                     }
+					simpleArrayTracker[arrayID] = entryNumber;
                     //Latest field, without the value, also the ID changed
-                    var latestTextField = '<input id=&quot;]....}?|?|?{....[_' + current_path + key.toString() + '&quot; name=&quot;' + current_path + key.toString() + '&quot; type=&quot;' + inputType + '&quot; style=&quot;width: 80px; margin-left: 3px;&quot;></input>';
-                    //FIX THIS
-                    generatedHTML += '<button class="circle plus" onclick="addToInputList(this, \'' + latestTextField + '\');" title="Add another one of this element."></button></span></p>';
+					latestID += 1;
+					fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key, entryNumber.toString()]]);
+					var latestTextField = '<input id=&quot;]....}?|?|?{....[_&quot; type=&quot;' + inputType + '&quot; style=&quot;width: 80px; margin-left: 3px;&quot; data-newid=&quot;]....}?|?|?{....[_' + (latestID-1).toString() + '&quot;></input>';
+                    generatedHTML += '<button class="circle plus" onclick="addToInputList(this, \'' + latestTextField + '\', \''+ arrayID +'\');" title="Add another one of this element."></button></span></p>';
 				}
 			}
 		}
@@ -621,30 +665,51 @@ function loopDictionary(json, indent, current_path){
    return generatedHTML;
 }
 
-function addToInputList(plusButton, textField){
+function addToInputList(plusButton, textField, arrayID){
+	
+   latestID += 1;
+	
+   findString = 'data-newid="]....}?|?|?{....[_';
+
+   start = textField.substring(0, textField.indexOf('data-newid="]....}?|?|?{....[_'));
+
+   end = textField.substring(textField.indexOf(findString)+findString.length,textField.length);
+   end = end.substring(end.indexOf('"')+1,end.length);
+
+   textField = start + 'data-newid="' + latestID.toString() + '"' + end;
+   
+   var a = fieldIDs[arrayID];
+   fieldIDs[latestID] = a.slice(0, a.length-1).concat([[a[a.length-1][0], simpleArrayTracker[arrayID].toString()]]);
+   simpleArrayTracker[arrayID] += 1;
    plusButton.insertAdjacentHTML("beforebegin", textField);
 }
 
 function oneInstanceOfEachElementJSON(jsonBlock) {
+	var tempJsonBlock = {};
 	for (var key in jsonBlock) {
 	   if (!(jsonBlock[key] == null || typeof jsonBlock[key] != typeof {})){
 		  if (Array.isArray(jsonBlock[key])){
-			jsonBlock[key] = [jsonBlock[key][0]];
-			if (typeof jsonBlock[key][0] == typeof {}) {
-				jsonBlock[key][0] = oneInstanceOfEachElementJSON(jsonBlock[key][0]);
+			tempJsonBlock[key] = [jsonBlock[key][0]];
+			if (typeof tempJsonBlock[key][0] == typeof {}) {
+				tempJsonBlock[key][0] = oneInstanceOfEachElementJSON(jsonBlock[key][0]);
 			}
+		  } else {
+			  tempJsonBlock[key] = jsonBlock[key];
 		  }
+	   } else {
+		   tempJsonBlock[key] = jsonBlock[key];
 	   }
 	}
-	return jsonBlock;
+	return tempJsonBlock;
 }
 
 function initiatePage(){
-   buildTree();
-   convertTreeToJSON();
+   loopDictionary(hovertext_json, 1, "", 0); //For the hover text
+   buildTree(false);
+   hashDict = hashCode(JSON.stringify(convertTreeToJSON()));
 }
 
-function buildTree(){
+function buildTree(hashTreeToJson){
 	folderCount = 0;
     var image1 = new Image();
     var image2 = new Image();
@@ -661,17 +726,20 @@ function buildTree(){
        generatedHTML += '<p style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (0*indentSize).toString() + '"><img src="' + folder +'">' + '</p>';
     }
 	
-	loopDictionary(hovertext_json, 1, "");
-	hovertext_json = {};
-	generatedHTML += loopDictionary(json, 1, "");
-	json = {};  //Clears the JSON so the page takes less memory.
+	fieldIDs = {0: []};
+	latestID = 0;
+	simpleArrayTracker = {};
+	generatedHTML += loopDictionary(json, 1, "", 0);
+	//json = {};
 	generatedHTML += "</div>";
 	var d1 = document.getElementById(']....}?|?|?{....[treeChart');
     
     d1.innerHTML = generatedHTML;
-     hashDict = hashCode(JSON.stringify(TreeToJSON()));
-	 document.getElementById("]....}?|?|?{....[treeWriteChecked").checked = true;
-	 document.getElementById("]....}?|?|?{....[treeReadChecked").checked = false;
+	if (hashTreeToJson) {
+		hashDict = hashCode(JSON.stringify(TreeToJSON()));
+	}
+	document.getElementById("]....}?|?|?{....[treeWriteChecked").checked = true;
+	document.getElementById("]....}?|?|?{....[treeReadChecked").checked = false;
 	
 	//Puts only one instance of each array for the add button, for example if you're starting json had "Example": {"numbers": [{"letter": "A"}, {"letter": "B"}]},
 	//when a new instance of "Example" is added it would just be "Example": {"numbers": [{"one": ""}]}
@@ -679,5 +747,4 @@ function buildTree(){
 	for (var block in jsonBlocks){
 	   jsonBlocks[block][0] = oneInstanceOfEachElementJSON(jsonBlocks[block][0]);
 	}
-	
 }
