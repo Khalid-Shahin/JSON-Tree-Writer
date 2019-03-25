@@ -45,7 +45,7 @@ if(window.addEventListener) {
     window.attachEvent('onload', initiatePage); //Older IE
 }
 
-hovertext_json = {
+json = {
   "resourceType": "EvidenceVariable",
   "id": "",
   "url": "",
@@ -67,7 +67,7 @@ hovertext_json = {
       "usageContext---HoVeR": "Use UsageContext to define the members of the population, such as Age Ranges, Genders, Settings. [0..*]",
       "exclude": "",
       "exclude---HoVeR": "When true, members with this characteristic are excluded from the element. [0..1]",
-      "definitionX": {
+      "definition[x]": {
           "defintionReference": "",
           "definitionCanonical": "",
           "definitionCodeableConcept": {
@@ -87,14 +87,14 @@ hovertext_json = {
           "definitionDataRequirement": "",
           "definitionTriggerDefinition": ""
       },
-      "definitionX---HoVeR": "Define members of the evidence element using Codes (such as condition, medication, or observation), Expressions ( using an expression language such as FHIRPath or CQL) or DataRequirements (such as Diabetes diagnosis onset in the last year). [1..1]",
-      "participantEffectiveX": {
+      "definition[x]---HoVeR": "Define members of the evidence element using Codes (such as condition, medication, or observation), Expressions ( using an expression language such as FHIRPath or CQL) or DataRequirements (such as Diabetes diagnosis onset in the last year). [1..1]",
+      "participantEffective[x]": {
           "participantEffectiveDateTime": "",
           "participantEffectivePeriod": "",
           "participantEffectiveDuration": "",
           "participantEffectiveTiming": ""
       },
-      "participantEffectiveX---HoVeR": "Indicates what effective period the study covers. [0..1]",
+      "participantEffective[x]---HoVeR": "Indicates what effective period the study covers. [0..1]",
       "timeFromStart": "",
       "timeFromStart---HoVeR": "Indicates duration from the participant's study entry. [0..1]",
       "groupMeasure": "",
@@ -102,51 +102,6 @@ hovertext_json = {
       "note": ""
   }],
   "characteristic---HoVeR": "A characteristic that defines the members of the evidence element. Multiple characteristics are applied with &quot;and&quot; semantics. [1..*]"
-};
-
-json = {
-  "resourceType": "EvidenceVariable",
-  "id": "",
-  "url": "",
-  "title": "",
-  "name": "",
-  "date": "",
-  "publisher": "",
-  "author": [""],
-  "characteristic": [{
-      "description": "",
-      "usageContext": [""],
-      "exclude": "",
-      "definitionX": {
-          "defintionReference": "",
-          "definitionCanonical": "",
-          "definitionCodeableConcept": {
-				"coding": {
-					"system": "",
-					"code": "",
-					"display": ""
-				}
-			},
-          "definitionExpression": {
-			"description": "",
-			"name": "",
-			"language": "",
-			"expression": "",
-			"reference": ""
-		  },
-          "definitionDataRequirement": "",
-          "definitionTriggerDefinition": ""
-      },
-      "participantEffectiveX": {
-          "participantEffectiveDateTime": "",
-          "participantEffectivePeriod": "",
-          "participantEffectiveDuration": "",
-          "participantEffectiveTiming": ""
-      },
-      "timeFromStart": "",
-      "groupMeasure": "",
-      "note": ""
-  }]
 };
 
 </script>
