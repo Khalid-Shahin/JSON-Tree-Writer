@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<!-- THIS DOCUMENT DEFAULTS TO BE READ MODE -->
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="JSON_Tree_Writer.css">
+	<title>JSON Tree Writer - EBMonFHIR - Artur's Evidence Example</title>
+</head>
+<body>
+<div class="container">
+     <div class="topArea">
+     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - Artur's Evidence Example</h2>
+	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. A field value of &quot;null&quot;, all lowercase, in the tree view will be converted to just null in the JSON.\n2. A field value of &quot;true&quot; or &quot;false&quot;, all lowercase,  will be converted to just true or false respectively as booleans in the JSON.\n3. Bugs may occur with 3-dimensional arrays but it seems to work most of the time. Arrays beyond 3-dimensions won\'t work at all.')" style="position: absolute; right: 6px; top: 6px;">Limitations</button>
+     <p style="margin-top: 8px;"><input type="file" id="]....}?|?|?{....[jsonFile" style="width: 500px; border: 1px solid #555555;" accept=".txt, .json, .js, .ts, .tex, .rtf, .odt, .wpd, .text"></p>
+	 <button onclick="SaveTreeToJSON()">Save Tree to JSON</button> <button onclick="deleteEmptyFields();">Delete Empty Fields</button> <input onchange="BlankCheckBoxReadWrite();" type="checkbox" id="]....}?|?|?{....[keepFields" name="keepFields" value="keepBlankFields" title="Having this unchecked removes the empty fields from the saved JSON. It also removes empty objects." checked> Keep blank fields when converted to JSON?
+	 <br><br>
+     <span style="display: inline">
+	 <input id="]....}?|?|?{....[treeWriteChecked" type="radio" name="readWriteMode" value="write" onchange="switchReadWrite();" checked="checked"> Write 
+	 <input id="]....}?|?|?{....[treeReadChecked" type="radio" name="readWriteMode" value="read" onchange="switchReadWrite();"> Read
+     <span class="middleButtons">
+     <button class="convertToJSONButton" onclick="convertTreeToJSON()" id="]....}?|?|?{....[convertToJSONButton"><b>Convert Tree to JSON ➡</b></button>
+     <button class="convertToTreeButton" onclick="convertJSONToTree()" id="]....}?|?|?{....[convertToTreeButton"><b>⬅ Convert JSON to Tree</b></button>
+     <button class="swapButton" onclick="swapSides()" style="" title="Swap the sides of the tree and JSON."><b>⇆</b></button>
+     </span>
+     </span>
+          <button class="hideJSONButton" id="]....}?|?|?{....[hideJSONButton" onclick="hideShowJSON()" style=""><b>Hide JSON View</b></button>
+     </div>
+     <div class="bottomSection" id="]....}?|?|?{....[bottomSection">
+       <div class="chart" id="]....}?|?|?{....[treeChart">
+       </div>
+       <div class="jsonArea" id="]....}?|?|?{....[jsonArea">
+       <textarea class="jsonTextArea" id="]....}?|?|?{....[jsonTextArea" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+       </div>
+     </div>
+    <div id="ElementAddedToast">A new element has been added to the end of the list.</div>
+    <div id="NothingToDeleteToast">No blank elements to delete.</div>
+</div>
+
+<!-- Imports lodash only for clearing blank fields -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+<script src="JSON_Tree_Writer.js"></script>
+<script>
+
+function switchToRead(){
+	document.getElementById("]....}?|?|?{....[treeWriteChecked").checked = false;
+	document.getElementById("]....}?|?|?{....[treeReadChecked").checked = true;
+	switchReadWrite();
+}
+
+if(window.addEventListener) {
+    window.addEventListener('load', initiatePage, false); //W3C
+	if(window.addEventListener) {
+		window.addEventListener('load', switchToRead, false); //W3C
+	}
+} else {
+    window.attachEvent('onload', initiatePage); //Older IE
+}
+
+hovertext_json = {
+  "resourceType": "Evidence",
+  "identifier": "",
+  "identifier---HoVeR": "A formal identifier that is used to identify this evidence when it is represented in other formats, or referenced in a specification, model, design or an instance. [0..*]",
+  "url": "",
+  "url---HoVeR": "An absolute URI that is used to identify this evidence when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this evidence is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the evidence is stored on different servers. [0..1]",
+  "title": "",
+  "title---HoVeR": "A short, descriptive, user-friendly title for the evidence. [0..1]",
+  "date": "",
+  "date---HoVeR": "The date (and optionally time) when the evidence was published. The date must change when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the evidence changes. [0..1]",
+  "publisher": "",
+  "publisher---HoVeR": "The name of the organization or individual that published the evidence. [0..1]",
+  "author": [
+    ""
+  ],
+  "author---HoVeR": "An individual or organization primarily involved in the creation and maintenance of the content [0..*]",
+  "exposureBackground": [
+    {
+      "description": "",
+      "description---HoVeR": "Human-readable summary of the population or subpopulation [0..1]",
+      "population": "",
+      "population---HoVeR": "A reference to a Group that defines the population or subpopulation [1..1]",
+      "populationSampleSize": {
+        "description": "",
+        "description---HoVeR": "Human-readable summary of population sample size [0..1]",
+        "numberOfStudies": -0,
+        "numberOfStudies---HoVeR": "Number of studies contributing to this Evidence summary [0..1]",
+        "numberOfParticipants": -0,
+        "numberOfParticipants---HoVeR": "Number of participants in the population [0..1]",
+        "note": "",
+        "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
+      },
+      "populationSampleSize---HoVeR": "[0..1]",
+      "exposureVariant": [
+        {
+          "description": "",
+          "description---HoVeR": "Human-readable summary of the exposure state [0..1]",
+          "groupByExposure": "",
+          "groupByExposure---HoVeR": "A reference to a Group that defines the exposure state (subgroup by exposure within the population) [1..1]",
+          "exposureSubsetSampleSize": {
+            "description": "",
+            "description---HoVeR": "Human-readable summary of sample size with exposure [0..1]",
+            "numberOfStudies": -0,
+            "numberOfStudies---HoVeR": "Number of studies contributing to this Evidence summary [0..1]",
+            "numberOfParticipants": -0,
+            "numberOfParticipants---HoVeR": "Number of participants in the population [0..1]",
+            "note": "",
+            "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
+          },
+          "measuredVariable": [
+            {
+              "description": "",
+              "description---HoVeR": "Human-readable summary of sample characteristic or outcome definition [0..1]",
+              "measuredVariableDefinition": "",
+              "measuredVariableDefinition---HoVeR": "A reference to an EvidenceVariable [1..1]",
+              "univariateStatistic": [
+                {
+                  "description": "",
+                  "description---HoVeR": "A human-readable string to describe the findings [0..1]",
+                  "synthesisType": "",
+                  "synthesisType---HoVeR": "Type of synthesis eg meta-analysis [0..1]",
+                  "studyType": "",
+                  "studyType---HoVeR": "Type of study eg randomized trial [0..1]",
+                  "sampleSize": {
+                    "description": "",
+                    "description---HoVeR": "Human-readable summary of sample size [0..1]",
+                    "numberOfStudies": -0,
+                    "numberOfStudies---HoVeR": "Number of studies contributing to this measurement [0..1]",
+                    "numberOfParticipants": -0,
+                    "numberOfParticipants---HoVeR": "Number of participants in the sample relevant to this measurement. May be used as denominator for intention-to-treat analysis, or analysis with assumptions for missing data. [0..1]",
+                    "knownDataCount": -0,
+                    "knownDataCount---HoVeR": "Number of participants in the sample with measurement value known relevant to this measurement. May be used as denominator for analysis limited to available data. [0..1]",
+                    "numeratorCount": -0,
+                    "numeratorCount---HoVeR": "Number of participants in the sample with measurement value known and &quot;positive&quot; or &quot;present&quot; for a dichotomous measurement. May be used as numerator for proportion or percentage as statistic type. [0..1]",
+                    "note": "",
+                    "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
+                  },
+                  "statistic": [
+                    {
+                      "description": "",
+                      "description---HoVeR": "A human-readable string to summarize the statistic. May include type, value, units, and precision estimate. [0..1]",
+                      "type": {
+                        "coding": {
+                          "system": "http://build.fhir.org/valueset-risk-estimate-type.html",
+                          "system---HoVeR": "",
+                          "code": "",
+                          "code---HoVeR": "",
+                          "display": "",
+                          "display---HoVeR": ""
+                        }
+                      },
+                      "type---HoVeR": "Coded type of univariate statistic. Extensible codes include mean, median, proportion, percentage, low, high, count. [0..1]",
+                      "quantity": {
+                        "value": -0,
+                        "value---HoVeR": "",
+                        "comparator": "",
+                        "comparator---HoVeR": "",
+                        "unit": "",
+                        "unit---HoVeR": "",
+                        "system": "",
+                        "system---HoVeR": "",
+                        "code": "",
+                        "code---HoVeR": ""
+                      },
+                      "quantity---HoVeR": "Quantity datatype includes value, comparator (=, <, >), and unit [0..1]",
+                      "precisionEstimate": {
+                        "type": {
+                          "coding": {
+                            "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                            "system---HoVeR": "",
+                            "code": "",
+                            "code---HoVeR": "",
+                            "display": "",
+                            "display---HoVeR": ""
+                          },
+                          "coding---HoVeR": ""
+                        },
+                        "type---HoVeR": "Examples include confidence interval and interquartile range [0..1]",
+                        "level": -0,
+                        "level---HoVeR": "Use 0.95 for a 95% confidence interval [0..1]",
+                        "from": -0,
+                        "from---HoVeR": "Lower bound of confidence interval [0..1]",
+                        "to": -0,
+                        "to---HoVeR": "Upper bound of confidence interval [0..1]"
+                      },
+                      "precisionEstimate---HoVeR": "[0..*]",
+                      "note": "",
+                      "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+                    }
+                  ],
+                  "statistic---HoVeR": "[0..*]",
+                  "certainty": [
+                    {
+                      "rating": [
+                        {
+                          "coding": {
+                            "system": "",
+                            "system---HoVeR": "",
+                            "code": "",
+                            "code---HoVeR": "",
+                            "display": "",
+                            "display---HoVeR": ""
+                          },
+                          "coding---HoVeR": ""
+                        }
+                      ],
+                      "rating---HoVeR": "A rating of the certainty of the effect estimate [0..*]",
+                      "certaintySubcomponent": [
+                        {
+                          "type": {
+                            "coding": {
+                              "system": "",
+                              "system---HoVeR": "",
+                              "code": "",
+                              "code---HoVeR": "",
+                              "display": "",
+                              "display---HoVeR": ""
+                            },
+                            "coding---HoVeR": ""
+                          },
+                          "type---HoVeR": "Type of subcomponent of certainty rating [0..1]",
+                          "rating": {
+                            "coding": {
+                              "system": "",
+                              "system---HoVeR": "",
+                              "code": "",
+                              "code---HoVeR": "",
+                              "display": "",
+                              "display---HoVeR": ""
+                            },
+                            "coding---HoVeR": ""
+                          },
+                          "rating---HoVeR": "A rating of a subcomponent of rating certainty [0..*]",
+                          "note": "",
+                          "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
+                        }
+                      ],
+                      "certaintySubcomponent---HoVeR": "A description of a component of the overall certainty [0..*]",
+                      "note": "",
+                      "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
+                    }
+                  ],
+                  "certainty---HoVeR": "A description of the certainty of the effect estimate [0..*]",
+                  "note": "",
+                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+                }
+              ],
+              "univariateStatistic---HoVeR": "Statistic with only 1 variable (non-comparative) to be used for summary statistics of a single variable in a single group.  [0..*]",
+              "note": "",
+              "note---HoVeR": "A human-readable string to clarify or explain concepts about the measured variable [0..*]"
+            }
+          ],
+          "measuredVariable---HoVeR": "[0..*]",
+          "covariantStatistic": [
+            {
+              "description": "",
+              "description---HoVeR": "A human-readable string to describe the findings [0..1]",
+              "measuredVariable1": "",
+              "measuredVariable1---HoVeR": "A reference to an EvidenceVariable [1..1]",
+              "measuredVariable2": "A reference to an EvidenceVariable [1..1]",
+              "measuredVariable2---HoVeR": "A reference to an EvidenceVariable [1..1]",
+              "synthesisType": "",
+              "synthesisType---HoVeR": "Type of synthesis eg meta-analysis [0..1]",
+              "studyType": "",
+              "studyType---HoVeR": "Type of study eg randomized trial [0..1]",
+              "sampleSize": {
+                "description": "",
+                "description---HoVeR": "Human-readable summary of sample size [0..1]",
+                "numberOfStudies": -0,
+                "numberOfStudies---HoVeR": "Number of studies contributing to this measurement [0..1]",
+                "numberOfParticipants": -0,
+                "numberOfParticipants---HoVeR": "Number of participants in the sample relevant to this measurement. [0..1]",
+                "note": "",
+                "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
+              },
+              "sampleSize---HoVeR": "[0..1]",
+              "statistic": [
+                {
+                  "description": "",
+                  "description---HoVeR": "A human-readable string to summarize the statistic. May include type, value, units, precision estimate, and p value. [0..1]",
+                  "type": {
+                    "coding": {
+                      "system": "",
+                      "system---HoVeR": "",
+                      "code": "",
+                      "code---HoVeR": "",
+                      "display": "",
+                      "display---HoVeR": ""
+                    },
+                    "coding---HoVeR": ""
+                  },
+                  "type---HoVeR": "Coded type of covariant statistic. Extensible codes include Pearson correlation coefficient, Spearman's rank-order correlation coefficient. [0..1]",
+                  "quantity": {
+                    "value": -0,
+                    "value---HoVeR": "",
+                    "comparator": "",
+                    "comparator---HoVeR": "",
+                    "unit": "",
+                    "unit---HoVeR": "",
+                    "system": "",
+                    "system---HoVeR": "",
+                    "code": "",
+                    "code---HoVeR": ""
+                  },
+                  "quantity---HoVeR": "Quantity datatype includes value, comparator (=, <, >), and unit [0..1]",
+                  "precisionEstimate": {
+                    "type": {
+                      "coding": {
+                        "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                        "system---HoVeR": "",
+                        "code": "",
+                        "code---HoVeR": "",
+                        "display": "",
+                        "display---HoVeR": ""
+                      },
+                      "coding---HoVeR": ""
+                    },
+                    "type---HoVeR": "Examples include confidence interval and interquartile range [0..1]",
+                    "level": -0,
+                    "level---HoVeR": "Use 95 for a 95% confidence interval [0..1]",
+                    "from": -0,
+                    "from---HoVeR": "Lower bound of confidence interval [0..1]",
+                    "to": -0,
+                    "to---HoVeR": "Upper bound of confidence interval [0..1]"
+                  },
+                  "precisionEstimate---HoVeR": "[0..*]",
+                  "pValue": {
+                    "type": "",
+                    "type---HoVeR": "P values for same statistic may vary based on statistical method used to calculate the p value. [0..1]",
+                    "quantity": {
+                      "value": -0,
+                      "value---HoVeR": "The value of the p value (between 0 and 1) [0..1]",
+                      "comparator": "",
+                      "comparator---HoVeR": "(=, <, >) [0..1]"
+                    },
+                    "quantity---HoVeR": "",
+                    "range": "",
+                    "range---HoVeR": "Used to express p values on one side of a threshold or in a range [0..1]"
+                  },
+                  "pValue---HoVeR": "Number between 0 and 1 related to probability of statistic [0..*]",
+                  "note": "",
+                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+                }
+              ],
+              "statistic---HoVeR": "[0..*]",
+              "certainty": [
+                {
+                  "rating": [
+                    {
+                      "coding": {
+                        "system": "",
+                        "system---HoVeR": "",
+                        "code": "",
+                        "code---HoVeR": "",
+                        "display": "",
+                        "display---HoVeR": ""
+                      },
+                      "coding---HoVeR": ""
+                    }
+                  ],
+                  "rating---HoVeR": "A rating of the certainty of the effect estimate [0..*]",
+                  "certaintySubcomponent": [
+                    {
+                      "type": {
+                        "coding": {
+                          "system": "",
+                          "system---HoVeR": "",
+                          "code": "",
+                          "code---HoVeR": "",
+                          "display": "",
+                          "display---HoVeR": ""
+                        },
+                        "coding---HoVeR": ""
+                      },
+                      "type---HoVeR": "Type of subcomponent of certainty rating [0..1]",
+                      "rating": {
+                        "coding": {
+                          "system": "",
+                          "system---HoVeR": "",
+                          "code": "",
+                          "code---HoVeR": "",
+                          "display": "",
+                          "display---HoVeR": ""
+                        },
+                        "coding---HoVeR": ""
+                      },
+                      "rating---HoVeR": "A rating of a subcomponent of rating certainty [0..*]",
+                      "note": "",
+                      "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty subcomponent [0..*]"
+                    }
+                  ],
+                  "certaintySubcomponent---HoVeR": "A description of a component of the overall certainty [0..*]",
+                  "note": "",
+                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
+                }
+              ],
+              "certainty---HoVeR": "A description of the certainty of the effect estimate [0..*]",
+              "note": "",
+              "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+            }
+          ],
+          "covariantStatistic---HoVeR": "Statistic to be used for summary of relation between 2 variables in a single group.  [0..*]",
+          "note": "",
+          "note---HoVeR": "A human-readable string to clarify or explain concepts about the exposure state [0..*]"
+        }
+      ],
+      "exposureVariant---HoVeR": "The exposure details. Which could be intervention or comparison/control states. [0..*]",
+      "comparativeStatistic": [
+        {
+          "description": "",
+          "description---HoVeR": "A human-readable string to describe the findings [0..1]",
+          "exposure": "",
+          "exposure---HoVeR": "A reference to a Group defining the exposure or intervention state [1..1]",
+          "exposureAlternative": "",
+          "exposureAlternative---HoVeR": "A reference to a Group defining the alternative exposure or control/comparator state [1..1]",
+          "measuredVariable": "",
+          "measuredVariable---HoVeR": "A reference to an EvidenceVariable [1..1]",
+          "synthesisType": "",
+          "synthesisType---HoVeR": "Type of synthesis eg meta-analysis [0..1]",
+          "studyType": "",
+          "studyType---HoVeR": "Type of study eg randomized trial [0..1]",
+          "sampleSize": {
+            "description": "",
+            "description---HoVeR": "Human-readable summary of sample size [0..1]",
+            "numberOfStudies": -0,
+            "numberOfStudies---HoVeR": "Number of studies contributing to this measurement [0..1]",
+            "numberOfParticipants": -0,
+            "numberOfParticipants---HoVeR": "Number of participants in the sample relevant to this measurement. [0..1]",
+            "note": "",
+            "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size. [0..*]"
+          },
+          "sampleSize---HoVeR": "[0..1]",
+          "statistic": [
+            {
+              "description": "",
+              "description---HoVeR": "A human-readable string to summarize the statistic. May include type, value, units, precision estimate, and p value. [0..1]",
+              "type": {
+                "coding": {
+                  "system": "http://build.fhir.org/valueset-effect-estimate-type.html",
+                  "system---HoVeR": "",
+                  "code": "",
+                  "code---HoVeR": "",
+                  "display": "",
+                  "display---HoVeR": ""
+                },
+                "coding---HoVeR": ""
+              },
+              "type---HoVeR": "Coded type of comparative statistic. Extensible codes include relative risk, odds ratio, absolute risk difference, standardized mean difference. [0..1]",
+              "quantity": {
+                "value": -0,
+                "value---HoVeR": "",
+                "comparator": "",
+                "comparator---HoVeR": "",
+                "unit": "",
+                "unit---HoVeR": "",
+                "system": "",
+                "system---HoVeR": "",
+                "code": "",
+                "code---HoVeR": ""
+              },
+              "quantity---HoVeR": "Quantity datatype includes value, comparator (=, <, >), and unit. [0..1]",
+              "precisionEstimate": {
+                "type": {
+                  "coding": {
+                    "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                    "system---HoVeR": "",
+                    "code": "",
+                    "code---HoVeR": "",
+                    "display": "",
+                    "display---HoVeR": ""
+                  },
+                  "coding---HoVeR": ""
+                },
+                "type---HoVeR": "Examples include confidence interval and interquartile range [0..1]",
+                "level": -0,
+                "level---HoVeR": "Use 95 for a 95% confidence interval [0..1]",
+                "from": -0,
+                "from---HoVeR": "Lower bound of confidence interval [0..1]",
+                "to": -0,
+                "to---HoVeR": "Upper bound of confidence interval [0..1]"
+              },
+              "precisionEstimate---HoVeR": "[0..*]",
+              "pValue": {
+                "type": "",
+                "type---HoVeR": "P values for same statistic may vary based on statistical method used to calculate the p value. [0..1]",
+                "quantity": {
+                  "value": -0,
+                  "value---HoVeR": "The value of the p value (between 0 and 1) [0..1]",
+                  "comparator": "",
+                  "comparator---HoVeR": "(=, <, >) [0..1]"
+                },
+                "quantity---HoVeR": "",
+                "range": "",
+                "range---HoVeR": "Used to express p values on one side of a threshold or in a range [0..1]"
+              },
+              "pValue---HoVeR": "number between 0 and 1 related to probability of statistic [0..*]",
+              "note": "",
+              "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+            }
+          ],
+          "statistic---HoVeR": "[0..*]",
+          "certainty": [
+            {
+              "rating": [
+                {
+                  "coding": {
+                    "system": "",
+                    "system---HoVeR": "",
+                    "code": "",
+                    "code---HoVeR": "",
+                    "display": "",
+                    "display---HoVeR": ""
+                  },
+                  "coding---HoVeR": ""
+                }
+              ],
+              "rating---HoVeR": "A rating of the certainty of the effect estimate [0..*]",
+              "certaintySubcomponent": [
+                {
+                  "type": {
+                    "coding": {
+                      "system": "",
+                      "system---HoVeR": "",
+                      "code": "",
+                      "code---HoVeR": "",
+                      "display": "",
+                      "display---HoVeR": ""
+                    },
+                    "coding---HoVeR": ""
+                  },
+                  "type---HoVeR": "Type of subcomponent of certainty rating [0..1]",
+                  "rating": {
+                    "coding": {
+                      "system": "",
+                      "system---HoVeR": "",
+                      "code": "",
+                      "code---HoVeR": "",
+                      "display": "",
+                      "display---HoVeR": ""
+                    },
+                    "coding---HoVeR": ""
+                  },
+                  "rating---HoVeR": "A rating of a subcomponent of rating certainty [0..*]",
+                  "note": "",
+                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty subcomponent [0..*]"
+                }
+              ],
+              "certaintySubcomponent---HoVeR": "A description of a component of the overall certainty [0..*]",
+              "note": "",
+              "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
+            }
+          ],
+          "certainty---HoVeR": "A description of the certainty of the effect estimate [0..*]",
+          "note": "",
+          "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
+        }
+      ],
+      "comparativeStatistic---HoVeR": "Statistic to be used for summary of relation between 2 variables in a single group.  [0..*]",
+      "note": "",
+      "note---HoVeR": ""
+    }
+  ],
+  "exposureBackground---HoVeR": "[1..*]"
+};
+
+json = {
+  "resourceType": "Evidence",
+  "identifier": "SSI-0001",
+  "title": "Sublingual specific immunotherapy vs no sublingual specific immunotherapy for allergic rhinitis in adults without concomitant asthma",
+  "date": "2017-01-05T17:18:19+01:00",
+  "publisher": "Cochrane",
+  "author": ["Jan L. Brozek"],
+  "exposureBackground": [
+    {
+      "description": "allergic rhinitis in adults without concomitant asthma",
+      "population": "http://bit.ly/Group-AllergicRhinitisNOTasthma",
+      "exposureVariant": [
+        {
+          "description": "sublingual specific immunotherapy",
+          "groupByExposure": "http://bit.ly/Group-SLimmunotherapy",
+          "measuredVariable": [
+            {
+              "description": "QoL (disease specific RQLQ) Better indicated by lower values) (median FU 7 months)",
+              "measuredVariableDefinition": "http://bit.ly/EvidenceVariable-RQLQrhinitisQOL",
+              "univariateStatistic": [
+                {
+                  "description": "NOT REPORTED",
+                  "synthesisType": "additive",
+                  "studyType": "RCT",
+                  "sampleSize": {
+                    "numberOfStudies": 6,
+                    "numberOfParticipants": 818
+                  }
+                }
+              ]
+            },
+            {
+              "description": "Withdrawal due to adverse effect (median FU 7 months)",
+              "measuredVariableDefinition": "http://bit.ly/EvidenceVariable-WithdrawalAE",
+              "univariateStatistic": [
+                {
+                  "description": "70/1691 (4.1%)",
+                  "synthesisType": "additive",
+                  "studyType": "RCT",
+                  "sampleSize": {
+                    "numberOfStudies": 25,
+                    "numberOfParticipants": 1691,
+                    "knownDataCount": 1691,
+                    "numeratorCount": 70
+                  },
+                  "statistic": [
+                    {
+                      "type": {
+                        "coding": {
+                          "system": "http://build.fhir.org/valueset-risk-estimate-type.html",
+                          "code": "proportion",
+                          "display": "proportion"
+                        }
+                      },
+                      "quantity": {
+                        "value": 0.041,
+                        "comparator": "="
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "description": "no sublingual specific immunotherapy",
+          "groupByExposure": "http://bit.ly/Group-noSLimmunotherapy",
+          "exposureSubsetSampleSize": {
+            "description": "",
+            "numberOfStudies": "",
+            "numberOfParticipants": ""
+          },
+          "measuredVariable": [
+            {
+              "description": "QoL (disease specific RQLQ) Better indicated by lower values) (median FU 7 months)",
+              "measuredVariableDefinition": "http://bit.ly/EvidenceVariable-RQLQrhinitisQOL",
+              "univariateStatistic": [
+                {
+                  "description": "NOT REPORTED",
+                  "synthesisType": "additive",
+                  "studyType": "RCT",
+                  "sampleSize": {
+                    "numberOfStudies": 6,
+                    "numberOfParticipants": 840
+                  }
+                }
+              ]
+            },
+            {
+              "description": "Withdrawal due to adverse effect (median FU 7 months)",
+              "measuredVariableDefinition": "http://bit.ly/EvidenceVariable-WithdrawalAE",
+              "univariateStatistic": [
+                {
+                  "description": "16/1430 (1.1%)",
+                  "synthesisType": "additive",
+                  "studyType": "RCT",
+                  "sampleSize": {
+                    "numberOfStudies": 25,
+                    "numberOfParticipants": 1430,
+                    "knownDataCount": 1430,
+                    "numeratorCount": 16
+                  },
+                  "statistic": [
+                    {
+                      "type": {
+                        "coding": {
+                          "system": "http://build.fhir.org/valueset-risk-estimate-type.html",
+                          "code": "proportion",
+                          "display": "proportion"
+                        }
+                      },
+                      "quantity": {
+                        "value": 0.011,
+                        "comparator": "="
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "comparativeStatistic": [
+        {
+          "exposure": "http://bit.ly/Group-SLimmunotherapy",
+          "exposureAlternative": "http://bit.ly/Group-noSLimmunotherapy",
+          "measuredVariable": "http://bit.ly/EvidenceVariable-RQLQrhinitisQOL",
+          "synthesisType": "std-MA",
+          "studyType": "RCT",
+          "sampleSize": {
+            "numberOfStudies": 6,
+            "numberOfParticipants": 1658
+          },
+          "statistic": [
+            {
+              "description": "SMD 0.36 lower (0.46 lower to 0.26 lower)",
+              "type": {
+                "coding": {
+                  "system": "http://build.fhir.org/valueset-effect-estimate-type.html",
+                  "code": "absolute-SMD",
+                  "display": "standardized mean difference"
+                }
+              },
+              "quantity": {
+                "value": -0.36,
+                "comparator": "=",
+                "unit": "points",
+                "system": "UCUM",
+                "code": "score"
+              },
+              "precisionEstimate": {
+                "type": {
+                  "coding": {
+                    "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                    "code": "CI",
+                    "display": "confidence interval"
+                  }
+                },
+                "level": 0.95,
+                "from": -0.46,
+                "to": -0.26
+              },
+              "pvalue": {
+                "quantity": {
+                  "value": 0.05,
+                  "comparator": "<"
+                }
+              }
+            }
+          ],
+          "certainty": [
+            {
+              "rating": [
+                {
+                  "coding": {
+                    "system": "GRADE",
+                    "code": 3,
+                    "display": "Moderate"
+                  }
+                }
+              ],
+              "certaintySubcomponent": [
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "RiskOfBias",
+                      "display": "Risk of bias"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "no-concern",
+                      "display": "no serious concern"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "Inconsistency",
+                      "display": "Inconsistency"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "serious-concern",
+                      "display": "serious concern"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "Indirectness",
+                      "display": "Indirectness"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "no-concern",
+                      "display": "no serious concern"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "Imprecision",
+                      "display": "Imprecision"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "no-concern",
+                      "display": "no serious concern"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "PublicationBias",
+                      "display": "Publication bias"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "no-concern",
+                      "display": "no serious concern"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "DoseResponseGradient",
+                      "display": "Dose response gradient"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "absent",
+                      "display": "absent"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "PlausibleConfounding",
+                      "display": "Plausible confounding"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "absent",
+                      "display": "absent"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "LargeEffect",
+                      "display": "Large effect"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "absent",
+                      "display": "absent"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "exposure": "http://bit.ly/Group-SLimmunotherapy",
+          "exposureAlternative": "http://bit.ly/Group-noSLimmunotherapy",
+          "measuredVariable": "http://bit.ly/EvidenceVariable-WithdrawalAE",
+          "synthesisType": "std-MA",
+          "studyType": "RCT",
+          "sampleSize": {
+            "numberOfStudies": 25,
+            "numberOfParticipants": 3121
+          },
+          "statistic": [
+            {
+              "description": "RR 2.91 (1.72 to 4.92)",
+              "type": {
+                "coding": {
+                  "system": "http://build.fhir.org/valueset-effect-estimate-type.html",
+                  "code": "relative-RR",
+                  "display": "relative risk"
+                }
+              },
+              "quantity": {
+                "value": 2.91,
+                "comparator": "="
+              },
+              "precisionEstimate": {
+                "type": {
+                  "coding": {
+                    "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                    "code": "CI",
+                    "display": "confidence interval"
+                  }
+                },
+                "level": 0.95,
+                "from": 1.72,
+                "to": 4.92
+              },
+              "pvalue": {
+                "quantity": {
+                  "value": 0.05,
+                  "comparator": "<"
+                }
+              }
+            },
+            {
+              "description": "21 more per 1000 (from 8 more to 44 more)",
+              "type": {
+                "coding": {
+                  "system": "http://build.fhir.org/valueset-effect-estimate-type.html",
+                  "code": "absolute-ARD-percentage",
+                  "display": "absolute risk difference as percentage"
+                }
+              },
+              "quantity": {
+                "value": 2.1,
+                "comparator": "=",
+                "unit": "%",
+                "system": "UCUM",
+                "code": "%"
+              },
+              "precisionEstimate": {
+                "type": {
+                  "coding": {
+                    "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+                    "code": "CI",
+                    "display": "confidence interval"
+                  }
+                },
+                "level": 0.95,
+                "from": 0.8,
+                "to": 4.4
+              },
+              "pvalue": {
+                "quantity": {
+                  "value": 0.05,
+                  "comparator": "<"
+                }
+              }
+            }
+          ],
+          "certainty": [
+            {
+              "rating": [
+                {
+                  "coding": {
+                    "system": "GRADE",
+                    "code": 3,
+                    "display": "Moderate"
+                  }
+                }
+              ],
+              "certaintySubcomponent": [
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "RiskOfBias",
+                      "display": "Risk of bias"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "no-concern",
+                      "display": "no serious concern"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "Inconsistency",
+                      "display": "Inconsistency"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "no-concern",
+                      "display": "no serious concern"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "Indirectness",
+                      "display": "Indirectness"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "no-concern",
+                      "display": "no serious concern"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "Imprecision",
+                      "display": "Imprecision"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "serious-concern",
+                      "display": "serious concern"
+                    },
+                    "note": "1. no explanation was provided"
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "PublicationBias",
+                      "display": "Publication bias"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "no-concern",
+                      "display": "no serious concern"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "DoseResponseGradient",
+                      "display": "Dose response gradient"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "absent",
+                      "display": "absent"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "PlausibleConfounding",
+                      "display": "Plausible confounding"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "absent",
+                      "display": "absent"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "LargeEffect",
+                      "display": "Large effect"
+                    }
+                  },
+                  "rating": {
+                    "coding": {
+                      "system": "GRADE",
+                      "code": "absent",
+                      "display": "absent"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+</script>
+
+</body>
+</html>
