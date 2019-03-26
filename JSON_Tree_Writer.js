@@ -132,14 +132,21 @@ function convertJSONToTree(){
 			//CRASH();
 			var jsonTextAreaChecked = document.getElementById("]....}?|?|?{....[jsonTextArea").value.trim();
 			if (jsonTextAreaChecked[0] === "[" || jsonTextAreaChecked[0] === "{") {
+				
 				var dictionaryParse;
 				eval('dictionaryParse = ' + jsonTextAreaChecked);
 				var dictionaryToJSON = JSON.stringify(dictionaryParse);
 				var convertingJSON = JSON.parse(dictionaryToJSON);
-				json = convertingJSON;
-				buildTree(true);
-				alert("Invalid JSON formatting, but changes have been made to the input to get it to work. The most common problem that gets fixed is having integers as the keyname.");
-				convertTreeToJSON();
+				
+				if (confirm("Invalid JSON formatting, but changes can be made to the input to make it work. The most common problem that gets fixed is having integers as the keyname or a misplaced comma. Do you want your JSON to be automatically corrected?")) {
+					json = convertingJSON;
+					buildTree(true);
+					convertTreeToJSON();
+				} else {
+					// Do nothing!
+				}
+				
+
 			} else {
 				CRASH();
 			}
