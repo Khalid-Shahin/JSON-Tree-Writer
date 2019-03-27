@@ -38,8 +38,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script src="JSON_Tree_Writer.js"></script>
 <script>
+
+function switchToRead(){
+	document.getElementById("]....}?|?|?{....[treeWriteChecked").checked = false;
+	document.getElementById("]....}?|?|?{....[treeReadChecked").checked = true;
+	switchReadWrite();
+}
+
 if(window.addEventListener) {
     window.addEventListener('load', initiatePage, false); //W3C
+	if(window.addEventListener) {
+		window.addEventListener('load', switchToRead, false); //W3C
+	}
 } else {
     window.attachEvent('onload', initiatePage); //Older IE
 }
