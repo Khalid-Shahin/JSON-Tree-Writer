@@ -219,7 +219,7 @@ function hideShowJSON(){
 }
 
 function TreeToJSONsetting(){
-	if (document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked) {
+	if (document.getElementById("]....}?|?|?{....[TreeToJSON_RealTime").checked) {
 		document.cookie = "TreeToJSONrealtime=true;";
 	} else {
 		document.cookie = "TreeToJSONrealtime=false;";
