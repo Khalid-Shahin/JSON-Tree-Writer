@@ -6,6 +6,10 @@ if (getCookie("sides") == "TreeRight") {
    swapSides();
 }
 
+if (getCookie("TreeToJSONrealtime") == "true"){
+	document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked = true;
+}
+
 var indentSize = 20;
 
 var file = "file.png";
@@ -122,6 +126,7 @@ function convertTreeToJSON(){
    //json = JSON.parse(jsonToSave); //I recently commented out this line, is it not needed at all?
    return treeToJsonDict;
 }
+
 function convertJSONToTree(){
      try {
         var convertingJSON = JSON.parse(document.getElementById("]....}?|?|?{....[jsonTextArea").value);
@@ -209,6 +214,14 @@ function hideShowJSON(){
       document.getElementsByClassName("chart")[0].style.width = "50%";
       document.cookie = "jsonView=true";
    }
+}
+
+function TreeToJSONsetting(){
+	if (document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked) {
+		document.cookie = 'TreeToJSONrealtime=true;';
+	} else {
+		document.cookie = 'TreeToJSONrealtime=false;';
+	}
 }
 
 function deleteEmptyFields (){
@@ -476,6 +489,19 @@ function clearDictionary(dict){
 	return dict;
 }
 
+function addToInputList(plusButton, textField, arrayID){
+   latestID += 1;
+   findString = 'data-newid="]....}?|?|?{....[_';
+   start = textField.substring(0, textField.indexOf('data-newid="]....}?|?|?{....[_'));
+   end = textField.substring(textField.indexOf(findString)+findString.length,textField.length);
+   end = end.substring(end.indexOf('"')+1,end.length);
+   textField = start + 'data-newid="' + latestID.toString() + '"' + end;
+   var a = fieldIDs[arrayID];
+   fieldIDs[latestID] = a.slice(0, a.length-1).concat([[a[a.length-1][0], simpleArrayTracker[arrayID].toString()]]);
+   simpleArrayTracker[arrayID] += 1;
+   plusButton.insertAdjacentHTML("beforebegin", textField);
+   if (document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked) { convertTreeToJSON(); }
+}
 
 function elementAdd(elementNumber, elementID){
    fieldLocation = "";
@@ -537,6 +563,7 @@ function elementAdd(elementNumber, elementID){
    var temp_x = temp_a.indexOf("'");
    var temp_b = temp_a.substring(0, temp_x);
    jsonBlocks[elementNumber][4] = temp_b;
+   if (document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked) { convertTreeToJSON(); }
    toastElementAdded();
 }
 
@@ -708,19 +735,6 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
    // END OF HOVER TEXT CODE
 
    return generatedHTML;
-}
-
-function addToInputList(plusButton, textField, arrayID){
-   latestID += 1;
-   findString = 'data-newid="]....}?|?|?{....[_';
-   start = textField.substring(0, textField.indexOf('data-newid="]....}?|?|?{....[_'));
-   end = textField.substring(textField.indexOf(findString)+findString.length,textField.length);
-   end = end.substring(end.indexOf('"')+1,end.length);
-   textField = start + 'data-newid="' + latestID.toString() + '"' + end;
-   var a = fieldIDs[arrayID];
-   fieldIDs[latestID] = a.slice(0, a.length-1).concat([[a[a.length-1][0], simpleArrayTracker[arrayID].toString()]]);
-   simpleArrayTracker[arrayID] += 1;
-   plusButton.insertAdjacentHTML("beforebegin", textField);
 }
 
 function oneInstanceOfEachElementJSON(jsonBlock) {
