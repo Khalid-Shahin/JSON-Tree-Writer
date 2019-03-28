@@ -6,6 +6,12 @@ if (getCookie("sides") == "TreeRight") {
    swapSides();
 }
 
+if (getCookie("showElementButtons") == "true") {
+   document.getElementById(']....}?|?|?{....[TreeToJSON_ShowDeleteElements').checked = true;
+} else {
+	document.getElementById(']....}?|?|?{....[TreeToJSON_ShowDeleteElements').checked = false;
+}
+
 if (getCookie("TreeToJSONrealtime") == "true"){
 	document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked = true;
 } else {
@@ -258,7 +264,8 @@ function BlankCheckBoxReadWrite(){
 
 function switchReadWrite(){
     var allInputs = document.getElementsByTagName("input");
-	var allButtons = document.getElementsByClassName("addButton");
+	var allAddButtons = document.getElementsByClassName("addButton");
+	var allMinusButtons = document.getElementsByClassName("minusButton");
 	var onlyTextBoxes = [];
 	for (var i = 0; i < allInputs.length; i++) {
 		if((allInputs[i].type.toLowerCase() == 'text' || allInputs[i].type.toLowerCase() == 'number' || allInputs[i].type.toLowerCase() == 'hidden')) {
@@ -273,9 +280,20 @@ function switchReadWrite(){
 			allInputs[i].nextSibling.nextSibling.style.display = "none";
 		  }
 	   }
-	   for (var j = 0; j < allButtons.length; j++) {
-		  allButtons[j].style.display = "inline";
+	   for (var j = 0; j < allAddButtons.length; j++) {
+		  allAddButtons[j].style.display = "inline";
 	   }
+	   
+	   if (document.getElementById("]....}?|?|?{....[TreeToJSON_ShowDeleteElements").checked) {
+			for (var i in allMinusButtons){
+			try {
+				allMinusButtons[i].style.display = "inline";
+			} catch(err){
+				//Skips it;
+			}
+		   }
+		}
+
 	} else {
 		var i = 0;
 		while (i < allInputs.length) {
@@ -302,9 +320,18 @@ function switchReadWrite(){
           }
 		  i++;
 		}
-	    for (var j = 0; j < allButtons.length; j++) {
-		  allButtons[j].style.display = "none";
+	    for (var j = 0; j < allAddButtons.length; j++) {
+		  allAddButtons[j].style.display = "none";
 	    }
+	   if (document.getElementById("]....}?|?|?{....[TreeToJSON_ShowDeleteElements").checked) {
+			for (var i in allMinusButtons){
+				try {
+					allMinusButtons[i].style.display = "none";
+				} catch(err){
+					//Skips it;
+				}
+		   }
+	   }
 	}
 }
 
@@ -491,6 +518,19 @@ function clearDictionary(dict){
 	return dict;
 }
 
+function JSON_Walk(elementID){
+   walkJson = json;
+   for (var field = 0; field < fieldIDs[elementID].length - 1; field++){
+	  var fieldPath = fieldIDs[elementID][field];
+	  if (fieldPath.length > 1){
+			walkJson = walkJson[fieldPath[0]][fieldPath[1]];
+	  } else {
+		  walkJson = walkJson[fieldPath[0]];
+	  }
+   }
+   return walkJson;
+}
+
 function addToInputList(plusButton, textField, arrayID){
    latestID += 1;
    findString = 'data-newid="]....}?|?|?{....[_';
@@ -507,15 +547,7 @@ function addToInputList(plusButton, textField, arrayID){
 
 function elementAdd(elementNumber, elementID){
    fieldLocation = "";
-   walkJson = json;
-   for (var field = 0; field < fieldIDs[elementID].length - 1; field++){
-	  var fieldPath = fieldIDs[elementID][field];
-	  if (fieldPath.length > 1){
-			walkJson = walkJson[fieldPath[0]][fieldPath[1]];
-	  } else {
-		  walkJson = walkJson[fieldPath[0]];
-	  }
-   }
+   walkJson = JSON_Walk(elementID, true);
    walkJson = walkJson[fieldIDs[elementID][fieldIDs[elementID].length - 1][0]];
    walkJson.push(clearDictionary(JSON.parse(JSON.stringify(jsonBlocks[elementNumber][0]))));
    //Added a blank backboneElement to the JSON
@@ -569,6 +601,43 @@ function elementAdd(elementNumber, elementID){
    toastElementAdded();
 }
 
+function elementDelete(elementID){
+	var treeToJsonDict = TreeToJSON();
+	var jsonToSave = JSON.stringify(treeToJsonDict, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/([^\r])\n/g, "$1\r\n");
+	json = JSON.parse(jsonToSave.replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0"));
+	walkJson = JSON_Walk(elementID);
+	if (fieldIDs[elementID][fieldIDs[elementID].length - 1].length == 1){
+		delete walkJson[fieldIDs[elementID][fieldIDs[elementID].length - 1][0]];
+	} else {
+		walkJson[fieldIDs[elementID][fieldIDs[elementID].length - 1][0]].splice(fieldIDs[elementID][fieldIDs[elementID].length - 1][1], 1);
+		if (walkJson[fieldIDs[elementID][fieldIDs[elementID].length - 1][0]].length == 0){
+			delete walkJson[fieldIDs[elementID][fieldIDs[elementID].length - 1][0]];
+		}
+	}
+	buildTree(true);
+	if (document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked) { convertTreeToJSON(); }
+}
+
+function ShowDeleteElementButtons(){
+	if (document.getElementById("]....}?|?|?{....[treeWriteChecked").checked) {
+		var deleteButtons = document.getElementsByClassName("minusButton");
+		var buttonDisplay = "none";
+		if (document.getElementById("]....}?|?|?{....[TreeToJSON_ShowDeleteElements").checked) {
+			buttonDisplay = "inline";
+			document.cookie = "showElementButtons=true;";
+		} else {
+			document.cookie = "showElementButtons=false;";
+		}
+		for (var i in deleteButtons){
+			try {
+				deleteButtons[i].style.display = buttonDisplay;
+			} catch(err){
+				//Skips it;
+			}
+		}
+	}
+}
+
 function toastElementAdded() {
   var x = document.getElementById("ElementAddedToast");
   x.className = "show";
@@ -620,7 +689,7 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 		
 		var keyValue = json[key];
 		if (keyValue == null || typeof keyValue != typeof {}){
-           var inputType = 'text'
+           var inputType = 'text';
            if (typeof(keyValue) == typeof(1)){
               inputType = 'number' 
 		   } else if (keyValue != null) {
@@ -632,7 +701,7 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
            }
 		   latestID += 1;
 		   fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key]]);
-		   generatedHTML += '<p id="' + current_path+key +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;" data-newid="' + latestID.toString() + '"><img src="' + file +'"><b> ' + key + '</b> <input type="' + inputType + '" style="width: 300px;" value="' + keyValue + '" data-newid="' + latestID.toString() + '"></input> <span style="display: none;">()</span></p>';
+		   generatedHTML += '<p id="' + current_path+key +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;" data-newid="' + latestID.toString() + '"><img src="' + file +'"><b> ' + key + '</b> <input type="' + inputType + '" style="width: 300px;" value="' + keyValue + '" data-newid="' + latestID.toString() + '"></input> <span style="display: none;">()</span><span class="minusButton" style="display: none;"><button class="circle minus" onclick="elementDelete(' + latestID + ')" title="Deletes this element instance."></button></span></p>';
 		} else {
 			if (!Array.isArray(keyValue)){
 				latestID += 1;
@@ -641,7 +710,7 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 				} else {
 					fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key]]);
 				}
-				generatedHTML += '<p id="' + current_path+key + '" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img name="_$-$_ImAgEFoLdEr" src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + folderCount.toString() + '\');" data-folderid="' + folderCount.toString() +'"><b> ' + key + '</b>' + '</p>';
+				generatedHTML += '<p id="' + current_path+key + '" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img name="_$-$_ImAgEFoLdEr" src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + folderCount.toString() + '\');" data-folderid="' + folderCount.toString() +'"><b> ' + key + '</b><span class="minusButton" style="display: none;"><button class="circle minus" onclick="elementDelete(' + latestID + ')" title="Deletes this element instance."></button></span>' + '</p>';
                 generatedHTML += "<div id='_$-$_FoLdEr" + folderCount.toString() + "'>";
                 folderCount += 1;
 				indent += 1;
@@ -662,7 +731,7 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 						foldCountString = folderCount.toString();
 						fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key, entry]]);
 						jsonBlocks[folderCount] = [json[key][entry], indent, current_path, key, foldCountString, current_path_ID];
-						generatedHTML += '<p id="' + current_path+key+ '[' + entry + ']' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img name="_$-$_ImAgEFoLdEr" src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + foldCountString + '\');" data-folderid="' + folderCount.toString() +'"><b> ' + key + '</b> <span id="buttonAdd' + foldCountString + '" class="addButton' + visibilityButton + '" style="' + visibility + '"><button class="circle plus" onclick="elementAdd(' + foldCountString + ', ' + latestID + ')" title="Add another one of this element."></button></span>' + '</p>';
+						generatedHTML += '<p id="' + current_path+key+ '[' + entry + ']' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img name="_$-$_ImAgEFoLdEr" src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + foldCountString + '\');" data-folderid="' + folderCount.toString() +'"><b> ' + key + '</b> <span id="buttonAdd' + foldCountString + '" class="addButton' + visibilityButton + '" style="' + visibility + '"><button class="circle plus" onclick="elementAdd(' + foldCountString + ', ' + latestID + ')" title="Add another one of this element."></button></span><span class="minusButton" style="display: none;"><button class="circle minus" onclick="elementDelete(' + latestID + ')" title="Deletes this element instance."></button></span>' + '</p>';
                         generatedHTML += "<div id='_$-$_FoLdEr" + foldCountString + "'>";
 						visibilityButton = "Invisible";
 						visibility = 'display: none;';
@@ -685,7 +754,6 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 					fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key]]);
 					var arrayID = latestID;
 					generatedHTML += '<p id="' + current_path+key+ '[0]' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;' +'" ' + 'data-newid="' + latestID.toString() + '" ><img src="' + file + '"><b> ' + key + '</b> <input type="hidden" style="width: 300px;" data-newid="' + latestID.toString() + '"></input><span style="display: none;">()</span><span style="display: none;">()</span><span id="buttonAdd' + folderCount.toString() + '" class="addButton' + visibilityButton + '" style="' + visibility + '">';
-				    var visibilityButton = "";
 					var visibility = 'display: inline;'
                     var latestTextField = "";
 					var entryNumber = 0;
@@ -803,4 +871,5 @@ function buildTree(hashTreeToJson){
 	for (var block in jsonBlocks){
 	   jsonBlocks[block][0] = oneInstanceOfEachElementJSON(jsonBlocks[block][0]);
 	}
+	ShowDeleteElementButtons();
 }

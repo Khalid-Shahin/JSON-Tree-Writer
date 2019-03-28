@@ -65,6 +65,22 @@ input[type=number] {
   height: 2px;
 }
 
+.circle.minus:before,
+.circle.minus:after {
+  background: #CC3333;
+}
+
+.circle.minus:before {
+  margin: 3px auto;
+  width: 0px;
+}
+
+.circle.minus:after {
+  margin: auto 3px;
+  height: 2px;
+}
+
+
 #ElementAddedToast {
   visibility: hidden;
   min-width: 460px;
