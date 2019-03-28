@@ -8,6 +8,8 @@ if (getCookie("sides") == "TreeRight") {
 
 if (getCookie("TreeToJSONrealtime") == "true"){
 	document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked = true;
+} else {
+	document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked = false;
 }
 
 var indentSize = 20;
@@ -218,9 +220,9 @@ function hideShowJSON(){
 
 function TreeToJSONsetting(){
 	if (document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked) {
-		document.cookie = 'TreeToJSONrealtime=true;';
+		document.cookie = "TreeToJSONrealtime=true;";
 	} else {
-		document.cookie = 'TreeToJSONrealtime=false;';
+		document.cookie = "TreeToJSONrealtime=false;";
 	}
 }
 
