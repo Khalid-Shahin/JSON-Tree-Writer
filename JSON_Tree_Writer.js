@@ -489,8 +489,8 @@ function elementAdd(elementNumber, elementID){
    
    //Then it loops through and finds all the folders inside that block, and replaces the same way in the jsonBlocks
    var tempBlock = htmlBlock;
-   while(tempBlock.indexOf("<div id='FoLdEr") != -1){
-      tempBlock = tempBlock.substring(tempBlock.indexOf("<div id='FoLdEr")+15, tempBlock.length);
+   while(tempBlock.indexOf("<div id='_$-$_FoLdEr") != -1){
+      tempBlock = tempBlock.substring(tempBlock.indexOf("<div id='_$-$_FoLdEr")+20, tempBlock.length);
 	  var folderFound = tempBlock.substring(0, tempBlock.indexOf("'"));
       if (jsonBlocks[folderFound]) {
 		  var tempPath = jsonBlocks[elementNumber][2]+(jsonBlocks[elementNumber][3]).toString();
@@ -500,7 +500,7 @@ function elementAdd(elementNumber, elementID){
    }
    document.getElementById(latestFolder.id).insertAdjacentHTML("afterend", htmlBlock);
    
-   var temp_a = htmlBlock.substring(htmlBlock.indexOf("id='FoLdEr")+10, htmlBlock.length);
+   var temp_a = htmlBlock.substring(htmlBlock.indexOf("id='_$-$_FoLdEr")+15, htmlBlock.length);
    var temp_x = temp_a.indexOf("'");
    var temp_b = temp_a.substring(0, temp_x);
    jsonBlocks[elementNumber][4] = temp_b;
@@ -579,8 +579,8 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 				} else {
 					fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key]]);
 				}
-				generatedHTML += '<p id="' + current_path+key + '" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img src="' + folder +'" onclick="toggleHideShow(this, \'FoLdEr' + folderCount.toString() + '\');"><b> ' + key + '</b>' + '</p>';
-                generatedHTML += "<div id='FoLdEr" + folderCount.toString() + "'>";
+				generatedHTML += '<p id="' + current_path+key + '" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + folderCount.toString() + '\');"><b> ' + key + '</b>' + '</p>';
+                generatedHTML += "<div id='_$-$_FoLdEr" + folderCount.toString() + "'>";
                 folderCount += 1;
 				indent += 1;
 				if (current_path != "" && current_path[current_path.length - 1] != "."){
@@ -600,8 +600,8 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 						foldCountString = folderCount.toString();
 						fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key, entry]]);
 						jsonBlocks[folderCount] = [json[key][entry], indent, current_path, key, foldCountString, current_path_ID];
-						generatedHTML += '<p id="' + current_path+key+ '[' + entry + ']' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img src="' + folder +'" onclick="toggleHideShow(this, \'FoLdEr' + foldCountString + '\');"><b> ' + key + '</b> <span id="buttonAdd' + foldCountString + '" class="addButton' + visibilityButton + '" style="' + visibility + '"><button class="circle plus" onclick="elementAdd(' + foldCountString + ', ' + latestID + ')" title="Add another one of this element."></button></span>' + '</p>';
-                        generatedHTML += "<div id='FoLdEr" + foldCountString + "'>";
+						generatedHTML += '<p id="' + current_path+key+ '[' + entry + ']' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + foldCountString + '\');"><b> ' + key + '</b> <span id="buttonAdd' + foldCountString + '" class="addButton' + visibilityButton + '" style="' + visibility + '"><button class="circle plus" onclick="elementAdd(' + foldCountString + ', ' + latestID + ')" title="Add another one of this element."></button></span>' + '</p>';
+                        generatedHTML += "<div id='_$-$_FoLdEr" + foldCountString + "'>";
 						visibilityButton = "Invisible";
 						visibility = 'display: none;';
                         folderCount += 1;
@@ -730,7 +730,7 @@ function buildTree(hashTreeToJson){
     image2.src = folder;
     image3.src = closedfolder;
 	var generatedHTML = "";
-	generatedHTML += "<div id='FoLdEr" + folderCount.toString() + "'>";
+	generatedHTML += "<div id='_$-$_FoLdEr" + folderCount.toString() + "'>";
 	folderCount += 1;
     if ("resourceType" in json) {
        generatedHTML += '<p style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (0*indentSize).toString() + '"><img src="' + folder +'"><b> ' + json["resourceType"] + '</b>' + '</p>';
