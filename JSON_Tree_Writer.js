@@ -99,7 +99,7 @@ function hashCode(dictString) {
     //hash |= 0; // Convert to 32bit integer
   }
   return hash;
-};
+}
 
 window.addEventListener("beforeunload", function (e) {
 	var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
@@ -209,7 +209,6 @@ function hideShowJSON(){
       document.getElementsByClassName("chart")[0].style.width = "50%";
       document.cookie = "jsonView=true";
    }
-
 }
 
 function deleteEmptyFields (){
@@ -228,7 +227,6 @@ function deleteEmptyFields (){
    } else {
       toastNothingToDelete();
    }
-   
    document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
 }
 
@@ -365,7 +363,6 @@ function TreeToJSON(){
 				  delete jsonPath[paths2[paths2.length - 1][0]];
 			  }
           } else {
-			  
 			  if (inputValue == "null"){
 				  inputValue = null;
 			  } else if (inputValue == "false") {
@@ -413,6 +410,42 @@ function toggleHideShow(folderImage, id){
        folderImage.src = closedfolder;
        document.getElementById(id).style.display = 'none';
    }
+}
+
+//Clicking the parent most folder will execute this function. It will collapse all if all the folders are open. If at least one folder is collapsed then it will expand all.
+function toggleAllFolders(){
+	var folderImages = document.getElementsByName("_$-$_ImAgEFoLdEr");
+	var expandAll = false;
+	for (var i = 0; i < folderImages.length; i++) {
+		var folderID = folderImages[i].getAttribute("data-folderid");
+		if (document.getElementById("_$-$_FoLdEr" + folderID).style.display == 'none') {
+			expandAll = true;
+			break;
+		}
+	}
+	if (expandAll) {
+		expandAllFolders();
+	} else {
+		collapseAllFolders();
+	}
+}
+
+function expandAllFolders(){
+	var folderImages = document.getElementsByName("_$-$_ImAgEFoLdEr");
+	for (var i = 0; i < folderImages.length; i++) {
+		var folderID = folderImages[i].getAttribute("data-folderid");
+		folderImages[i].src = folder;
+		document.getElementById("_$-$_FoLdEr"+folderID).style.display = 'block';
+	}
+}
+
+function collapseAllFolders(){
+	var folderImages = document.getElementsByName("_$-$_ImAgEFoLdEr");
+	for (var i = 0; i < folderImages.length; i++) {
+		var folderID = folderImages[i].getAttribute("data-folderid");
+		folderImages[i].src = closedfolder;
+		document.getElementById("_$-$_FoLdEr"+folderID).style.display = 'none';
+	}
 }
 
 function clearDictionary(dict){
@@ -579,7 +612,7 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 				} else {
 					fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key]]);
 				}
-				generatedHTML += '<p id="' + current_path+key + '" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + folderCount.toString() + '\');"><b> ' + key + '</b>' + '</p>';
+				generatedHTML += '<p id="' + current_path+key + '" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img name="_$-$_ImAgEFoLdEr" src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + folderCount.toString() + '\');" data-folderid="' + folderCount.toString() +'"><b> ' + key + '</b>' + '</p>';
                 generatedHTML += "<div id='_$-$_FoLdEr" + folderCount.toString() + "'>";
                 folderCount += 1;
 				indent += 1;
@@ -600,7 +633,7 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 						foldCountString = folderCount.toString();
 						fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key, entry]]);
 						jsonBlocks[folderCount] = [json[key][entry], indent, current_path, key, foldCountString, current_path_ID];
-						generatedHTML += '<p id="' + current_path+key+ '[' + entry + ']' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + foldCountString + '\');"><b> ' + key + '</b> <span id="buttonAdd' + foldCountString + '" class="addButton' + visibilityButton + '" style="' + visibility + '"><button class="circle plus" onclick="elementAdd(' + foldCountString + ', ' + latestID + ')" title="Add another one of this element."></button></span>' + '</p>';
+						generatedHTML += '<p id="' + current_path+key+ '[' + entry + ']' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img name="_$-$_ImAgEFoLdEr" src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + foldCountString + '\');" data-folderid="' + folderCount.toString() +'"><b> ' + key + '</b> <span id="buttonAdd' + foldCountString + '" class="addButton' + visibilityButton + '" style="' + visibility + '"><button class="circle plus" onclick="elementAdd(' + foldCountString + ', ' + latestID + ')" title="Add another one of this element."></button></span>' + '</p>';
                         generatedHTML += "<div id='_$-$_FoLdEr" + foldCountString + "'>";
 						visibilityButton = "Invisible";
 						visibility = 'display: none;';
@@ -673,23 +706,17 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 	   }
    }
    // END OF HOVER TEXT CODE
-   
+
    return generatedHTML;
 }
 
 function addToInputList(plusButton, textField, arrayID){
-	
    latestID += 1;
-	
    findString = 'data-newid="]....}?|?|?{....[_';
-
    start = textField.substring(0, textField.indexOf('data-newid="]....}?|?|?{....[_'));
-
    end = textField.substring(textField.indexOf(findString)+findString.length,textField.length);
    end = end.substring(end.indexOf('"')+1,end.length);
-
    textField = start + 'data-newid="' + latestID.toString() + '"' + end;
-   
    var a = fieldIDs[arrayID];
    fieldIDs[latestID] = a.slice(0, a.length-1).concat([[a[a.length-1][0], simpleArrayTracker[arrayID].toString()]]);
    simpleArrayTracker[arrayID] += 1;
@@ -732,11 +759,12 @@ function buildTree(hashTreeToJson){
 	var generatedHTML = "";
 	generatedHTML += "<div id='_$-$_FoLdEr" + folderCount.toString() + "'>";
 	folderCount += 1;
+	
+	generatedHTML += '<p style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (0*indentSize).toString() + '"><img onclick="toggleAllFolders();" title="Click this to toggle expand/collapse of all subfolders." src="' + folder +'">';
     if ("resourceType" in json) {
-       generatedHTML += '<p style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (0*indentSize).toString() + '"><img src="' + folder +'"><b> ' + json["resourceType"] + '</b>' + '</p>';
-    } else {
-       generatedHTML += '<p style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (0*indentSize).toString() + '"><img src="' + folder +'">' + '</p>';
+       generatedHTML += '<b> ' + json["resourceType"] + '</b>';
     }
+	generatedHTML += '</p>';
 	
 	fieldIDs = {0: []};
 	latestID = 0;
