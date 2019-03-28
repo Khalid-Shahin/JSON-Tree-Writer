@@ -619,15 +619,15 @@ function elementDelete(elementID){
 }
 
 function ShowDeleteElementButtons(){
+	var deleteButtons = document.getElementsByClassName("minusButton");
+	var buttonDisplay = "none";
+	if (document.getElementById("]....}?|?|?{....[TreeToJSON_ShowDeleteElements").checked) {
+		buttonDisplay = "inline";
+		document.cookie = "showElementButtons=true;";
+	} else {
+		document.cookie = "showElementButtons=false;";
+	}
 	if (document.getElementById("]....}?|?|?{....[treeWriteChecked").checked) {
-		var deleteButtons = document.getElementsByClassName("minusButton");
-		var buttonDisplay = "none";
-		if (document.getElementById("]....}?|?|?{....[TreeToJSON_ShowDeleteElements").checked) {
-			buttonDisplay = "inline";
-			document.cookie = "showElementButtons=true;";
-		} else {
-			document.cookie = "showElementButtons=false;";
-		}
 		for (var i in deleteButtons){
 			try {
 				deleteButtons[i].style.display = buttonDisplay;
