@@ -21,3 +21,30 @@
 		var JSONheight = d2.scrollHeight;
 		d2.scrollTop = Math.round(treePercentage * JSONheight);
 	});
+
+
+
+
+//Great code so that Tree doesn't need to be rebuilt when an element is deleted. But there's a problem with the reference JSON (or something) so I didn't end up using.
+function elementDelete(elementID){
+	var treeToJsonDict = TreeToJSON();
+	var jsonToSave = JSON.stringify(treeToJsonDict, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/([^\r])\n/g, "$1\r\n");
+	json = JSON.parse(jsonToSave.replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0"));
+	walkJson = JSON_Walk(elementID);
+	if (fieldIDs[elementID][fieldIDs[elementID].length - 1].length == 1){
+		delete walkJson[fieldIDs[elementID][fieldIDs[elementID].length - 1][0]];
+	} else {
+		walkJson[fieldIDs[elementID][fieldIDs[elementID].length - 1][0]].splice(fieldIDs[elementID][fieldIDs[elementID].length - 1][1], 1);
+		if (walkJson[fieldIDs[elementID][fieldIDs[elementID].length - 1][0]].length == 0){
+			delete walkJson[fieldIDs[elementID][fieldIDs[elementID].length - 1][0]];
+		}
+	}
+	//buildTree(true);
+	var elementToDelete = document.querySelector('[data-newid="' + elementID.toString() + '"]');
+	var nextElement = elementToDelete.nextSibling;
+	if (nextElement.tagName == "DIV" && nextElement.id.substring(0, 11) == "_$-$_FoLdEr") {
+		nextElement.parentNode.removeChild(nextElement);
+	}
+	elementToDelete.parentNode.removeChild(elementToDelete);
+	if (document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked) { convertTreeToJSON(); }
+}
