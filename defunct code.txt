@@ -1,0 +1,23 @@
+//Event listener on the Tree View to get the JSON to scroll the same amount as the Tree View. Not perfect. But if there is a folder that's closed on the Tree side then it won't scroll to the right amount.
+	document.getElementById("]....}?|?|?{....[treeChart").addEventListener('scroll', function(e) {
+		var d1 = document.getElementById("]....}?|?|?{....[treeChart");
+		var treeScrollPosition = d1.scrollTop;		//Pixels you are scrolled
+		var treeHeight = d1.scrollHeight;
+		var treePercentage = treeScrollPosition / treeHeight;
+
+		var d2 = document.getElementById("]....}?|?|?{....[jsonTextArea");
+		var JSONheight = d2.scrollHeight;
+		d2.scrollTop = Math.round(treePercentage * JSONheight);
+	});
+
+//Event listener on the JSON view to get the Tree view to scroll the same amount. If both event listeners are being used then it makes the scroll slow to a crawl.
+	document.getElementById("]....}?|?|?{....[jsonTextArea").addEventListener('scroll', function(e) {
+		var d1 = document.getElementById("]....}?|?|?{....[jsonTextArea");
+		var treeScrollPosition = d1.scrollTop;		//Pixels you are scrolled
+		var treeHeight = d1.scrollHeight;
+		var treePercentage = treeScrollPosition / treeHeight;
+
+		var d2 = document.getElementById("]....}?|?|?{....[treeChart");
+		var JSONheight = d2.scrollHeight;
+		d2.scrollTop = Math.round(treePercentage * JSONheight);
+	});
