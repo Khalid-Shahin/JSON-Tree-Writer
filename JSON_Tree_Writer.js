@@ -598,6 +598,7 @@ function elementAdd(elementNumber, elementID){
    var temp_b = temp_a.substring(0, temp_x);
    jsonBlocks[elementNumber][4] = temp_b;
    if (document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked) { convertTreeToJSON(); }
+   ShowDeleteElementButtons();
    toastElementAdded();
 }
 
