@@ -7,8 +7,8 @@ if (getCookie("jsonView") == "false"){
 }
 
 if (getCookie("treeOntoJsonSync") == "true"){
-	document.getElementById("]....}?|?|?{....[TreeToJSON_RealTime").checked = true;
 	document.getElementById("]....}?|?|?{....[TreeOntoJsonSyncScroll").checked = true;
+	document.getElementById("]....}?|?|?{....[TreeToJSON_RealTime").checked = true;
 }
 
 if (getCookie("sides") == "TreeRight") {
