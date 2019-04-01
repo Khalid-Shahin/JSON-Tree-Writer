@@ -203,7 +203,7 @@ function convertJSONToTree(){
 				var dictionaryToJSON = JSON.stringify(dictionaryParse);
 				var convertingJSON = JSON.parse(dictionaryToJSON);
 				
-				if (confirm("Invalid JSON formatting, but changes can be made to the input to make it work. The most common problem that gets fixed is having integers as the keyname or a misplaced comma. Do you want your JSON to be automatically corrected?")) {
+				if (confirm("Invalid JSON formatting, but changes can be made to the input to make it work. The most common problem that gets fixed is having integers as the keyname, a misplaced comma, or the use of single quotes in place of double quotes. A correction attempt can be made although it may not be accurate or desired. Do you want your JSON to be automatically corrected?")) {
 					json = convertingJSON;
 					buildTree(true);
 					convertTreeToJSON();
