@@ -205,7 +205,7 @@ function convertTreeToJSON(){
     var jsonToSave = JSON.stringify(tempJson, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0").replace(/([^\r])\n/g, "$1\r\n");
     //json = JSON.parse(jsonToSave); //I recently commented out this line, is it not needed at all?
     document.getElementById("]....}?|?|?{....[jsonTextArea").value = jsonToSave;
-	document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = "https://khalid-shahin.github.io/JSON-Tree-Writer/" + "?json=" + window.btoa(jsonToSave);
+	//document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = "https://khalid-shahin.github.io/JSON-Tree-Writer/" + "?json=" + window.btoa(jsonToSave);
     return treeToJsonDict;
 }
 
