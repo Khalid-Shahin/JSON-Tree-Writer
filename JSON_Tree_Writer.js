@@ -1,4 +1,4 @@
-document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = window.location.href;
+//document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = window.location.href;
 
 if(window.addEventListener) {
 	document.getElementById("]....}?|?|?{....[treeChart").addEventListener("scroll", scrollSyncTreeOntoJSON);
