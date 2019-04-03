@@ -1,4 +1,4 @@
-//document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = window.location.href;
+//document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = window.location.href; //copyURL
 
 if(window.addEventListener) {
 	document.getElementById("]....}?|?|?{....[treeChart").addEventListener("scroll", scrollSyncTreeOntoJSON);
@@ -207,7 +207,7 @@ function convertTreeToJSON(){
     var jsonToSave = JSON.stringify(tempJson, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0").replace(/([^\r])\n/g, "$1\r\n");
     //json = JSON.parse(jsonToSave); //I recently commented out this line, is it not needed at all?
     document.getElementById("]....}?|?|?{....[jsonTextArea").value = jsonToSave;
-	//document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = "https://khalid-shahin.github.io/JSON-Tree-Writer/" + "?json=" + window.btoa(jsonToSave);
+	//document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = "https://khalid-shahin.github.io/JSON-Tree-Writer/" + "?json=" + window.btoa(jsonToSave); //copyURL
     return treeToJsonDict;
 }
 
@@ -822,14 +822,14 @@ function toastElementAdded() {
   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2990);
 }
 
-function toastCopiedURL() {
-  var x = document.getElementById("URLCopiedToast");
+function toastNothingToDelete() {
+  var x = document.getElementById("NothingToDeleteToast");
   x.className = "show";
   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2990);
 }
 
-function toastNothingToDelete() {
-  var x = document.getElementById("NothingToDeleteToast");
+function toastCopiedURL() {
+  var x = document.getElementById("URLCopiedToast");
   x.className = "show";
   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2990);
 }
