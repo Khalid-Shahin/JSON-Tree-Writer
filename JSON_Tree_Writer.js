@@ -179,6 +179,7 @@ function deleteElementsFromJSON(temp_json){
 	return temp_json;
 }
 
+/*
 function copyURL(){
 	var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
 	document.getElementById("]....}?|?|?{....[keepFields").checked = true;
@@ -191,13 +192,14 @@ function copyURL(){
 			convertTreeToJSON();
 		}
 	}
-	document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = "https://khalid-shahin.github.io/JSON-Tree-Writer/" + "?json=" + window.btoa(document.getElementById("]....}?|?|?{....[jsonTextArea").value); //Just in case
+	document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = "https://khalid-shahin.github.io/JSON-Tree-Writer/" + "?json=" + window.btoa(compareJson); //Just in case
 	document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
 	var copyText = document.getElementById("]....}?|?|?{....[CopyUrlTextBox");
 	copyText.select();
 	document.execCommand("copy");
 	toastCopiedURL();
 }
+*/
 
 function convertTreeToJSON(){
     var treeToJsonDict = TreeToJSON();
