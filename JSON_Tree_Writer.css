@@ -133,17 +133,38 @@ input[type=number] {
                                   supported by Chrome and Opera */
 }
 
-#ElementAddedToast.show {
+#URLCopiedToast {
+  visibility: hidden;
+  min-width: 300px;
+  margin-left: -150px;
+  background-color: #21C996;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 10px;
+  font-size: 18px;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+#ElementAddedToast.show, #NothingToDeleteToast.show, #URLCopiedToast.show {
   visibility: visible;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-#NothingToDeleteToast.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
 
 @-webkit-keyframes fadein {
   from {bottom: 0; opacity: 0;} 
@@ -270,4 +291,35 @@ body {
     position: absolute;
     display: block;
     margin-top: -23px;
+}
+
+p.copyURLElement input[type=url] {
+  padding: 1px;
+  font-size: 14px;
+  border: 1px solid #555555;
+  float: left;
+  width: 60%;
+  background: #F2F2F2;
+}
+
+p.copyURLElement button {
+  float: left;
+  width: 40%;
+  padding: 1px;
+  background: #21C996;
+  color: #FFFFFF;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #555555;
+  border-left: none;
+}
+
+p.copyURLElement button:hover {
+  background: #0BDA7D;
+}
+
+p.copyURLElement::after {
+  content: "";
+  clear: both;
+  display: table;
 }

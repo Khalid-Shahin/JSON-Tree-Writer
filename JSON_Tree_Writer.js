@@ -1,3 +1,5 @@
+document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = window.location.href;
+
 if(window.addEventListener) {
 	document.getElementById("]....}?|?|?{....[treeChart").addEventListener("scroll", scrollSyncTreeOntoJSON);
 }
@@ -177,13 +179,33 @@ function deleteElementsFromJSON(temp_json){
 	return temp_json;
 }
 
+function copyURL(){
+	var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
+	document.getElementById("]....}?|?|?{....[keepFields").checked = true;
+    var treeToJsonDict = TreeToJSON();
+	var tempJson = deleteElementsFromJSON(JSON.parse(JSON.stringify(treeToJsonDict)));
+    var compareJson = JSON.stringify(tempJson).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0").replace(/([^\r])\n/g, "$1\r\n");
+	var jsonSide = JSON.stringify(JSON.parse(document.getElementById("]....}?|?|?{....[jsonTextArea").value));
+    if (jsonSide != compareJson) {
+		if (confirm("Changes have been made that aren't reflected in the JSON, do you want to update the JSON side?")){
+			convertTreeToJSON();
+		}
+	}
+	document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = "https://khalid-shahin.github.io/JSON-Tree-Writer/" + "?json=" + window.btoa(document.getElementById("]....}?|?|?{....[jsonTextArea").value); //Just in case
+	document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
+	var copyText = document.getElementById("]....}?|?|?{....[CopyUrlTextBox");
+	copyText.select();
+	document.execCommand("copy");
+	toastCopiedURL();
+}
+
 function convertTreeToJSON(){
     var treeToJsonDict = TreeToJSON();
 	var tempJson = deleteElementsFromJSON(JSON.parse(JSON.stringify(treeToJsonDict)));
-	
     var jsonToSave = JSON.stringify(tempJson, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0").replace(/([^\r])\n/g, "$1\r\n");
     //json = JSON.parse(jsonToSave); //I recently commented out this line, is it not needed at all?
     document.getElementById("]....}?|?|?{....[jsonTextArea").value = jsonToSave;
+	document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = "https://khalid-shahin.github.io/JSON-Tree-Writer/" + "?json=" + window.btoa(jsonToSave);
     return treeToJsonDict;
 }
 
@@ -794,6 +816,12 @@ function ShowDeleteElementButtons(){
 
 function toastElementAdded() {
   var x = document.getElementById("ElementAddedToast");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2990);
+}
+
+function toastCopiedURL() {
+  var x = document.getElementById("URLCopiedToast");
   x.className = "show";
   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2990);
 }
