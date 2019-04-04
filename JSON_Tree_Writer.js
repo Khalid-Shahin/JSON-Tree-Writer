@@ -432,33 +432,6 @@ function switchReadWrite(){
 	}
 }
 
-function SaveTreeToJSON(){
-    var saveJSONfile = prompt("Filename for the JSON you're saving", "Resource JSON file.txt");
-    
-	if (saveJSONfile != null) {
-        var dict = TreeToJSON();
-	    if (saveJSONfile.indexOf(".") == -1 || acceptableExtensions.indexOf(saveJSONfile.substring(saveJSONfile.lastIndexOf("."), saveJSONfile.length)) == -1) {
-		   saveJSONfile = saveJSONfile + ".txt";		   
-		}
-        var temp_json = JSON.parse(JSON.stringify(dict));
-		temp_json = deleteElementsFromJSON(temp_json);
-        var jsonToSave = JSON.stringify(temp_json, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0").replace(/([^\r])\n/g, "$1\r\n");
-
-        if (navigator.msSaveBlob) { // IE 10+ 
-          navigator.msSaveBlob(new Blob([jsonToSave], { type: 'data:text/plain;charset=utf-8;' }), saveJSONfile);
-        } else {
-          var element = document.createElement('a');
-          element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonToSave));
-          element.setAttribute('download', saveJSONfile);
-          element.style.display = 'none';
-          document.body.appendChild(element);
-          element.click();
-          document.body.removeChild(element);
-        }
-		hashDict = hashCode(JSON.stringify(dict));
-    }
-}
-
 function cleanForXML(str){
 	return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&apos;").replace(/"/g, "&quot;");
 }
@@ -522,6 +495,33 @@ function SaveTreeToXML(FHIR){
         }
 		hashDict = hashCode(JSON.stringify(dict));
 	}
+}
+
+function SaveTreeToJSON(){
+    var saveJSONfile = prompt("Filename for the JSON you're saving", "Resource JSON file.txt");
+    
+	if (saveJSONfile != null) {
+        var dict = TreeToJSON();
+	    if (saveJSONfile.indexOf(".") == -1 || acceptableExtensions.indexOf(saveJSONfile.substring(saveJSONfile.lastIndexOf("."), saveJSONfile.length)) == -1) {
+		   saveJSONfile = saveJSONfile + ".txt";		   
+		}
+        var temp_json = JSON.parse(JSON.stringify(dict));
+		temp_json = deleteElementsFromJSON(temp_json);
+        var jsonToSave = JSON.stringify(temp_json, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0").replace(/([^\r])\n/g, "$1\r\n");
+
+        if (navigator.msSaveBlob) { // IE 10+ 
+          navigator.msSaveBlob(new Blob([jsonToSave], { type: 'data:text/plain;charset=utf-8;' }), saveJSONfile);
+        } else {
+          var element = document.createElement('a');
+          element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonToSave));
+          element.setAttribute('download', saveJSONfile);
+          element.style.display = 'none';
+          document.body.appendChild(element);
+          element.click();
+          document.body.removeChild(element);
+        }
+		hashDict = hashCode(JSON.stringify(dict));
+    }
 }
 
 function TreeToJSON(){
