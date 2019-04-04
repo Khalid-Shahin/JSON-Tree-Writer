@@ -417,7 +417,7 @@ function SaveTreeToJSON(){
     var saveJSONfile = prompt("Filename for the JSON you're saving", "Resource JSON file.txt");
     
 	if (saveJSONfile != null) {
-        var dict = TreeToJSON(); //TO DO todo Maybe convertTreeToJSON instead?
+        var dict = TreeToJSON();
 	    if (saveJSONfile.indexOf(".") == -1 || acceptableExtensions.indexOf(saveJSONfile.substring(saveJSONfile.lastIndexOf("."), saveJSONfile.length)) == -1) {
 		   saveJSONfile = saveJSONfile + ".txt";		   
 		}
@@ -438,6 +438,75 @@ function SaveTreeToJSON(){
         }
 		hashDict = hashCode(JSON.stringify(dict));
     }
+}
+
+var XMLspacing = "	";
+
+function cleanForXML(str){
+	return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&apos;").replace(/"/g, "&quot;");
+}
+
+function JSONtoXML(dict, indent){
+	var xml = "";
+	for (var x in dict){
+		if (typeof dict[x] == typeof []) {
+			var tempDictX = dict[x];
+			if (!Array.isArray(dict[x])) {
+				tempDictX = [dict[x]];
+			}
+			for (var y in tempDictX) {
+				
+				if (typeof tempDictX[y] != typeof {}) {
+					xml += XMLspacing.repeat(indent) + "<" + cleanForXML(x) + ' value="' + cleanForXML(tempDictX[y].toString()) + '"' + "/>\n";
+				} else {
+					xml += XMLspacing.repeat(indent) + "<" + cleanForXML(x) + ">\n";
+					xml += JSONtoXML(tempDictX[y], indent+1);
+					xml += XMLspacing.repeat(indent) + "</" + cleanForXML(x) + ">\n";
+				}
+				
+			}
+		} else {
+			xml += XMLspacing.repeat(indent) + "<" + cleanForXML(x) + ' value="' + cleanForXML(dict[x].toString()) + '"' + "/>\n";
+		}
+	}
+	return xml;
+}
+
+function SaveTreeToXML(FHIR){
+	var saveXMLfile = prompt("Filename for the XML you're saving", "Resource XML file.txt");
+	if (saveXMLfile != null) {
+		var dict = TreeToJSON();
+	    if (saveXMLfile.indexOf(".") == -1) {
+		   saveXMLfile = saveXMLfile + ".txt";		   
+		}
+        var temp_json = JSON.parse(JSON.stringify(dict));
+		temp_json = deleteElementsFromJSON(temp_json);
+		var xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		var root = "root";
+		if (FHIR){
+			if (temp_json["resourceType"]){
+				root = cleanForXML(temp_json["resourceType"].toString());
+			}
+			xml += '<' + root + ' xmlns="http://hl7.org/fhir" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
+		} else {
+			xml += '<' + root + '>\n';
+		}
+		xml += JSONtoXML(temp_json, 1);
+		xml += '</' + root + '>';
+        var xmlToSave = xml.replace(/"{\[{NeGaTiVe!_!0}]}"/g, '"-0"').replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, '"-0.0"').replace(/([^\r])\n/g, "$1\r\n");
+        if (navigator.msSaveBlob) { // IE 10+ 
+          navigator.msSaveBlob(new Blob([xmlToSave], { type: 'data:text/plain;charset=utf-8;' }), saveXMLfile);
+        } else {
+          var element = document.createElement('a');
+          element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(xmlToSave));
+          element.setAttribute('download', saveXMLfile);
+          element.style.display = 'none';
+          document.body.appendChild(element);
+          element.click();
+          document.body.removeChild(element);
+        }
+		hashDict = hashCode(JSON.stringify(dict));
+	}
 }
 
 function TreeToJSON(){
