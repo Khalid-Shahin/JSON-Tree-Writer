@@ -458,8 +458,7 @@ function JSONtoXML(dict, indent){
 			if (!Array.isArray(dict[x])) {
 				tempDictX = [dict[x]];
 			}
-			for (var y in tempDictX) {
-				
+			for (var y in tempDictX) {				
 				if (typeof tempDictX[y] != typeof {}) {
 					xml += XMLspacing.repeat(indent) + "<" + cleanForXML(x) + ' value="' + cleanForXML(tempDictX[y].toString()) + '"' + "/>\n";
 				} else {
@@ -467,7 +466,6 @@ function JSONtoXML(dict, indent){
 					xml += JSONtoXML(tempDictX[y], indent+1);
 					xml += XMLspacing.repeat(indent) + "</" + cleanForXML(x) + ">\n";
 				}
-				
 			}
 		} else {
 			xml += XMLspacing.repeat(indent) + "<" + cleanForXML(x) + ' value="' + cleanForXML(dict[x].toString()) + '"' + "/>\n";
