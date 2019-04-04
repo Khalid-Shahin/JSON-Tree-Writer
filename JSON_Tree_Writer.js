@@ -201,6 +201,10 @@ function copyURL(){
 }
 */
 
+function scrollToActiveElement(){
+	var activeElement = document.activeElement;
+}
+
 function convertTreeToJSON(){
     var treeToJsonDict = TreeToJSON();
 	var tempJson = deleteElementsFromJSON(JSON.parse(JSON.stringify(treeToJsonDict)));
@@ -641,6 +645,36 @@ function collapseAllFolders(){
 	}
 }
 
+function scrollToJSONelement(elementID){
+	var temp_json = JSON.parse(JSON.stringify(json));
+	var walkJson = temp_json;
+	for (var field = 0; field < fieldIDs[elementID].length - 1; field++){
+	  var fieldPath = fieldIDs[elementID][field];
+	  if (fieldPath.length > 1){
+			walkJson = walkJson[fieldPath[0]][fieldPath[1]];
+	  } else {
+		  walkJson = walkJson[fieldPath[0]];
+	  }
+	}
+	var fieldPath = fieldIDs[elementID][fieldIDs[elementID].length - 1];
+	if (fieldPath.length == 1){
+		walkJson[fieldPath[0]] = "$$$_|_|+1pAYzyCp9=|_|_|=+|_|$$$_|_|";
+	} else {
+		walkJson[fieldPath[0]][fieldPath[1]] = "$$$_|_|+1pAYzyCp9=|_|_|=+|_|$$$_|_|";
+	}
+	temp_json = JSON.stringify(temp_json, null, 2).replace(/([^\r])\n/g, "$1\r\n");
+	temp_json = temp_json.substring(0, temp_json.indexOf('$$$_|_|+1pAYzyCp9=|_|_|=+|_|$$$_|_|'));
+	var line = temp_json.split("\n").length  - 4;
+	if (line < 0) {
+		line = 0;
+	}
+	var d2 = document.getElementById("]....}?|?|?{....[jsonTextArea");
+	var totalLines = d2.value.split('\n').length;
+	var scrollPercentage = line/totalLines;
+	var JSONheight = d2.scrollHeight;
+	d2.scrollTop = Math.round(scrollPercentage * JSONheight);
+}
+
 function scrollSyncTreeOntoJSON(){
 	if (document.getElementById("]....}?|?|?{....[TreeOntoJsonSyncScroll").checked) {
 		var y = document.getElementById("]....}?|?|?{....[treeChart");
@@ -648,37 +682,17 @@ function scrollSyncTreeOntoJSON(){
 		for (var p in pTags){
 			var x = pTags[p];
 			if (x.offsetTop && y.scrollTop - 21 > 0 && y.scrollTop + y.offsetTop <= x.offsetTop + x.offsetHeight) {
-				var elementID = x.getAttribute("data-newid");
-				var temp_json = JSON.parse(JSON.stringify(json));
-				var walkJson = temp_json;
-				for (var field = 0; field < fieldIDs[elementID].length - 1; field++){
-				  var fieldPath = fieldIDs[elementID][field];
-				  if (fieldPath.length > 1){
-						walkJson = walkJson[fieldPath[0]][fieldPath[1]];
-				  } else {
-					  walkJson = walkJson[fieldPath[0]];
-				  }
-				}
-				var fieldPath = fieldIDs[elementID][fieldIDs[elementID].length - 1];
-				if (fieldPath.length == 1){
-					walkJson[fieldPath[0]] = "$$$_|_|+1pAYzyCp9=|_|_|=+|_|$$$_|_|";
-				} else {
-					walkJson[fieldPath[0]][fieldPath[1]] = "$$$_|_|+1pAYzyCp9=|_|_|=+|_|$$$_|_|";
-				}
-				temp_json = JSON.stringify(temp_json, null, 2).replace(/([^\r])\n/g, "$1\r\n");
-				temp_json = temp_json.substring(0, temp_json.indexOf('$$$_|_|+1pAYzyCp9=|_|_|=+|_|$$$_|_|'));
-				var line = temp_json.split("\n").length  - 4;
-				if (line < 0) {
-					line = 0;
-				}
-				var d2 = document.getElementById("]....}?|?|?{....[jsonTextArea");
-				var totalLines = d2.value.split('\n').length;
-				var scrollPercentage = line/totalLines;
-				var JSONheight = d2.scrollHeight;
-				d2.scrollTop = Math.round(scrollPercentage * JSONheight);
+				scrollToJSONelement(x.getAttribute("data-newid"))
 				break;
 			}
 		}
+	}
+}
+
+function scrollToActiveElement(){
+	var activeElement = document.activeElement;
+	if (document.getElementById("]....}?|?|?{....[treeChart").contains(activeElement)) {
+		scrollToJSONelement(activeElement.getAttribute("data-newid"));
 	}
 }
 
