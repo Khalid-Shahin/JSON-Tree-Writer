@@ -473,11 +473,11 @@ function JSONtoXML(dict, indent){
 }
 
 function SaveTreeToXML(FHIR){
-	var saveXMLfile = prompt("Filename for the XML you're saving", "Resource XML file.txt");
+	var saveXMLfile = prompt("Filename for the XML you're saving", "Resource XML file.xml");
 	if (saveXMLfile != null) {
 		var dict = TreeToJSON();
 	    if (saveXMLfile.indexOf(".") == -1) {
-		   saveXMLfile = saveXMLfile + ".txt";		   
+		   saveXMLfile = saveXMLfile + ".xml";		   
 		}
         var temp_json = JSON.parse(JSON.stringify(dict));
 		temp_json = deleteElementsFromJSON(temp_json);
