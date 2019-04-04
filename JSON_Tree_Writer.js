@@ -1,3 +1,36 @@
+var indentSize = 20;
+
+var file = "file.png";
+var folder = "folder.png";
+var closedfolder = "closed-folder-transparent.png";
+
+var json;
+var hovertext_json = {};
+
+//var lodash = false;
+
+var folderCount = 0;
+
+var htmlBlocks = {};
+var jsonBlocks = {};
+
+var hashDict = 0;
+
+var pathsToDelete = [];
+var inputsToDelete = [];
+
+// HOVER TEXT CODE
+var HoverTextFields = {};
+// END OF HOVER TEXT CODE
+
+var fieldIDs = {0: [[]]};
+var simpleArrayTracker = {};
+var latestID = 0;
+
+var XMLspacing = "	";
+
+var acceptableExtensions = [".txt", ".json", ".js", ".ts", ".tex", ".rtf", ".odt", ".wpd", ".text"]
+
 //document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = window.location.href; //copyURL
 
 if(window.addEventListener) {
@@ -29,44 +62,23 @@ if (getCookie("TreeToJSONrealtime") == "true"){
 	document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked = false;
 }
 
-var indentSize = 20;
-
-var file = "file.png";
-var folder = "folder.png";
-var closedfolder = "closed-folder-transparent.png";
-
-var json;
-var hovertext_json = {};
-
-//var lodash = false;
-
-var folderCount = 0;
-
-var htmlBlocks = {};
-var jsonBlocks = {};
-
-var hashDict = 0;
-
-var acceptableExtensions = [".txt", ".json", ".js", ".ts", ".tex", ".rtf", ".odt", ".wpd", ".text"]
-
-//NOT MY CODE below
 function getCookie(cname) {
   var name = cname + "=";
-  var ca = document.cookie.split(';');
-  for(var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+	  var cookie = cookies[i];
+	  while (cookie.charAt(0) == ' ') {
+		  cookie = cookie.substring(1);
+	  }
+	  if (cookie.indexOf(name) == 0) {
+		  return cookie.substring(name.length, cookie.length);
+	  }
   }
   return "";
 }
 
 //Only uses this imported script if they're using Internet Explorer.
-if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {			//This conditional statement is not my code
     var bluebirdscript = document.createElement("script");
     bluebirdscript.src = "https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js";
     bluebirdscript.type = "text/javascript";
@@ -77,11 +89,13 @@ document.getElementById(']....}?|?|?{....[jsonFile').addEventListener('change', 
 
 function loadJsonFile(event){
   const input = event.target;
-  if ('files' in input && input.files.length > 0) {
+  if ("files" in input && input.files.length > 0) {
 	  placeFileContent(input.files[0]);
   }
 }
 
+
+//NOT MY CODE below
 function placeFileContent(file) {
    readFileContent(file).then(function(content) { json = JSON.parse(content); buildTree(true); convertTreeToJSON(); }).catch( function(error) { console.log(error) });
 }
@@ -136,6 +150,7 @@ window.addEventListener("beforeunload", function (e) {
 	document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
 }); 
 //END OF NOT MY CODE
+
 
 function deleteElementsFromJSON(temp_json){
 	for (var x in inputsToDelete) {
@@ -443,8 +458,6 @@ function SaveTreeToJSON(){
 		hashDict = hashCode(JSON.stringify(dict));
     }
 }
-
-var XMLspacing = "	";
 
 function cleanForXML(str){
 	return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&apos;").replace(/"/g, "&quot;");
@@ -819,9 +832,6 @@ function elementAdd(elementNumber, elementID){
    toastElementAdded();
 }
 
-var pathsToDelete = [];
-var inputsToDelete = [];
-
 function elementDelete(elementID, minusButtonInstance){
 	//var treeToJsonDict = TreeToJSON();
 	//var jsonToSave = JSON.stringify(treeToJsonDict, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/([^\r])\n/g, "$1\r\n");
@@ -914,14 +924,6 @@ function toastCopiedURL() {
   x.className = "show";
   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2990);
 }
-
-// HOVER TEXT CODE
-var HoverTextFields = {};
-// END OF HOVER TEXT CODE
-
-var fieldIDs = {0: [[]]};
-var simpleArrayTracker = {};
-var latestID = 0;
 
 function loopDictionary(json, indent, current_path, current_path_ID, entry_number){
     var generatedHTML = "";
