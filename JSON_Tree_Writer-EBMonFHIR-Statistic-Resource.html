@@ -54,6 +54,8 @@ hovertext_json = {
   "title": "",
   "title---HoVeR": "A short, descriptive, user-friendly title for the evidence. [0..1]",
   "date": "",
+  "status": "",
+  "status": "[1..1]",
   "date---HoVeR": "The date (and optionally time) when the evidence was published. The date must change when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the evidence changes. [0..1]",
   "publisher": "",
   "publisher---HoVeR": "The name of the organization or individual that published the evidence. [0..1]",
@@ -561,20 +563,20 @@ json = {
   "approvalDate": "",
   "lastReviewDate": "",
   "publisher": [
-    ""
+    "Cochrane"
   ],
   "contact": [
     {
       "name": "",
       "telecom": [
-         {
-           "system": "",
-           "value": "",
-           "use": "",
-           "rank": "",
-           "period": ""
-         }
-       ]
+        {
+          "system": "",
+          "value": "",
+          "use": "",
+          "rank": "",
+          "period": ""
+        }
+      ]
     }
   ],
   "contributor": [
@@ -585,14 +587,14 @@ json = {
         {
           "name": "",
           "telecom": [
-             {
-               "system": "",
-               "value": "",
-               "use": "",
-               "rank": "",
-               "period": ""
-             }
-           ]
+            {
+              "system": "",
+              "value": "",
+              "use": "",
+              "rank": "",
+              "period": ""
+            }
+          ]
         }
       ]
     }
@@ -611,13 +613,22 @@ json = {
   "measuredVariable": [
     ""
   ],
-  "statisticType": "",
+  "statisticType": {
+    "description": "",
+    "type": {
+      "coding": {
+        "system": "http://build.fhir.org/valueset-effect-estimate-type.html",
+        "code": "",
+        "display": ""
+      }
+    }
+  },
   "quantity": {
-    "value": "",
-    "comparator": "",
-    "unit": "",
-    "system": "",
-    "code": ""
+    "value": -0.0,
+    "comparator": "=",
+    "unit": "points",
+    "system": "UCUM",
+    "code": "score"
   },
   "sampleSize": {
     "description": "",
@@ -630,7 +641,13 @@ json = {
   "precisionEstimate": [
     {
       "description": "",
-      "type": "",
+      "type": {
+        "coding": {
+          "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
+          "code": "",
+          "display": ""
+        }
+      },
       "level": -0.0,
       "from": -0.0,
       "to": -0.0,
@@ -640,9 +657,15 @@ json = {
   "pValue": [
     {
       "description": "",
-      "type": "",
+      "type": {
+        "coding": {
+          "system": "",
+          "code": "",
+          "display": ""
+        }
+      },
       "quantity": {
-        "value": "",
+        "value": -0,
         "comparator": "",
         "unit": "",
         "system": "",
@@ -654,19 +677,31 @@ json = {
   ],
   "certainty": [
     {
-      "description": "",
       "rating": [
-        ""
+        {
+          "coding": {
+            "system": "",
+            "code": -0,
+            "display": ""
+          }
+        }
       ],
       "certaintySubcomponent": [
         {
-          "description": "",
-          "type": [
-            ""
-          ],
-          "rating": [
-            ""
-          ],
+          "type": {
+            "coding": {
+              "system": "",
+              "code": "",
+              "display": ""
+            }
+          },
+          "rating": {
+            "coding": {
+              "system": "",
+              "code": "",
+              "display": ""
+            }
+          },
           "note": ""
         }
       ],

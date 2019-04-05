@@ -83,7 +83,7 @@ if (navigator.userAgent.indexOf("Trident") != -1) {
     document.getElementsByTagName("head")[0].appendChild(bluebirdscript);
 }
 
-function cleanObject(object, entry, result){
+function objectClean(object, entry, result){
   var cleanedObj;
   if (typeof object == "object"){
 	  var index = 0;
@@ -91,7 +91,7 @@ function cleanObject(object, entry, result){
 		cleanedObj = [];
 		var length = object.length;
 		while (index < length) {
-			cleanObject(object[index], index, cleanedObj);
+			objectClean(object[index], index, cleanedObj);
 			index++;
 		}
 	  } else {
@@ -100,7 +100,7 @@ function cleanObject(object, entry, result){
 		var length = keys.length;
 		while (index < length) {
 			var key = keys[index];
-			cleanObject(object[key], key, cleanedObj);
+			objectClean(object[key], key, cleanedObj);
 			index++;
 		}
 	  }
@@ -126,7 +126,7 @@ function removeBlankFields(object) {
 	var index = 0;
     while (index < length) {
 	  var key = keys[index];
-	  cleanObject(object[key], key, result);
+	  objectClean(object[key], key, result);
 	  index++;
     }
     return result;
