@@ -83,6 +83,18 @@ if (navigator.userAgent.indexOf("Trident") != -1) {
     document.getElementsByTagName("head")[0].appendChild(bluebirdscript);
 }
 
+window.addEventListener("beforeunload", function (e) {
+	var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
+	document.getElementById("]....}?|?|?{....[keepFields").checked = true;
+    if (hashDict != 0 && hashDict != hashCode(JSON.stringify(TreeToJSON()))) {
+		document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
+		var confirmMessage = 'If you leave this page your changes will be lost.';
+		(e || window.event).returnValue = confirmMessage; //Gecko and IE, older versions only?
+		return confirmMessage; //Gecko, Safari, Webkit, and Chrome
+	}
+	document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
+}); 
+
 function objectClean(object, entry, result){
   var cleanedObj;
   if (typeof object == "object"){
@@ -151,18 +163,6 @@ function hashCode(dictString) {
   }
   return hash;
 }
-
-window.addEventListener("beforeunload", function (e) {
-	var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
-	document.getElementById("]....}?|?|?{....[keepFields").checked = true;
-    if (hashDict != 0 && hashDict != hashCode(JSON.stringify(TreeToJSON()))) {
-		document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
-		var confirmMessage = 'If you leave this page your changes will be lost.';
-		(e || window.event).returnValue = confirmMessage; //Gecko and IE, older versions only?
-		return confirmMessage; //Gecko, Safari, Webkit, and Chrome
-	}
-	document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
-}); 
 
 function deleteElementsFromJSON(temp_json){
 	for (var x in inputsToDelete) {
@@ -280,12 +280,12 @@ function swapSides() {
    if (document.getElementsByClassName("chart")[0].style.float == "right"){
       document.getElementsByClassName("chart")[0].style.float = "left";
       document.getElementsByClassName("jsonArea")[0].style.float = "right";
-      document.getElementById("]....}?|?|?{....[convertToJSONButton").innerHTML = "<b>Convert Tree to JSON ➡</b>";
+      document.getElementById("]....}?|?|?{....[convertToJSONButton").innerHTML = "<b>Convert Tree to JSON &#8594;</b>";
       document.getElementById("]....}?|?|?{....[convertToJSONButton").style.right = "auto";
       document.getElementById("]....}?|?|?{....[convertToJSONButton").style.marginRight = "auto";
       document.getElementById("]....}?|?|?{....[convertToJSONButton").style.left = "50%";
       document.getElementById("]....}?|?|?{....[convertToJSONButton").style.marginLeft = "-210px";      
-      document.getElementById("]....}?|?|?{....[convertToTreeButton").innerHTML = "<b>⬅ Convert JSON to Tree</b>";
+      document.getElementById("]....}?|?|?{....[convertToTreeButton").innerHTML = "<b>&#8592; Convert JSON to Tree</b>";
       document.getElementById("]....}?|?|?{....[convertToTreeButton").style.left = "auto";
       document.getElementById("]....}?|?|?{....[convertToTreeButton").style.marginLeft = "auto";
       document.getElementById("]....}?|?|?{....[convertToTreeButton").style.right = "50%";
@@ -294,12 +294,12 @@ function swapSides() {
    } else {
       document.getElementsByClassName("chart")[0].style.float = "right";
       document.getElementsByClassName("jsonArea")[0].style.float = "left";
-      document.getElementById("]....}?|?|?{....[convertToJSONButton").innerHTML = "<b>⬅ Convert Tree to JSON</b>";
+      document.getElementById("]....}?|?|?{....[convertToJSONButton").innerHTML = "<b>&#8592; Convert Tree to JSON</b>";
       document.getElementById("]....}?|?|?{....[convertToJSONButton").style.left = "auto";
       document.getElementById("]....}?|?|?{....[convertToJSONButton").style.marginLeft = "auto";
       document.getElementById("]....}?|?|?{....[convertToJSONButton").style.right = "50%";
       document.getElementById("]....}?|?|?{....[convertToJSONButton").style.marginRight = "-210px";
-      document.getElementById("]....}?|?|?{....[convertToTreeButton").innerHTML = "<b>Convert JSON to Tree ➡</b>";
+      document.getElementById("]....}?|?|?{....[convertToTreeButton").innerHTML = "<b>Convert JSON to Tree &#8594;</b>";
       document.getElementById("]....}?|?|?{....[convertToTreeButton").style.right = "auto";
       document.getElementById("]....}?|?|?{....[convertToTreeButton").style.marginRight = "auto";
       document.getElementById("]....}?|?|?{....[convertToTreeButton").style.left = "50%";
