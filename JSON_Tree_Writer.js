@@ -7,8 +7,6 @@ var closedfolder = "closed-folder-transparent.png";
 var json;
 var hovertext_json = {};
 
-//var lodash = false;
-
 var folderCount = 0;
 
 var htmlBlocks = {};
@@ -78,11 +76,60 @@ function getCookie(cname) {
 }
 
 //Only uses this imported script if they're using Internet Explorer.
-if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {			//This conditional statement is not my code
+if (navigator.userAgent.indexOf("Trident") != -1) {
     var bluebirdscript = document.createElement("script");
     bluebirdscript.src = "https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js";
     bluebirdscript.type = "text/javascript";
     document.getElementsByTagName("head")[0].appendChild(bluebirdscript);
+}
+
+function cleanObject(object, entry, result){
+  var cleanedObj;
+  if (typeof object == "object"){
+	  var index = 0;
+	  if (Array.isArray(object)) {
+		cleanedObj = [];
+		var length = object.length;
+		while (index < length) {
+			cleanObject(object[index], index, cleanedObj);
+			index++;
+		}
+	  } else {
+		cleanedObj = {};
+		var keys = Object.keys(object);
+		var length = keys.length;
+		while (index < length) {
+			var key = keys[index];
+			cleanObject(object[key], key, cleanedObj);
+			index++;
+		}
+	  }
+	  if (!Object.keys(cleanedObj).length){
+		return;
+	  }
+  } else {
+	  cleanedObj = object;
+  }
+  if (Array.isArray(result)){
+	  if (typeof cleanedObj !== "undefined"){
+		  result.push(cleanedObj);
+	  }
+  } else {
+	 result[entry] = cleanedObj;
+  }
+}
+  
+function removeBlankFields(object) {
+	result = {};
+    var keys = Object.keys(object);
+    var length = keys.length;
+	var index = 0;
+    while (index < length) {
+	  var key = keys[index];
+	  cleanObject(object[key], key, result);
+	  index++;
+    }
+    return result;
 }
 
 document.getElementById(']....}?|?|?{....[jsonFile').addEventListener('change', loadJsonFile);
@@ -94,7 +141,6 @@ function loadJsonFile(event){
   }
 }
 
-
 //NOT MY CODE below
 function placeFileContent(file) {
    readFileContent(file).then(function(content) { json = JSON.parse(content); buildTree(true); convertTreeToJSON(); }).catch( function(error) { console.log(error) });
@@ -103,28 +149,6 @@ function placeFileContent(file) {
 function readFileContent(file) {
    const reader = new FileReader();
    return new Promise(function(resolve, reject) { reader.onload = function(event) { resolve(event.target.result) };  reader.onerror = function(error) { reject(error) }; reader.readAsText(file); })
-}
-
-function cleanDictionary(el) {
-  function internalClean(el) {
-    return _.transform(el, function(result, value, key) {
-      var isCollection = _.isObject(value);
-      var cleaned = isCollection ? internalClean(value) : value;
-
-      if (isCollection && _.isEmpty(cleaned)) {
-        return;
-      }
-
-      if (_.isArray(result)){
-		  if (typeof cleaned !== "undefined"){
-			  result.push(cleaned);
-		  }
-	  } else {
-		 result[key] = cleaned;
-	  }
-    });
-  }
-  return _.isObject(el) ? internalClean(el) : el;
 }
 
 function hashCode(dictString) {
@@ -604,7 +628,7 @@ function TreeToJSON(){
 		}
 		
         if (!document.getElementById("]....}?|?|?{....[keepFields").checked) {
-           dict = cleanDictionary(dict);
+           dict = removeBlankFields(dict);
         }
 		
 		return dict;
