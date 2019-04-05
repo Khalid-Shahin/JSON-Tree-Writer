@@ -152,20 +152,17 @@ function hashCode(dictString) {
   return hash;
 }
 
-//NOT MY CODE below
 window.addEventListener("beforeunload", function (e) {
 	var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
 	document.getElementById("]....}?|?|?{....[keepFields").checked = true;
     if (hashDict != 0 && hashDict != hashCode(JSON.stringify(TreeToJSON()))) {
 		document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
-		var confirmMessage = 'If you leave this page your changes to the form will be lost.';
-		(e || window.event).returnValue = confirmMessage; //Gecko + IE
-		return confirmMessage; //Gecko + Webkit, Safari, Chrome etc.
+		var confirmMessage = 'If you leave this page your changes will be lost.';
+		(e || window.event).returnValue = confirmMessage; //Gecko and IE, older versions only?
+		return confirmMessage; //Gecko, Safari, Webkit, and Chrome
 	}
 	document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
 }); 
-//END OF NOT MY CODE
-
 
 function deleteElementsFromJSON(temp_json){
 	for (var x in inputsToDelete) {
