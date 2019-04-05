@@ -1,15 +1,15 @@
 var indentSize = 20;
+var XMLspacing = "	";
 
 var file = "file.png";
 var folder = "folder.png";
-var closedfolder = "closed-folder-transparent.png";
+var closedfolder = "closed.png";
 
 var json;
 var hovertext_json = {};
 
 var folderCount = 0;
 
-var htmlBlocks = {};
 var jsonBlocks = {};
 
 var hashDict = 0;
@@ -25,9 +25,7 @@ var fieldIDs = {0: [[]]};
 var simpleArrayTracker = {};
 var latestID = 0;
 
-var XMLspacing = "	";
-
-var acceptableExtensions = [".txt", ".json", ".js", ".ts", ".tex", ".rtf", ".odt", ".wpd", ".text"]
+var acceptableExtensions = [".txt", ".json", ".js", ".ts", ".tex", ".rtf", ".odt", ".wpd", ".text"];
 
 //document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = window.location.href; //copyURL
 
@@ -37,6 +35,12 @@ if(window.addEventListener) {
 
 if (getCookie("jsonView") == "false"){
    hideShowJSON();
+}
+
+if (getCookie("TreeToJSONrealtime") == "true"){
+	document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked = true;
+} else {
+	document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked = false;
 }
 
 if (getCookie("treeOntoJsonSync") == "true"){
@@ -52,12 +56,6 @@ if (getCookie("showElementButtons") == "true") {
    document.getElementById(']....}?|?|?{....[TreeToJSON_ShowDeleteElements').checked = true;
 } else {
 	document.getElementById(']....}?|?|?{....[TreeToJSON_ShowDeleteElements').checked = false;
-}
-
-if (getCookie("TreeToJSONrealtime") == "true"){
-	document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked = true;
-} else {
-	document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked = false;
 }
 
 function getCookie(cname) {
@@ -206,27 +204,21 @@ function deleteElementsFromJSON(temp_json){
 	return temp_json;
 }
 
-/*
-function copyURL(){
+/*function copyURL(){
 	var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
 	document.getElementById("]....}?|?|?{....[keepFields").checked = true;
     var treeToJsonDict = TreeToJSON();
 	var tempJson = deleteElementsFromJSON(JSON.parse(JSON.stringify(treeToJsonDict)));
     var compareJson = JSON.stringify(tempJson).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0").replace(/([^\r])\n/g, "$1\r\n");
 	var jsonSide = JSON.stringify(JSON.parse(document.getElementById("]....}?|?|?{....[jsonTextArea").value));
-    if (jsonSide != compareJson) {
-		if (confirm("Changes have been made that aren't reflected in the JSON, do you want to update the JSON side?")){
-			convertTreeToJSON();
-		}
-	}
+    if (jsonSide != compareJson) { if (confirm("Changes have been made that aren't reflected in the JSON, do you want to update the JSON side?")){ convertTreeToJSON(); } }
 	document.getElementById("]....}?|?|?{....[CopyUrlTextBox").value = "https://khalid-shahin.github.io/JSON-Tree-Writer/" + "?json=" + window.btoa(compareJson); //Just in case
 	document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
 	var copyText = document.getElementById("]....}?|?|?{....[CopyUrlTextBox");
 	copyText.select();
 	document.execCommand("copy");
 	toastCopiedURL();
-}
-*/
+}*/
 
 function scrollToActiveElement(){
 	var activeElement = document.activeElement;
@@ -349,7 +341,6 @@ function deleteEmptyFields (){
    var dict = TreeToJSON();
    var hashAfter = hashCode(JSON.stringify(dict));
    if (hashBefore != hashAfter){
-      //Warning
       if (confirm('Are you sure you want to delete these empty field(s)')) {
         json = dict;
         buildTree(true);
@@ -574,10 +565,8 @@ function TreeToJSON(){
 		  if (!document.getElementById("]....}?|?|?{....[keepFields").checked && inputValue == "") {
             //DON'T SAVE THE INPUT IF IT IS BLANK and the checkbox is unchecked
 			  if (pathIndex) {
-				  //jsonPath[paths2[paths2.length - 1][0]][pathIndex] = "";
 				  delete jsonPath[paths2[paths2.length - 1][0]][pathIndex];
 			  } else {
-				  //jsonPath[paths2[paths2.length - 1][0]] = "";
 				  delete jsonPath[paths2[paths2.length - 1][0]];
 			  }
 		  } else if (inputValue == "}}}_?][?][?_{{{") {
