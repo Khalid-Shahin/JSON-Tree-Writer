@@ -137,31 +137,22 @@ document.getElementById(']....}?|?|?{....[jsonFile').addEventListener('change', 
 function loadJsonFile(event){
   const input = event.target;
   if ("files" in input && input.files.length > 0) {
-	  placeFileContent(input.files[0]);
+	  var file = input.files[0];
+	  const fileRead = new FileReader();
+	  new Promise(function(resolve, reject) { fileRead.onload = function(event) { resolve(event.target.result) };  fileRead.onerror = function(error) { reject(error) }; fileRead.readAsText(file); }).then(function(content) { json = JSON.parse(content); buildTree(true); convertTreeToJSON(); }).catch( function(error) { console.log(error) });
   }
 }
 
-//NOT MY CODE below
-function placeFileContent(file) {
-   readFileContent(file).then(function(content) { json = JSON.parse(content); buildTree(true); convertTreeToJSON(); }).catch( function(error) { console.log(error) });
-}
-
-function readFileContent(file) {
-   const reader = new FileReader();
-   return new Promise(function(resolve, reject) { reader.onload = function(event) { resolve(event.target.result) };  reader.onerror = function(error) { reject(error) }; reader.readAsText(file); })
-}
-
 function hashCode(dictString) {
-  var hash = 0, i, chr;
-  if (dictString.length === 0) return hash;
-  for (i = 0; i < dictString.length; i++) {
-    chr   = dictString.charCodeAt(i);
-    hash  = ((hash << 5) - hash) + chr;
-    //hash |= 0; // Convert to 32bit integer
+  var hash = 0;
+  var length = dictString.length;
+  for (var i = 0; i < length; i++) {
+    hash = (hash << 5) - hash + dictString.charCodeAt(i);
   }
   return hash;
 }
 
+//NOT MY CODE below
 window.addEventListener("beforeunload", function (e) {
 	var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
 	document.getElementById("]....}?|?|?{....[keepFields").checked = true;
