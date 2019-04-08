@@ -61,6 +61,7 @@ if (getCookie("showElementButtons") == "true") {
 }
 
 if (getCookie("singlelineText") == "true"){
+	document.getElementById("]....}?|?|?{....[TreeToJSON_ShowSingleLineTextBoxes").checked = true;
 	singlelineText = true;
 }
 
