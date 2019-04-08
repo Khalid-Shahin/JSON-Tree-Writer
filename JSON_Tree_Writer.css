@@ -15,6 +15,10 @@ input[type=number] {
     -moz-appearance:textfield;
 }
 
+.inputField::-webkit-scrollbar {
+	display: none;
+}
+
 .circle {
   border: 1px solid #aaa;
   box-shadow: inset 1px 1px 3px #DDDDDD;

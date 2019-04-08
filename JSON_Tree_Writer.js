@@ -1,9 +1,11 @@
-var indentSize = 20;
-var XMLspacing = "	";
-
 var file = "file.png";
 var folder = "folder.png";
 var closedfolder = "closed.png";
+
+var indentSize = 20;
+var XMLspacing = "	";
+
+var singlelineText = false;
 
 var json;
 var hovertext_json = {};
@@ -56,6 +58,10 @@ if (getCookie("showElementButtons") == "true") {
    document.getElementById(']....}?|?|?{....[TreeToJSON_ShowDeleteElements').checked = true;
 } else {
 	document.getElementById(']....}?|?|?{....[TreeToJSON_ShowDeleteElements').checked = false;
+}
+
+if (getCookie("singlelineText") == "true"){
+	singlelineText = true;
 }
 
 function getCookie(cname) {
@@ -363,14 +369,12 @@ function BlankCheckBoxReadWrite(){
 }
 
 function switchReadWrite(){
-    var allInputs = document.getElementsByTagName("input");
+	var allInputs = document.querySelectorAll('.inputField');
 	var allAddButtons = document.getElementsByClassName("addButton");
 	var allMinusButtons = document.getElementsByClassName("minusButton");
 	var onlyTextBoxes = [];
 	for (var i = 0; i < allInputs.length; i++) {
-		if((allInputs[i].type.toLowerCase() == 'text' || allInputs[i].type.toLowerCase() == 'number' || allInputs[i].type.toLowerCase() == 'hidden')) {
-			onlyTextBoxes.push(allInputs[i]);
-		}
+		onlyTextBoxes.push(allInputs[i]);
 	}
 	allInputs = onlyTextBoxes;
 	if (document.getElementById("]....}?|?|?{....[treeWriteChecked").checked) {
@@ -533,14 +537,12 @@ function TreeToJSON(){
 			dict = JSON.parse(JSON.stringify(json));			//THIS CODE MIGHT NOT BE NEEDED
 		}
 		
-        var allInputs = document.getElementsByTagName("input");
+		var allInputs = document.querySelectorAll('.inputField');
         		
 		var onlyTextBoxes2 = [];
 		for(var i = 0; i < allInputs.length; i++) {
 			var inputElementType = allInputs[i].type.toLowerCase();
-            if(inputElementType == 'text' || inputElementType == 'number' || inputElementType == 'hidden') {
-                onlyTextBoxes2.push(allInputs[i]);
-            }
+            onlyTextBoxes2.push(allInputs[i]);
         }
 
         allInputs = onlyTextBoxes2;
@@ -810,6 +812,8 @@ function elementAdd(elementNumber, elementID){
    
    //Clear the for the inputs
    htmlBlock = htmlBlock.replace(/value=".*?"/g, 'value=""');
+   htmlBlock = htmlBlock.split("").reverse().join("").replace(/>aeratxet\/<(.*?)>";/g, '>aeratxet/<>";').split("").reverse().join(""); //This can be made better if you don't reverse it twice and use a regex to find the end tag first.
+   //htmlBlock = htmlBlock.replace(/;">(.*?)<\/textarea>/g, ';"></textarea>');
    
    //Then it loops through and finds all the folders inside that block, and replaces the same way in the jsonBlocks
    var tempBlock = htmlBlock;
@@ -969,7 +973,16 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
            }
 		   latestID += 1;
 		   fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key]]);
-		   generatedHTML += '<p id="' + current_path+key +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;" data-newid="' + latestID.toString() + '"><img src="' + file +'"><b> ' + key + '</b> <input type="' + inputType + '" style="width: 300px;" value="' + keyValue + '" data-newid="' + latestID.toString() + '"></input> <span style="display: none;">()</span><span class="minusButton" style="display: none;"><button class="circle minus" onclick="elementDelete(' + latestID + ', false)" title="Deletes this element."></button></span></p>';
+		   if (inputType === 'text'){
+				//This commented out line is for regular input text boxes. Perhaps I can have this as a setting
+				if (singlelineText) {
+					generatedHTML += '<p id="' + current_path+key +'" style="min-height: 22px; margin-top: 0px; margin-bottom: 0px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;" data-newid="' + latestID.toString() + '"><label style="vertical-align:top; display:inline-block; padding-top: 0px; margin: 0px;"><img src="' + file +'"><b> ' + key + '</b></label> <input type="' + inputType + '" class="inputField" style="width: 370px; font-family: Arial, sans-serif; font-size: 14px; padding-top: 0px; padding-bottom: 0px; padding-left: 1px;" value="' + keyValue + '" data-newid="' + latestID.toString() + '" oninput=""></input> <span style="display: none;">()</span><span class="minusButton" style="display: none;"><button class="circle minus" onclick="elementDelete(' + latestID + ', false)" title="Deletes this element."></button></span></p>';
+				} else {
+					generatedHTML += '<p id="' + current_path+key +'" style="margin-top: 0px; margin-bottom: 1px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;" data-newid="' + latestID.toString() + '"><label style="vertical-align:top; display:inline-block; padding-top: 0px; margin: 0px;"><img src="' + file +'"><b> ' + key + '</b></label> <textarea type="' + inputType + '" class="inputField" style="width: 370px; height: 15px; font-family: Arial, sans-serif; font-size: 14px; padding-top: 0px; padding-bottom: 1px; margin-top: 0px; margin-bottom: 0px; overflow: hidden; resize: none;" value="' + keyValue + '" data-newid="' + latestID.toString() + '" oninput="this.style.height = \'15px\'; this.style.height = (this.scrollHeight - 2).toString() + \'px\';"></textarea> <span style="display: none;">()</span><span class="minusButton" style="display: none;"><button class="circle minus" onclick="elementDelete(' + latestID + ', false)" title="Deletes this element."></button></span></p>';
+				}
+		   } else {
+			    generatedHTML += '<p id="' + current_path+key +'" style="min-height: 22px; margin-top: 0px; margin-bottom: 1px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;" data-newid="' + latestID.toString() + '"><label style="vertical-align:top; display:inline-block; padding-top: 0px; margin: 0px;"><img src="' + file +'"><b> ' + key + '</b></label> <input type="' + inputType + '" class="inputField" style="width: 120px; font-family: Arial, sans-serif; font-size: 14px; padding-top: 0px; padding-bottom: 0px;" value="' + keyValue + '" data-newid="' + latestID.toString() + '" oninput=""></input> <span style="display: none;">()</span><span class="minusButton" style="display: none;"><button class="circle minus" onclick="elementDelete(' + latestID + ', false)" title="Deletes this element."></button></span></p>';
+		   }
 		} else {
 			if (!Array.isArray(keyValue)){
 				latestID += 1;
@@ -1022,7 +1035,7 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 					latestID += 1;
 					fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key]]);
 					var arrayID = latestID;
-					generatedHTML += '<p id="' + current_path+key+ '[0]' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;' +'" ' + 'data-newid="' + latestID.toString() + '" ><img src="' + file + '"><b> ' + key + '</b> <input type="hidden" value="}}}_?][?][?_{{{" style="width: 300px;" data-newid="' + latestID.toString() + '"></input><span style="display: none;">()</span><span style="display: none;">()</span><span id="buttonAdd' + folderCount.toString() + '" class="addButton' + visibilityButton + '" style="' + visibility + '">';
+					generatedHTML += '<p id="' + current_path+key+ '[0]' +'" style="min-height: 22px; margin-top: 0px; margin-bottom: 1px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px;' +'" ' + 'data-newid="' + latestID.toString() + '" ><label style="vertical-align:top; display:inline-block; padding-top: 0px; margin: 0px;"><img src="' + file + '"><b> ' + key + '</b></label> <input type="hidden" value="}}}_?][?][?_{{{" class="inputField" style="width: 300px;" data-newid="' + latestID.toString() + '"></input><span style="display: none;">()</span><span style="display: none;">()</span><span id="buttonAdd' + folderCount.toString() + '" class="addButton' + visibilityButton + '" style="' + visibility + '">';
 					var visibility = 'display: inline;'
                     var latestTextField = "";
 					var entryNumber = 0;
@@ -1042,14 +1055,14 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 					   latestID += 1;
 					   fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key, entryNumber.toString()]]);
 					   
-                       generatedHTML += '<input id="]....}?|?|?{....[_" type="' + inputType + '" value="' + json[key][entry] +'" style="width: 80px; margin-left: 3px;"  data-newid="' + latestID.toString() + '"></input>';
+                       generatedHTML += '<input id="]....}?|?|?{....[_" type="' + inputType + '" class="inputField" style="width: 90px; margin-left: 3px; font-family: Arial, sans-serif; font-size: 14px; padding-top: 0px; padding-bottom: 0px;" value="' + json[key][entry] + '" data-newid="' + latestID.toString() + '" oninput=""></input>';
 					   entryNumber += 1;
                     }
 					simpleArrayTracker[arrayID] = entryNumber;
                     //Latest field, without the value, also the ID changed
 					latestID += 1;
 					fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key, entryNumber.toString()]]);
-					var latestTextField = '<input id=&quot;]....}?|?|?{....[_&quot; type=&quot;' + inputType + '&quot; style=&quot;width: 80px; margin-left: 3px;&quot; data-newid=&quot;]....}?|?|?{....[_' + (latestID-1).toString() + '&quot;></input>';
+					var latestTextField = '<input id=&quot;]....}?|?|?{....[_&quot; type=&quot;' + inputType + '&quot; class=&quot;inputField&quot; style=&quot;width: 80px; margin-left: 3px; font-family: Arial, sans-serif; font-size: 14px; padding-top: 0px; padding-bottom: 0px;&quot; data-newid=&quot;]....}?|?|?{....[_' + (latestID-1).toString() + '&quot;></input>';
                     generatedHTML += '<button class="circle plus" onclick="addToInputList(this, \'' + latestTextField + '\', \''+ arrayID +'\');" title="Add another one of this element."></button><button class="circle minus minusButton" style="display: none;" onclick="removeFromInputList(this, \'' + latestTextField + '\', \''+ arrayID +'\');" title="Deletes the last element in this array."></button></span></p>';
 				}
 			}
@@ -1130,6 +1143,12 @@ function buildTree(hashTreeToJson){
 	var d1 = document.getElementById(']....}?|?|?{....[treeChart');
     
     d1.innerHTML = generatedHTML;
+	var allTextArea = document.querySelectorAll('textarea.inputField');
+	for (var x = 0; x < allTextArea.length; x++) {
+		allTextArea[x].value = allTextArea[x].getAttribute("value");
+		allTextArea[x].style.height = '15px';
+		allTextArea[x].style.height = (allTextArea[x].scrollHeight - 2).toString() + 'px';
+	}
 	if (hashTreeToJson) {
 		hashDict = hashCode(JSON.stringify(TreeToJSON()));
 	}
