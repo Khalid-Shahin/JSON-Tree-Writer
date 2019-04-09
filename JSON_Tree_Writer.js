@@ -231,6 +231,14 @@ function scrollToActiveElement(){
 	var activeElement = document.activeElement;
 }
 
+function updateTree(){
+	var treeToJsonDict = TreeToJSON();
+	var tempJson = deleteElementsFromJSON(JSON.parse(JSON.stringify(treeToJsonDict)));
+    var jsonToSave = JSON.stringify(tempJson, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0").replace(/([^\r])\n/g, "$1\r\n");
+    json = JSON.parse(jsonToSave);
+    buildTree(false);
+}
+
 function convertTreeToJSON(){
     var treeToJsonDict = TreeToJSON();
 	var tempJson = deleteElementsFromJSON(JSON.parse(JSON.stringify(treeToJsonDict)));
@@ -350,7 +358,7 @@ function deleteEmptyFields (){
    if (hashBefore != hashAfter){
       if (confirm('Are you sure you want to delete these empty field(s)')) {
         json = dict;
-        buildTree(true);
+        buildTree(false);
       }
    } else {
       toastNothingToDelete();
