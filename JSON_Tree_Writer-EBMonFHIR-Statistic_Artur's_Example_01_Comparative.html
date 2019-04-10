@@ -557,7 +557,34 @@ hovertext_json = {
 json = {
   "resourceType": "Statistic",
   "url": "",
-  "identifier": "",
+  "identifier": [
+    {
+      "use": "",
+      "type": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "system": "",
+      "value": "",
+      "period": {
+        "start": "",
+        "end": ""
+      },
+      "assigner": {
+        "reference": "",
+        "type": "",
+        "display": ""
+      }
+    }
+  ],
   "version": "",
   "title": "",
   "status": "draft",
@@ -576,7 +603,10 @@ json = {
               "value": "",
               "use": "",
               "rank": "",
-              "period": ""
+              "period": {
+                "start": "",
+                "end": ""
+              }
             }
           ]
         }
@@ -596,7 +626,10 @@ json = {
               "value": "",
               "use": "",
               "rank": "",
-              "period": ""
+              "period": {
+                "start": "",
+                "end": ""
+              }
             }
           ]
         }
@@ -604,32 +637,93 @@ json = {
     }
   ],
   "relatedArtifact": [
-    ""
+    {
+      "type": "",
+      "label": "",
+      "display": "",
+      "citation": "",
+      "url": "",
+      "document": {
+        "contentType": "",
+        "language": "",
+        "data": "",
+        "url": "",
+        "size": null,
+        "hash": "",
+        "title": "",
+        "creation": ""
+      },
+      "resource": ""
+    }
   ],
-  "description": "",
-  "synthesisType": "std-MA",
-  "studyType": "RCT",
-  "exposureBackground[x]": "http://bit.ly/Group-AllergicRhinitisNOTasthma",
-  "exposure[x]": "http://bit.ly/Group-SLimmunotherapy",
-  "exposureVariant[x]": [
-    "http://bit.ly/Group-noSLimmunotherapy"
+  "description": "SMD 0.36 lower (0.46 lower to 0.26 lower)",
+  "synthesisType": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+        "version": "",
+        "code": "std-MA",
+        "display": "summary data meta-analysis",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "studyType": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/study-type",
+        "version": "",
+        "code": "RCT",
+        "display": "randomized trial",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "exposureBackground": {
+    "reference": "http://bit.ly/Group-AllergicRhinitisNOTasthma",
+    "type": "Group",
+    "identifier": "",
+    "display": "allergic rhinitis in adults without concomitant asthma"
+  },
+  "exposure": {
+    "reference": "http://bit.ly/Group-SLimmunotherapy",
+    "type": "Group",
+    "identifier": "",
+    "display": "sublingual specific immunotherapy"
+  },
+  "exposureVariant": [
+    {
+      "reference": "http://bit.ly/Group-noSLimmunotherapy",
+      "type": "Group",
+      "identifier": "",
+      "display": "no sublingual specific immunotherapy"
+    }
   ],
-  "measuredVariable[x]": [
-    "http://bit.ly/EvidenceVariable-RQLQrhinitisQOL"
+  "measuredVariable": [
+    {
+      "reference": "http://bit.ly/EvidenceVariable-RQLQrhinitisQOL",
+      "type": "EvidenceVariable",
+      "identifier": "",
+      "display": "QoL (disease specific RQLQ) Better indicated by lower values)"
+    }
   ],
   "statisticType": {
-    "description": "SMD 0.36 lower (0.46 lower to 0.26 lower)",
-    "type": {
-      "coding": {
-        "system": "http://build.fhir.org/valueset-effect-estimate-type.html",
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/effect-estimate-type",
+        "version": "",
         "code": "absolute-SMD",
-        "display": "standardized mean difference"
+        "display": "standardized mean difference",
+        "userSelected": ""
       }
-    }
+    ],
+    "text": ""
   },
   "quantity": {
     "value": -0.36,
-    "comparator": "=",
+    "comparator": "",
     "unit": "points",
     "system": "UCUM",
     "code": "score"
@@ -640,33 +734,51 @@ json = {
     "numberOfParticipants": 1658,
     "knownDataCount": -0,
     "numeratorCount": -0,
-    "note": ""
+    "note": [
+      {
+        "text": ""
+      }
+    ]
   },
   "precisionEstimate": [
     {
       "description": "",
       "type": {
-        "coding": {
-          "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
-          "code": "CI",
-          "display": "confidence interval"
-        }
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+            "version": "",
+            "code": "CI",
+            "display": "confidence interval",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
       },
       "level": 0.95,
       "from": -0.46,
       "to": -0.26,
-      "note": ""
+      "note": [
+        {
+          "text": ""
+        }
+      ]
     }
   ],
   "pValue": [
     {
       "description": "",
       "type": {
-        "coding": {
-          "system": "",
-          "code": "",
-          "display": ""
-        }
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
       },
       "quantity": {
         "value": 0.05,
@@ -675,163 +787,295 @@ json = {
         "system": "",
         "code": ""
       },
-      "range": "",
-      "note": ""
+      "range": {
+        "low": "",
+        "high": ""
+      },
+      "note": [
+        {
+          "text": ""
+        }
+      ]
     }
   ],
   "certainty": [
     {
       "rating": [
         {
-          "coding": {
-            "system": "GRADE",
-            "code": 3,
-            "display": "Moderate"
-          }
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/certainty-rating",
+              "version": "",
+              "code": "moderate",
+              "display": "Moderate quality",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
         }
       ],
       "certaintySubcomponent": [
         {
           "type": {
-            "coding": {
-              "system": "GRADE",
-              "code": "RiskOfBias",
-              "display": "Risk of bias"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "RiskOfBias",
+                "display": "Risk of bias",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
           "rating": {
-            "coding": {
-              "system": "GRADE",
-              "code": "no-concern",
-              "display": "no serious concern"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "no-concern",
+                "display": "no serious concern",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
-          "note": ""
+          "note": [
+            {
+              "text": ""
+            }
+          ]
         },
         {
           "type": {
-            "coding": {
-              "system": "GRADE",
-              "code": "Inconsistency",
-              "display": "Inconsistency"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "Inconsistency",
+                "display": "Inconsistency",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
           "rating": {
-            "coding": {
-              "system": "GRADE",
-              "code": "serious-concern",
-              "display": "serious concern"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "serious-concern",
+                "display": "serious concern",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
-          "note": "No explanation was provided"
+          "note": [
+            {
+              "text": "No explanation was provided"
+            }
+          ]
         },
         {
           "type": {
-            "coding": {
-              "system": "GRADE",
-              "code": "Indirectness",
-              "display": "Indirectness"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "Indirectness",
+                "display": "Indirectness",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
           "rating": {
-            "coding": {
-              "system": "GRADE",
-              "code": "no-concern",
-              "display": "no serious concern"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "no-concern",
+                "display": "no serious concern",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
-          "note": ""
+          "note": [
+            {
+              "text": ""
+            }
+          ]
         },
         {
           "type": {
-            "coding": {
-              "system": "GRADE",
-              "code": "Imprecision",
-              "display": "Imprecision"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "Imprecision",
+                "display": "Imprecision",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
           "rating": {
-            "coding": {
-              "system": "GRADE",
-              "code": "no-concern",
-              "display": "no serious concern"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "no-concern",
+                "display": "no serious concern",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
-          "note": ""
+          "note": [
+            {
+              "text": ""
+            }
+          ]
         },
         {
           "type": {
-            "coding": {
-              "system": "GRADE",
-              "code": "PublicationBias",
-              "display": "Publication bias"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "PublicationBias",
+                "display": "Publication bias",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
           "rating": {
-            "coding": {
-              "system": "GRADE",
-              "code": "no-concern",
-              "display": "no serious concern"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "no-concern",
+                "display": "no serious concern",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
-          "note": ""
+          "note": [
+            {
+              "text": ""
+            }
+          ]
         },
         {
           "type": {
-            "coding": {
-              "system": "GRADE",
-              "code": "DoseResponseGradient",
-              "display": "Dose response gradient"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "DoseResponseGradient",
+                "display": "Dose response gradient",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
           "rating": {
-            "coding": {
-              "system": "GRADE",
-              "code": "absent",
-              "display": "absent"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "absent",
+                "display": "absent",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
-          "note": ""
+          "note": [
+            {
+              "text": ""
+            }
+          ]
         },
         {
           "type": {
-            "coding": {
-              "system": "GRADE",
-              "code": "PlausibleConfounding",
-              "display": "Plausible confounding"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "PlausibleConfounding",
+                "display": "Plausible confounding",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
           "rating": {
-            "coding": {
-              "system": "GRADE",
-              "code": "absent",
-              "display": "absent"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "absent",
+                "display": "absent",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
-          "note": ""
+          "note": [
+            {
+              "text": ""
+            }
+          ]
         },
         {
           "type": {
-            "coding": {
-              "system": "GRADE",
-              "code": "LargeEffect",
-              "display": "Large effect"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "LargeEffect",
+                "display": "Large effect",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
           "rating": {
-            "coding": {
-              "system": "GRADE",
-              "code": "absent",
-              "display": "absent"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "absent",
+                "display": "absent",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
-          "note": ""
+          "note": [
+            {
+              "text": ""
+            }
+          ]
         }
       ],
-      "note": ""
+      "note": [
+        {
+          "text": ""
+        }
+      ]
     }
   ],
-  "note": ""
+  "note": [
+    {
+      "text": ""
+    }
+  ]
 };
 
 </script>

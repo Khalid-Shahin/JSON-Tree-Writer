@@ -557,7 +557,34 @@ hovertext_json = {
 json = {
   "resourceType": "Statistic",
   "url": "",
-  "identifier": "",
+  "identifier": [
+    {
+      "use": "",
+      "type": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "system": "",
+      "value": "",
+      "period": {
+        "start": "",
+        "end": ""
+      },
+      "assigner": {
+        "reference": "",
+        "type": "",
+        "display": ""
+      }
+    }
+  ],
   "version": "",
   "title": "",
   "status": "",
@@ -576,7 +603,10 @@ json = {
               "value": "",
               "use": "",
               "rank": "",
-              "period": ""
+              "period": {
+                "start": "",
+                "end": ""
+              }
             }
           ]
         }
@@ -596,7 +626,10 @@ json = {
               "value": "",
               "use": "",
               "rank": "",
-              "period": ""
+              "period": {
+                "start": "",
+                "end": ""
+              }
             }
           ]
         }
@@ -604,32 +637,93 @@ json = {
     }
   ],
   "relatedArtifact": [
-    ""
+    {
+      "type": "",
+      "label": "",
+      "display": "",
+      "citation": "",
+      "url": "",
+      "document": {
+        "contentType": "",
+        "language": "",
+        "data": "",
+        "url": "",
+        "size": null,
+        "hash": "",
+        "title": "",
+        "creation": ""
+      },
+      "resource": ""
+    }
   ],
   "description": "",
-  "synthesisType": "",
-  "studyType": "",
-  "exposureBackground[x]": "",
-  "exposure[x]": "",
-  "exposureVariant[x]": [
-    ""
+  "synthesisType": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "studyType": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/study-type",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "exposureBackground": {
+    "reference": "",
+    "type": "Group",
+    "identifier": "",
+    "display": ""
+  },
+  "exposure": {
+    "reference": "",
+    "type": "Group",
+    "identifier": "",
+    "display": ""
+  },
+  "exposureVariant": [
+    {
+      "reference": "",
+      "type": "Group",
+      "identifier": "",
+      "display": ""
+    }
   ],
-  "measuredVariable[x]": [
-    ""
+  "measuredVariable": [
+    {
+      "reference": "",
+      "type": "EvidenceVariable",
+      "identifier": "",
+      "display": ""
+    }
   ],
   "statisticType": {
-    "description": "",
-    "type": {
-      "coding": {
-        "system": "http://build.fhir.org/valueset-effect-estimate-type.html",
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/effect-estimate-type",
+        "version": "",
         "code": "",
-        "display": ""
+        "display": "",
+        "userSelected": ""
       }
-    }
+    ],
+    "text": ""
   },
   "quantity": {
-    "value": -0.0,
-    "comparator": "=",
+    "value": -0,
+    "comparator": "",
     "unit": "points",
     "system": "UCUM",
     "code": "score"
@@ -640,33 +734,51 @@ json = {
     "numberOfParticipants": -0,
     "knownDataCount": -0,
     "numeratorCount": -0,
-    "note": ""
+    "note": [
+      {
+        "text": ""
+      }
+    ]
   },
   "precisionEstimate": [
     {
       "description": "",
       "type": {
-        "coding": {
-          "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
-          "code": "",
-          "display": ""
-        }
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
       },
-      "level": -0.0,
-      "from": -0.0,
-      "to": -0.0,
-      "note": ""
+      "level": -0,
+      "from": -0,
+      "to": -0,
+      "note": [
+        {
+          "text": ""
+        }
+      ]
     }
   ],
   "pValue": [
     {
       "description": "",
       "type": {
-        "coding": {
-          "system": "",
-          "code": "",
-          "display": ""
-        }
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
       },
       "quantity": {
         "value": -0,
@@ -675,44 +787,78 @@ json = {
         "system": "",
         "code": ""
       },
-      "range": "",
-      "note": ""
+      "range": {
+        "low": "",
+        "high": ""
+      },
+      "note": [
+        {
+          "text": ""
+        }
+      ]
     }
   ],
   "certainty": [
     {
       "rating": [
         {
-          "coding": {
-            "system": "",
-            "code": -0,
-            "display": ""
-          }
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/certainty-rating",
+              "version": "",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
         }
       ],
       "certaintySubcomponent": [
         {
           "type": {
-            "coding": {
-              "system": "",
-              "code": "",
-              "display": ""
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
           "rating": {
-            "coding": {
-              "system": "",
-              "code": "",
-              "display": ""
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           },
-          "note": ""
+          "note": [
+            {
+              "text": ""
+            }
+          ]
         }
       ],
-      "note": ""
+      "note": [
+        {
+          "text": ""
+        }
+      ]
     }
   ],
-  "note": ""
+  "note": [
+    {
+      "text": ""
+    }
+  ]
 };
 
 </script>
