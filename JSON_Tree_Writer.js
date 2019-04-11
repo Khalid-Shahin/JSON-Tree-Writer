@@ -102,7 +102,7 @@ window.addEventListener("beforeunload", function (e) {
 
 function objectClean(object, entry, result){
   var cleanedObj;
-  if (typeof object == "object"){
+  if (typeof object == "object" && object != null){
 	  var index = 0;
 	  if (Array.isArray(object)) {
 		cleanedObj = [];
