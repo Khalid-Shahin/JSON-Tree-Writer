@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 	<link rel="stylesheet" type="text/css" href="JSON_Tree_Writer.css">
-	<title>JSON Tree Writer - EBMonFHIR - Blank Evidence Resource</title>
+	<title>JSON Tree Writer - EBMonFHIR - Artur's Statistic Example 04 (Univariate)</title>
 </head>
 <body>
 <div class="container">
      <div class="topArea">
-     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - Blank - <span style="color: red;">DO NOT USE</span> use the <a href="https://khalid-shahin.github.io/JSON-Tree-Writer/JSON_Tree_Writer-EBMonFHIR-Statistic-Resource.html">Statistic resource</a> instead</h2>
+     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - Artur's Statistic Example 04 (Univariate) </h2>
 	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. A field value of &quot;null&quot;, all lowercase, in the tree view will be converted to just null in the JSON.\n2. A field value of &quot;true&quot; or &quot;false&quot;, all lowercase, will be converted to just true or false respectively as booleans in the JSON.\n3. 1D arrays work perfectly fine to and from JSON, and interpreting 2D, 3D, and beyond arrays from JSON to Tree View can work well most of the time, but bugs may occur when adding elements in the Tree View for arrays more complex than 1D.')" style="position: absolute; right: 6px; top: 4px;">Limitations</button>
 	 <p style="position: absolute; right: 94px; top: 7px; margin: 0px; color: #AEAEAE; font-size: 13px; font-family: sans-serif"><b>EBSCO Health Innovations</b></p>
 	 <p style="position: absolute; right: 2px; top: 10px;">Convert Tree View to JSON in real time? <input onchange="TreeToJSONsetting();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_RealTime" name="JSONrealtime" value="JSONrealtime" title="If this is checked then the JSON side will be updated automatically as you type and add elements on the Tree View side."></p>
@@ -47,7 +47,7 @@ if(window.addEventListener) {
     window.attachEvent('onload', initiatePage); //Older IE
 }
 
-json = {
+hovertext_json = {
   "resourceType": "Evidence",
   "identifier": "",
   "identifier---HoVeR": "A formal identifier that is used to identify this evidence when it is represented in other formats, or referenced in a specification, model, design or an instance. [0..*]",
@@ -56,6 +56,8 @@ json = {
   "title": "",
   "title---HoVeR": "A short, descriptive, user-friendly title for the evidence. [0..1]",
   "date": "",
+  "status": "",
+  "status": "[1..1]",
   "date---HoVeR": "The date (and optionally time) when the evidence was published. The date must change when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the evidence changes. [0..1]",
   "publisher": "",
   "publisher---HoVeR": "The name of the organization or individual that published the evidence. [0..1]",
@@ -550,6 +552,313 @@ json = {
     }
   ],
   "exposureBackground---HoVeR": "[1..*]"
+};
+
+json = {
+  "resourceType": "Statistic",
+  "url": "",
+  "identifier": [
+    {
+      "use": "",
+      "type": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "system": "",
+      "value": "",
+      "period": {
+        "start": "",
+        "end": ""
+      },
+      "assigner": {
+        "reference": "",
+        "type": "",
+        "display": ""
+      }
+    }
+  ],
+  "version": "",
+  "title": "",
+  "status": "",
+  "date": "",
+  "approvalDate": "",
+  "lastReviewDate": "",
+  "publisher": [
+    {
+      "name": "Cochrane",
+      "contact": [
+        {
+          "name": "",
+          "telecom": [
+            {
+              "system": "",
+              "value": "",
+              "use": "",
+              "rank": "",
+              "period": {
+                "start": "",
+                "end": ""
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "contributor": [
+    {
+      "type": "author",
+      "name": "Jan L. Brozek",
+      "contact": [
+        {
+          "name": "Jan L. Brozek",
+          "telecom": [
+            {
+              "system": "",
+              "value": "",
+              "use": "",
+              "rank": "",
+              "period": {
+                "start": "",
+                "end": ""
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "relatedArtifact": [
+    {
+      "type": "",
+      "label": "",
+      "display": "",
+      "citation": "",
+      "url": "",
+      "document": {
+        "contentType": "",
+        "language": "",
+        "data": "",
+        "url": "",
+        "size": null,
+        "hash": "",
+        "title": "",
+        "creation": ""
+      },
+      "resource": ""
+    }
+  ],
+  "description": "",
+  "synthesisType": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+        "version": "",
+        "code": "additive?",
+        "display": "sample size for this analysis?",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "studyType": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/study-type",
+        "version": "",
+        "code": "RCT",
+        "display": "randomized trial",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "exposureBackground": {
+    "reference": "http://bit.ly/Group-AllergicRhinitisNOTasthma",
+    "type": "Group",
+    "identifier": "",
+    "display": "allergic rhinitis in adults without concomitant asthma"
+  },
+  "exposure": {
+    "reference": "http://bit.ly/Group-SLimmunotherapy",
+    "type": "Group",
+    "identifier": "",
+    "display": "sublingual specific immunotherapy"
+  },
+  "exposureVariant": [
+    {
+      "reference": "",
+      "type": "",
+      "identifier": "",
+      "display": ""
+    }
+  ],
+  "measuredVariable": [
+    {
+      "reference": "http://bit.ly/EvidenceVariable-WithdrawalAE",
+      "type": "EvidenceVariable",
+      "identifier": "",
+      "display": "Withdrawal due to adverse effect (median FU 7 months)"
+    }
+  ],
+  "statisticType": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/effect-estimate-type",
+        "version": "",
+        "code": "rate",
+        "display": "rate",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "quantity": {
+    "value": 0.041,
+    "comparator": "",
+    "unit": "",
+    "system": "",
+    "code": ""
+  },
+  "sampleSize": {
+    "description": "",
+    "numberOfStudies": 25,
+    "numberOfParticipants": 1691,
+    "knownDataCount": 1691,
+    "numeratorCount": 70,
+    "note": [
+      {
+        "text": "70/1691 (4.1%) "
+      }
+    ]
+  },
+  "precisionEstimate": [
+    {
+      "description": "",
+      "type": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "level": -0,
+      "from": -0,
+      "to": -0,
+      "note": [
+        {
+          "text": ""
+        }
+      ]
+    }
+  ],
+  "pValue": [
+    {
+      "description": "",
+      "type": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "quantity": {
+        "value": -0,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "range": {
+        "low": "",
+        "high": ""
+      },
+      "note": [
+        {
+          "text": ""
+        }
+      ]
+    }
+  ],
+  "certainty": [
+    {
+      "rating": [
+        {
+          "coding": [
+            {
+              "system": "",
+              "version": "",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        }
+      ],
+      "certaintySubcomponent": [
+        {
+          "type": {
+            "coding": [
+              {
+                "system": "",
+                "version": "",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "rating": {
+            "coding": [
+              {
+                "system": "",
+                "version": "",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "note": [
+            {
+              "text": ""
+            }
+          ]
+        }
+      ],
+      "note": [
+        {
+          "text": ""
+        }
+      ]
+    }
+  ],
+  "note": [
+    {
+      "text": ""
+    }
+  ]
 };
 
 </script>
