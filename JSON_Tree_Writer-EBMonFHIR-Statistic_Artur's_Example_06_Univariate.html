@@ -602,10 +602,10 @@ json = {
     "display": "allergic rhinitis in adults without concomitant asthma"
   },
   "exposure": {
-    "reference": "http://bit.ly/Group-noSLimmunotherapy",
+    "reference": "http://bit.ly/Group-SLimmunotherapy",
     "type": "Group",
     "identifier": "",
-    "display": "no sublingual specific immunotherapy"
+    "display": "sublingual specific immunotherapy"
   },
   "exposureVariant": [
     {
@@ -617,10 +617,10 @@ json = {
   ],
   "measuredVariable": [
     {
-      "reference": "http://bit.ly/EvidenceVariable-RQLQrhinitisQOL",
+      "reference": "http://bit.ly/EvidenceVariable-WithdrawalAE",
       "type": "EvidenceVariable",
       "identifier": "",
-      "display": "QoL (disease specific RQLQ) Better indicated by lower values) (median FU 7 months)"
+      "display": "Withdrawal due to adverse effect (median FU 7 months)"
     }
   ],
   "statisticType": {
@@ -628,14 +628,14 @@ json = {
       {
         "system": "http://hl7.org/fhir/ValueSet/effect-estimate-type",
         "version": "",
-        "code": "sampleSize?",
-        "display": "sample size?"
+        "code": "rate",
+        "display": "rate"
       }
     ],
     "text": ""
   },
   "quantity": {
-    "value": -0,
+    "value": 0.041,
     "comparator": "",
     "unit": "",
     "system": "",
@@ -643,13 +643,13 @@ json = {
   },
   "sampleSize": {
     "description": "",
-    "numberOfStudies": 5,
-    "numberOfParticipants": 840,
-    "knownDataCount": -0,
-    "numeratorCount": -0,
+    "numberOfStudies": 25,
+    "numberOfParticipants": 1691,
+    "knownDataCount": 1691,
+    "numeratorCount": 70,
     "note": [
       {
-        "text": ""
+        "text": "70/1691 (4.1%) "
       }
     ]
   },
