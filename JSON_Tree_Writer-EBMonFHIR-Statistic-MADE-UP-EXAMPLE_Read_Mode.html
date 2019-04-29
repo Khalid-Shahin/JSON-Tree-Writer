@@ -59,508 +59,431 @@ if(window.addEventListener) {
 }
 
 hovertext_json = {
-  "resourceType": "Evidence",
-  "identifier": "",
-  "identifier---HoVeR": "A formal identifier that is used to identify this evidence when it is represented in other formats, or referenced in a specification, model, design or an instance. [0..*]",
+  "resourceType": "Statistic",
   "url": "",
-  "url---HoVeR": "An absolute URI that is used to identify this evidence when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this evidence is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the evidence is stored on different servers. [0..1]",
-  "title": "",
-  "title---HoVeR": "A short, descriptive, user-friendly title for the evidence. [0..1]",
-  "date": "",
-  "date---HoVeR": "The date (and optionally time) when the evidence was published. The date must change when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the evidence changes. [0..1]",
-  "publisher": "",
-  "publisher---HoVeR": "The name of the organization or individual that published the evidence. [0..1]",
-  "author": [
-    ""
-  ],
-  "author---HoVeR": "An individual or organization primarily involved in the creation and maintenance of the content [0..*]",
-  "exposureBackground": [
+  "url---HoVeR": "An absolute URI that is used to identify this statistic when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this statistic is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the statistic is stored on different servers.",
+  "identifier": [
     {
-      "description": "",
-      "description---HoVeR": "Human-readable summary of the population or subpopulation [0..1]",
-      "population": "",
-      "population---HoVeR": "A reference to a Group that defines the population or subpopulation [1..1]",
-      "populationSampleSize": {
-        "description": "",
-        "description---HoVeR": "Human-readable summary of population sample size [0..1]",
-        "numberOfStudies": -0,
-        "numberOfStudies---HoVeR": "Number of studies contributing to this Evidence summary [0..1]",
-        "numberOfParticipants": -0,
-        "numberOfParticipants---HoVeR": "Number of participants in the population [0..1]",
-        "note": "",
-        "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
+      "use": "",
+	  "use---HoVeR": "The purpose of this identifier.",
+      "type": {
+       "coding": [
+          {
+            "system": "",
+			"system---HoVeR": "The identification of the code system that defines the meaning of the symbol in the code.",
+            "version": "",
+			"version---HoVeR": "The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured, and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged.",
+            "code": "",
+			"code---HoVeR": "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).",
+            "display": "",
+			"display---HoVeR": "A representation of the meaning of the code in the system, following the rules of the system.",
+            "userSelected": "",
+			"userSelected---HoVeR": "Indicates that this coding was chosen by a user directly - e.g. off a pick list of available items (codes or displays)."
+          }
+        ],
+		"coding---HoVeR": "A reference to a code defined by a terminology system.",
+        "text": "",
+		"text---HoVeR": "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."
       },
-      "populationSampleSize---HoVeR": "[0..1]",
-      "exposureVariant": [
-        {
-          "description": "",
-          "description---HoVeR": "Human-readable summary of the exposure state [0..1]",
-          "groupByExposure": "",
-          "groupByExposure---HoVeR": "A reference to a Group that defines the exposure state (subgroup by exposure within the population) [1..1]",
-          "exposureSubsetSampleSize": {
-            "description": "",
-            "description---HoVeR": "Human-readable summary of sample size with exposure [0..1]",
-            "numberOfStudies": -0,
-            "numberOfStudies---HoVeR": "Number of studies contributing to this Evidence summary [0..1]",
-            "numberOfParticipants": -0,
-            "numberOfParticipants---HoVeR": "Number of participants in the population [0..1]",
-            "note": "",
-            "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
-          },
-          "measuredVariable": [
-            {
-              "description": "",
-              "description---HoVeR": "Human-readable summary of sample characteristic or outcome definition [0..1]",
-              "measuredVariableDefinition": "",
-              "measuredVariableDefinition---HoVeR": "A reference to an EvidenceVariable [1..1]",
-              "univariateStatistic": [
-                {
-                  "description": "",
-                  "description---HoVeR": "A human-readable string to describe the findings [0..1]",
-                  "synthesisType": "",
-                  "synthesisType---HoVeR": "Type of synthesis eg meta-analysis [0..1]",
-                  "studyType": "",
-                  "studyType---HoVeR": "Type of study eg randomized trial [0..1]",
-                  "sampleSize": {
-                    "description": "",
-                    "description---HoVeR": "Human-readable summary of sample size [0..1]",
-                    "numberOfStudies": -0,
-                    "numberOfStudies---HoVeR": "Number of studies contributing to this measurement [0..1]",
-                    "numberOfParticipants": -0,
-                    "numberOfParticipants---HoVeR": "Number of participants in the sample relevant to this measurement. May be used as denominator for intention-to-treat analysis, or analysis with assumptions for missing data. [0..1]",
-                    "knownDataCount": -0,
-                    "knownDataCount---HoVeR": "Number of participants in the sample with measurement value known relevant to this measurement. May be used as denominator for analysis limited to available data. [0..1]",
-                    "numeratorCount": -0,
-                    "numeratorCount---HoVeR": "Number of participants in the sample with measurement value known and &quot;positive&quot; or &quot;present&quot; for a dichotomous measurement. May be used as numerator for proportion or percentage as statistic type. [0..1]",
-                    "note": "",
-                    "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
-                  },
-                  "statistic": [
-                    {
-                      "description": "",
-                      "description---HoVeR": "A human-readable string to summarize the statistic. May include type, value, units, and precision estimate. [0..1]",
-                      "type": {
-                        "coding": {
-                          "system": "http://build.fhir.org/valueset-risk-estimate-type.html",
-                          "system---HoVeR": "",
-                          "code": "",
-                          "code---HoVeR": "",
-                          "display": "",
-                          "display---HoVeR": ""
-                        }
-                      },
-                      "type---HoVeR": "Coded type of univariate statistic. Extensible codes include mean, median, proportion, percentage, low, high, count. [0..1]",
-                      "quantity": {
-                        "value": -0,
-                        "value---HoVeR": "",
-                        "comparator": "",
-                        "comparator---HoVeR": "",
-                        "unit": "",
-                        "unit---HoVeR": "",
-                        "system": "",
-                        "system---HoVeR": "",
-                        "code": "",
-                        "code---HoVeR": ""
-                      },
-                      "quantity---HoVeR": "Quantity datatype includes value, comparator (=, <, >), and unit [0..1]",
-                      "precisionEstimate": {
-                        "type": {
-                          "coding": {
-                            "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
-                            "system---HoVeR": "",
-                            "code": "",
-                            "code---HoVeR": "",
-                            "display": "",
-                            "display---HoVeR": ""
-                          },
-                          "coding---HoVeR": ""
-                        },
-                        "type---HoVeR": "Examples include confidence interval and interquartile range [0..1]",
-                        "level": -0,
-                        "level---HoVeR": "Use 0.95 for a 95% confidence interval [0..1]",
-                        "from": -0,
-                        "from---HoVeR": "Lower bound of confidence interval [0..1]",
-                        "to": -0,
-                        "to---HoVeR": "Upper bound of confidence interval [0..1]"
-                      },
-                      "precisionEstimate---HoVeR": "[0..*]",
-                      "note": "",
-                      "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
-                    }
-                  ],
-                  "statistic---HoVeR": "[0..*]",
-                  "certainty": [
-                    {
-                      "rating": [
-                        {
-                          "coding": {
-                            "system": "",
-                            "system---HoVeR": "",
-                            "code": "",
-                            "code---HoVeR": "",
-                            "display": "",
-                            "display---HoVeR": ""
-                          },
-                          "coding---HoVeR": ""
-                        }
-                      ],
-                      "rating---HoVeR": "A rating of the certainty of the effect estimate [0..*]",
-                      "certaintySubcomponent": [
-                        {
-                          "type": {
-                            "coding": {
-                              "system": "",
-                              "system---HoVeR": "",
-                              "code": "",
-                              "code---HoVeR": "",
-                              "display": "",
-                              "display---HoVeR": ""
-                            },
-                            "coding---HoVeR": ""
-                          },
-                          "type---HoVeR": "Type of subcomponent of certainty rating [0..1]",
-                          "rating": {
-                            "coding": {
-                              "system": "",
-                              "system---HoVeR": "",
-                              "code": "",
-                              "code---HoVeR": "",
-                              "display": "",
-                              "display---HoVeR": ""
-                            },
-                            "coding---HoVeR": ""
-                          },
-                          "rating---HoVeR": "A rating of a subcomponent of rating certainty [0..*]",
-                          "note": "",
-                          "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
-                        }
-                      ],
-                      "certaintySubcomponent---HoVeR": "A description of a component of the overall certainty [0..*]",
-                      "note": "",
-                      "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
-                    }
-                  ],
-                  "certainty---HoVeR": "A description of the certainty of the effect estimate [0..*]",
-                  "note": "",
-                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
-                }
-              ],
-              "univariateStatistic---HoVeR": "Statistic with only 1 variable (non-comparative) to be used for summary statistics of a single variable in a single group.  [0..*]",
-              "note": "",
-              "note---HoVeR": "A human-readable string to clarify or explain concepts about the measured variable [0..*]"
-            }
-          ],
-          "measuredVariable---HoVeR": "[0..*]",
-          "covariantStatistic": [
-            {
-              "description": "",
-              "description---HoVeR": "A human-readable string to describe the findings [0..1]",
-              "measuredVariable1": "",
-              "measuredVariable1---HoVeR": "A reference to an EvidenceVariable [1..1]",
-              "measuredVariable2": "A reference to an EvidenceVariable [1..1]",
-              "measuredVariable2---HoVeR": "A reference to an EvidenceVariable [1..1]",
-              "synthesisType": "",
-              "synthesisType---HoVeR": "Type of synthesis eg meta-analysis [0..1]",
-              "studyType": "",
-              "studyType---HoVeR": "Type of study eg randomized trial [0..1]",
-              "sampleSize": {
-                "description": "",
-                "description---HoVeR": "Human-readable summary of sample size [0..1]",
-                "numberOfStudies": -0,
-                "numberOfStudies---HoVeR": "Number of studies contributing to this measurement [0..1]",
-                "numberOfParticipants": -0,
-                "numberOfParticipants---HoVeR": "Number of participants in the sample relevant to this measurement. [0..1]",
-                "note": "",
-                "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size [0..*]"
-              },
-              "sampleSize---HoVeR": "[0..1]",
-              "statistic": [
-                {
-                  "description": "",
-                  "description---HoVeR": "A human-readable string to summarize the statistic. May include type, value, units, precision estimate, and p value. [0..1]",
-                  "type": {
-                    "coding": {
-                      "system": "",
-                      "system---HoVeR": "",
-                      "code": "",
-                      "code---HoVeR": "",
-                      "display": "",
-                      "display---HoVeR": ""
-                    },
-                    "coding---HoVeR": ""
-                  },
-                  "type---HoVeR": "Coded type of covariant statistic. Extensible codes include Pearson correlation coefficient, Spearman's rank-order correlation coefficient. [0..1]",
-                  "quantity": {
-                    "value": -0,
-                    "value---HoVeR": "",
-                    "comparator": "",
-                    "comparator---HoVeR": "",
-                    "unit": "",
-                    "unit---HoVeR": "",
-                    "system": "",
-                    "system---HoVeR": "",
-                    "code": "",
-                    "code---HoVeR": ""
-                  },
-                  "quantity---HoVeR": "Quantity datatype includes value, comparator (=, <, >), and unit [0..1]",
-                  "precisionEstimate": {
-                    "type": {
-                      "coding": {
-                        "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
-                        "system---HoVeR": "",
-                        "code": "",
-                        "code---HoVeR": "",
-                        "display": "",
-                        "display---HoVeR": ""
-                      },
-                      "coding---HoVeR": ""
-                    },
-                    "type---HoVeR": "Examples include confidence interval and interquartile range [0..1]",
-                    "level": -0,
-                    "level---HoVeR": "Use 95 for a 95% confidence interval [0..1]",
-                    "from": -0,
-                    "from---HoVeR": "Lower bound of confidence interval [0..1]",
-                    "to": -0,
-                    "to---HoVeR": "Upper bound of confidence interval [0..1]"
-                  },
-                  "precisionEstimate---HoVeR": "[0..*]",
-                  "pValue": {
-                    "type": "",
-                    "type---HoVeR": "P values for same statistic may vary based on statistical method used to calculate the p value. [0..1]",
-                    "quantity": {
-                      "value": -0,
-                      "value---HoVeR": "The value of the p value (between 0 and 1) [0..1]",
-                      "comparator": "",
-                      "comparator---HoVeR": "(=, <, >) [0..1]"
-                    },
-                    "quantity---HoVeR": "",
-                    "range": "",
-                    "range---HoVeR": "Used to express p values on one side of a threshold or in a range [0..1]"
-                  },
-                  "pValue---HoVeR": "Number between 0 and 1 related to probability of statistic [0..*]",
-                  "note": "",
-                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
-                }
-              ],
-              "statistic---HoVeR": "[0..*]",
-              "certainty": [
-                {
-                  "rating": [
-                    {
-                      "coding": {
-                        "system": "",
-                        "system---HoVeR": "",
-                        "code": "",
-                        "code---HoVeR": "",
-                        "display": "",
-                        "display---HoVeR": ""
-                      },
-                      "coding---HoVeR": ""
-                    }
-                  ],
-                  "rating---HoVeR": "A rating of the certainty of the effect estimate [0..*]",
-                  "certaintySubcomponent": [
-                    {
-                      "type": {
-                        "coding": {
-                          "system": "",
-                          "system---HoVeR": "",
-                          "code": "",
-                          "code---HoVeR": "",
-                          "display": "",
-                          "display---HoVeR": ""
-                        },
-                        "coding---HoVeR": ""
-                      },
-                      "type---HoVeR": "Type of subcomponent of certainty rating [0..1]",
-                      "rating": {
-                        "coding": {
-                          "system": "",
-                          "system---HoVeR": "",
-                          "code": "",
-                          "code---HoVeR": "",
-                          "display": "",
-                          "display---HoVeR": ""
-                        },
-                        "coding---HoVeR": ""
-                      },
-                      "rating---HoVeR": "A rating of a subcomponent of rating certainty [0..*]",
-                      "note": "",
-                      "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty subcomponent [0..*]"
-                    }
-                  ],
-                  "certaintySubcomponent---HoVeR": "A description of a component of the overall certainty [0..*]",
-                  "note": "",
-                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
-                }
-              ],
-              "certainty---HoVeR": "A description of the certainty of the effect estimate [0..*]",
-              "note": "",
-              "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
-            }
-          ],
-          "covariantStatistic---HoVeR": "Statistic to be used for summary of relation between 2 variables in a single group.  [0..*]",
-          "note": "",
-          "note---HoVeR": "A human-readable string to clarify or explain concepts about the exposure state [0..*]"
-        }
-      ],
-      "exposureVariant---HoVeR": "The exposure details. Which could be intervention or comparison/control states. [0..*]",
-      "comparativeStatistic": [
-        {
-          "description": "",
-          "description---HoVeR": "A human-readable string to describe the findings [0..1]",
-          "exposure": "",
-          "exposure---HoVeR": "A reference to a Group defining the exposure or intervention state [1..1]",
-          "exposureAlternative": "",
-          "exposureAlternative---HoVeR": "A reference to a Group defining the alternative exposure or control/comparator state [1..1]",
-          "measuredVariable": "",
-          "measuredVariable---HoVeR": "A reference to an EvidenceVariable [1..1]",
-          "synthesisType": "",
-          "synthesisType---HoVeR": "Type of synthesis eg meta-analysis [0..1]",
-          "studyType": "",
-          "studyType---HoVeR": "Type of study eg randomized trial [0..1]",
-          "sampleSize": {
-            "description": "",
-            "description---HoVeR": "Human-readable summary of sample size [0..1]",
-            "numberOfStudies": -0,
-            "numberOfStudies---HoVeR": "Number of studies contributing to this measurement [0..1]",
-            "numberOfParticipants": -0,
-            "numberOfParticipants---HoVeR": "Number of participants in the sample relevant to this measurement. [0..1]",
-            "note": "",
-            "note---HoVeR": "A human-readable string to clarify or explain concepts about the sample size. [0..*]"
-          },
-          "sampleSize---HoVeR": "[0..1]",
-          "statistic": [
-            {
-              "description": "",
-              "description---HoVeR": "A human-readable string to summarize the statistic. May include type, value, units, precision estimate, and p value. [0..1]",
-              "type": {
-                "coding": {
-                  "system": "http://build.fhir.org/valueset-effect-estimate-type.html",
-                  "system---HoVeR": "",
-                  "code": "",
-                  "code---HoVeR": "",
-                  "display": "",
-                  "display---HoVeR": ""
-                },
-                "coding---HoVeR": ""
-              },
-              "type---HoVeR": "Coded type of comparative statistic. Extensible codes include relative risk, odds ratio, absolute risk difference, standardized mean difference. [0..1]",
-              "quantity": {
-                "value": -0,
-                "value---HoVeR": "",
-                "comparator": "",
-                "comparator---HoVeR": "",
-                "unit": "",
-                "unit---HoVeR": "",
-                "system": "",
-                "system---HoVeR": "",
-                "code": "",
-                "code---HoVeR": ""
-              },
-              "quantity---HoVeR": "Quantity datatype includes value, comparator (=, <, >), and unit. [0..1]",
-              "precisionEstimate": {
-                "type": {
-                  "coding": {
-                    "system": "http://build.fhir.org/valueset-precision-estimate-type.html",
-                    "system---HoVeR": "",
-                    "code": "",
-                    "code---HoVeR": "",
-                    "display": "",
-                    "display---HoVeR": ""
-                  },
-                  "coding---HoVeR": ""
-                },
-                "type---HoVeR": "Examples include confidence interval and interquartile range [0..1]",
-                "level": -0,
-                "level---HoVeR": "Use 95 for a 95% confidence interval [0..1]",
-                "from": -0,
-                "from---HoVeR": "Lower bound of confidence interval [0..1]",
-                "to": -0,
-                "to---HoVeR": "Upper bound of confidence interval [0..1]"
-              },
-              "precisionEstimate---HoVeR": "[0..*]",
-              "pValue": {
-                "type": "",
-                "type---HoVeR": "P values for same statistic may vary based on statistical method used to calculate the p value. [0..1]",
-                "quantity": {
-                  "value": -0,
-                  "value---HoVeR": "The value of the p value (between 0 and 1) [0..1]",
-                  "comparator": "",
-                  "comparator---HoVeR": "(=, <, >) [0..1]"
-                },
-                "quantity---HoVeR": "",
-                "range": "",
-                "range---HoVeR": "Used to express p values on one side of a threshold or in a range [0..1]"
-              },
-              "pValue---HoVeR": "number between 0 and 1 related to probability of statistic [0..*]",
-              "note": "",
-              "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
-            }
-          ],
-          "statistic---HoVeR": "[0..*]",
-          "certainty": [
-            {
-              "rating": [
-                {
-                  "coding": {
-                    "system": "",
-                    "system---HoVeR": "",
-                    "code": "",
-                    "code---HoVeR": "",
-                    "display": "",
-                    "display---HoVeR": ""
-                  },
-                  "coding---HoVeR": ""
-                }
-              ],
-              "rating---HoVeR": "A rating of the certainty of the effect estimate [0..*]",
-              "certaintySubcomponent": [
-                {
-                  "type": {
-                    "coding": {
-                      "system": "",
-                      "system---HoVeR": "",
-                      "code": "",
-                      "code---HoVeR": "",
-                      "display": "",
-                      "display---HoVeR": ""
-                    },
-                    "coding---HoVeR": ""
-                  },
-                  "type---HoVeR": "Type of subcomponent of certainty rating [0..1]",
-                  "rating": {
-                    "coding": {
-                      "system": "",
-                      "system---HoVeR": "",
-                      "code": "",
-                      "code---HoVeR": "",
-                      "display": "",
-                      "display---HoVeR": ""
-                    },
-                    "coding---HoVeR": ""
-                  },
-                  "rating---HoVeR": "A rating of a subcomponent of rating certainty [0..*]",
-                  "note": "",
-                  "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty subcomponent [0..*]"
-                }
-              ],
-              "certaintySubcomponent---HoVeR": "A description of a component of the overall certainty [0..*]",
-              "note": "",
-              "note---HoVeR": "A human-readable string to clarify or explain concepts about the certainty [0..*]"
-            }
-          ],
-          "certainty---HoVeR": "A description of the certainty of the effect estimate [0..*]",
-          "note": "",
-          "note---HoVeR": "A human-readable string to clarify or explain concepts about the statistic [0..*]"
-        }
-      ],
-      "comparativeStatistic---HoVeR": "Statistic to be used for summary of relation between 2 variables in a single group.  [0..*]",
-      "note": "",
-      "note---HoVeR": ""
+	  "type---HoVeR": "A coded type for the identifier that can be used to determine which identifier to use for a specific purpose.",
+      "system": "",
+      "system---HoVeR": "Establishes the namespace for the value - that is, a URL that describes a set values that are unique.",
+      "value": "",
+      "value---HoVeR": "The portion of the identifier typically relevant to the user and which is unique within the context of the system.",
+      "period": {
+        "start": "",
+		"start---HoVeR": "The start of the period. The boundary is inclusive.",
+        "end": "",
+		"end---HoVeR": "The end of the period. If the end of the period is missing, it means no end was known or planned at the time the instance was created. The start may be in the past, and the end date in the future, which means that period is expected/planned to end at that time."
+      },
+	  "period---HoVeR": "Time period during which identifier is/was valid for use.",
+      "assigner": {
+		"reference": "",
+        "reference---HoVeR": "A reference to a location at which the other resource is found. The reference may be a relative reference, in which case it is relative to the service base URL, or an absolute URL that resolves to the location where the resource is found. The reference may be version specific or not. If the reference is not to a FHIR RESTful server, then it should be assumed to be version specific. Internal fragment references (start with '#') refer to contained resources.",
+        "type": "",
+        "type---HoVeR": "The expected type of the target of the reference. If both Reference.type and Reference.reference are populated and Reference.reference is a FHIR URL, both SHALL be consistent.",
+        "display": "",
+        "display---HoVeR": "Plain text narrative that identifies the resource in addition to the resource reference."
+      },
+	  "assigner---HoVeR": "Organization that issued/manages the identifier."
     }
   ],
-  "exposureBackground---HoVeR": "[1..*]"
+  "identifier---HoVeR": "A formal identifier that is used to identify this statistic when it is represented in other formats, or referenced in a specification, model, design or an instance.",
+  "version": "",
+  "version---HoVeR": "The identifier that is used to identify this version of the statistic when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the statistic author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions can be placed in a lexicographical sequence.",
+  "title": "",
+  "title---HoVeR": "A short, descriptive, user-friendly title for the statistic.",
+  "status": "",
+  "status---HoVeR": "The status of this statistic. Enables tracking the life-cycle of the content.",
+  "date": "",
+  "date---HoVeR": "The date (and optionally time) when the statistic was published. The date must change when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the statistic changes.",
+  "approvalDate": "",
+  "approvalDate---HoVeR": "The date on which the resource content was approved by the publisher. Approval happens once when the content is officially approved for usage.",
+  "lastReviewDate": "",
+  "lastReviewDate---HoVeR": "The date on which the resource content was last reviewed. Review happens periodically after approval but does not change the original approval date.",
+  "statisticPublisher": [
+    {
+      "name": "",
+	  "name---HoVeR": "The name of the publisher.",
+      "contact": [
+        {
+          "name": "",
+          "name---HoVeR": "The name of an individual to contact.",
+          "telecom": [
+            {
+              "system": "",
+              "system---HoVeR": "Telecommunications form for contact point - what communications system is required to make use of the contact.",
+              "value": "",
+              "value---HoVeR": "The actual contact point details, in a form that is meaningful to the designated communication system (i.e. phone number or email address).",
+              "use": "",
+              "use---HoVeR": "Identifies the purpose for the contact point.",
+              "rank": "",
+              "rank---HoVeR": "Specifies a preferred order in which to use a set of contacts. ContactPoints with lower rank values are more preferred than those with higher rank values.",
+              "period": {
+                "start": "",
+                "start---HoVeR": "The start of the period. The boundary is inclusive.",
+                "end": "",
+				"end---HoVeR": "The end of the period. If the end of the period is missing, it means no end was known or planned at the time the instance was created. The start may be in the past, and the end date in the future, which means that period is expected/planned to end at that time."
+              },
+              "period---HoVeR": "Time period when the contact point was/is in use."
+            }
+          ],
+          "telecom---HoVeR": "The contact details for the individual (if a name was provided) or the organization."
+        }
+      ],
+	  "contact---HoVeR": "Contact details for the publisher."
+    }
+  ],
+  "statisticPublisher---HoVeR": "The individual or organization that produced this statistic.",
+  "contributor": [
+    {
+      "type": "",
+      "type---HoVeR": "The type of contributor.",
+      "name": "",
+      "name---HoVeR": "The name of the individual or organization responsible for the contribution.",
+      "contact": [
+        {
+          "name": "",
+          "name---HoVeR": "The name of an individual to contact.",
+          "telecom": [
+            {
+              "system": "",
+              "system---HoVeR": "Telecommunications form for contact point - what communications system is required to make use of the contact.",
+              "value": "",
+              "value---HoVeR": "The actual contact point details, in a form that is meaningful to the designated communication system (i.e. phone number or email address).",
+              "use": "",
+              "use---HoVeR": "Identifies the purpose for the contact point.",
+              "rank": "",
+              "rank---HoVeR": "Specifies a preferred order in which to use a set of contacts. ContactPoints with lower rank values are more preferred than those with higher rank values.",
+              "period": {
+                "start": "",
+                "start---HoVeR": "The start of the period. The boundary is inclusive.",
+                "end": "",
+				"end---HoVeR": "The end of the period. If the end of the period is missing, it means no end was known or planned at the time the instance was created. The start may be in the past, and the end date in the future, which means that period is expected/planned to end at that time."
+              },
+              "period---HoVeR": "Time period when the contact point was/is in use."
+            }
+          ],
+          "telecom---HoVeR": "The contact details for the individual (if a name was provided) or the organization."
+        }
+      ],
+	  "contact---HoVeR": "Contact details for the publisher."
+    }
+  ],
+  "contributor---HoVeR": "Contact detail and role for contributor to statistic.",
+  "relatedArtifact": [
+    {
+      "type": "",
+      "label": "",
+      "display": "",
+      "citation": "",
+      "url": "",
+      "document": {
+        "contentType": "",
+        "language": "",
+        "data": "",
+        "url": "",
+        "size": "",
+        "hash": "",
+        "title": "",
+        "creation": ""
+      },
+      "resource": ""
+    }
+  ],
+  "relatedArtifact---HoVeR": "Link to artifact associated with statistic.",
+  "description": "",
+  "description---HoVeR": "A free text natural language description of the statistic from a consumer's perspective.",
+  "synthesisType": {
+    "coding": [
+	  {
+		"system": "http://hl7.org/fhir/ValueSet/study-type",
+		"system---HoVeR": "The identification of the code system that defines the meaning of the symbol in the code.",
+		"version": "",
+		"version---HoVeR": "The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured, and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged.",
+		"code": "",
+		"code---HoVeR": "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).",
+		"display": "",
+		"display---HoVeR": "A representation of the meaning of the code in the system, following the rules of the system.",
+		"userSelected": "",
+		"userSelected---HoVeR": "Indicates that this coding was chosen by a user directly - e.g. off a pick list of available items (codes or displays)."
+	  }
+	 ],
+	 "coding---HoVeR": "A reference to a code defined by a terminology system.",
+	 "text": "",
+	 "text---HoVeR": "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."
+  },
+  "synthesisType---HoVeR": "The particular type of synthesis if this is a synthesis statistic.",
+  "studyType": {
+    "coding": [
+	  {
+		"system": "http://hl7.org/fhir/ValueSet/study-type",
+		"system---HoVeR": "The identification of the code system that defines the meaning of the symbol in the code.",
+		"version": "",
+		"version---HoVeR": "The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured, and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged.",
+		"code": "",
+		"code---HoVeR": "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).",
+		"display": "",
+		"display---HoVeR": "A representation of the meaning of the code in the system, following the rules of the system.",
+		"userSelected": "",
+		"userSelected---HoVeR": "Indicates that this coding was chosen by a user directly - e.g. off a pick list of available items (codes or displays)."
+	  }
+	 ],
+	 "coding---HoVeR": "A reference to a code defined by a terminology system.",
+	 "text": "",
+	 "text---HoVeR": "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."
+  },
+  "studyType---HoVeR": "The type of study that produced this statistic.",
+  "exposureBackground": {
+    "reference": "",
+    "type": "Group",
+    "identifier": "",
+    "display": ""
+  },
+  "exposure": {
+    "reference": "",
+    "type": "Group",
+    "identifier": "",
+    "display": ""
+  },
+  "exposureVariant": [
+    {
+      "reference": "",
+      "type": "Group",
+      "identifier": "",
+      "display": ""
+    }
+  ],
+  "measuredVariable": [
+    {
+      "reference": "",
+      "type": "EvidenceVariable",
+      "identifier": "",
+      "display": ""
+    }
+  ],
+  "measuredVariable---HoVeR": "Outcome or characteristic that is measured.",
+  "statisticType": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/effect-estimate-type",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "statisticType---HoVeR": "The effect or risk estimate type.",
+  "quantity": {
+    "value": -0,
+    "comparator": "",
+    "unit": "",
+    "system": "",
+    "code": ""
+  },
+  "quantity---HoVeR": "The statistic value.",
+  "sampleSize": {
+    "description": "",
+	"description---HoVeR": "Human-readable summary of population sample size.",
+    "numberOfStudies": -0,
+	"numberOfStudies---HoVeR": "",
+    "numberOfParticipants": -0,
+	"numberOfParticipants---HoVeR": "Number of participants in the population.",
+    "knownDataCount": -0,
+    "numeratorCount": -0,
+    "note": [
+	  {
+	    "text": "",
+		"text---HoVeR": "The text of the annotation in markdown format."
+      }
+    ],
+	"note---HoVeR": "Footnote or explanatory note about the sample size."
+  },
+  "sampleSize---HoVeR": "Population sample size.",
+  "precisionEstimate": [
+    {
+      "description": "",
+	  "description---HoVeR": "Human-readable summary of the estimate.",
+      "type": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+			"system---HoVeR": "The identification of the code system that defines the meaning of the symbol in the code.",
+            "version": "",
+			"version---HoVeR": "The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured, and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged.",
+            "code": "",
+			"code---HoVeR": "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).",
+            "display": "",
+			"display---HoVeR": "A representation of the meaning of the code in the system, following the rules of the system.",
+            "userSelected": "",
+			"userSelected---HoVeR": "Indicates that this coding was chosen by a user directly - e.g. off a pick list of available items (codes or displays)."
+          }
+        ],
+		"coding---HoVeR": "A reference to a code defined by a terminology system.",
+        "text": "",
+		"text---HoVeR": "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."
+      },
+      "level": -0,
+	  "level---HoVeR": "Use 0.95 for a 95% confidence interval.",
+      "from": -0,
+	  "from---HoVeR": "Lower bound of confidence interval.",
+      "to": -0,
+	  "to---HoVeR": "Upper bound of confidence interval.",
+      "note": [
+        {
+          "text": "",
+		  "text---HoVeR": "The text of the annotation in markdown format."
+        }
+      ],
+	  "note---HoVeR": "Footnote or explanatory note about the estimate."
+    }
+  ],
+  "precisionEstimate---HoVeR": "An estimate of the precision of the statistic.",
+  "pValue": [
+    {
+      "description": "",
+      "type": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "quantity": {
+        "value": -0,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "range": {
+        "low": "",
+        "high": ""
+      },
+      "note": [
+        {
+          "text": ""
+        }
+      ]
+    }
+  ],
+  "pValue---HoVeR": "The probability that this statistic would be the same given the null hypothesis.",
+  "certainty": [
+    {
+	  "description": "",
+	  "description---HoVeR": "Textual description of the certainty.",
+      "rating": [
+        {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/evidence-quality",
+				"system---HoVeR": "The identification of the code system that defines the meaning of the symbol in the code.",
+				"version": "",
+				"version---HoVeR": "The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured, and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged.",
+				"code": "",
+				"code---HoVeR": "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).",
+				"display": "",
+				"display---HoVeR": "A representation of the meaning of the code in the system, following the rules of the system.",
+				"userSelected": "",
+				"userSelected---HoVeR": "Indicates that this coding was chosen by a user directly - e.g. off a pick list of available items (codes or displays)."
+            }
+          ],
+			"coding---HoVeR": "A reference to a code defined by a terminology system.",
+			"text": "",
+			"text---HoVeR": "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."
+        }
+      ],
+	  "rating---HoVeR": "A rating of the certainty of the effect estimate.",
+      "certaintySubcomponent": [
+        {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+				"system---HoVeR": "The identification of the code system that defines the meaning of the symbol in the code.",
+				"version": "",
+				"version---HoVeR": "The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured, and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged.",
+				"code": "",
+				"code---HoVeR": "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).",
+				"display": "",
+				"display---HoVeR": "A representation of the meaning of the code in the system, following the rules of the system.",
+				"userSelected": "",
+				"userSelected---HoVeR": "Indicates that this coding was chosen by a user directly - e.g. off a pick list of available items (codes or displays)."
+              }
+            ],
+			"coding---HoVeR": "A reference to a code defined by a terminology system.",
+			"text": "",
+			"text---HoVeR": "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."
+          },
+          "rating": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+				"system---HoVeR": "The identification of the code system that defines the meaning of the symbol in the code.",
+				"version": "",
+				"version---HoVeR": "The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured, and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged.",
+				"code": "",
+				"code---HoVeR": "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).",
+				"display": "",
+				"display---HoVeR": "A representation of the meaning of the code in the system, following the rules of the system.",
+				"userSelected": "",
+				"userSelected---HoVeR": "Indicates that this coding was chosen by a user directly - e.g. off a pick list of available items (codes or displays)."
+              }
+            ],
+			"coding---HoVeR": "A reference to a code defined by a terminology system.",
+			"text": "",
+			"text---HoVeR": "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."
+          },
+          "note": [
+            {
+              "text": ""
+            }
+          ]
+        }
+      ],
+      "certaintySubcomponent---HoVeR": "A description of a component of the overall certainty.",
+      "note": [
+        {
+          "text": ""
+        }
+      ]
+    }
+  ],
+  "certainty---HoVeR": "A description of the certainty of the effect estimate.",
+  "note": [
+	{
+	  "text": "",
+	  "text---HoVeR": "The text of the annotation in markdown format."
+	}
+  ],
+  "note---HoVeR": "Footnotes and/or explanatory notes."
 };
 
 json = {
