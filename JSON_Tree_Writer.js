@@ -969,9 +969,10 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 		// END OF HOVER TEXT CODE
 		
 		var keyValue = json[key];
-		if (keyValue == null || typeof keyValue != typeof {}){
+		var typeKeyValue = typeof keyValue;
+		if (keyValue == null || typeKeyValue != "object"){
            var inputType = 'text';
-           if (typeof(keyValue) == typeof(1)){
+           if (typeKeyValue == "number"){
               inputType = 'number' 
 		   } else if (keyValue != null) {
 		      keyValue = keyValue.toString().replace(/"/g, '&quot;'); //TO DO todo Comment this line out? Is this line needed?
@@ -1011,30 +1012,28 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 				generatedHTML += loopDictionary(keyValue, indent, current_path+key+".", latestID, 0);
 				indent -= 1;
                 generatedHTML += "</div>";
-			} else if (Array.isArray(json[key])){
-				if (typeof json[key][0] == typeof {}) {
+			} else {
+				if (typeof keyValue[0] == typeof {}) {
 				    var visibilityButton = "";
 					var visibility = 'display: inline;';
 					var folderCountString;
-					for (var entry in json[key]) {			
+					var indentation = (indent*indentSize).toString();
+					for (var entry in keyValue) {		
 						latestID += 1;
 						folderCountString = folderCount.toString();
-						parentID = latestID;
 						fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key, entry]]);
-						jsonBlocks[folderCount] = [json[key][entry], indent, current_path, key, folderCountString, current_path_ID];
-						generatedHTML += '<p id="' + current_path+key+ '[' + entry + ']' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + (indent*indentSize).toString() + 'px" data-newid="' + latestID.toString() + '"><img name="_$-$_ImAgEFoLdEr" src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + folderCountString + '\');" data-folderid="' + folderCount.toString() +'"><b> ' + key + '</b><span id="buttonAdd' + folderCountString + '" class="addButton' + visibilityButton + '" style="' + visibility + '"> <button class="circle plus" onclick="elementAdd(' + folderCountString + ', ' + latestID + ')" title="Add another one of this element."></button></span><span class="minusButton" style="display: none;"><button class="circle minus" onclick="elementDelete(' + latestID + ', this)" title="Deletes this element instance."></button></span>' + '</p>';
+						jsonBlocks[folderCount] = [keyValue[entry], indent, current_path, key, folderCountString, current_path_ID];
+						generatedHTML += '<p id="' + current_path+key+ '[' + entry + ']' +'" style="margin-top: 2px; margin-bottom: 2px;'+ ' margin-left: ' + indentation + 'px" data-newid="' + latestID.toString() + '"><img name="_$-$_ImAgEFoLdEr" src="' + folder +'" onclick="toggleHideShow(this, \'_$-$_FoLdEr' + folderCountString + '\');" data-folderid="' + folderCountString +'"><b> ' + key + '</b><span id="buttonAdd' + folderCountString + '" class="addButton' + visibilityButton + '" style="' + visibility + '"> <button class="circle plus" onclick="elementAdd(' + folderCountString + ', ' + latestID + ')" title="Add another one of this element."></button></span><span class="minusButton" style="display: none;"><button class="circle minus" onclick="elementDelete(' + latestID + ', this)" title="Deletes this element instance."></button></span>' + '</p>';
                         generatedHTML += "<div id='_$-$_FoLdEr" + folderCountString + "'>";
 						visibilityButton = "Invisible";
 						visibility = 'display: none;';
                         folderCount += 1;
-						indent += 1;
 						if (current_path != "" && current_path[current_path.length - 1] != "."){
 							current_path += ".";
 						}
-						var returnedHTML = loopDictionary(json[key][entry], indent, current_path+key+"[" + entry.toString() + "]" + ".", latestID, 0);
+						var returnedHTML = loopDictionary(keyValue[entry], indent+1, current_path+key+"[" + entry.toString() + "]" + ".", latestID, 0);
 						generatedHTML += returnedHTML;
-						
-						indent -= 1;
+
                         generatedHTML += "</div>";
                         //break;  //This is added to only allow one instance of a field. This could be replaced with code to have an "Add" button for the field.
 					}
@@ -1048,18 +1047,20 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
 					var visibility = 'display: inline;'
                     var latestTextField = "";
 					var entryNumber = 0;
-                    for (var entry in json[key]){
+                    for (var entry in keyValue){
                         var inputType = 'text';
-                        if (typeof(json[key][entry]) == typeof(1)){
+						var JsonKeyEntry = keyValue[entry];
+						var typeJsonKeyEntry = typeof JsonKeyEntry;
+                        if (typeJsonKeyEntry == "number"){
                            inputType = 'number';
-						} else if (typeof json[key][entry] == typeof false) {
-							//It's a boolean, don't do anything. 
+						} else if (typeJsonKeyEntry == "boolean") {
+							//It's a boolean, don't do anything additional. 
 							//inputType = 'boolean'; //Not valid HTML and other problems.
-                        } else if (json[key][entry] != null) {
-						   json[key][entry] = json[key][entry].replace(/"/g, '&quot;');
+                        } else if (JsonKeyEntry != null) {
+						   keyValue[entry] = JsonKeyEntry.replace(/"/g, '&quot;');
 						}
-                        if (json[key][entry] != null && json[key][entry] === 0 && (1/json[key][entry]) === -Infinity) {
-                           json[key][entry] = "";
+                        if (JsonKeyEntry != null && JsonKeyEntry === 0 && (1/JsonKeyEntry) === -Infinity) {
+                           keyValue[entry] = "";
                         }
 					   latestID += 1;
 					   fieldIDs[latestID] = fieldIDs[current_path_ID].concat([[key, entryNumber.toString()]]);
