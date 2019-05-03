@@ -50,7 +50,7 @@ function postAjax(url, data, success) {
     };
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/fhir+json; charset=UTF-8');
-	xhr.withCredentials = true;
+	//xhr.withCredentials = true;
     xhr.send(params);
     return xhr;
 }
