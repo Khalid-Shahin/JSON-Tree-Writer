@@ -871,14 +871,22 @@ function elementDelete(elementID, minusButtonInstance){
 					if (nextElement.style.display != "none"){
 						break;
 					} else {
-						nextElement = nextElement.nextSibling.nextSibling;
+						try {
+							nextElement = nextElement.nextSibling.nextSibling;
+						} catch (err) {
+							break;
+						}
 					}
 				} else {
 					break;
 				}
 			}
-			if (nextElement && elementText.innerHTML == nextElement.children[1].innerHTML){
-				nextElement.insertBefore(plusButtonSpan, nextElement.lastChild);
+			
+			if (nextElement){
+				var nextElementFirstChild = nextElement.children[1];
+				if (nextElementFirstChild && elementText.innerHTML == nextElementFirstChild.innerHTML) {
+					nextElement.insertBefore(plusButtonSpan, nextElement.lastChild);
+				}
 			}
 			//Then makes the next instance have the + button (copies it over) if there is a next instance
 		}
