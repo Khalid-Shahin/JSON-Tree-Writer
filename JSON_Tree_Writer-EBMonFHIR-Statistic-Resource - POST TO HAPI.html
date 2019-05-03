@@ -50,13 +50,14 @@ function postAjax(url, data, success) {
     };
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('Content-Type', 'application/fhir+json; charset=UTF-8');
-	xhr.withCredentials = true;
+	//xhr.withCredentials = true;
     xhr.send(params);
     return xhr;
 }
 
 function SaveJSONToHapi() {
-postAjax('https://hapi2.clinicalprofiles.org/baseR4/Statistic?_format=json&_pretty=true', JSON.stringify(JSON.parse(document.getElementById(']....}?|?|?{....[jsonTextArea').value)), function(data){ console.log(data); });
+//postAjax('https://hapi2.clinicalprofiles.org/baseR4/Statistic?_format=json&_pretty=true', JSON.stringify(JSON.parse(document.getElementById(']....}?|?|?{....[jsonTextArea').value)), function(data){ console.log(data); });
+postAjax('http://hapi2.clinicalprofiles.org/baseR4/Statistic?_format=json&_pretty=true', JSON.stringify(JSON.parse(document.getElementById(']....}?|?|?{....[jsonTextArea').value)), function(data){ console.log(data); });
 }
 
 if(window.addEventListener) {
