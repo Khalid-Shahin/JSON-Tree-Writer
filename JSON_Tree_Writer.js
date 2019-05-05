@@ -473,7 +473,7 @@ function JSONtoXML(dict, indent){
 			xml += XMLspacing.repeat(indent) + "<" + cleanForXML(x) + ' value="' + cleanForXML(dict[x].toString()) + '"' + "/>\n";
 		}
 	}
-	return xml;
+	return xml;				//.replace(/value=\"-0\"/g, 'value=""')  //I could have something like this.
 }
 
 function SaveTreeToXML(FHIR){
@@ -495,7 +495,7 @@ function SaveTreeToXML(FHIR){
 		} else {
 			xml += '<' + root + '>\n';
 		}
-		xml += JSONtoXML(temp_json, 1);
+		xml += JSONtoXML(temp_json, 1);		//Removes the -0 values
 		xml += '</' + root + '>';
         var xmlToSave = xml.replace(/"{\[{NeGaTiVe!_!0}]}"/g, '"-0"').replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, '"-0.0"').replace(/([^\r])\n/g, "$1\r\n");
         if (navigator.msSaveBlob) { // IE 10+ 
