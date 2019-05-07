@@ -543,14 +543,6 @@ json = {
         {
           "reference": "",
           "type": "Group",
-          "identifier": "",
-          "display": ""
-        }
-      ],
-      "sampleCohort": [
-        {
-          "reference": "",
-          "type": "Group",
           "identifier": "Group-Sepsis",
           "display": "Patients with sepsis"
         }
@@ -899,30 +891,12 @@ json = {
                           ]
                         }
                       ]
-                    }
-                  ]
-                },
-                {
-                  "description": "Corticosteroids possibly achieve a small reduction in long-term mortality.",
-                  "note": [
+                    },
                     {
-                      "text": ""
-                    }
-                  ],
-                  "exposureAlternative": [
-                    {
-                      "reference": "",
-                      "type": "EvidenceVariable",
-                      "identifier": "EvidenceVariable-No-Steroids",
-                      "display": "No corticosteroids"
-                    }
-                  ],
-                  "statistic": [
-                    {
-                      "description": "Difference: 22 fewer per 1000",
+                      "description": "Absolute risk difference -0.041",
                       "note": [
                         {
-                          "text": "Based on data from 6438 patients in 9 studies "
+                          "text": ""
                         }
                       ],
                       "statisticType": {
@@ -930,11 +904,11 @@ json = {
                           {
                             "system": "http://hl7.org/fhir/ValueSet/statistic-type",
                             "version": "",
-                            "code": "proportion",
-                            "display": "proportion"
+                            "code": "absolute-ARD",
+                            "display": "absolute risk difference"
                           }
                         ],
-                        "text": ""
+                        "text": "Based on data from 6438 patients in 9 studies "
                       },
                       "quantity": {
                         "value": -0.022,
@@ -960,7 +934,7 @@ json = {
                           "description": "",
                           "note": [
                             {
-                              "text": "0.95"
+                              "text": ""
                             }
                           ],
                           "type": {
@@ -981,7 +955,7 @@ json = {
                             "system": "",
                             "code": ""
                           },
-                          "level": "",
+                          "level": 0.95,
                           "from": {
                             "value": -0.041,
                             "comparator": "",
