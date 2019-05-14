@@ -490,9 +490,17 @@ function convertToJSON() {
 					if (!compNew[exp]){
 						compNew[exp] = true;
 					} else {
-						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0]["compoundStatistic"][0])));
+						exposures[exp]["compoundStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0]["compoundStatistic"][0])));
 					}
 					statisticLocation = "compoundStatistic";
+					var comparatorDisplay = statistics[y].getElementsByClassName("statisticComparator")[0].value;
+					exposures[exp]["compoundStatistic"][0]["additionalVariable"][0]["variableDefinition"]["display"] = comparatorDisplay;
+					var exposureLikes = document.getElementsByClassName("exposureLike");
+					for (var z = 0; z < comparators + 1; z++) {
+						if (exposureLikes[z].value == comparatorDisplay){
+							exposures[exp]["compoundStatistic"][0]["additionalVariable"][0]["variableDefinition"]["identifier"] = document.getElementsByClassName("exposureLikeId")[z].value;
+						}
+					}
 				}
 				
 
