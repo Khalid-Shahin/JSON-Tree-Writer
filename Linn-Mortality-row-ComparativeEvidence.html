@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 	<link rel="stylesheet" type="text/css" href="JSON_Tree_Writer.css">
-	<title>JSON Tree Writer - EBMonFHIR - ComparativeEvidence Resource</title>
+	<title>JSON Tree Writer - EBMonFHIR - ComparativeEvidence (Mortality row for Linn's example)</title>
 </head>
 <body>
 <div class="container">
      <div class="topArea">
-     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - ComparativeEvidence Resource</h2>
+     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - ComparativeEvidence (Mortality row for Linn's example)</h2>
 	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. A field value of &quot;null&quot;, all lowercase, in the tree view will be converted to just null in the JSON.\n2. A field value of &quot;true&quot; or &quot;false&quot;, all lowercase, will be converted to just true or false respectively as booleans in the JSON.\n3. 1D arrays work perfectly fine to and from JSON, and interpreting 2D, 3D, and beyond arrays from JSON to Tree View can work well most of the time, but bugs may occur when adding elements in the Tree View for arrays more complex than 1D.')" style="position: absolute; right: 6px; top: 4px;">Limitations</button>
 	 <p style="position: absolute; right: 94px; top: 7px; margin: 0px; color: #AEAEAE; font-size: 13px; font-family: sans-serif"><b>EBSCO Health Innovations</b></p>
 	 <p style="position: absolute; right: 2px; top: 10px;">Convert Tree View to JSON in real time? <input onchange="TreeToJSONsetting();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_RealTime" name="JSONrealtime" value="JSONrealtime" title="If this is checked then the JSON side will be updated automatically as you type and add elements on the Tree View side."></p>
@@ -475,13 +475,12 @@ hovertext_json = {
 };
 json = {
   "resourceType": "ComparativeEvidence",
+  "id": "",
   "title": "Corticosteroids vs No corticosteroids",
   "shortTitle": "",
   "subTitle": "",
   "status": "draft",
   "date": "",
-  "approvalDate": "",
-  "lastReviewDate": "",
   "summaryPublisher": [
     {
       "name": "MAGIC"
@@ -547,7 +546,17 @@ json = {
           "display": "Patients with sepsis"
         }
       ],
-      "measuredVariable": [
+      "sampleSize": {
+        "description": "Mortality Longer term (60 days to 1 year)",
+        "note": [
+          {
+            "text": ""
+          }
+        ],
+        "numberOfStudies": -0,
+        "numberOfParticipants": -0
+      },
+      "evidenceVariable": [
         {
           "description": "Mortality Longer term (60 days to 1 year)",
           "note": [
@@ -555,6 +564,7 @@ json = {
               "text": ""
             }
           ],
+          "variableType": "measuredVariable",
           "variableDefinition": [
             {
               "reference": "",
@@ -563,14 +573,15 @@ json = {
               "display": "Mortality Longer term (Follow up: 60 days to 1 year)"
             }
           ],
-          "exposure": [
+          "nestedVariable": [
             {
-              "description": "",
+              "description": "Corticosteroids",
               "note": [
                 {
                   "text": ""
                 }
               ],
+              "variableType": "exposure",
               "variableDefinition": [
                 {
                   "reference": "",
@@ -587,39 +598,49 @@ json = {
                       "text": ""
                     }
                   ],
-                  "statisticType": {
-                    "coding": [
-                      {
-                        "system": "http://hl7.org/fhir/ValueSet/statistic-type",
-                        "version": "",
-                        "code": "proportion",
-                        "display": "proportion"
-                      }
-                    ],
-                    "text": ""
-                  },
-                  "quantity": {
-                    "value": 0.349,
-                    "comparator": "",
-                    "unit": "",
-                    "system": "",
-                    "code": ""
-                  },
-                  "sampleSize": {
-                    "description": "",
-                    "note": [
-                      {
+                  "statistic": [
+                    {
+                      "description": "349 per 1000",
+                      "note": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "statisticType": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                            "version": "",
+                            "code": "proportion",
+                            "display": "proportion"
+                          }
+                        ],
                         "text": ""
+                      },
+                      "quantity": {
+                        "value": 0.349,
+                        "comparator": "",
+                        "unit": "",
+                        "system": "",
+                        "code": ""
+                      },
+                      "sampleSize": {
+                        "description": "",
+                        "note": [
+                          {
+                            "text": ""
+                          }
+                        ],
+                        "numberOfStudies": -0,
+                        "numberOfParticipants": -0,
+                        "knownDataCount": -0,
+                        "numeratorCount": -0
                       }
-                    ],
-                    "numberOfStudies": -0,
-                    "numberOfParticipants": -0,
-                    "knownDataCount": -0,
-                    "numeratorCount": -0
-                  }
+                    }
+                  ]
                 }
               ],
-              "comparativeStatistic": [
+              "compoundStatistic": [
                 {
                   "description": "Corticosteroids possibly achieve a small reduction in long-term mortality.",
                   "note": [
@@ -627,12 +648,15 @@ json = {
                       "text": ""
                     }
                   ],
-                  "exposureAlternative": [
+                  "additionalVariable": [
                     {
-                      "reference": "",
-                      "type": "EvidenceVariable",
-                      "identifier": "EvidenceVariable-No-Steroids",
-                      "display": "No corticosteroids"
+                      "variableType": "exposure",
+                      "variableDefinition": {
+                        "reference": "",
+                        "type": "EvidenceVariable",
+                        "identifier": "EvidenceVariable-No-Steroids",
+                        "display": "No corticosteroids"
+                      }
                     }
                   ],
                   "statistic": [
@@ -700,19 +724,19 @@ json = {
                             "code": ""
                           },
                           "level": 0.95,
-                          "from": {
-                            "value": 0.89,
-                            "comparator": "",
-                            "unit": "",
-                            "system": "",
-                            "code": ""
-                          },
-                          "to": {
-                            "value": 1,
-                            "comparator": "",
-                            "unit": "",
-                            "system": "",
-                            "code": ""
+                          "range": {
+                            "low": {
+                              "value": 0.89,
+                              "unit": "",
+                              "system": "",
+                              "code": ""
+                            },
+                            "high": {
+                              "value": 1,
+                              "unit": "",
+                              "system": "",
+                              "code": ""
+                            }
                           }
                         }
                       ],
@@ -891,99 +915,19 @@ json = {
                           ]
                         }
                       ]
-                    },
-                    {
-                      "description": "Absolute risk difference -0.022",
-                      "note": [
-                        {
-                          "text": ""
-                        }
-                      ],
-                      "statisticType": {
-                        "coding": [
-                          {
-                            "system": "http://hl7.org/fhir/ValueSet/statistic-type",
-                            "version": "",
-                            "code": "absolute-ARD",
-                            "display": "absolute risk difference"
-                          }
-                        ],
-                        "text": "Based on data from 6438 patients in 9 studies "
-                      },
-                      "quantity": {
-                        "value": -0.022,
-                        "comparator": "",
-                        "unit": "",
-                        "system": "",
-                        "code": ""
-                      },
-                      "sampleSize": {
-                        "description": "(CI 95% 41 fewer - 0 )",
-                        "note": [
-                          {
-                            "text": ""
-                          }
-                        ],
-                        "numberOfStudies": 9,
-                        "numberOfParticipants": 6438,
-                        "knownDataCount": "",
-                        "numeratorCount": ""
-                      },
-                      "precisionEstimate": [
-                        {
-                          "description": "",
-                          "note": [
-                            {
-                              "text": ""
-                            }
-                          ],
-                          "type": {
-                            "coding": [
-                              {
-                                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
-                                "version": "",
-                                "code": "CI",
-                                "display": "confidence interval"
-                              }
-                            ],
-                            "text": ""
-                          },
-                          "quantity": {
-                            "value": "",
-                            "comparator": "",
-                            "unit": "",
-                            "system": "",
-                            "code": ""
-                          },
-                          "level": 0.95,
-                          "from": {
-                            "value": -0.041,
-                            "comparator": "",
-                            "unit": "",
-                            "system": "",
-                            "code": ""
-                          },
-                          "to": {
-                            "value": 0,
-                            "comparator": "",
-                            "unit": "",
-                            "system": "",
-                            "code": ""
-                          }
-                        }
-                      ]
                     }
                   ]
                 }
               ]
             },
             {
-              "description": "",
+              "description": "No corticosteroids",
               "note": [
                 {
                   "text": ""
                 }
               ],
+              "variableType": "",
               "variableDefinition": [
                 {
                   "reference": "",
@@ -1000,24 +944,46 @@ json = {
                       "text": ""
                     }
                   ],
-                  "statisticType": {
-                    "coding": [
-                      {
-                        "system": "http://hl7.org/fhir/ValueSet/statistic-type",
-                        "version": "",
-                        "code": "proportion",
-                        "display": "proportion"
+                  "statistic": [
+                    {
+                      "description": "371 per 1000",
+                      "note": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "statisticType": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                            "version": "",
+                            "code": "proportion",
+                            "display": "proportion"
+                          }
+                        ],
+                        "text": ""
+                      },
+                      "quantity": {
+                        "value": 0.371,
+                        "comparator": "",
+                        "unit": "",
+                        "system": "",
+                        "code": ""
+                      },
+                      "sampleSize": {
+                        "description": "",
+                        "note": [
+                          {
+                            "text": ""
+                          }
+                        ],
+                        "numberOfStudies": "",
+                        "numberOfParticipants": "",
+                        "knownDataCount": "",
+                        "numeratorCount": ""
                       }
-                    ],
-                    "text": ""
-                  },
-                  "quantity": {
-                    "value": 0.371,
-                    "comparator": "",
-                    "unit": "",
-                    "system": "",
-                    "code": ""
-                  }
+                    }
+                  ]
                 }
               ]
             }
