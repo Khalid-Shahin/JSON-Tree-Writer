@@ -503,7 +503,6 @@ function convertToJSON() {
 					}
 				}
 				
-
 				var statSynthType = statistics[y].getElementsByClassName("statisticSynthesisType")[0].value;
 				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["synthesisType"]["coding"][0]["code"] = statSynthType;
 				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["synthesisType"]["coding"][0]["display"] = synthesisTypeSet[statSynthType];
