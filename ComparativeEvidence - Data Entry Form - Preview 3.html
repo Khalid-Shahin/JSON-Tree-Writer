@@ -447,11 +447,11 @@ function convertToJSON() {
 	for (var x = 0; x < numberOfOutcomes; x++) {
 		var outcomeName = outcomes[x].getElementsByClassName("outcomeName")[0].value;
 		var outcomeIdentifier = outcomes[x].getElementsByClassName("outcomeIdentifier")[0].value;
-		if (!json["population"][0]["measuredVariable"][x]){
-		   json["population"][0]["measuredVariable"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["measuredVariable"][0])));
+		if (!json["population"][0]["evidenceVariable"][x]){
+		   json["population"][0]["evidenceVariable"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0])));
 		}
-		json["population"][0]["measuredVariable"][x]["variableDefinition"][0]["display"] = outcomeName;
-		json["population"][0]["measuredVariable"][x]["variableDefinition"][0]["identifier"] = outcomeIdentifier;
+		json["population"][0]["evidenceVariable"][x]["variableDefinition"][0]["display"] = outcomeName;
+		json["population"][0]["evidenceVariable"][x]["variableDefinition"][0]["identifier"] = outcomeIdentifier;
 		var statistics = outcomes[x].getElementsByClassName("statisticBox");
 		var exposures = {};
 		var uniNew = {};
@@ -468,7 +468,7 @@ function convertToJSON() {
 			}
 			if (exp) {
 				if (!exposures[exp]){
-					exposures[exp] = JSON.parse(JSON.stringify(blankJson["population"][0]["measuredVariable"][0]["exposure"][0]));
+					exposures[exp] = JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["exposure"][0]));
 					exposures[exp]["variableDefinition"][0]["display"] = exp;
 					var exposureLikes = document.getElementsByClassName("exposureLike");
 					for (var z = 0; z < comparators + 1; z++) {
@@ -481,7 +481,7 @@ function convertToJSON() {
 					if (!uniNew[exp]){
 						uniNew[exp] = true;
 					} else {
-						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["measuredVariable"][0]["exposure"][0]["univariateStatistic"][0])));
+						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["exposure"][0]["univariateStatistic"][0])));
 					}
 					var statSynthType = statistics[y].getElementsByClassName("statisticSynthesisType")[0].value;
 					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["synthesisType"]["coding"][0]["code"] = statSynthType;
@@ -551,7 +551,7 @@ function convertToJSON() {
 					if (!compNew[exp]){
 						compNew[exp] = true;
 					} else {
-						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["measuredVariable"][0]["exposure"][0]["comparativeStatistic"][0])));
+						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["exposure"][0]["comparativeStatistic"][0])));
 					}
 					
 				}
@@ -560,7 +560,7 @@ function convertToJSON() {
 		}
 		var yCount = 0;
 		for (var y in exposures){
-			json["population"][0]["measuredVariable"][x]["exposure"][yCount] = exposures[y];
+			json["population"][0]["evidenceVariable"][x]["exposure"][yCount] = exposures[y];
 			yCount += 1;
 		}
 	}
@@ -613,28 +613,91 @@ var precisionEstimateSet = {
 	"SE": "standard error"
 }
 
+var loadedJson;
 
 var blankJson = {
   "resourceType": "ComparativeEvidence",
   "id": "",
   "url": "",
+  "identifier": [
+    {
+      "use": "",
+      "type": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "system": "",
+      "value": "",
+      "period": {
+        "start": "",
+        "end": ""
+      },
+      "assigner": {
+        "reference": "",
+        "type": "",
+        "display": ""
+      }
+    }
+  ],
   "title": "",
   "shortTitle": "",
   "subTitle": "",
-  "status": "draft",
+  "status": "",
   "date": "",
   "copyright": "",
   "approvalDate": "",
   "lastReviewDate": "",
   "summaryPublisher": [
     {
-      "name": ""
+      "name": "",
+      "contact": [
+        {
+          "name": "",
+          "telecom": [
+            {
+              "system": "",
+              "value": "",
+              "use": "",
+              "rank": "",
+              "period": {
+                "start": "",
+                "end": ""
+              }
+            }
+          ]
+        }
+      ]
     }
   ],
   "contributor": [
     {
       "type": "",
       "name": "",
+      "contact": [
+        {
+          "name": "",
+          "telecom": [
+            {
+              "system": "",
+              "value": "",
+              "use": "",
+              "rank": "",
+              "period": {
+                "start": "",
+                "end": ""
+              }
+            }
+          ]
+        }
+      ]
     }
   ],
   "relatedArtifact": [
@@ -644,6 +707,16 @@ var blankJson = {
       "display": "",
       "citation": "",
       "url": "",
+      "document": {
+        "contentType": "",
+        "language": "",
+        "data": "",
+        "url": "",
+        "size": "",
+        "hash": "",
+        "title": "",
+        "creation": ""
+      },
       "resource": ""
     }
   ],
@@ -696,12 +769,30 @@ var blankJson = {
       "sampleCohort": [
         {
           "reference": "",
+          "type": "CohortSummary",
+          "identifier": "",
+          "display": ""
+        }
+      ],
+      "actualCohort": [
+        {
+          "reference": "",
           "type": "Group",
           "identifier": "",
           "display": ""
         }
       ],
-      "measuredVariable": [
+      "sampleSize": {
+        "description": "",
+        "note": [
+          {
+            "text": ""
+          }
+        ],
+        "numberOfStudies": -0,
+        "numberOfParticipants": -0
+      },
+      "evidenceVariable": [
         {
           "description": "",
           "note": [
@@ -709,6 +800,7 @@ var blankJson = {
               "text": ""
             }
           ],
+          "variableType": "measuredVariable",
           "variableDefinition": [
             {
               "reference": "",
@@ -717,7 +809,7 @@ var blankJson = {
               "display": ""
             }
           ],
-          "exposure": [
+          "univariateStatistic": [
             {
               "description": "",
               "note": [
@@ -725,15 +817,31 @@ var blankJson = {
                   "text": ""
                 }
               ],
-              "variableDefinition": [
-                {
-                  "reference": "",
-                  "type": "EvidenceVariable",
-                  "identifier": "",
-                  "display": ""
-                }
-              ],
-              "univariateStatistic": [
+              "synthesisType": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+                    "version": "",
+                    "code": "",
+                    "display": "",
+                    "userSelected": ""
+                  }
+                ],
+                "text": ""
+              },
+              "studyType": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/study-type",
+                    "version": "",
+                    "code": "",
+                    "display": "",
+                    "userSelected": ""
+                  }
+                ],
+                "text": ""
+              },
+              "statistic": [
                 {
                   "description": "",
                   "note": [
@@ -741,30 +849,6 @@ var blankJson = {
                       "text": ""
                     }
                   ],
-                  "synthesisType": {
-                    "coding": [
-                      {
-                        "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
-                        "version": "",
-                        "code": "",
-                        "display": "",
-                        "userSelected": ""
-                      }
-                    ],
-                    "text": ""
-                  },
-                  "studyType": {
-                    "coding": [
-                      {
-                        "system": "http://hl7.org/fhir/ValueSet/study-type",
-                        "version": "",
-                        "code": "",
-                        "display": "",
-                        "userSelected": ""
-                      }
-                    ],
-                    "text": ""
-                  },
                   "statisticType": {
                     "coding": [
                       {
@@ -778,7 +862,7 @@ var blankJson = {
                     "text": ""
                   },
                   "quantity": {
-                    "value": "",
+                    "value": -0,
                     "comparator": "",
                     "unit": "",
                     "system": "",
@@ -791,10 +875,10 @@ var blankJson = {
                         "text": ""
                       }
                     ],
-                    "numberOfStudies": "",
-                    "numberOfParticipants": "",
-                    "knownDataCount": "",
-                    "numeratorCount": ""
+                    "numberOfStudies": -0,
+                    "numberOfParticipants": -0,
+                    "knownDataCount": -0,
+                    "numeratorCount": -0
                   },
                   "precisionEstimate": [
                     {
@@ -817,27 +901,100 @@ var blankJson = {
                         "text": ""
                       },
                       "quantity": {
-                        "value": "",
+                        "value": -0,
                         "comparator": "",
                         "unit": "",
                         "system": "",
                         "code": ""
                       },
-                      "level": "",
-                      "from": {
-                        "value": "",
-                        "comparator": "",
-                        "unit": "",
-                        "system": "",
-                        "code": ""
-                      },
-                      "to": {
-                        "value": "",
-                        "comparator": "",
-                        "unit": "",
-                        "system": "",
-                        "code": ""
+                      "level": -0,
+                      "range": {
+                        "low": {
+                          "value": -0,
+                          "unit": "",
+                          "system": "",
+                          "code": ""
+                        },
+                        "high": {
+                          "value": -0,
+                          "unit": "",
+                          "system": "",
+                          "code": ""
+                        }
                       }
+                    }
+                  ],
+                  "consistencyEstimate": [
+                    {
+                      "description": "",
+                      "note": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "type": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                            "version": "",
+                            "code": "",
+                            "display": "",
+                            "userSelected": ""
+                          }
+                        ],
+                        "text": ""
+                      },
+                      "quantity": {
+                        "value": -0,
+                        "comparator": "",
+                        "unit": "",
+                        "system": "",
+                        "code": ""
+                      },
+                      "precisionEstimate": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "type": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                "version": "",
+                                "code": "",
+                                "display": "",
+                                "userSelected": ""
+                              }
+                            ],
+                            "text": ""
+                          },
+                          "quantity": {
+                            "value": -0,
+                            "comparator": "",
+                            "unit": "",
+                            "system": "",
+                            "code": ""
+                          },
+                          "level": -0,
+                          "range": {
+                            "low": {
+                              "value": -0,
+                              "unit": "",
+                              "system": "",
+                              "code": ""
+                            },
+                            "high": {
+                              "value": -0,
+                              "unit": "",
+                              "system": "",
+                              "code": ""
+                            }
+                          }
+                        }
+                      ]
                     }
                   ],
                   "certainty": [
@@ -899,24 +1056,36 @@ var blankJson = {
                     }
                   ]
                 }
-              ],
-              "comparativeStatistic": [
+              ]
+            }
+          ],
+          "distribution": [
+            {
+              "description": "",
+              "note": [
                 {
-                  "description": "",
-                  "note": [
-                    {
-                      "text": ""
-                    }
-                  ],
-                  "exposureAlternative": [
-                    {
-                      "reference": "",
-                      "type": "EvidenceVariable",
-                      "identifier": "",
-                      "display": ""
-                    }
-                  ],
-                  "statistic": [
+                  "text": ""
+                }
+              ],
+              "numberOfIntervals": -0,
+              "minimum": {
+                "value": -0,
+                "comparator": "",
+                "unit": "",
+                "system": "",
+                "code": ""
+              },
+              "interval": [
+                {
+                  "rankOrder": -0,
+                  "topOfInterval": {
+                    "value": -0,
+                    "comparator": "",
+                    "unit": "",
+                    "system": "",
+                    "code": ""
+                  },
+                  "intervalStatistic": [
                     {
                       "description": "",
                       "note": [
@@ -924,30 +1093,6 @@ var blankJson = {
                           "text": ""
                         }
                       ],
-                      "synthesisType": {
-                        "coding": [
-                          {
-                            "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
-                            "version": "",
-                            "code": "",
-                            "display": "",
-                            "userSelected": ""
-                          }
-                        ],
-                        "text": ""
-                      },
-                      "studyType": {
-                        "coding": [
-                          {
-                            "system": "http://hl7.org/fhir/ValueSet/study-type",
-                            "version": "",
-                            "code": "",
-                            "display": "",
-                            "userSelected": ""
-                          }
-                        ],
-                        "text": ""
-                      },
                       "statisticType": {
                         "coding": [
                           {
@@ -961,7 +1106,7 @@ var blankJson = {
                         "text": ""
                       },
                       "quantity": {
-                        "value": "",
+                        "value": -0,
                         "comparator": "",
                         "unit": "",
                         "system": "",
@@ -974,10 +1119,10 @@ var blankJson = {
                             "text": ""
                           }
                         ],
-                        "numberOfStudies": "",
-                        "numberOfParticipants": "",
-                        "knownDataCount": "",
-                        "numeratorCount": ""
+                        "numberOfStudies": -0,
+                        "numberOfParticipants": -0,
+                        "knownDataCount": -0,
+                        "numeratorCount": -0
                       },
                       "precisionEstimate": [
                         {
@@ -1000,27 +1145,876 @@ var blankJson = {
                             "text": ""
                           },
                           "quantity": {
-                            "value": "",
+                            "value": -0,
                             "comparator": "",
                             "unit": "",
                             "system": "",
                             "code": ""
                           },
-                          "level": "",
-                          "from": {
-                            "value": "",
-                            "comparator": "",
-                            "unit": "",
-                            "system": "",
-                            "code": ""
-                          },
-                          "to": {
-                            "value": "",
-                            "comparator": "",
-                            "unit": "",
-                            "system": "",
-                            "code": ""
+                          "level": -0,
+                          "range": {
+                            "low": {
+                              "value": -0,
+                              "unit": "",
+                              "system": "",
+                              "code": ""
+                            },
+                            "high": {
+                              "value": -0,
+                              "unit": "",
+                              "system": "",
+                              "code": ""
+                            }
                           }
+                        }
+                      ],
+                      "consistencyEstimate": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "type": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                "version": "",
+                                "code": "",
+                                "display": "",
+                                "userSelected": ""
+                              }
+                            ],
+                            "text": ""
+                          },
+                          "quantity": {
+                            "value": -0,
+                            "comparator": "",
+                            "unit": "",
+                            "system": "",
+                            "code": ""
+                          },
+                          "precisionEstimate": [
+                            {
+                              "description": "",
+                              "note": [
+                                {
+                                  "text": ""
+                                }
+                              ],
+                              "type": {
+                                "coding": [
+                                  {
+                                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                    "version": "",
+                                    "code": "",
+                                    "display": "",
+                                    "userSelected": ""
+                                  }
+                                ],
+                                "text": ""
+                              },
+                              "quantity": {
+                                "value": -0,
+                                "comparator": "",
+                                "unit": "",
+                                "system": "",
+                                "code": ""
+                              },
+                              "level": -0,
+                              "range": {
+                                "low": {
+                                  "value": -0,
+                                  "unit": "",
+                                  "system": "",
+                                  "code": ""
+                                },
+                                "high": {
+                                  "value": -0,
+                                  "unit": "",
+                                  "system": "",
+                                  "code": ""
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "certainty": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "rating": [
+                            {
+                              "coding": [
+                                {
+                                  "system": "http://hl7.org/fhir/ValueSet/certainty-rating",
+                                  "version": "",
+                                  "code": "",
+                                  "display": "",
+                                  "userSelected": ""
+                                }
+                              ],
+                              "text": ""
+                            }
+                          ],
+                          "certaintySubcomponent": [
+                            {
+                              "description": "",
+                              "note": [
+                                {
+                                  "text": ""
+                                }
+                              ],
+                              "type": {
+                                "coding": [
+                                  {
+                                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                                    "version": "",
+                                    "code": "",
+                                    "display": "",
+                                    "userSelected": ""
+                                  }
+                                ],
+                                "text": ""
+                              },
+                              "rating": {
+                                "coding": [
+                                  {
+                                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                                    "version": "",
+                                    "code": "",
+                                    "display": "",
+                                    "userSelected": ""
+                                  }
+                                ],
+                                "text": ""
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "nestedVariable": [
+            {
+              "description": "",
+              "note": [
+                {
+                  "text": ""
+                }
+              ],
+              "variableType": "exposure",
+              "variableDefinition": [
+                {
+                  "reference": "",
+                  "type": "EvidenceVariable",
+                  "identifier": "",
+                  "display": ""
+                }
+              ],
+              "univariateStatistic": [
+                {
+                  "description": "",
+                  "note": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "synthesisType": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+                        "version": "",
+                        "code": "",
+                        "display": "",
+                        "userSelected": ""
+                      }
+                    ],
+                    "text": ""
+                  },
+                  "studyType": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/ValueSet/study-type",
+                        "version": "",
+                        "code": "",
+                        "display": "",
+                        "userSelected": ""
+                      }
+                    ],
+                    "text": ""
+                  },
+                  "statistic": [
+                    {
+                      "description": "",
+                      "note": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "statisticType": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                            "version": "",
+                            "code": "",
+                            "display": "",
+                            "userSelected": ""
+                          }
+                        ],
+                        "text": ""
+                      },
+                      "quantity": {
+                        "value": -0,
+                        "comparator": "",
+                        "unit": "",
+                        "system": "",
+                        "code": ""
+                      },
+                      "sampleSize": {
+                        "description": "",
+                        "note": [
+                          {
+                            "text": ""
+                          }
+                        ],
+                        "numberOfStudies": -0,
+                        "numberOfParticipants": -0,
+                        "knownDataCount": -0,
+                        "numeratorCount": -0
+                      },
+                      "precisionEstimate": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "type": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                "version": "",
+                                "code": "",
+                                "display": "",
+                                "userSelected": ""
+                              }
+                            ],
+                            "text": ""
+                          },
+                          "quantity": {
+                            "value": -0,
+                            "comparator": "",
+                            "unit": "",
+                            "system": "",
+                            "code": ""
+                          },
+                          "level": -0,
+                          "range": {
+                            "low": {
+                              "value": -0,
+                              "unit": "",
+                              "system": "",
+                              "code": ""
+                            },
+                            "high": {
+                              "value": -0,
+                              "unit": "",
+                              "system": "",
+                              "code": ""
+                            }
+                          }
+                        }
+                      ],
+                      "consistencyEstimate": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "type": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                "version": "",
+                                "code": "",
+                                "display": "",
+                                "userSelected": ""
+                              }
+                            ],
+                            "text": ""
+                          },
+                          "quantity": {
+                            "value": -0,
+                            "comparator": "",
+                            "unit": "",
+                            "system": "",
+                            "code": ""
+                          },
+                          "precisionEstimate": [
+                            {
+                              "description": "",
+                              "note": [
+                                {
+                                  "text": ""
+                                }
+                              ],
+                              "type": {
+                                "coding": [
+                                  {
+                                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                    "version": "",
+                                    "code": "",
+                                    "display": "",
+                                    "userSelected": ""
+                                  }
+                                ],
+                                "text": ""
+                              },
+                              "quantity": {
+                                "value": -0,
+                                "comparator": "",
+                                "unit": "",
+                                "system": "",
+                                "code": ""
+                              },
+                              "level": -0,
+                              "range": {
+                                "low": {
+                                  "value": -0,
+                                  "unit": "",
+                                  "system": "",
+                                  "code": ""
+                                },
+                                "high": {
+                                  "value": -0,
+                                  "unit": "",
+                                  "system": "",
+                                  "code": ""
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "certainty": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "rating": [
+                            {
+                              "coding": [
+                                {
+                                  "system": "http://hl7.org/fhir/ValueSet/certainty-rating",
+                                  "version": "",
+                                  "code": "",
+                                  "display": "",
+                                  "userSelected": ""
+                                }
+                              ],
+                              "text": ""
+                            }
+                          ],
+                          "certaintySubcomponent": [
+                            {
+                              "description": "",
+                              "note": [
+                                {
+                                  "text": ""
+                                }
+                              ],
+                              "type": {
+                                "coding": [
+                                  {
+                                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                                    "version": "",
+                                    "code": "",
+                                    "display": "",
+                                    "userSelected": ""
+                                  }
+                                ],
+                                "text": ""
+                              },
+                              "rating": {
+                                "coding": [
+                                  {
+                                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                                    "version": "",
+                                    "code": "",
+                                    "display": "",
+                                    "userSelected": ""
+                                  }
+                                ],
+                                "text": ""
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "distribution": [
+                {
+                  "description": "",
+                  "note": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "numberOfIntervals": -0,
+                  "minimum": {
+                    "value": -0,
+                    "comparator": "",
+                    "unit": "",
+                    "system": "",
+                    "code": ""
+                  },
+                  "interval": [
+                    {
+                      "rankOrder": -0,
+                      "topOfInterval": {
+                        "value": -0,
+                        "comparator": "",
+                        "unit": "",
+                        "system": "",
+                        "code": ""
+                      },
+                      "intervalStatistic": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "statisticType": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                                "version": "",
+                                "code": "",
+                                "display": "",
+                                "userSelected": ""
+                              }
+                            ],
+                            "text": ""
+                          },
+                          "quantity": {
+                            "value": -0,
+                            "comparator": "",
+                            "unit": "",
+                            "system": "",
+                            "code": ""
+                          },
+                          "sampleSize": {
+                            "description": "",
+                            "note": [
+                              {
+                                "text": ""
+                              }
+                            ],
+                            "numberOfStudies": -0,
+                            "numberOfParticipants": -0,
+                            "knownDataCount": -0,
+                            "numeratorCount": -0
+                          },
+                          "precisionEstimate": [
+                            {
+                              "description": "",
+                              "note": [
+                                {
+                                  "text": ""
+                                }
+                              ],
+                              "type": {
+                                "coding": [
+                                  {
+                                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                    "version": "",
+                                    "code": "",
+                                    "display": "",
+                                    "userSelected": ""
+                                  }
+                                ],
+                                "text": ""
+                              },
+                              "quantity": {
+                                "value": -0,
+                                "comparator": "",
+                                "unit": "",
+                                "system": "",
+                                "code": ""
+                              },
+                              "level": -0,
+                              "range": {
+                                "low": {
+                                  "value": -0,
+                                  "unit": "",
+                                  "system": "",
+                                  "code": ""
+                                },
+                                "high": {
+                                  "value": -0,
+                                  "unit": "",
+                                  "system": "",
+                                  "code": ""
+                                }
+                              }
+                            }
+                          ],
+                          "consistencyEstimate": [
+                            {
+                              "description": "",
+                              "note": [
+                                {
+                                  "text": ""
+                                }
+                              ],
+                              "type": {
+                                "coding": [
+                                  {
+                                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                    "version": "",
+                                    "code": "",
+                                    "display": "",
+                                    "userSelected": ""
+                                  }
+                                ],
+                                "text": ""
+                              },
+                              "quantity": {
+                                "value": -0,
+                                "comparator": "",
+                                "unit": "",
+                                "system": "",
+                                "code": ""
+                              },
+                              "precisionEstimate": [
+                                {
+                                  "description": "",
+                                  "note": [
+                                    {
+                                      "text": ""
+                                    }
+                                  ],
+                                  "type": {
+                                    "coding": [
+                                      {
+                                        "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                        "version": "",
+                                        "code": "",
+                                        "display": "",
+                                        "userSelected": ""
+                                      }
+                                    ],
+                                    "text": ""
+                                  },
+                                  "quantity": {
+                                    "value": -0,
+                                    "comparator": "",
+                                    "unit": "",
+                                    "system": "",
+                                    "code": ""
+                                  },
+                                  "level": -0,
+                                  "range": {
+                                    "low": {
+                                      "value": -0,
+                                      "unit": "",
+                                      "system": "",
+                                      "code": ""
+                                    },
+                                    "high": {
+                                      "value": -0,
+                                      "unit": "",
+                                      "system": "",
+                                      "code": ""
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ],
+                          "certainty": [
+                            {
+                              "description": "",
+                              "note": [
+                                {
+                                  "text": ""
+                                }
+                              ],
+                              "rating": [
+                                {
+                                  "coding": [
+                                    {
+                                      "system": "http://hl7.org/fhir/ValueSet/certainty-rating",
+                                      "version": "",
+                                      "code": "",
+                                      "display": "",
+                                      "userSelected": ""
+                                    }
+                                  ],
+                                  "text": ""
+                                }
+                              ],
+                              "certaintySubcomponent": [
+                                {
+                                  "description": "",
+                                  "note": [
+                                    {
+                                      "text": ""
+                                    }
+                                  ],
+                                  "type": {
+                                    "coding": [
+                                      {
+                                        "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                                        "version": "",
+                                        "code": "",
+                                        "display": "",
+                                        "userSelected": ""
+                                      }
+                                    ],
+                                    "text": ""
+                                  },
+                                  "rating": {
+                                    "coding": [
+                                      {
+                                        "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                                        "version": "",
+                                        "code": "",
+                                        "display": "",
+                                        "userSelected": ""
+                                      }
+                                    ],
+                                    "text": ""
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "compoundStatistic": [
+                {
+                  "description": "",
+                  "note": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "synthesisType": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+                        "version": "",
+                        "code": "",
+                        "display": "",
+                        "userSelected": ""
+                      }
+                    ],
+                    "text": ""
+                  },
+                  "studyType": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/ValueSet/study-type",
+                        "version": "",
+                        "code": "",
+                        "display": "",
+                        "userSelected": ""
+                      }
+                    ],
+                    "text": ""
+                  },
+                  "additionalVariable": [
+                    {
+                      "variableType": "exposure",
+                      "variableDefinition": {
+                        "reference": "",
+                        "type": "EvidenceVariable",
+                        "identifier": "",
+                        "display": ""
+                      }
+                    }
+                  ],
+                  "statistic": [
+                    {
+                      "description": "",
+                      "note": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "statisticType": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                            "version": "",
+                            "code": "",
+                            "display": "",
+                            "userSelected": ""
+                          }
+                        ],
+                        "text": ""
+                      },
+                      "quantity": {
+                        "value": -0,
+                        "comparator": "",
+                        "unit": "",
+                        "system": "",
+                        "code": ""
+                      },
+                      "sampleSize": {
+                        "description": "",
+                        "note": [
+                          {
+                            "text": ""
+                          }
+                        ],
+                        "numberOfStudies": -0,
+                        "numberOfParticipants": -0,
+                        "knownDataCount": -0,
+                        "numeratorCount": -0
+                      },
+                      "precisionEstimate": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "type": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                "version": "",
+                                "code": "",
+                                "display": "",
+                                "userSelected": ""
+                              }
+                            ],
+                            "text": ""
+                          },
+                          "quantity": {
+                            "value": -0,
+                            "comparator": "",
+                            "unit": "",
+                            "system": "",
+                            "code": ""
+                          },
+                          "level": -0,
+                          "range": {
+                            "low": {
+                              "value": -0,
+                              "unit": "",
+                              "system": "",
+                              "code": ""
+                            },
+                            "high": {
+                              "value": -0,
+                              "unit": "",
+                              "system": "",
+                              "code": ""
+                            }
+                          }
+                        }
+                      ],
+                      "consistencyEstimate": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "type": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                "version": "",
+                                "code": "",
+                                "display": "",
+                                "userSelected": ""
+                              }
+                            ],
+                            "text": ""
+                          },
+                          "quantity": {
+                            "value": -0,
+                            "comparator": "",
+                            "unit": "",
+                            "system": "",
+                            "code": ""
+                          },
+                          "precisionEstimate": [
+                            {
+                              "description": "",
+                              "note": [
+                                {
+                                  "text": ""
+                                }
+                              ],
+                              "type": {
+                                "coding": [
+                                  {
+                                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                    "version": "",
+                                    "code": "",
+                                    "display": "",
+                                    "userSelected": ""
+                                  }
+                                ],
+                                "text": ""
+                              },
+                              "quantity": {
+                                "value": -0,
+                                "comparator": "",
+                                "unit": "",
+                                "system": "",
+                                "code": ""
+                              },
+                              "level": -0,
+                              "range": {
+                                "low": {
+                                  "value": -0,
+                                  "unit": "",
+                                  "system": "",
+                                  "code": ""
+                                },
+                                "high": {
+                                  "value": -0,
+                                  "unit": "",
+                                  "system": "",
+                                  "code": ""
+                                }
+                              }
+                            }
+                          ]
                         }
                       ],
                       "certainty": [
