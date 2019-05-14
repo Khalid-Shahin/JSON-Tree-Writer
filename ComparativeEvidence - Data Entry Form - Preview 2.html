@@ -1,0 +1,1645 @@
+<html>
+
+
+
+<body onload="prepareForm();">
+
+<h2 style="margin-bottom: 6px;">ComparativeEvidence Data Entry Form (Preview)</h2>
+
+<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 890px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:70px;">
+<p style="margin: 0px; font-size:18px; font-weight: bold;">Study Details</p>
+	<div class="group" style="margin-left: 12px">      
+			<input class="textInput" type="text" id="studyURL" style="width: 260px;" required="">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">Study URL</label>
+	</div>
+	<div class="group" style="margin-left: 8px;">      
+			<input class="textInput" type="text" id="studyPublisher" style="width: 220px;" required="">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">Publisher</label>
+	</div>
+	<div class="group" style="margin-left: 8px;">      
+			<input class="textInput" type="text" id="studyAuthors" style="width: 260px;" required="">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">Author</label>
+	</div>
+	<div class="group" style="margin-left: 8px;">
+		<select class="dropdownInput" id="studySynthesisType" style="width: 356px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+			<option value="" disabled="" selected=""> -- select -- </option>
+			<option value="std-MA" style="color: black;">summary data meta-analysis</option>
+			<option value="IPD-MA" style="color: black;">individual patient data meta-analysis</option>
+			<option value="indirect-NMA" style="color: black;">indirect network meta-analysis</option>
+			<option value="combined-NMA" style="color: black;">combined direct plus indirect network meta-analysis</option>
+			<option value="range" style="color: black;">range of results</option>
+			<option value="classification" style="color: black;">classifcation of results</option>
+		</select><label class="textLabel unselectable">Synthesis Type</label><span class="bar"></span>
+		<p style="position: absolute; margin-top: -21px; margin-left: 336px; pointer-events: none;">▼</p>
+	</div>
+	<div class="group" style="margin-left: 8px;">
+		<select class="dropdownInput" id="studyStudyType" style="width: 242px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+			<option value="" disabled="" selected=""> -- select -- </option>
+			<option value="RCT" style="color: black;">randomized trial</option>
+			<option value="CCT" style="color: black;">controlled trial (non-randomized)</option>
+			<option value="cohort" style="color: black;">comparative cohort study</option>
+			<option value="case-control" style="color: black;">case-control study</option>
+			<option value="series" style="color: black;">uncontrolled cohort or case series</option>
+			<option value="case-report" style="color: black;">case report</option>
+			<option value="mixed" style="color: black;">mixed methods</option>
+		</select><label class="textLabel unselectable">Study Type</label><span class="bar"></span>
+		<p style="position: absolute; margin-top: -21px; margin-left: 222px; pointer-events: none;">▼</p>
+	</div>
+</div>
+
+<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 890px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">
+<p style="margin: 0px; font-size:18px; font-weight: bold;">Population</p>
+	<div class="group" style="margin-left: 16px">      
+			<input class="textInput" type="text" id="populationName" style="width: 490px;" required="">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">Population Display Name</label>
+	</div>
+	<div class="group" style="margin-left: 8px;">      
+			<input class="textInput" type="text" id="populationIdentifier" style="width: 280px;" required="">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">Population Identifier</label>
+	</div>
+</div>
+
+<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 890px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">
+<p style="margin: 0px; font-size:18px; font-weight: bold;">Intervention</p>
+	<div class="group" style="margin-left: 6px">      
+			<input class="textInput exposureLike" type="text" id="interventionName" style="width: 490px;" required="" onchange="updateAllInterventions()">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">Intervention Display Name</label>
+	</div>
+	<div class="group" style="margin-left: 8px;">      
+			<input class="textInput exposureLikeId" type="text" id="interventionIdentifier" style="width: 280px;" required="">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">Intervention Identifier</label>
+	</div>
+</div>
+<div id="Comparators">
+</div>
+<div>
+<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" value="➕" onclick="addComparator()"> Add Comparator</p></b>
+</div>
+
+<br>
+
+<div id="Outcomes">
+
+</div>
+<div style="float: left;">
+<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" value="➕" onclick="addOutcome()"> Add Outcome</p></b>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+<div>
+<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" style="font-weight: bold;" value="Convert to JSON" onclick="convertToJSON()"></p></b>
+<textarea id="jsonArea" cols="120" rows="6"></textarea>
+</div>
+
+<div id="elementTemplates" style="">		<!-- display: none; -->
+<br>
+<br>
+<br>
+	<div class="box outcomeBox" id="outcomeBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 890px; max-width: 99%; margin-bottom: 16px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">
+		<p style="margin: 0px; font-size:18px; font-weight: bold;">Outcome <span style="color: #777777" class="outcomeNumberLabel"></span></p>
+			<div class="group" style="margin-left: 6px">
+					<input class="textInput outcome outcomeName" type="text" name="outcomeName" style="width: 476px;" required="">
+					<span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Outcome Display Name</label></div>
+			<div class="group" style="margin-left: 8px;"><input class="textInput outcome outcomeIdentifier" type="text" name="outcomeIdentifier" style="width: 160px;" required="">
+			<span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Outcome Identifier</label></div>
+		<b>		
+		<div class="statistics" name="statistics" id="statistics" align="center">
+
+
+
+		</div>
+			
+		<div style="float: left;">
+		<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px; margin-bottom: 2px;">
+		<input type="button" value="➕" onclick="var topParent = this.parentElement.parentElement.parentElement.parentElement.parentElement; addStatistic(topParent, topParent.getAttribute('outcomeNumber'));"></span> Add Statistic</p></b>
+		</div>
+
+		</b>
+	</div>
+	
+	<div class="box statisticBox" name="statisticBox" id="statisticBox" align="left" style="border:1px solid black; padding-left: 5px; padding-right: 10px; padding-bottom: 5px; margin-top: 10px; margin-left: 2px; margin-bottom: 12px; width:868px; max-width: 98%; background-color: #DBDBF0; font-size: 14px; ">
+	<p style="margin-top: 4px; margin-bottom: 4px; font-size:16px;"> <span style="margin-left: 6px; color: #808080" class="outcomeStatisticNumberLabel"></span>. Statistic:  
+	<input type="radio" class="UnivariateOrComparative UnivariateRadio" name="UnivariateOrComparative" value="univariate" onchange="loadStatistic(this); loadUnivariate(this);"> Univariate 
+	<input type="radio" class="UnivariateOrComparative ComparativeRadio" name="UnivariateOrComparative" value="comparative" onchange="loadStatistic(this); loadComparative(this);"> Comparative </p>
+	<div class="statisticSection" name="statisticSection" style="display: none;">
+
+		<div class="line-break" style="padding-top: 4px;"></div>
+		
+		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
+		<div class="group statisticInterventionGroup" style="margin-left: 0px"><input class="textInputAlways statisticIntervention" type="text" name="statisticIntervention" style="width: 160px;" required="" disabled><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Intervention</label></div>
+		<div class="group statisticComparatorGroup" style="margin-left: 8px"><input class="textInput statisticComparator" type="text" name="statisticComparator" style="width: 160px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Comparator</label></div>
+		<div class="group statisticExposureGroup" style="margin-left: 0px; display: none;"><input class="textInput statisticExposure" type="text" name="statisticExposure" style="width: 150px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Exposure</label></div>
+		</div>
+		
+		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
+			<div class="group" style="margin-left: 0px;">
+				<select class="dropdownInput statisticSynthesisType" name="statisticSynthesisType" style="width: 356px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+					<option value="" disabled="" selected=""> -- select -- </option>
+					<option value="std-MA" style="color: black;">summary data meta-analysis</option>
+					<option value="IPD-MA" style="color: black;">individual patient data meta-analysis</option>
+					<option value="indirect-NMA" style="color: black;">indirect network meta-analysis</option>
+					<option value="combined-NMA" style="color: black;">combined direct plus indirect network meta-analysis</option>
+					<option value="range" style="color: black;">range of results</option>
+					<option value="classification" style="color: black;">classifcation of results</option>
+				</select><label class="textLabel unselectable">Synthesis Type</label><span class="bar"></span>
+				<p style="position: absolute; margin-top: -21px; margin-left: 336px; pointer-events: none;">▼</p>
+			</div>
+			<div class="group" style="margin-left: 8px;">
+				<select class="dropdownInput statisticStudyType" name="statisticStudyType" style="width: 242px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+					<option value="" disabled="" selected=""> -- select -- </option>
+					<option value="RCT" style="color: black;">randomized trial</option>
+					<option value="CCT" style="color: black;">controlled trial (non-randomized)</option>
+					<option value="cohort" style="color: black;">comparative cohort study</option>
+					<option value="case-control" style="color: black;">case-control study</option>
+					<option value="series" style="color: black;">uncontrolled cohort or case series</option>
+					<option value="case-report" style="color: black;">case report</option>
+					<option value="mixed" style="color: black;">mixed methods</option>
+				</select><label class="textLabel unselectable">Study Type</label><span class="bar"></span>
+				<p style="position: absolute; margin-top: -21px; margin-left: 222px; pointer-events: none;">▼</p>
+			</div>
+			
+		<div class="line-break" style="padding-top: 4px;"></div>
+		</div>
+		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
+		<div class="group" style="margin-left: 0px"><input class="textInput outcomeDetail statisticNumberOfStudies" type="text" name="numberOfStudies" style="width: 160px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Number of studies</label></div>
+		<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticNumberOfParticipants" type="text" name="numberOfParticipants" style="width: 160px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Number of participants</label></div>
+		<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticKnownDataCount" type="text" name="knownDataCount" style="width: 150px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Known data count</label></div>
+		<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticNumeratorCount" type="text" name="numeratorCount" style="width: 150px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Numerator count</label></div>
+		</div>
+		
+		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
+			<div class="group" style="margin-left: 0px;">
+				<select class="dropdownInput statisticType" name="statisticType" style="width: 208px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+					<option value="" disabled="" selected=""> -- select -- </option>
+					<option value="relative-RR" style="color: black;">relative risk</option>
+					<option value="count" style="color: black;">count</option>
+					<option value="percentage" style="color: black;">percentage</option>		<!-- proportion -->
+					<option value="perthousand" style="color: black;">per 1,000</option>		<!-- proportion -->
+					<option value="derivedProportion" style="color: black;">derived proportion</option>
+					<option value="relative-OR" style="color: black;">odds ratio</option>
+					<option value="relative-HR" style="color: black;">hazard ratio</option>
+					<option value="absolute-ARD" style="color: black;">absolute risk difference</option>
+					<option value="absolute-SMD" style="color: black;">standardized mean difference</option>
+					<option value="absolute-MedianDiff" style="color: black;">median difference</option>
+					<option value="mean" style="color: black;">mean</option>
+					<option value="median" style="color: black;">median</option>
+				</select><label class="textLabel unselectable">Statistic Type</label><span class="bar"></span>
+				<p style="position: absolute; margin-top: -21px; margin-left: 188px; pointer-events: none;">▼</p>
+			</div>
+			<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticValue" type="text" name="statisticValue" style="width: 140px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Value</label></div>
+			<div class="group" style="margin-left: 8px;">
+				<select class="dropdownInput statisticInequality" name="statisticInequality" style="width: 112px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+					<option value="" disabled="" selected=""> -- select -- </option>
+					<option value="=" style="color: black;">=</option>
+					<option value="&lt;" style="color: black;">&lt;</option>
+					<option value="&gt;" style="color: black;">&gt;</option>
+					<option value="&lt;=" style="color: black;">&lt;=</option>
+					<option value="&gt;=" style="color: black;">&gt;=</option>
+				</select><label class="textLabel unselectable">Inequality</label><span class="bar"></span>
+				<p style="position: absolute; margin-top: -21px; margin-left: 92px; pointer-events: none;">▼</p>
+			</div>
+			<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticUnit" type="text" name="statisticUnit" style="width: 160px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Unit</label></div>
+		</div>
+		
+		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
+			<div class="group" style="margin-left: 0px;">
+				<select class="dropdownInput precisionEstimateType" name="precisionEstimateType" style="width: 212px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; precisionEstimatePick(this);" required="">
+					<option value="" disabled="" selected=""> -- select -- </option>
+					<option value="CI" style="color: black;">confidence interval</option>
+					<option value="pValue" style="color: black;">p value</option>
+					<option value="CrI" style="color: black;">credible interval</option>
+					<option value="IQR" style="color: black;">interquartile range</option>
+					<option value="SD" style="color: black;">standard deviation</option>
+					<option value="SE" style="color: black;">standard error</option>
+				</select><label class="textLabel unselectable">Precision estimate type</label><span class="bar"></span>
+				<p style="position: absolute; margin-top: -21px; margin-left: 192px; pointer-events: none;">▼</p>
+			</div>
+			<div class="group peQuantityGroup" style="margin-left: 8px"><input class="textInput outcomeDetail peQuantity" type="text" name="peQuantity" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Quantity</label></div>
+			<div class="group peFromGroup" style="margin-left: 8px"><input class="textInput outcomeDetail peFrom" type="text" name="peFrom" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">From</label></div>
+			<div class="group peToGroup" style="margin-left: 8px"><input class="textInput outcomeDetail peTo" type="text" name="peTo" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">To</label></div>
+			<div class="group peLevelGroup" style="margin-left: 8px"><input class="textInput outcomeDetail peLevel" type="text" name="peLevel" value="0.95" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Level</label></div>
+		
+		</div>
+		
+		<div style="padding-bottom: 6px;"><input type="checkbox" id="scales" name="scales" onchange="if (this.checked) { this.parentElement.nextElementSibling.style.display = 'block'; } else { this.parentElement.nextElementSibling.style.display = 'none'; }"> Rate certainty?</div>
+		<div class="certaintySection" name="certaintySection"  style="display: none; padding-bottom: 26px;">
+			<div class="certainty" name="certainty">
+			</div>
+			<div style="float: left;">
+				<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px; margin-bottom: 2px;">
+				<input type="button" value="➕" onclick="addCertainty(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);"></span> Add Certainty</p></b>
+			</div>
+		</div>
+	</div>
+
+	</div>
+
+	<div name="certaintyBox" id="certaintyBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; background-color: #F0F0FE;">
+	
+	
+		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;">
+			<div>Certainty system: <select name="certaintySystem" class="outcomeDetail" style="width: 210px;" onchange="this.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'none'; this.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'none'; if (this.value == 'GRADE') { this.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'block'; } else if(this.value == 'DynaMed') { this.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'block'; }"> <option selected="" value=""> -- select -- </option> <option value="GRADE">GRADE</option> <option value="DynaMed">DynaMed Levels of Evidence</option> </select></div>
+		</div>
+		
+		<div class="GRADEcertainty" id="GRADEcertainty" style="display: none">
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;">
+				<div>Certainty of evidence: <select name="GRADEcertaintyOfEvidence" class="GRADEcertaintyOfEvidence"> <option selected="" value=""> -- select -- </option> <option value="high">High quality</option> <option value="moderate">Moderate quality</option> <option value="low">Low quality</option> <option value="very-low">Very Low</option> </select></div>
+					<div class="v3" style="margin-left: 10px; display: flex;"></div>
+						<div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments on certainty: </label> <textarea cols="47" rows="1" style="overflow: auto; resize: none;" id="" class="GRADEcertaintyComments" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div>
+			</div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Risk of bias: <select name="riskOfBias" class="GRADEcertaintySub1" style="width: 172px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments1" class="outcomeDetail" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Inconsistency: <select name="inconsistency" class="GRADEcertaintySub2" style="width: 163px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments2" class="outcomeDetail" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Indirectness: <select name="indirectness" class="GRADEcertaintySub3" style="width: 173px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments3" class="outcomeDetail" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Imprecision: <select name="imprecision" class="GRADEcertaintySub4" style="width: 173px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments4" class="outcomeDetail" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Publication bias: <select name="publicationBias" class="GRADEcertaintySub5" style="width: 148px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments5" class="outcomeDetail" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+		</div>
+		<div class="DynaMedcertainty" id="DynaMedcertainty" style="display: none">
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;">
+				<div>Certainty of evidence: <select name="DynaMedcertaintyOfEvidence" class="DynaMedcertaintyOfEvidence"> <option selected="" value=""> -- select -- </option> <option value="level1">Level 1</option> <option value="level2">Level 2</option> <option value="level3">Level 3</option> </select></div>
+					<div class="v3" style="margin-left: 10px; display: flex;"></div>
+						<div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments on certainty: </label> <textarea cols="54" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintyComments" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div>
+			</div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Clinical outcome: <select name="" class="DynaMedcertaintySub1" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments1" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Directness: <select name="" class="DynaMedcertaintySub2" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="66" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments2" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Randomization: <select name="" class="DynaMedcertaintySub3" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="62" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments3" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Blinding: <select name="" class="DynaMedcertaintySub4" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="68" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments4" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Follow up: <select name="" class="DynaMedcertaintySub5" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments5" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Dropouts: <select name="" class="DynaMedcertaintySub6" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments6" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Precision: <select name="" class="DynaMedcertaintySub7" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments7" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Consistency: <select name="" class="DynaMedcertaintySub8" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="64" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments8" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Allocation concealment: <select name="" class="DynaMedcertaintySub9" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="54" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments9" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>ITT analysis: <select name="" class="DynaMedcertaintySub10" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="65" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments10" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Other: <select name="" class="DynaMedcertaintySub11" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="71" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments11" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+
+		</div>
+	</div>
+
+</div>
+
+
+</body>
+
+<script>
+
+var comparators = 0;
+var numberOfOutcomes = 0;
+var outcomeStatistics = [];
+
+function loadStatistic(element){
+	if (element.parentElement.nextElementSibling.style.display == "none"){
+		element.parentElement.nextElementSibling.style.display = 'block';
+		var topSynth = document.getElementById('studySynthesisType').value;
+		if (topSynth != "") {
+			var statSynth = element.parentElement.nextElementSibling.getElementsByClassName('statisticSynthesisType')[0];
+			statSynth.value = topSynth;
+			statSynth.style.color = '#000000';
+		}
+		var topStudy = document.getElementById('studyStudyType').value;
+		if (topStudy != "") {
+			var statStudy = element.parentElement.nextElementSibling.getElementsByClassName('statisticStudyType')[0];
+			statStudy.value = topStudy;
+			statStudy.style.color = '#000000';
+		}
+	}
+}
+
+function loadUnivariate(element){
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticInterventionGroup')[0].style.display = "none";
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticComparatorGroup')[0].style.display = "none";
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticExposureGroup')[0].style.display = "block";
+}
+
+function loadComparative(element){
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticInterventionGroup')[0].style.display = "block";
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticComparatorGroup')[0].style.display = "block";
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticExposureGroup')[0].style.display = "none";
+   
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticInterventionGroup')[0].getElementsByTagName('input')[0].value = document.getElementById("interventionName").value;
+}
+
+function updateAllInterventions(){
+	var statisticInterventions = document.getElementsByName("statisticIntervention");
+	for (var x = 0; x < statisticInterventions.length; x++){
+	   statisticInterventions[x].value = document.getElementById("interventionName").value;
+	}
+}
+
+function precisionEstimatePick(element){
+   var p = element.value;
+   var parent = element.parentElement.parentElement;
+   
+   if (p == "CI" || p == "CrI"){
+      parent.getElementsByClassName('peQuantityGroup')[0].style.display = "none";
+	  parent.getElementsByClassName('peFromGroup')[0].style.display = "block";
+	  parent.getElementsByClassName('peToGroup')[0].style.display = "block";
+	  parent.getElementsByClassName('peLevelGroup')[0].style.display = "block";
+   } else if (p == "pValue"){
+      parent.getElementsByClassName('peQuantityGroup')[0].style.display = "block";
+	  parent.getElementsByClassName('peFromGroup')[0].style.display = "block";
+	  parent.getElementsByClassName('peToGroup')[0].style.display = "block";
+	  parent.getElementsByClassName('peLevelGroup')[0].style.display = "none";
+   } else if (p == "IQR"){
+      parent.getElementsByClassName('peQuantityGroup')[0].style.display = "none";
+	  parent.getElementsByClassName('peFromGroup')[0].style.display = "block";
+	  parent.getElementsByClassName('peToGroup')[0].style.display = "block";
+	  parent.getElementsByClassName('peLevelGroup')[0].style.display = "none";
+   } else if (p == "SD" || p == "SE"){
+      parent.getElementsByClassName('peQuantityGroup')[0].style.display = "block";
+	  parent.getElementsByClassName('peFromGroup')[0].style.display = "none";
+	  parent.getElementsByClassName('peToGroup')[0].style.display = "none";
+	  parent.getElementsByClassName('peLevelGroup')[0].style.display = "none";
+   }
+   
+}
+
+function addComparator() {
+   var number = (comparators + 1).toString();
+   var d1 = document.getElementById("Comparators");
+   d1.insertAdjacentHTML('beforeend', '' +
+	'' + 
+	'<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 890px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">' +
+	'<p style="margin: 0px; font-size:18px; font-weight: bold;">Comparator <span style="color: #777777" id="comparatorNumber' + number + '">' + number + '</span></p>' +
+		'<div class="group" style="margin-left: 6px">      ' +
+				'<input class="textInput comparator exposureLike" type="text" id="comparatorName" style="width: 476px;" required="">' +
+				'<span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Comparator Display Name</label></div>' +
+		'<div class="group" style="margin-left: 8px;"><input class="textInput comparator exposureLikeId" type="text" id="comparatorIdentifier" style="width: 280px;" required="">' +
+		'<span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Comparator Identifier</label></div></div>'+
+   '');
+   comparators += 1;
+}
+
+function addOutcome(){
+   numberOfOutcomes += 1;
+   outcomeStatistics.push(0);
+   var itm = document.getElementById("outcomeBox");
+   var cln = itm.cloneNode(true);
+   cln.id = "";
+   cln.getElementsByClassName("outcomeNumberLabel")[0].innerHTML = numberOfOutcomes;
+   cln.setAttribute("outcomeNumber", numberOfOutcomes.toString());
+   document.getElementById("Outcomes").appendChild(cln);
+   var newestOutcome = document.getElementById("Outcomes").lastChild;
+   addStatistic(newestOutcome, numberOfOutcomes);		//Needs to have an element parameter
+}
+
+function addStatistic(element, outcomeNumber){
+   outcomeStatistics[outcomeNumber-1] += 1;
+   var itm = document.getElementById("statisticBox");
+   var cln = itm.cloneNode(true);
+   cln.id = "";
+   cln.getElementsByClassName("outcomeStatisticNumberLabel")[0].innerHTML = outcomeStatistics[outcomeNumber-1];
+   cln.getElementsByClassName("UnivariateOrComparative")[0].name = "UnivariateOrComparative" + outcomeNumber.toString() + "-" + outcomeStatistics[outcomeNumber-1].toString();
+   cln.getElementsByClassName("UnivariateOrComparative")[1].name = "UnivariateOrComparative" + outcomeNumber.toString() + "-" + outcomeStatistics[outcomeNumber-1].toString();
+   addCertainty(cln);
+   element.getElementsByClassName("statistics")[0].appendChild(cln);   
+}
+
+function addCertainty(element){
+   var itm = document.getElementById("certaintyBox");
+   var cln = itm.cloneNode(true);
+   cln.id = "";
+   element.getElementsByClassName("statisticSection")[0].getElementsByClassName("certainty")[0].appendChild(cln);
+}
+
+function prepareForm() {
+	addComparator();
+	addOutcome();
+}
+
+
+function convertToJSON() {
+	var json = JSON.parse(JSON.stringify(blankJson));
+	json["relatedArtifact"][0]["url"] = document.getElementById("studyURL").value;
+	json["summaryPublisher"][0]["name"] = document.getElementById("studyPublisher").value;
+	json["contributor"][0]["name"] = document.getElementById("studyAuthors").value;
+	var synthType = document.getElementById("studySynthesisType").value;
+	if (synthType){
+		json["synthesisType"]["coding"][0]["code"] = synthType;
+		json["synthesisType"]["coding"][0]["display"] = synthesisTypeSet[synthType];
+	}
+	var studyType = document.getElementById("studyStudyType").value;
+	if (studyType){
+		json["studyType"]["coding"][0]["code"] = studyType;
+		json["studyType"]["coding"][0]["display"] = studyTypeSet[studyType];
+	}
+	var populationName = document.getElementById("populationName").value;
+	var populationIdentifier = document.getElementById("populationIdentifier").value;
+	json["population"][0]["intendedCohort"][0]["display"] = populationName;
+	json["population"][0]["intendedCohort"][0]["identifier"] = populationIdentifier;
+	
+	var outcomes = document.getElementsByClassName("outcomeBox");
+	for (var x = 0; x < numberOfOutcomes; x++) {
+		var outcomeName = outcomes[x].getElementsByClassName("outcomeName")[0].value;
+		var outcomeIdentifier = outcomes[x].getElementsByClassName("outcomeIdentifier")[0].value;
+		if (!json["population"][0]["measuredVariable"][x]){
+		   json["population"][0]["measuredVariable"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["measuredVariable"][0])));
+		}
+		json["population"][0]["measuredVariable"][x]["variableDefinition"][0]["display"] = outcomeName;
+		json["population"][0]["measuredVariable"][x]["variableDefinition"][0]["identifier"] = outcomeIdentifier;
+		var statistics = outcomes[x].getElementsByClassName("statisticBox");
+		var exposures = {};
+		var uniNew = {};
+		var compNew = {};
+		for (var y = 0; y < outcomeStatistics[x]; y++) {
+			var uni = false;
+			var comp = false;
+			if (statistics[y].getElementsByClassName("UnivariateRadio")[0].checked) {
+				var exp = statistics[y].getElementsByClassName("statisticExposure")[0].value;
+				uni = true;
+			} else if (statistics[y].getElementsByClassName("ComparativeRadio")[0].checked) {
+				var exp = statistics[y].getElementsByClassName("statisticIntervention")[0].value;
+				comp = true;
+			}
+			if (exp) {
+				if (!exposures[exp]){
+					exposures[exp] = JSON.parse(JSON.stringify(blankJson["population"][0]["measuredVariable"][0]["exposure"][0]));
+					exposures[exp]["variableDefinition"][0]["display"] = exp;
+					var exposureLikes = document.getElementsByClassName("exposureLike");
+					for (var z = 0; z < comparators + 1; z++) {
+						if (exposureLikes[z].value == exp){
+							exposures[exp]["variableDefinition"][0]["identifier"] = document.getElementsByClassName("exposureLikeId")[z].value;
+						}
+					}
+				}
+				if (uni) {
+					if (!uniNew[exp]){
+						uniNew[exp] = true;
+					} else {
+						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["measuredVariable"][0]["exposure"][0]["univariateStatistic"][0])));
+					}
+					var statSynthType = statistics[y].getElementsByClassName("statisticSynthesisType")[0].value;
+					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["synthesisType"]["coding"][0]["code"] = statSynthType;
+					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["synthesisType"]["coding"][0]["display"] = synthesisTypeSet[statSynthType];
+					var statStudyType = statistics[y].getElementsByClassName("statisticStudyType")[0].value;
+					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["studyType"]["coding"][0]["code"] = statStudyType;
+					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["studyType"]["coding"][0]["display"] = studyTypeSet[statStudyType];
+					
+					var statType = statistics[y].getElementsByClassName("statisticType")[0].value;
+					var formStatType = statType;
+					if (statType == "percentage" || statType == "perthousand") {
+						statType = "proportion";
+					}
+					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["statisticType"]["coding"][0]["code"] = statType;
+					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["statisticType"]["coding"][0]["display"] = statTypeSet[statType];
+					var temp = statistics[y].getElementsByClassName("statisticValue")[0].value;
+					if (temp != ""){
+						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["quantity"]["value"] = Number(temp);
+					}
+					
+					var statInequality = statistics[y].getElementsByClassName("statisticInequality")[0].value;
+					if (statInequality != "=") {
+						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["quantity"]["comparator"] = statInequality;
+					}
+					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["quantity"]["unit"] = statistics[y].getElementsByClassName("statisticUnit")[0].value;
+					
+					var temp = statistics[y].getElementsByClassName("statisticNumberOfStudies")[0].value;
+					if (temp != ""){
+						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["sampleSize"]["numberOfStudies"] = Number(temp);
+					}
+					var temp = statistics[y].getElementsByClassName("statisticNumberOfParticipants")[0].value;
+					if (temp != ""){
+						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["sampleSize"]["numberOfParticipants"] = Number(temp);
+					}
+					var temp = statistics[y].getElementsByClassName("statisticKnownDataCount")[0].value;
+					if (temp != ""){
+						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["sampleSize"]["knownDataCount"] = Number(temp);
+					}
+					var temp = statistics[y].getElementsByClassName("statisticNumeratorCount")[0].value;
+					if (temp != ""){
+						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["sampleSize"]["numeratorCount"] = Number(temp);
+					}
+					
+					var statPrecisionEstimate = statistics[y].getElementsByClassName("precisionEstimateType")[0].value;
+					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["type"]["coding"][0]["code"] = statPrecisionEstimate;
+					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["type"]["coding"][0]["display"] = precisionEstimateSet[statPrecisionEstimate];
+					
+					
+					var temp = statistics[y].getElementsByClassName("peQuantity")[0].value;
+					if (temp != ""){
+						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["quantity"]["value"] = Number(temp);
+					}
+					var temp = statistics[y].getElementsByClassName("peLevel")[0].value;
+					if (temp != ""){
+						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["level"] = Number(temp);
+					}
+					var temp = statistics[y].getElementsByClassName("peFrom")[0].value;
+					if (temp != ""){
+						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["from"]["value"] = Number(temp);
+					}
+					var temp = statistics[y].getElementsByClassName("peTo")[0].value;
+					if (temp != ""){
+						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["to"]["value"] = Number(temp);
+					}
+										
+				} else if (comp){
+					if (!compNew[exp]){
+						compNew[exp] = true;
+					} else {
+						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["measuredVariable"][0]["exposure"][0]["comparativeStatistic"][0])));
+					}
+					
+				}
+			}
+			//console.log(exposures);
+		}
+		var yCount = 0;
+		for (var y in exposures){
+			json["population"][0]["measuredVariable"][x]["exposure"][yCount] = exposures[y];
+			yCount += 1;
+		}
+	}
+	
+    document.getElementById("jsonArea").value = JSON.stringify(json, null, 2);
+}
+
+
+var synthesisTypeSet = {
+	"std-MA": "summary data meta-analysis",
+	"IPD-MA": "individual patient data meta-analysis",
+	"indirect-NMA": "indirect network meta-analysis",
+	"combined-NMA": "combined direct plus indirect network meta-analysis",
+	"range": "range of results",
+	"classification": "classifcation of results"
+};
+
+var studyTypeSet = {
+	"RCT": "randomized trial",
+	"CCT": "controlled trial (non-randomized)",
+	"cohort": "comparative cohort study",
+	"case-control": "case-control study",
+	"series": "uncontrolled cohort or case series",
+	"case-report": "case report",
+	"mixed": "mixed methods"
+};
+
+var statTypeSet = {
+	"relative-RR": "relative risk",
+	"count": "count",
+	"percentage": "proportion",
+	"perthousand": "proportion",
+	"proportion": "proportion",
+	"derivedProportion": "derived proportion",
+	"relative-OR": "odds ratio",
+	"relative-HR": "hazard ratio",
+	"absolute-ARD": "absolute risk difference",
+	"absolute-SMD": "standardized mean difference",
+	"absolute-MedianDiff": "median difference",
+	"mean": "mean",
+	"median": "median"
+};
+
+var precisionEstimateSet = {
+	"CI": "confidence interval",
+	"pValue": "p value",
+	"CrI": "credible interval",
+	"IQR": "interquartile range",
+	"SD": "standard deviation",
+	"SE": "standard error"
+}
+
+
+var blankJson = {
+  "resourceType": "ComparativeEvidence",
+  "id": "",
+  "url": "",
+  "title": "",
+  "shortTitle": "",
+  "subTitle": "",
+  "status": "draft",
+  "date": "",
+  "copyright": "",
+  "approvalDate": "",
+  "lastReviewDate": "",
+  "summaryPublisher": [
+    {
+      "name": ""
+    }
+  ],
+  "contributor": [
+    {
+      "type": "",
+      "name": "",
+    }
+  ],
+  "relatedArtifact": [
+    {
+      "type": "",
+      "label": "",
+      "display": "",
+      "citation": "",
+      "url": "",
+      "resource": ""
+    }
+  ],
+  "description": "",
+  "note": [
+    {
+      "text": ""
+    }
+  ],
+  "synthesisType": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "studyType": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/study-type",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "population": [
+    {
+      "description": "",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "intendedCohort": [
+        {
+          "reference": "",
+          "type": "Group",
+          "identifier": "",
+          "display": ""
+        }
+      ],
+      "sampleCohort": [
+        {
+          "reference": "",
+          "type": "Group",
+          "identifier": "",
+          "display": ""
+        }
+      ],
+      "measuredVariable": [
+        {
+          "description": "",
+          "note": [
+            {
+              "text": ""
+            }
+          ],
+          "variableDefinition": [
+            {
+              "reference": "",
+              "type": "EvidenceVariable",
+              "identifier": "",
+              "display": ""
+            }
+          ],
+          "exposure": [
+            {
+              "description": "",
+              "note": [
+                {
+                  "text": ""
+                }
+              ],
+              "variableDefinition": [
+                {
+                  "reference": "",
+                  "type": "EvidenceVariable",
+                  "identifier": "",
+                  "display": ""
+                }
+              ],
+              "univariateStatistic": [
+                {
+                  "description": "",
+                  "note": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "synthesisType": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+                        "version": "",
+                        "code": "",
+                        "display": "",
+                        "userSelected": ""
+                      }
+                    ],
+                    "text": ""
+                  },
+                  "studyType": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/ValueSet/study-type",
+                        "version": "",
+                        "code": "",
+                        "display": "",
+                        "userSelected": ""
+                      }
+                    ],
+                    "text": ""
+                  },
+                  "statisticType": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                        "version": "",
+                        "code": "",
+                        "display": "",
+                        "userSelected": ""
+                      }
+                    ],
+                    "text": ""
+                  },
+                  "quantity": {
+                    "value": "",
+                    "comparator": "",
+                    "unit": "",
+                    "system": "",
+                    "code": ""
+                  },
+                  "sampleSize": {
+                    "description": "",
+                    "note": [
+                      {
+                        "text": ""
+                      }
+                    ],
+                    "numberOfStudies": "",
+                    "numberOfParticipants": "",
+                    "knownDataCount": "",
+                    "numeratorCount": ""
+                  },
+                  "precisionEstimate": [
+                    {
+                      "description": "",
+                      "note": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "type": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                            "version": "",
+                            "code": "",
+                            "display": "",
+                            "userSelected": ""
+                          }
+                        ],
+                        "text": ""
+                      },
+                      "quantity": {
+                        "value": "",
+                        "comparator": "",
+                        "unit": "",
+                        "system": "",
+                        "code": ""
+                      },
+                      "level": "",
+                      "from": {
+                        "value": "",
+                        "comparator": "",
+                        "unit": "",
+                        "system": "",
+                        "code": ""
+                      },
+                      "to": {
+                        "value": "",
+                        "comparator": "",
+                        "unit": "",
+                        "system": "",
+                        "code": ""
+                      }
+                    }
+                  ],
+                  "certainty": [
+                    {
+                      "description": "",
+                      "note": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "rating": [
+                        {
+                          "coding": [
+                            {
+                              "system": "http://hl7.org/fhir/ValueSet/certainty-rating",
+                              "version": "",
+                              "code": "",
+                              "display": "",
+                              "userSelected": ""
+                            }
+                          ],
+                          "text": ""
+                        }
+                      ],
+                      "certaintySubcomponent": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "type": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                                "version": "",
+                                "code": "",
+                                "display": "",
+                                "userSelected": ""
+                              }
+                            ],
+                            "text": ""
+                          },
+                          "rating": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                                "version": "",
+                                "code": "",
+                                "display": "",
+                                "userSelected": ""
+                              }
+                            ],
+                            "text": ""
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "comparativeStatistic": [
+                {
+                  "description": "",
+                  "note": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "exposureAlternative": [
+                    {
+                      "reference": "",
+                      "type": "EvidenceVariable",
+                      "identifier": "",
+                      "display": ""
+                    }
+                  ],
+                  "statistic": [
+                    {
+                      "description": "",
+                      "note": [
+                        {
+                          "text": ""
+                        }
+                      ],
+                      "synthesisType": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+                            "version": "",
+                            "code": "",
+                            "display": "",
+                            "userSelected": ""
+                          }
+                        ],
+                        "text": ""
+                      },
+                      "studyType": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/ValueSet/study-type",
+                            "version": "",
+                            "code": "",
+                            "display": "",
+                            "userSelected": ""
+                          }
+                        ],
+                        "text": ""
+                      },
+                      "statisticType": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                            "version": "",
+                            "code": "",
+                            "display": "",
+                            "userSelected": ""
+                          }
+                        ],
+                        "text": ""
+                      },
+                      "quantity": {
+                        "value": "",
+                        "comparator": "",
+                        "unit": "",
+                        "system": "",
+                        "code": ""
+                      },
+                      "sampleSize": {
+                        "description": "",
+                        "note": [
+                          {
+                            "text": ""
+                          }
+                        ],
+                        "numberOfStudies": "",
+                        "numberOfParticipants": "",
+                        "knownDataCount": "",
+                        "numeratorCount": ""
+                      },
+                      "precisionEstimate": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "type": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                                "version": "",
+                                "code": "",
+                                "display": "",
+                                "userSelected": ""
+                              }
+                            ],
+                            "text": ""
+                          },
+                          "quantity": {
+                            "value": "",
+                            "comparator": "",
+                            "unit": "",
+                            "system": "",
+                            "code": ""
+                          },
+                          "level": "",
+                          "from": {
+                            "value": "",
+                            "comparator": "",
+                            "unit": "",
+                            "system": "",
+                            "code": ""
+                          },
+                          "to": {
+                            "value": "",
+                            "comparator": "",
+                            "unit": "",
+                            "system": "",
+                            "code": ""
+                          }
+                        }
+                      ],
+                      "certainty": [
+                        {
+                          "description": "",
+                          "note": [
+                            {
+                              "text": ""
+                            }
+                          ],
+                          "rating": [
+                            {
+                              "coding": [
+                                {
+                                  "system": "http://hl7.org/fhir/ValueSet/certainty-rating",
+                                  "version": "",
+                                  "code": "",
+                                  "display": "",
+                                  "userSelected": ""
+                                }
+                              ],
+                              "text": ""
+                            }
+                          ],
+                          "certaintySubcomponent": [
+                            {
+                              "description": "",
+                              "note": [
+                                {
+                                  "text": ""
+                                }
+                              ],
+                              "type": {
+                                "coding": [
+                                  {
+                                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                                    "version": "",
+                                    "code": "",
+                                    "display": "",
+                                    "userSelected": ""
+                                  }
+                                ],
+                                "text": ""
+                              },
+                              "rating": {
+                                "coding": [
+                                  {
+                                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                                    "version": "",
+                                    "code": "",
+                                    "display": "",
+                                    "userSelected": ""
+                                  }
+                                ],
+                                "text": ""
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+</script>
+
+<style>
+* {
+ font-family: Arial;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input::-webkit-calendar-picker-indicator {
+  opacity: 100;
+}
+           
+.invalidEntry {
+   animation: glow-red 3s 1 ease;
+}
+
+@keyframes  glow-red {
+   33%, 66% {
+    /* background-color: #EE8080; */
+    outline: none;
+    box-shadow: 0 0 12px #FF0000;
+   }
+   100% {
+     /* background-color: #FFFFFF; */
+    outline: none;
+    box-shadow: 0 0 0px #FFFFFF;
+   }
+}
+
+.group 			  { 
+  position:relative;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.textInput 				{
+  font-size:12px;
+  display:block;
+  /* border: solid; */
+  border:1px solid #757575;
+  padding:8px 2px 4px 4px;
+}
+
+.textRight 				{
+  padding-right: 20px;
+  text-align: right;
+}
+
+/* LABEL ======================================= */
+.textLabel, .textLabelTop			 {
+  font-size:14px;
+  color:#777777;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:4px;
+  top:8px;
+  transition:0.3s ease all; 
+  -moz-transition:0.3s ease all; 
+  -webkit-transition:0.3s ease all;
+}
+
+.textLabelTop {
+   position: absolute;
+   opacity: 0.0;
+}
+
+.textLabelSign				 {
+  position: absolute;
+  opacity: 0.0;
+  top:20px;
+}
+
+.textInput:focus ~ .textLabelSign, .textInput:valid ~ .textLabelSign		 {
+  position: absolute;
+  text-align: right;
+  opacity: 1.0;
+  color:#777777; 
+  font-size:14px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  right:4px;
+  top:7px;
+  transition:0.3s ease all;
+  -moz-transition:0.3s ease all; 
+  -webkit-transition:0.3s ease all;
+}
+
+/* If I want the labels to be ever-present. */
+/*
+.textInput ~ .textLabel, .textInput ~ .textLabelTop, .dropdownInput ~ .textLabel, .dropdownInput ~ .textLabelTop, .dateInput ~ .textLabel, .dateInput ~ .textLabelTop 		{
+  opacity: 1.0;
+  top:-6px;
+  left: 6px;
+  padding-left: 1px;
+  padding-right: 2px;
+  background: #FFFFFF;
+  font-size:10px;
+  color:#5264ae;
+}
+*/
+
+.textInputAlways 				{
+  font-size:12px;
+  display:block;
+  /* border: solid; */
+  border:1px solid #757575;
+  padding:8px 2px 4px 4px;
+}
+
+.textInputAlways:focus ~ .textLabelSign, .textInputAlways:valid ~ .textLabelSign		 {
+  position: absolute;
+  text-align: right;
+  opacity: 1.0;
+  color:#777777; 
+  font-size:14px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  right:4px;
+  top:7px;
+  transition:0.3s ease all;
+  -moz-transition:0.3s ease all; 
+  -webkit-transition:0.3s ease all;
+}
+
+.textInputAlways ~ .textLabel, .textInputAlways ~ .textLabelTop 		{
+  opacity: 1.0;
+  top:-6px;
+  left: 6px;
+  padding-left: 1px;
+  padding-right: 2px;
+  background: #FFFFFF;
+  font-size:10px;
+  color:#5264ae;
+}
+
+.textInputAlways:focus ~ .textLabel, .textInputAlways:focus ~ .textLabelTop {
+  opacity: 1.0;
+  top:-6px;
+  left: 6px;
+  padding-left: 1px;
+  padding-right: 2px;
+  background: #FFFFFF;
+  font-size:11px;
+  color:#5264ae;
+}
+
+.textInputAlways:valid ~ .textLabel, .textInputAlways:valid ~ .textLabelTop {
+  opacity: 1.0;
+  top:-6px;
+  left: 6px;
+  padding-left: 1px;
+  padding-right: 2px;
+  background: #FFFFFF;
+  font-size:11px;
+  color:#52ae64;
+}
+
+
+.dateInput {
+   height: 24px;
+}
+
+.textInput:focus ~ .textLabel, .textInput:focus ~ .textLabelTop, .dropdownInput:focus ~ .textLabel, .dropdownInput:focus ~ .textLabelTop, .dateInput:focus ~ .textLabel, .dateInput:focus ~ .textLabelTop, .dateInput ~ .textLabel, .dateInput ~ .textLabelTop {
+  opacity: 1.0;
+  top:-6px;
+  left: 6px;
+  padding-left: 1px;
+  padding-right: 2px;
+  background: #FFFFFF;
+  font-size:11px;
+  color:#5264ae;
+}
+
+.textInput:valid ~ .textLabel, .textInput:valid ~ .textLabelTop, .dropdownInput:valid ~ .textLabel, .dropdownInput:valid ~ .textLabelTop, .dateInput:valid ~ .textLabel, .dateInput:valid ~ .textLabelTop 		{
+  opacity: 1.0;
+  top:-6px;
+  left: 6px;
+  padding-left: 1px;
+  padding-right: 2px;
+  background: #FFFFFF;
+  font-size:11px;
+  color:#52ae64;
+}
+
+/* BOTTOM BARS ================================= */
+.bar 	{ 
+  position:relative;
+  display:block;
+  width:100%;
+}
+
+.bar:before, .bar:after 	{
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:0px; 
+  position:absolute;
+  /* background:#52ae64; */
+  background:#5264ae;
+  transition:0.3s ease all; 
+  -moz-transition:0.3s ease all; 
+  -webkit-transition:0.3s ease all;
+}
+.textInput:valid ~ .bar:before, .textInput:valid ~ .bar:after, .dropdownInput:valid ~ .bar:before, .dropdownInput:valid ~ .bar:after, .dateInput:valid ~ .bar:before, .dateInput:valid ~ .bar:after  	{
+   background:#52ae64;
+}
+
+
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%; 
+}
+
+/* active state */
+.textInput:focus ~ .bar:before, .textInput:focus ~ .bar:after, .dropdownInput:focus ~ .bar:before, .dropdownInput:focus ~ .bar:after, .dateInput:focus ~ .bar:before, .dateInput:focus ~ .bar:after {
+  width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%; 
+  width:100%; 
+  top:25%; 
+  bottom: 0;
+  left:0;
+  pointer-events:none;
+  opacity:0.0; /* opacity: 0.5; */
+}
+
+/* active state */
+.textInput:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+	from { background:#52ae64; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+	from { background:#52ae64; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+	from { background:#52ae64; }
+  to 	{ width:0; background:transparent; }
+}
+
+
+input[type=radio] {
+		<!-- display:none; -->
+	}
+
+input[type=radio] + label {
+		display:inline-block;
+		margin:-2px;
+		padding: 7px 4px;
+		margin-bottom: 0;
+		margin-top: 0px;
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 20px;
+		color: #777;
+		text-align: center;
+		text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+		vertical-align: middle;
+		cursor: pointer;
+		background-color: #e5e5e5;
+		background-image: -moz-linear-gradient(top,#fff,#e6e6e6);
+		background-image: -webkit-gradient(linear,0 0,0 100%,from(#fff),to(#e6e6e6));
+		background-image: -webkit-linear-gradient(top,#fff,#e6e6e6);
+		background-image: -o-linear-gradient(top,#fff,#e6e6e6);
+		background-image: linear-gradient(to bottom,#fff,#e6e6e6);
+		background-repeat: repeat-x;
+		border: 1px solid #aaa;
+		border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+		border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+		border-bottom-color: #b3b3b3;
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#e6e6e6',GradientType=0);
+		filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+		-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+		-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+		box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+	}
+
+	 input[type=radio]:checked + label{
+		background-image: none;
+		color: #000;
+		outline: 0;
+		-webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+		-moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+		box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+			background-color:#90c0e0;
+	}
+
+
+.vl {
+    border-left: 3px solid #828282;
+    height: 20px;
+}
+.v2 {
+    border-left: 2px solid #828282;
+    height: 64px;
+    margin-bottom: -10px;
+}
+
+.v3 {
+    border-left: 3px solid #828282;
+}
+
+type="number" */
+.no-spinners {
+  -moz-appearance:textfield;
+}
+
+
+
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.outcomeDetail::-webkit-outer-spin-button,
+.outcomeDetail::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.line-break {
+  width: 100%;
+}
+
+input[type=text]:disabled {
+   background: #F0F0F0;
+}
+
+/* Popup container - can be anything you want */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 580px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 8px 4px 8px 4px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -550px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 94%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Popup container - can be anything you want */
+.popupBelow {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/* The actual popup */
+.popupBelow .popuptext {
+    visibility: hidden;
+    width: 580px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 8px 4px 8px 4px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -550px;
+}
+
+/* Popup arrow */
+.popupBelow .popuptext::after {
+    content: "";
+    position: absolute;
+    top: -15%;
+    left: 94%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    transform: rotate(180deg);
+    border-color: #555 transparent transparent transparent;
+}
+/* Toggle this class - hide and show the popup */
+.popupBelow .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 800px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-h2 {
+   margin:1px;
+}
+
+.modal-header {
+    padding: 2px 6px;
+    background-color: #6B6B70;
+    color: white;
+}
+
+.modal-body {padding: 2px 6px;}
+
+.modal-footer {
+    padding: 2px 6px;
+    background-color: #6B6B70;
+    color: white;
+}
+
+</style>
+</html>
