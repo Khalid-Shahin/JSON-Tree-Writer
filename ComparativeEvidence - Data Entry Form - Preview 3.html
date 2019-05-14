@@ -238,7 +238,7 @@
 		
 		</div>
 		
-		<div style="padding-bottom: 6px;"><input type="checkbox" id="scales" name="scales" onchange="if (this.checked) { this.parentElement.nextElementSibling.style.display = 'block'; } else { this.parentElement.nextElementSibling.style.display = 'none'; }"> Rate certainty?</div>
+		<div style="padding-bottom: 6px;"><input type="checkbox"  class="certaintyCheck" id="" name="" onchange="if (this.checked) { this.parentElement.nextElementSibling.style.display = 'block'; } else { this.parentElement.nextElementSibling.style.display = 'none'; }"> Rate certainty?</div>
 		<div class="certaintySection" name="certaintySection"  style="display: none; padding-bottom: 26px;">
 			<div class="certainty" name="certainty">
 			</div>
@@ -251,11 +251,11 @@
 
 	</div>
 
-	<div name="certaintyBox" id="certaintyBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; background-color: #F0F0FE;">
+	<div class="certaintyBox" name="certaintyBox" id="certaintyBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; background-color: #F0F0FE;">
 	
 	
 		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;">
-			<div>Certainty system: <select name="certaintySystem" class="outcomeDetail" style="width: 210px;" onchange="this.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'none'; this.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'none'; if (this.value == 'GRADE') { this.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'block'; } else if(this.value == 'DynaMed') { this.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'block'; }"> <option selected="" value=""> -- select -- </option> <option value="GRADE">GRADE</option> <option value="DynaMed">DynaMed Levels of Evidence</option> </select></div>
+			<div>Certainty system: <select name="certaintySystem" class="certaintySystem" style="width: 210px;" onchange="this.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'none'; this.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'none'; if (this.value == 'GRADE') { this.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'block'; } else if(this.value == 'DynaMed') { this.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'block'; }"> <option selected="" value=""> -- select -- </option> <option value="GRADE">GRADE</option> <option value="DynaMed">DynaMed Levels of Evidence</option> </select></div>
 		</div>
 		
 		<div class="GRADEcertainty" id="GRADEcertainty" style="display: none">
@@ -264,11 +264,11 @@
 					<div class="v3" style="margin-left: 10px; display: flex;"></div>
 						<div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments on certainty: </label> <textarea cols="47" rows="1" style="overflow: auto; resize: none;" id="" class="GRADEcertaintyComments" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div>
 			</div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Risk of bias: <select name="riskOfBias" class="GRADEcertaintySub1" style="width: 172px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments1" class="outcomeDetail" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Inconsistency: <select name="inconsistency" class="GRADEcertaintySub2" style="width: 163px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments2" class="outcomeDetail" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Indirectness: <select name="indirectness" class="GRADEcertaintySub3" style="width: 173px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments3" class="outcomeDetail" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Imprecision: <select name="imprecision" class="GRADEcertaintySub4" style="width: 173px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments4" class="outcomeDetail" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Publication bias: <select name="publicationBias" class="GRADEcertaintySub5" style="width: 148px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments5" class="outcomeDetail" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Risk of bias: <select name="RiskOfBias" class="GRADEcertaintySub1" style="width: 172px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments1" class="GRADEcertaintySubComments1" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Inconsistency: <select name="Inconsistency" class="GRADEcertaintySub2" style="width: 163px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments2" class="GRADEcertaintySubComments2" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Indirectness: <select name="Indirectness" class="GRADEcertaintySub3" style="width: 173px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments3" class="GRADEcertaintySubComments3" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Imprecision: <select name="Imprecision" class="GRADEcertaintySub4" style="width: 173px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments4" class="GRADEcertaintySubComments4" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Publication bias: <select name="PublicationBias" class="GRADEcertaintySub5" style="width: 148px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments5" class="GRADEcertaintySubComments5" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
 		</div>
 		<div class="DynaMedcertainty" id="DynaMedcertainty" style="display: none">
 			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;">
@@ -276,17 +276,17 @@
 					<div class="v3" style="margin-left: 10px; display: flex;"></div>
 						<div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments on certainty: </label> <textarea cols="54" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintyComments" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div>
 			</div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Clinical outcome: <select name="" class="DynaMedcertaintySub1" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments1" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Directness: <select name="" class="DynaMedcertaintySub2" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="66" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments2" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Randomization: <select name="" class="DynaMedcertaintySub3" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="62" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments3" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Blinding: <select name="" class="DynaMedcertaintySub4" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="68" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments4" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Follow up: <select name="" class="DynaMedcertaintySub5" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments5" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Dropouts: <select name="" class="DynaMedcertaintySub6" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments6" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Precision: <select name="" class="DynaMedcertaintySub7" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments7" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Consistency: <select name="" class="DynaMedcertaintySub8" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="64" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments8" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Allocation concealment: <select name="" class="DynaMedcertaintySub9" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="54" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments9" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>ITT analysis: <select name="" class="DynaMedcertaintySub10" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="65" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments10" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Other: <select name="" class="DynaMedcertaintySub11" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="71" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments11" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Clinical outcome: <select name="clinical-outcome" class="DynaMedcertaintySub1" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments1" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Directness: <select name="directness" class="DynaMedcertaintySub2" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="66" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments2" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Randomization: <select name="randomization" class="DynaMedcertaintySub3" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="62" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments3" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Blinding: <select name="blinding" class="DynaMedcertaintySub4" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="68" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments4" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Follow up: <select name="follow-up" class="DynaMedcertaintySub5" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments5" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Dropouts: <select name="dropouts" class="DynaMedcertaintySub6" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments6" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Precision: <select name="precision" class="DynaMedcertaintySub7" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments7" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Consistency: <select name="consistency" class="DynaMedcertaintySub8" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="64" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments8" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Allocation concealment: <select name="allocation-concealment" class="DynaMedcertaintySub9" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="54" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments9" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>ITT analysis: <select name="itt-analysis" class="DynaMedcertaintySub10" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="65" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments10" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
+			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Other: <select name="other" class="DynaMedcertaintySub11" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="71" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments11" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
 
 		</div>
 	</div>
@@ -468,7 +468,7 @@ function convertToJSON() {
 			}
 			if (exp) {
 				if (!exposures[exp]){
-					exposures[exp] = JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["exposure"][0]));
+					exposures[exp] = JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0]));
 					exposures[exp]["variableDefinition"][0]["display"] = exp;
 					var exposureLikes = document.getElementsByClassName("exposureLike");
 					for (var z = 0; z < comparators + 1; z++) {
@@ -477,90 +477,153 @@ function convertToJSON() {
 						}
 					}
 				}
+				var statisticLocation;
 				if (uni) {
 					if (!uniNew[exp]){
 						uniNew[exp] = true;
 					} else {
-						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["exposure"][0]["univariateStatistic"][0])));
+						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0]["univariateStatistic"][0])));
 					}
-					var statSynthType = statistics[y].getElementsByClassName("statisticSynthesisType")[0].value;
-					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["synthesisType"]["coding"][0]["code"] = statSynthType;
-					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["synthesisType"]["coding"][0]["display"] = synthesisTypeSet[statSynthType];
-					var statStudyType = statistics[y].getElementsByClassName("statisticStudyType")[0].value;
-					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["studyType"]["coding"][0]["code"] = statStudyType;
-					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["studyType"]["coding"][0]["display"] = studyTypeSet[statStudyType];
-					
-					var statType = statistics[y].getElementsByClassName("statisticType")[0].value;
-					var formStatType = statType;
-					if (statType == "percentage" || statType == "perthousand") {
-						statType = "proportion";
-					}
-					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["statisticType"]["coding"][0]["code"] = statType;
-					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["statisticType"]["coding"][0]["display"] = statTypeSet[statType];
-					var temp = statistics[y].getElementsByClassName("statisticValue")[0].value;
-					if (temp != ""){
-						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["quantity"]["value"] = Number(temp);
-					}
-					
-					var statInequality = statistics[y].getElementsByClassName("statisticInequality")[0].value;
-					if (statInequality != "=") {
-						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["quantity"]["comparator"] = statInequality;
-					}
-					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["quantity"]["unit"] = statistics[y].getElementsByClassName("statisticUnit")[0].value;
-					
-					var temp = statistics[y].getElementsByClassName("statisticNumberOfStudies")[0].value;
-					if (temp != ""){
-						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["sampleSize"]["numberOfStudies"] = Number(temp);
-					}
-					var temp = statistics[y].getElementsByClassName("statisticNumberOfParticipants")[0].value;
-					if (temp != ""){
-						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["sampleSize"]["numberOfParticipants"] = Number(temp);
-					}
-					var temp = statistics[y].getElementsByClassName("statisticKnownDataCount")[0].value;
-					if (temp != ""){
-						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["sampleSize"]["knownDataCount"] = Number(temp);
-					}
-					var temp = statistics[y].getElementsByClassName("statisticNumeratorCount")[0].value;
-					if (temp != ""){
-						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["sampleSize"]["numeratorCount"] = Number(temp);
-					}
-					
-					var statPrecisionEstimate = statistics[y].getElementsByClassName("precisionEstimateType")[0].value;
-					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["type"]["coding"][0]["code"] = statPrecisionEstimate;
-					exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["type"]["coding"][0]["display"] = precisionEstimateSet[statPrecisionEstimate];
-					
-					
-					var temp = statistics[y].getElementsByClassName("peQuantity")[0].value;
-					if (temp != ""){
-						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["quantity"]["value"] = Number(temp);
-					}
-					var temp = statistics[y].getElementsByClassName("peLevel")[0].value;
-					if (temp != ""){
-						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["level"] = Number(temp);
-					}
-					var temp = statistics[y].getElementsByClassName("peFrom")[0].value;
-					if (temp != ""){
-						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["from"]["value"] = Number(temp);
-					}
-					var temp = statistics[y].getElementsByClassName("peTo")[0].value;
-					if (temp != ""){
-						exposures[exp]["univariateStatistic"][exposures[exp]["univariateStatistic"].length-1]["precisionEstimate"][0]["to"]["value"] = Number(temp);
-					}
+					statisticLocation = "univariateStatistic";
 										
 				} else if (comp){
 					if (!compNew[exp]){
 						compNew[exp] = true;
 					} else {
-						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["exposure"][0]["comparativeStatistic"][0])));
+						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0]["compoundStatistic"][0])));
 					}
-					
+					statisticLocation = "compoundStatistic";
 				}
+				
+
+				var statSynthType = statistics[y].getElementsByClassName("statisticSynthesisType")[0].value;
+				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["synthesisType"]["coding"][0]["code"] = statSynthType;
+				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["synthesisType"]["coding"][0]["display"] = synthesisTypeSet[statSynthType];
+				var statStudyType = statistics[y].getElementsByClassName("statisticStudyType")[0].value;
+				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["studyType"]["coding"][0]["code"] = statStudyType;
+				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["studyType"]["coding"][0]["display"] = studyTypeSet[statStudyType];
+				
+				var statType = statistics[y].getElementsByClassName("statisticType")[0].value;
+				var formStatType = statType;
+				if (statType == "percentage" || statType == "perthousand") {
+					statType = "proportion";
+				}
+				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["statisticType"]["coding"][0]["code"] = statType;
+				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["statisticType"]["coding"][0]["display"] = statTypeSet[statType];
+				var temp = statistics[y].getElementsByClassName("statisticValue")[0].value;
+				if (temp != ""){
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["quantity"]["value"] = Number(temp);
+				}
+				
+				var statInequality = statistics[y].getElementsByClassName("statisticInequality")[0].value;
+				if (statInequality != "=") {
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["quantity"]["comparator"] = statInequality;
+				}
+				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["quantity"]["unit"] = statistics[y].getElementsByClassName("statisticUnit")[0].value;
+				
+				var temp = statistics[y].getElementsByClassName("statisticNumberOfStudies")[0].value;
+				if (temp != ""){
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["sampleSize"]["numberOfStudies"] = Number(temp);
+				}
+				var temp = statistics[y].getElementsByClassName("statisticNumberOfParticipants")[0].value;
+				if (temp != ""){
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["sampleSize"]["numberOfParticipants"] = Number(temp);
+				}
+				var temp = statistics[y].getElementsByClassName("statisticKnownDataCount")[0].value;
+				if (temp != ""){
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["sampleSize"]["knownDataCount"] = Number(temp);
+				}
+				var temp = statistics[y].getElementsByClassName("statisticNumeratorCount")[0].value;
+				if (temp != ""){
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["sampleSize"]["numeratorCount"] = Number(temp);
+				}
+				
+				var statPrecisionEstimate = statistics[y].getElementsByClassName("precisionEstimateType")[0].value;
+				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["type"]["coding"][0]["code"] = statPrecisionEstimate;
+				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["type"]["coding"][0]["display"] = precisionEstimateSet[statPrecisionEstimate];
+				
+				
+				var temp = statistics[y].getElementsByClassName("peQuantity")[0].value;
+				if (temp != ""){
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["quantity"]["value"] = Number(temp);
+				}
+				var temp = statistics[y].getElementsByClassName("peLevel")[0].value;
+				if (temp != ""){
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["level"] = Number(temp);
+				}
+				var temp = statistics[y].getElementsByClassName("peFrom")[0].value;
+				if (temp != ""){
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["range"]["low"]["value"] = Number(temp);
+				}
+				var temp = statistics[y].getElementsByClassName("peTo")[0].value;
+				if (temp != ""){
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["range"]["high"]["value"] = Number(temp);
+				}
+				
+				if (statistics[y].getElementsByClassName("certaintyCheck")[0].checked){
+					var certaintys = statistics[y].getElementsByClassName("certaintyBox");
+					for (var z = 0; z < certaintys.length; z++) {
+						var certaintySystem = statistics[y].getElementsByClassName("certaintySystem")[z].value;
+						if (certaintySystem){
+							if (!exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]){
+								exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0][statisticLocation][0]["statistic"][0]["certainty"][0])));
+							}
+							if (certaintySystem == "GRADE"){
+							
+								exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["rating"][0]["coding"][0]["system"] = "http://hl7.org/fhir/ValueSet/certainty-rating";
+								for (var a = 0; a < 5; a++) {
+									if (a > 0) {
+										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0][statisticLocation][0]["statistic"][0]["certainty"][0]["certaintySubcomponent"][0])));
+									}
+									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["note"][0]["text"] = certaintys[z].getElementsByClassName("GRADEcertaintySubComments"+(a+1).toString())[0].value;
+									var certaintySub = certaintys[z].getElementsByClassName("GRADEcertaintySub"+(a+1).toString())[0];
+									var criteria = certaintySub.name;
+									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["system"] = "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type";
+									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["code"] = criteria; //And then display
+									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["display"] = gradeCertaintySubcomponentCriteriaTypeSet[criteria]; //And then display
+									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["system"] = "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating";
+									if (certaintySub.value) {
+										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["code"] = certaintySub.value;
+										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["display"] = gradeCertaintySubcomponentCodeTypeSet[certaintySub.value];
+									}
+								}
+
+							} else if (certaintySystem == "DynaMed") {
+								exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["rating"][0]["coding"][0]["system"] = "http://www.dynamed.com/home/content/levels-of-evidence";
+								for (var a = 0; a < 11; a++) {
+									if (a > 0) {
+										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0][statisticLocation][0]["statistic"][0]["certainty"][0]["certaintySubcomponent"][0])));
+									}
+									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["note"][0]["text"] = certaintys[z].getElementsByClassName("DynaMedcertaintySubComments"+(a+1).toString())[0].value;
+									var certaintySub = certaintys[z].getElementsByClassName("DynaMedcertaintySub"+(a+1).toString())[0];
+									var criteria = certaintySub.name;
+									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["system"] = "DynaMed criteria";
+									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["code"] = criteria; //And then display
+									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["display"] = dynamedCertaintySubcomponentCriteriaTypeSet[criteria]; //And then display
+									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["system"] = "DynaMed concern";
+									if (certaintySub.value) {
+										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["code"] = certaintySub.value;
+										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[certaintySub.value];
+									}
+								}
+
+							}
+
+							exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["rating"][0]["coding"][0]["code"] = certaintys[z].getElementsByClassName(certaintySystem+"certaintyOfEvidence")[0].value;
+							exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["rating"][0]["coding"][0]["display"] = certaintyOfEvidenceTypeSet[certaintys[z].getElementsByClassName(certaintySystem+"certaintyOfEvidence")[0].value];
+							exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["note"][0]["text"] = certaintys[z].getElementsByClassName(certaintySystem+"certaintyComments")[0].value;
+							
+						}
+					}
+
+				}
+					
 			}
 			//console.log(exposures);
 		}
 		var yCount = 0;
 		for (var y in exposures){
-			json["population"][0]["evidenceVariable"][x]["exposure"][yCount] = exposures[y];
+			json["population"][0]["evidenceVariable"][x]["nestedVariable"][yCount] = exposures[y];
 			yCount += 1;
 		}
 	}
@@ -568,6 +631,63 @@ function convertToJSON() {
     document.getElementById("jsonArea").value = JSON.stringify(json, null, 2);
 }
 
+
+
+
+var gradeCertaintySubcomponentCodeTypeSet = {
+	"no-change": " no change to rating",
+	"downcode1": "reduce rating: -1",
+	"downcode2": "reduce rating: -2",
+	"downcode3": "reduce rating: -3",
+	"upcode1": "increase rating: +1",
+	"upcode2": "increase rating: +2",
+	"no-concern": "no serious concern",
+	"serious-concern": "serious concern",
+	"critical-concern": "critical concern",
+	"present": "present",
+	"absent": "absent"
+};
+
+var gradeCertaintySubcomponentCriteriaTypeSet = { 
+	"RiskOfBias": "Risk of bias",
+	"Inconsistency": "Inconsistency",
+	"Indirectness": "Indirectness",
+	"Imprecision": "Imprecision",
+	"PublicationBias": "Publication bias",
+	"DoseResponseGradient": "Dose response gradient",
+	"PlausibleConfounding": "Plausible confounding",
+	"LargeEffect": "Large effect"	
+};
+
+var dynamedCertaintySubcomponentCodeTypeSet = {
+	"no-concern": "no concerns",
+	"some-concern": "some concerns",
+	"invalidating-concerns": "invalidating concerns"
+}
+
+var dynamedCertaintySubcomponentCriteriaTypeSet = {
+	"clinical-outcome": "clinical outcome",
+	"directness": "directness",
+	"randomization": "randomization",
+	"blinding": "blinding",
+	"follow-up": "follow up",
+	"dropouts": "dropouts",
+	"precision": "precision",
+	"consistency": "consistency",
+	"allocation-concealment": "allocation concealment",
+	"itt-analysis": "itt analysis",
+	"other": "other"
+};
+
+var certaintyOfEvidenceTypeSet = {
+	"high": "High quality",
+	"moderate": "Moderate quality",
+	"low": "Low quality",
+	"very-low": "Very low quality",
+	"level1": "Level 1 (likely reliable) Evidence",
+	"level2": "Level 2 (mid-level) Evidence",
+	"level3": "Level 3 (lacking direct) Evidence"
+};
 
 var synthesisTypeSet = {
 	"std-MA": "summary data meta-analysis",
