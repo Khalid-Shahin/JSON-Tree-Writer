@@ -450,8 +450,8 @@ function convertToJSON() {
 		if (!json["population"][0]["evidenceVariable"][x]){
 		   json["population"][0]["evidenceVariable"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0])));
 		}
-		json["population"][0]["evidenceVariable"][x]["variableDefinition"][0]["display"] = outcomeName;
-		json["population"][0]["evidenceVariable"][x]["variableDefinition"][0]["identifier"] = outcomeIdentifier;
+		json["population"][0]["evidenceVariable"][x]["variableDefinition"]["display"] = outcomeName;
+		json["population"][0]["evidenceVariable"][x]["variableDefinition"]["identifier"] = outcomeIdentifier;
 		var statistics = outcomes[x].getElementsByClassName("statisticBox");
 		var exposures = {};
 		var uniNew = {};
@@ -469,11 +469,11 @@ function convertToJSON() {
 			if (exp) {
 				if (!exposures[exp]){
 					exposures[exp] = JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0]));
-					exposures[exp]["variableDefinition"][0]["display"] = exp;
+					exposures[exp]["variableDefinition"]["display"] = exp;
 					var exposureLikes = document.getElementsByClassName("exposureLike");
 					for (var z = 0; z < comparators + 1; z++) {
 						if (exposureLikes[z].value == exp){
-							exposures[exp]["variableDefinition"][0]["identifier"] = document.getElementsByClassName("exposureLikeId")[z].value;
+							exposures[exp]["variableDefinition"]["identifier"] = document.getElementsByClassName("exposureLikeId")[z].value;
 						}
 					}
 				}
@@ -926,14 +926,12 @@ var blankJson = {
             }
           ],
           "variableType": "measuredVariable",
-          "variableDefinition": [
-            {
-              "reference": "",
-              "type": "EvidenceVariable",
-              "identifier": "",
-              "display": ""
-            }
-          ],
+          "variableDefinition": {
+            "reference": "",
+            "type": "EvidenceVariable",
+            "identifier": "",
+            "display": ""
+          },
           "univariateStatistic": [
             {
               "description": "",
@@ -1407,14 +1405,12 @@ var blankJson = {
                 }
               ],
               "variableType": "exposure",
-              "variableDefinition": [
-                {
-                  "reference": "",
-                  "type": "EvidenceVariable",
-                  "identifier": "",
-                  "display": ""
-                }
-              ],
+              "variableDefinition": {
+                "reference": "",
+                "type": "EvidenceVariable",
+                "identifier": "",
+                "display": ""
+              },
               "univariateStatistic": [
                 {
                   "description": "",
