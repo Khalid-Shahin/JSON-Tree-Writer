@@ -74,6 +74,13 @@
 		</select><label class="textLabel unselectable">Study Type</label><span class="bar"></span>
 		<p style="position: absolute; margin-top: -21px; margin-left: 245px; pointer-events: none;">▼</p>
 	</div>
+	
+		<div class="group" style="margin-left: 8px; margin-top: 6px;">      
+			<input class="textInput studyNotes" type="text" id="studyNotes" style="width: 794px;" required="">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">Study Notes</label>
+	</div>
 
 </div>
 
@@ -92,7 +99,7 @@
 			<label class="textLabel unselectable">Population Identifier</label>
 	</div>
 	<div class="group" style="margin-top: 6px;">      
-			<input class="textInput" type="text" id="populationNotes" style="width: 887px;" required="">
+			<input class="textInput populationNotes" type="text" id="populationNotes" style="width: 887px;" required="">
 			<span class="highlight"></span>
 			<span class="bar"></span>
 			<label class="textLabel unselectable">Population Notes</label>
@@ -114,7 +121,7 @@
 			<label class="textLabel unselectable">Intervention Identifier</label>
 	</div>
 	<div class="group" style="margin-top: 6px;">      
-			<input class="textInput" type="text" id="interventionNotes" style="width: 887px;" required="">
+			<input class="textInput interventionNotes" type="text" id="interventionNotes" style="width: 887px;" required="">
 			<span class="highlight"></span>
 			<span class="bar"></span>
 			<label class="textLabel unselectable">Intervention Notes</label>
@@ -155,7 +162,7 @@
         <span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Comparator Display Name</label></div>
         <div class="group" style="margin-left: 8px;"><input class="textInput comparator exposureLikeId" type="text" id="comparatorIdentifier" style="width: 280px;" required="">
         <span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Comparator Identifier</label></div>
-        <div class="group" style="margin-top: 6px;"> <input class="textInput" type="text" id="cpmparatorNotes" style="width: 887px;" required=""> <span class="highlight"></span> <span class="bar"></span>
+        <div class="group" style="margin-top: 6px;"> <input class="textInput comparatorNotes" type="text" id="comparatorNotes" style="width: 887px;" required=""> <span class="highlight"></span> <span class="bar"></span>
         <label class="textLabel unselectable">Comparator Notes</label></div>
 </div>
 
@@ -166,10 +173,10 @@
 					<span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Outcome Display Name</label></div>
 			<div class="group" style="margin-left: 8px;"><input class="textInput outcome outcomeIdentifier" type="text" name="outcomeIdentifier" style="width: 160px;" required="">
 			<span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Outcome Identifier</label></div>
+			<div class="group" style="margin-top: 6px;"> <input class="textInput outcomeNotes" type="text" id="outcomeNotes" style="width: 743px;" required=""> <span class="highlight"></span> <span class="bar"></span>
+			<label class="textLabel unselectable">Outcome Notes</label></div>
 		<b>		
 		<div class="statistics" name="statistics" id="statistics" align="center">
-
-
 
 		</div>
 			
@@ -193,6 +200,11 @@
 		<div class="group statisticInterventionGroup" style="margin-left: 0px"><input class="textInputAlways statisticIntervention" type="text" name="statisticIntervention" style="width: 160px;" required="" disabled><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Intervention</label></div>
 		<div class="group statisticComparatorGroup" style="margin-left: 8px"><input class="textInput statisticComparator" type="text" name="statisticComparator" style="width: 160px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Comparator</label></div>
 		<div class="group statisticExposureGroup" style="margin-left: 0px; display: none;"><input class="textInput statisticExposure" type="text" name="statisticExposure" style="width: 150px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Exposure</label></div>
+		</div>
+		
+		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
+			<div class="group" style="margin-left: 0px"> <input class="textInput statisticNotes" type="text" id="statisticNotes" style="width: 644px;" required=""> <span class="highlight"></span> <span class="bar"></span>
+			<label class="textLabel unselectable">Statistic Notes</label></div>
 		</div>
 		
 		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
