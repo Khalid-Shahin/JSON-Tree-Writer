@@ -11,7 +11,14 @@
 <div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 890px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:70px;">
 <p style="margin: 0px; font-size:18px; font-weight: bold;">Study Details</p>
 	<div class="group" style="margin-left: 12px">      
-			<input class="textInput" type="text" id="studyURL" style="width: 260px;" required="">
+			<input class="textInput" type="text" id="pmid" style="width: 70px;" required="">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">PMID</label>
+	</div>
+	<b><p align="left" text-align="left" style="padding-left: 4px; margin-top: 4px; margin-bottom: 0px;"><input type="button" style="font-weight: bold;" value="Load PMID Info" onclick="loadPMIDinfo()"></p></b>
+	<div class="group" style="margin-left: 12px">      
+			<input class="textInput" type="text" id="studyURL" style="width: 249px;" required="">
 			<span class="highlight"></span>
 			<span class="bar"></span>
 			<label class="textLabel unselectable">Study URL</label>
@@ -22,14 +29,28 @@
 			<span class="bar"></span>
 			<label class="textLabel unselectable">Publisher</label>
 	</div>
-	<div class="group" style="margin-left: 8px;">      
-			<input class="textInput" type="text" id="studyAuthors" style="width: 260px;" required="">
+	<div style="margin-bottom: 6px; margin-top: 6px; display: flex; flex-flow: row wrap;">
+		<div class="group" style="margin-left: 8px;">      
+				<input class="textInput" type="text" id="studyAuthors" style="width: 298px;" required="">
+				<span class="highlight"></span>
+				<span class="bar"></span>
+				<label class="textLabel unselectable">Author</label>
+		</div>
+		<div class="group" style="margin-left: 8px;">      
+			<input class="textInput" type="number" id="numberOfStudies" style="width: 140px;" required="">
 			<span class="highlight"></span>
 			<span class="bar"></span>
-			<label class="textLabel unselectable">Author</label>
+			<label class="textLabel unselectable">Number of studies</label>
+		</div>
+		<div class="group" style="margin-left: 8px;">      
+			<input class="textInput" type="number" id="numberOfParticipants" style="width: 152px;" required="">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">Number of participants</label>
+		</div>
 	</div>
 	<div class="group" style="margin-left: 8px;">
-		<select class="dropdownInput" id="studySynthesisType" style="width: 356px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+		<select class="dropdownInput" id="studySynthesisType" style="width: 334px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
 			<option value="" disabled="" selected=""> -- select -- </option>
 			<option value="std-MA" style="color: black;">summary data meta-analysis</option>
 			<option value="IPD-MA" style="color: black;">individual patient data meta-analysis</option>
@@ -38,10 +59,10 @@
 			<option value="range" style="color: black;">range of results</option>
 			<option value="classification" style="color: black;">classification of results</option>
 		</select><label class="textLabel unselectable">Synthesis Type</label><span class="bar"></span>
-		<p style="position: absolute; margin-top: -21px; margin-left: 336px; pointer-events: none;">▼</p>
+		<p style="position: absolute; margin-top: -21px; margin-left: 314px; pointer-events: none;">▼</p>
 	</div>
 	<div class="group" style="margin-left: 8px;">
-		<select class="dropdownInput" id="studyStudyType" style="width: 242px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+		<select class="dropdownInput" id="studyStudyType" style="width: 264px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
 			<option value="" disabled="" selected=""> -- select -- </option>
 			<option value="RCT" style="color: black;">randomized trial</option>
 			<option value="CCT" style="color: black;">controlled trial (non-randomized)</option>
@@ -51,8 +72,9 @@
 			<option value="case-report" style="color: black;">case report</option>
 			<option value="mixed" style="color: black;">mixed methods</option>
 		</select><label class="textLabel unselectable">Study Type</label><span class="bar"></span>
-		<p style="position: absolute; margin-top: -21px; margin-left: 222px; pointer-events: none;">▼</p>
+		<p style="position: absolute; margin-top: -21px; margin-left: 244px; pointer-events: none;">▼</p>
 	</div>
+
 </div>
 
 <div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 890px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">
@@ -182,8 +204,8 @@
 		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
 		<div class="group" style="margin-left: 0px"><input class="textInput outcomeDetail statisticNumberOfStudies" type="text" name="numberOfStudies" style="width: 160px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Number of studies</label></div>
 		<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticNumberOfParticipants" type="text" name="numberOfParticipants" style="width: 160px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Number of participants</label></div>
-		<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticKnownDataCount" type="text" name="knownDataCount" style="width: 150px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Known data count</label></div>
-		<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticNumeratorCount" type="text" name="numeratorCount" style="width: 150px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Numerator count</label></div>
+		<div class="group statisticKnownDataCountGroup" style="margin-left: 8px"><input class="textInput outcomeDetail statisticKnownDataCount" type="text" name="knownDataCount" style="width: 150px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Known data count</label></div>
+		<div class="group statisticNumeratorCountGroup" style="margin-left: 8px"><input class="textInput outcomeDetail statisticNumeratorCount" type="text" name="numeratorCount" style="width: 150px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Numerator count</label></div>
 		</div>
 		
 		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
@@ -326,12 +348,20 @@ function loadUnivariate(element){
    element.parentElement.nextElementSibling.getElementsByClassName('statisticInterventionGroup')[0].style.display = "none";
    element.parentElement.nextElementSibling.getElementsByClassName('statisticComparatorGroup')[0].style.display = "none";
    element.parentElement.nextElementSibling.getElementsByClassName('statisticExposureGroup')[0].style.display = "block";
+
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticKnownDataCountGroup')[0].style.display = "block";
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticNumeratorCountGroup')[0].style.display = "block";
+   
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticInterventionGroup')[0].getElementsByTagName('input')[0].value = "";
 }
 
 function loadComparative(element){
    element.parentElement.nextElementSibling.getElementsByClassName('statisticInterventionGroup')[0].style.display = "block";
    element.parentElement.nextElementSibling.getElementsByClassName('statisticComparatorGroup')[0].style.display = "block";
    element.parentElement.nextElementSibling.getElementsByClassName('statisticExposureGroup')[0].style.display = "none";
+   
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticKnownDataCountGroup')[0].style.display = "none";
+   element.parentElement.nextElementSibling.getElementsByClassName('statisticNumeratorCountGroup')[0].style.display = "none";
    
    element.parentElement.nextElementSibling.getElementsByClassName('statisticInterventionGroup')[0].getElementsByTagName('input')[0].value = document.getElementById("interventionName").value;
 }
@@ -422,6 +452,53 @@ function addCertainty(element){
 function prepareForm() {
 	addComparator();
 	addOutcome();
+}
+
+function loadPMIDinfo() {
+	var request = new XMLHttpRequest();
+	
+	var pmid = document.getElementById("pmid").value;
+	var start = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=';
+	var end = '&retmode=json';
+	
+	request.open('GET', start + pmid+ end, true);
+
+	request.onload = function () {
+		var data = JSON.parse(this.response);
+		
+		document.getElementById("studyAuthors").value = "";
+		var authors = "";
+		for (var author in data["result"][pmid]["authors"]){
+			authors += data["result"][pmid]["authors"][author]["name"] + "; ";
+		}
+		authors = authors.substring(0, authors.length - 2);
+		document.getElementById("studyAuthors").value = authors;
+		document.getElementById("studyPublisher").value = data["result"][pmid]["source"];
+		
+		for (var article in data["result"][pmid]["articleids"]){
+			if (data["result"][pmid]["articleids"][article]["idtype"] == "doi") {
+				document.getElementById("studyURL").value = "https://doi.org/" + data["result"][pmid]["articleids"][article]["value"];
+				break;
+			} else {
+				document.getElementById("studyURL").value = "";
+			}
+		}
+		
+		for (var type in data["result"][pmid]["pubtype"]){
+			if (data["result"][pmid]["pubtype"][type] == "Randomized Controlled Trial") {
+				document.getElementById("studyStudyType").value = "RCT";
+				document.getElementById("studyStudyType").style.color = "#000000";
+				break;
+			} else {
+				document.getElementById("studyStudyType").value = "";
+				document.getElementById("studyStudyType").style.color = "#FFFFFF";	
+			}
+		}
+		
+		
+	}
+	request.send();
+
 }
 
 
