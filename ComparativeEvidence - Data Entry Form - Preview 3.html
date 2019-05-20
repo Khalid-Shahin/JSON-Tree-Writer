@@ -59,7 +59,7 @@
 			<option value="range" style="color: black;">range of results</option>
 			<option value="classification" style="color: black;">classification of results</option>
 		</select><label class="textLabel unselectable">Synthesis Type</label><span class="bar"></span>
-		<p style="position: absolute; margin-top: -21px; margin-left: 314px; pointer-events: none;">▼</p>
+		<p style="position: absolute; margin-top: -21px; margin-left: 315px; pointer-events: none;">▼</p>
 	</div>
 	<div class="group" style="margin-left: 8px;">
 		<select class="dropdownInput" id="studyStudyType" style="width: 264px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
@@ -72,7 +72,7 @@
 			<option value="case-report" style="color: black;">case report</option>
 			<option value="mixed" style="color: black;">mixed methods</option>
 		</select><label class="textLabel unselectable">Study Type</label><span class="bar"></span>
-		<p style="position: absolute; margin-top: -21px; margin-left: 244px; pointer-events: none;">▼</p>
+		<p style="position: absolute; margin-top: -21px; margin-left: 245px; pointer-events: none;">▼</p>
 	</div>
 
 </div>
@@ -91,6 +91,12 @@
 			<span class="bar"></span>
 			<label class="textLabel unselectable">Population Identifier</label>
 	</div>
+	<div class="group" style="margin-top: 6px;">      
+			<input class="textInput" type="text" id="populationNotes" style="width: 887px;" required="">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">Population Notes</label>
+	</div>
 </div>
 
 <div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 890px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">
@@ -106,6 +112,12 @@
 			<span class="highlight"></span>
 			<span class="bar"></span>
 			<label class="textLabel unselectable">Intervention Identifier</label>
+	</div>
+	<div class="group" style="margin-top: 6px;">      
+			<input class="textInput" type="text" id="interventionNotes" style="width: 887px;" required="">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label class="textLabel unselectable">Intervention Notes</label>
 	</div>
 </div>
 <div id="Comparators">
@@ -136,6 +148,17 @@
 <br>
 <br>
 <br>
+<div class="box comparatorBox" id="comparatorBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 890px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">
+   <p style="margin: 0px; font-size:18px; font-weight: bold;">Comparator <span style="color: #777777" class="comparatorNumberLabel"></span></p>
+   <div class="group" style="margin-left: 6px">
+   <input class="textInput comparator exposureLike" type="text" id="comparatorName" style="width: 476px;" required="">
+        <span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Comparator Display Name</label></div>
+        <div class="group" style="margin-left: 8px;"><input class="textInput comparator exposureLikeId" type="text" id="comparatorIdentifier" style="width: 280px;" required="">
+        <span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Comparator Identifier</label></div>
+        <div class="group" style="margin-top: 6px;"> <input class="textInput" type="text" id="cpmparatorNotes" style="width: 887px;" required=""> <span class="highlight"></span> <span class="bar"></span>
+        <label class="textLabel unselectable">Comparator Notes</label></div>
+</div>
+
 	<div class="box outcomeBox" id="outcomeBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 890px; max-width: 99%; margin-bottom: 16px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">
 		<p style="margin: 0px; font-size:18px; font-weight: bold;">Outcome <span style="color: #777777" class="outcomeNumberLabel"></span></p>
 			<div class="group" style="margin-left: 6px">
@@ -183,7 +206,7 @@
 					<option value="range" style="color: black;">range of results</option>
 					<option value="classification" style="color: black;">classifcation of results</option>
 				</select><label class="textLabel unselectable">Synthesis Type</label><span class="bar"></span>
-				<p style="position: absolute; margin-top: -21px; margin-left: 336px; pointer-events: none;">▼</p>
+				<p style="position: absolute; margin-top: -21px; margin-left: 338px; pointer-events: none;">▼</p>
 			</div>
 			<div class="group" style="margin-left: 8px;">
 				<select class="dropdownInput statisticStudyType" name="statisticStudyType" style="width: 242px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
@@ -196,7 +219,7 @@
 					<option value="case-report" style="color: black;">case report</option>
 					<option value="mixed" style="color: black;">mixed methods</option>
 				</select><label class="textLabel unselectable">Study Type</label><span class="bar"></span>
-				<p style="position: absolute; margin-top: -21px; margin-left: 222px; pointer-events: none;">▼</p>
+				<p style="position: absolute; margin-top: -21px; margin-left: 224px; pointer-events: none;">▼</p>
 			</div>
 			
 		<div class="line-break" style="padding-top: 4px;"></div>
@@ -225,7 +248,7 @@
 					<option value="mean" style="color: black;">mean</option>
 					<option value="median" style="color: black;">median</option>
 				</select><label class="textLabel unselectable">Statistic Type</label><span class="bar"></span>
-				<p style="position: absolute; margin-top: -21px; margin-left: 188px; pointer-events: none;">▼</p>
+				<p style="position: absolute; margin-top: -21px; margin-left: 190px; pointer-events: none;">▼</p>
 			</div>
 			<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticValue" type="text" name="statisticValue" style="width: 140px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Value</label></div>
 			<div class="group" style="margin-left: 8px;">
@@ -237,7 +260,7 @@
 					<option value="&lt;=" style="color: black;">&lt;=</option>
 					<option value="&gt;=" style="color: black;">&gt;=</option>
 				</select><label class="textLabel unselectable">Inequality</label><span class="bar"></span>
-				<p style="position: absolute; margin-top: -21px; margin-left: 92px; pointer-events: none;">▼</p>
+				<p style="position: absolute; margin-top: -21px; margin-left: 94px; pointer-events: none;">▼</p>
 			</div>
 			<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticUnit" type="text" name="statisticUnit" style="width: 160px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Unit</label></div>
 		</div>
@@ -253,7 +276,7 @@
 					<option value="SD" style="color: black;">standard deviation</option>
 					<option value="SE" style="color: black;">standard error</option>
 				</select><label class="textLabel unselectable">Precision estimate type</label><span class="bar"></span>
-				<p style="position: absolute; margin-top: -21px; margin-left: 192px; pointer-events: none;">▼</p>
+				<p style="position: absolute; margin-top: -21px; margin-left: 194px; pointer-events: none;">▼</p>
 			</div>
 			<div class="group peQuantityGroup" style="margin-left: 8px"><input class="textInput outcomeDetail peQuantity" type="text" name="peQuantity" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Quantity</label></div>
 			<div class="group peFromGroup" style="margin-left: 8px"><input class="textInput outcomeDetail peFrom" type="text" name="peFrom" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">From</label></div>
@@ -322,7 +345,7 @@
 
 <script>
 
-var comparators = 0;
+var numberOfComparators = 0;
 var numberOfOutcomes = 0;
 var outcomeStatistics = [];
 
@@ -402,19 +425,14 @@ function precisionEstimatePick(element){
 }
 
 function addComparator() {
-   var number = (comparators + 1).toString();
+   numberOfComparators += 1;
    var d1 = document.getElementById("Comparators");
-   d1.insertAdjacentHTML('beforeend', '' +
-	'' + 
-	'<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 890px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">' +
-	'<p style="margin: 0px; font-size:18px; font-weight: bold;">Comparator <span style="color: #777777" id="comparatorNumber' + number + '">' + number + '</span></p>' +
-		'<div class="group" style="margin-left: 6px">      ' +
-				'<input class="textInput comparator exposureLike" type="text" id="comparatorName" style="width: 476px;" required="">' +
-				'<span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Comparator Display Name</label></div>' +
-		'<div class="group" style="margin-left: 8px;"><input class="textInput comparator exposureLikeId" type="text" id="comparatorIdentifier" style="width: 280px;" required="">' +
-		'<span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Comparator Identifier</label></div></div>'+
-   '');
-   comparators += 1;
+   var itm = document.getElementById("comparatorBox");
+   var cln = itm.cloneNode(true);
+   cln.id = "";
+   cln.getElementsByClassName("comparatorNumberLabel")[0].innerHTML = numberOfComparators;
+   cln.setAttribute("comparatorNumber", numberOfOutcomes.toString());
+   document.getElementById("Comparators").appendChild(cln);
 }
 
 function addOutcome(){
@@ -550,7 +568,7 @@ function convertToJSON() {
 					exposures[exp] = JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0]));
 					exposures[exp]["variableDefinition"]["display"] = exp;
 					var exposureLikes = document.getElementsByClassName("exposureLike");
-					for (var z = 0; z < comparators + 1; z++) {
+					for (var z = 0; z < numberOfComparators + 1; z++) {
 						if (exposureLikes[z].value == exp){
 							exposures[exp]["variableDefinition"]["identifier"] = document.getElementsByClassName("exposureLikeId")[z].value;
 						}
@@ -575,7 +593,7 @@ function convertToJSON() {
 					var comparatorDisplay = statistics[y].getElementsByClassName("statisticComparator")[0].value;
 					exposures[exp]["compoundStatistic"][0]["additionalVariable"][0]["variableDefinition"]["display"] = comparatorDisplay;
 					var exposureLikes = document.getElementsByClassName("exposureLike");
-					for (var z = 0; z < comparators + 1; z++) {
+					for (var z = 0; z < numberOfComparators + 1; z++) {
 						if (exposureLikes[z].value == comparatorDisplay){
 							exposures[exp]["compoundStatistic"][0]["additionalVariable"][0]["variableDefinition"]["identifier"] = document.getElementsByClassName("exposureLikeId")[z].value;
 						}
