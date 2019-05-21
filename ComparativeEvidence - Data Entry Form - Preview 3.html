@@ -542,6 +542,7 @@ function loadPMIDinfo() {
 
 function convertToJSON() {
 	var json = JSON.parse(JSON.stringify(blankJson));
+	json["title"] = document.getElementById("studyTitle").value;
 	json["relatedArtifact"][0]["url"] = document.getElementById("studyURL").value;
 	json["summaryPublisher"][0]["name"] = document.getElementById("studyPublisher").value;
 	json["contributor"][0]["name"] = document.getElementById("studyAuthors").value;
@@ -555,10 +556,14 @@ function convertToJSON() {
 		json["studyType"]["coding"][0]["code"] = studyType;
 		json["studyType"]["coding"][0]["display"] = studyTypeSet[studyType];
 	}
+	json["note"][0]["text"] = document.getElementById("studyNotes").value;
 	var populationName = document.getElementById("populationName").value;
 	var populationIdentifier = document.getElementById("populationIdentifier").value;
 	json["population"][0]["intendedCohort"][0]["display"] = populationName;
 	json["population"][0]["intendedCohort"][0]["identifier"] = populationIdentifier;
+	json["population"][0]["note"][0]["text"] = document.getElementById("populationNotes").value;	
+	json["population"][0]["sampleSize"]["numberOfStudies"] = document.getElementById("numberOfStudies").value;
+	json["population"][0]["sampleSize"]["numberOfParticipants"] = document.getElementById("numberOfParticipants").value;
 	
 	var outcomes = document.getElementsByClassName("outcomeBox");
 	for (var x = 0; x < numberOfOutcomes; x++) {
