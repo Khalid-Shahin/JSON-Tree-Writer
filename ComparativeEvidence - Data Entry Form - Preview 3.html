@@ -23,13 +23,20 @@
 			<span class="bar"></span>
 			<label class="textLabel unselectable">Study URL</label>
 	</div>
+	
 	<div class="group" style="margin-left: 8px;">      
-			<input class="textInput" type="text" id="studyPublisher" style="width: 220px;" required="">
+			<input class="textInput" type="text" id="studyTitle" style="width: 220px;" required="">
 			<span class="highlight"></span>
 			<span class="bar"></span>
-			<label class="textLabel unselectable">Publisher</label>
+			<label class="textLabel unselectable">Title</label>
 	</div>
 	<div style="margin-bottom: 6px; margin-top: 6px; display: flex; flex-flow: row wrap;">
+		<div class="group" style="margin-left: 8px;">      
+				<input class="textInput" type="text" id="studyPublisher" style="width: 180px;" required="">
+				<span class="highlight"></span>
+				<span class="bar"></span>
+				<label class="textLabel unselectable">Publisher</label>
+		</div>
 		<div class="group" style="margin-left: 8px;">      
 				<input class="textInput" type="text" id="studyAuthors" style="width: 298px;" required="">
 				<span class="highlight"></span>
@@ -504,6 +511,7 @@ function loadPMIDinfo() {
 		authors = authors.substring(0, authors.length - 2);
 		document.getElementById("studyAuthors").value = authors;
 		document.getElementById("studyPublisher").value = data["result"][pmid]["source"];
+		document.getElementById("studyTitle").value = data["result"][pmid]["title"];
 		
 		for (var article in data["result"][pmid]["articleids"]){
 			if (data["result"][pmid]["articleids"][article]["idtype"] == "doi") {
