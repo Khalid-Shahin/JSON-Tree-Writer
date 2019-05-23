@@ -562,11 +562,13 @@ function convertToJSON() {
 	for (var x = 0; x < numberOfOutcomes; x++) {
 		var outcomeName = outcomes[x].getElementsByClassName("outcomeName")[0].value;
 		var outcomeIdentifier = outcomes[x].getElementsByClassName("outcomeIdentifier")[0].value;
+		var outcomeNotes = outcomes[x].getElementsByClassName("outcomeNotes")[0].value;
 		if (!json["population"][0]["evidenceVariable"][x]){
 		   json["population"][0]["evidenceVariable"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0])));
 		}
 		json["population"][0]["evidenceVariable"][x]["variableDefinition"]["display"] = outcomeName;
 		json["population"][0]["evidenceVariable"][x]["variableDefinition"]["identifier"] = outcomeIdentifier;
+		json["population"][0]["evidenceVariable"][x]["note"][0]["text"] = outcomeNotes;
 		var statistics = outcomes[x].getElementsByClassName("statisticBox");
 		var exposures = {};
 		var uniNew = {};
@@ -609,6 +611,7 @@ function convertToJSON() {
 					}
 					statisticLocation = "compoundStatistic";
 					var comparatorDisplay = statistics[y].getElementsByClassName("statisticComparator")[0].value;
+					exposures[exp]["note"][0]["text"] = document.getElementById("interventionNotes").value;
 					exposures[exp]["compoundStatistic"][0]["additionalVariable"][0]["variableDefinition"]["display"] = comparatorDisplay;
 					var exposureLikes = document.getElementsByClassName("exposureLike");
 					for (var z = 0; z < numberOfComparators + 1; z++) {
@@ -839,6 +842,7 @@ var precisionEstimateSet = {
 	"SE": "standard error"
 }
 var loadedJson;
+//Update to the newest one, and update the convert to JSON code.
 var blankJson = {
   "resourceType": "ComparativeEvidence",
   "id": "",
