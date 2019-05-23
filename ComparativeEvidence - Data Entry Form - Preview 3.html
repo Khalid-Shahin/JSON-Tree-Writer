@@ -1,6 +1,5 @@
 <html>
 
-
 <body onload="prepareForm();">
 
 <title>DynaMed ComparativeEvidence Data Entry Form (Preview)</title>
@@ -499,11 +498,15 @@ function loadPMIDinfo() {
 		var pmidPublisher = data["result"][pmid]["source"];
 		if (pmidPublisher){
 			document.getElementById("studyPublisher").value = pmidPublisher;
+		} else {
+			document.getElementById("studyPublisher").value = "";
 		}
 		
 		var pmidTitle = data["result"][pmid]["title"];
 		if (pmidTitle){
 			document.getElementById("studyTitle").value = pmidTitle;
+		} else {
+			document.getElementById("studyTitle").value = "";
 		}
 		
 		for (var article in data["result"][pmid]["articleids"]){
