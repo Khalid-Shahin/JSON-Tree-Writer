@@ -589,22 +589,6 @@ json = {
         {
           "reference": "",
           "type": "Group",
-          "identifier": "???",
-          "display": "???"
-        }
-      ],
-      "sampleCohort": [
-        {
-          "reference": "",
-          "type": "CohortSummary",
-          "identifier": "",
-          "display": ""
-        }
-      ],
-      "actualCohort": [
-        {
-          "reference": "",
-          "type": "Group",
           "identifier": "Group-Sepsis",
           "display": "Patients with sepsis"
         }
@@ -634,8 +618,8 @@ json = {
           {
             "system": "http://hl7.org/fhir/ValueSet/variable-role",
             "version": "",
-            "code": "referenceExposure",
-            "display": "reference exposure",
+            "code": "exposure",
+            "display": "exposure",
             "userSelected": ""
           }
         ],
@@ -666,8 +650,8 @@ json = {
           {
             "system": "http://hl7.org/fhir/ValueSet/variable-role",
             "version": "",
-            "code": "exposure",
-            "display": "exposure",
+            "code": "referenceExposure",
+            "display": "referenceExposure",
             "userSelected": ""
           }
         ],
@@ -1169,19 +1153,19 @@ json = {
   ],
   "assertions": [
     {
-      "reference": "",
+      "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-LinnAssertion01.html",
       "type": "Assertion",
       "identifier": "Assertion-MortalityLongTerm-Corticosteroids-vs-NoCorticosteroids",
       "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Mortality (60 days to 1 year)"
     },
     {
-      "reference": "",
+      "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-LinnAssertion02.html",
       "type": "Assertion",
       "identifier": "Assertion-MortalityLongTerm-Corticosteroids",
       "display": "Corticosteroids for Patients with Sepsis with Mortality (60 days to 1 year)"
     },
     {
-      "reference": "",
+      "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-LinnAssertion03.html",
       "type": "Assertion",
       "identifier": "Assertion-MortalityLongTerm-NoCorticosteroids",
       "display": "No corticosteroids for Patients with Sepsis with Mortality (60 days to 1 year)"
