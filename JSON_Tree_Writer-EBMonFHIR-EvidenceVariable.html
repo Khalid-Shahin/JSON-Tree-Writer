@@ -63,13 +63,23 @@ json = {
   "publisher---HoVeR": "The name of the organization or individual that published the evidence variable. [0..1]",
   "author": [""],
   "author---HoVeR": "An individiual or organization primarily involved in the creation and maintenance of the content. [0..*]",
+  "description": "",
+  "description---HoVeR": "",
+  "note": [
+      {
+        "text": ""
+      }
+  ],
+  "type": "",
+  "type---HoVeR": "",
   "characteristic": [{
       "description": "",
       "description---HoVeR": "A short, natural language description of the characteristic that could be used to communicate the criteria to an end-user. [0..1]",
-      "usageContext": [""],
-      "usageContext---HoVeR": "Use UsageContext to define the members of the population, such as Age Ranges, Genders, Settings. [0..*]",
-      "exclude": "",
-      "exclude---HoVeR": "When true, members with this characteristic are excluded from the element. [0..1]",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
       "definition[x]": {
           "defintionReference": "",
           "definitionCanonical": "",
@@ -91,6 +101,25 @@ json = {
           "definitionTriggerDefinition": ""
       },
       "definition[x]---HoVeR": "Define members of the evidence element using Codes (such as condition, medication, or observation), Expressions ( using an expression language such as FHIRPath or CQL) or DataRequirements (such as Diabetes diagnosis onset in the last year). [1..1]",
+      "method": {
+          "coding": {
+              "system": "",
+              "code": "",
+              "display": ""
+          }
+      },
+      "method---HoVeR": "",
+      "device": {
+        "reference": "",
+        "type": "",
+        "identifier": "",
+        "display": ""
+      },
+      "device---HoVeR": "",
+      "usageContext": [""],
+      "usageContext---HoVeR": "Use UsageContext to define the members of the population, such as Age Ranges, Genders, Settings. [0..*]",
+      "exclude": "",
+      "exclude---HoVeR": "When true, members with this characteristic are excluded from the element. [0..1]",
       "participantEffective[x]": {
           "participantEffectiveDateTime": "",
           "participantEffectivePeriod": "",
@@ -101,8 +130,7 @@ json = {
       "timeFromStart": "",
       "timeFromStart---HoVeR": "Indicates duration from the participant's study entry. [0..1]",
       "groupMeasure": "",
-      "groupMeasure---HoVeR": "Indicates how elements are aggregated within the study effective period. [0..1]",
-      "note": ""
+      "groupMeasure---HoVeR": "Indicates how elements are aggregated within the study effective period. [0..1]"
   }],
   "characteristic---HoVeR": "A characteristic that defines the members of the evidence element. Multiple characteristics are applied with &quot;and&quot; semantics. [1..*]"
 };
