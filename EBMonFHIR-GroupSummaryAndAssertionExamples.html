@@ -69,6 +69,15 @@ json = {
           "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
         }
       ],
+      "synthesisType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+            "code": "std-MA",
+            "display": "summary data meta-analysis"
+          }
+        ]
+      },
       "studyType": {
         "coding": [
           {
@@ -85,7 +94,7 @@ json = {
               "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
               "type": "Group",
               "identifier": "Group-Schizophrenia",
-              "display": "Schizophrenia"
+              "display": "Patients with Schizophrenia"
             }
           ]
         }
@@ -96,15 +105,33 @@ json = {
             "coding": [
               {
                 "system": "http://hl7.org/fhir/ValueSet/variable-role",
-                "code": "measuredVariable",
-                "display": "measured variable"
+                "code": "exposure",
+                "display": "exposure"
               }
             ]
           },
           "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
             "type": "EvidenceVariable",
-            "identifier": "EvidenceVariable-RelapseZeroWeeksNineWeeks",
-            "display": "Relapse medium term (0 weeks - 8 weeks)"
+            "identifier": "EvidenceVariable-Chlorpromazine",
+            "display": "Chlorpromazine"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "referenceExposure",
+                "display": "reference exposure"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Placebo",
+            "display": "Placebo"
           }
         },
         {
@@ -118,6 +145,24 @@ json = {
             ]
           },
           "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseZeroWeeksEightWeeks.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseZeroWeeksEightWeeks",
+            "display": "Relapse short term (0 weeks - 8 weeks)"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseNineWeeksSixMonths.html",
             "type": "EvidenceVariable",
             "identifier": "EvidenceVariable-RelapseNineWeeksSixMonths",
             "display": "Relapse medium term (9 weeks - 6 months)"
@@ -156,47 +201,13 @@ json = {
             "identifier": "EvidenceVariable-RelapseTwoYearsFiveYears",
             "display": "Relapse (2 years - 5 years)"
           }
-        },
-        {
-          "variableRole": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/variable-role",
-                "code": "exposure",
-                "display": "exposure"
-              }
-            ]
-          },
-          "intendedDefinition": {
-            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
-            "type": "EvidenceVariable",
-            "identifier": "EvidenceVariable-Chlorpromazine",
-            "display": "Chlorpromazine"
-          }
-        },
-        {
-          "variableRole": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/variable-role",
-                "code": "referenceExposure",
-                "display": "reference exposure"
-              }
-            ]
-          },
-          "intendedDefinition": {
-            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
-            "type": "EvidenceVariable",
-            "identifier": "EvidenceVariable-Placebo",
-            "display": "Placebo"
-          }
         }
       ],
       "assertions": [
         {
           "type": "Assertion",
-          "identifier": "Assertion-RelapseZeroWeeksNineWeeks-AdamsMetaAnalysis",
-          "display": "Adams 2014 Meta-analysis 0 weeks - 9 weeks"
+          "identifier": "Assertion-RelapseZeroWeeksEightWeeks-AdamsMetaAnalysis",
+          "display": "Adams 2014 Meta-analysis 0 weeks - 8 weeks"
         },
         {
           "type": "Assertion",
@@ -220,6 +231,7 @@ json = {
     {
       "resourceType": "Group",
       "id": "Group-Schizophrenia",
+      "name": "Patients with Schizophrenia",
       "actual": false,
       "characteristic": [
         {
@@ -262,7 +274,7 @@ json = {
             }
           },
           "usageContext": [
-            "A"
+            "B"
           ]
         }
       ]
@@ -288,17 +300,68 @@ json = {
     },
     {
       "resourceType": "EvidenceVariable",
+      "id": "EvidenceVariable-RelapseZeroWeeksEightWeeks",
+      "description": "Relapse (0 weeks - 8 weeks)",
+      "characteristic": [
+        {
+          "description": "Relapse (0 weeks - 8 weeks)",
+          "definitionCodeableConcept": {
+            "coding": {
+              "display": "Relapse (0 weeks - 8 weeks)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "EvidenceVariable",
+      "id": "EvidenceVariable-RelapseNineWeeksSixMonths",
+      "description": "Relapse (9 weeks - 6 months)",
+      "characteristic": [
+        {
+          "description": "Relapse (9 weeks - 6 months)",
+          "definitionCodeableConcept": {
+            "coding": {
+              "display": "Relapse (9 weeks - 6 months)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "EvidenceVariable",
       "id": "EvidenceVariable-RelapseSixMonthsTwoYears",
-      "description": "Relapse long term (6 months - 2 years)"
+      "description": "Relapse long term (6 months - 2 years)",
+      "characteristic": [
+        {
+          "description": "Relapse (6 months - 2 years)",
+          "definitionCodeableConcept": {
+            "coding": {
+              "display": "Relapse (6 months - 2 years)"
+            }
+          }
+        }
+      ]
     },
     {
       "resourceType": "EvidenceVariable",
       "id": "EvidenceVariable-RelapseTwoYearsFiveYears",
-      "description": "Relapse (2 years - 5 years)"
+      "description": "Relapse (2 years - 5 years)",
+      "characteristic": [
+        {
+          "description": "Relapse (2 years - 5 years)",
+          "definitionCodeableConcept": {
+            "coding": {
+              "display": "Relapse (2 years - 5 years)"
+            }
+          }
+        }
+      ]
     },
     {
       "resourceType": "Assertion",
       "id": "Assertion-RelapseSixMonthsTwoYears-AdamsMetaAnalysis",
+      "title": "Adams 2014 Meta-analysis 6 months - 2 years",
       "status": "draft",
       "relatedArtifact": [
         {
@@ -306,9 +369,8 @@ json = {
           "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
         }
       ],
-      "description": "Adams 2014 Meta-analysis 6 months - 2 years",
+      "description": "Chlorpromazine vs. Placebo with Relapse (6 months - 2 years) Risk Ratio 0.65 [0.47, 0.90] for patients with Schizophrenia",
       "referentGroup": {
-        "description": "schizophrenia",
         "evidenceSource": {
           "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-GroupSummary-RelapseSixMonthsTwoYears-ThreeStudies.html",
           "type": "GroupSummary",
@@ -318,20 +380,11 @@ json = {
           "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
           "type": "Group",
           "identifier": "Group-Schizophrenia",
-          "display": "schizophrenia"
-        },
-        "directnessMatch": {
-          "coding": [
-            {
-              "code": "???",
-              "display": "???"
-            }
-          ]
+          "display": "Patients with Schizophrenia"
         }
       },
       "variableDefinition": [
         {
-          "description": "Relapse long term (6 months - 2 years)",
           "variableRole": {
             "coding": [
               {
@@ -346,17 +399,9 @@ json = {
             "type": "EvidenceVariable",
             "identifier": "EvidenceVariable-RelapseSixMonthsTwoYears",
             "display": "Relapse long term (6 months - 2 years)"
-          },
-          "directnessMatch": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/directness"
-              }
-            ]
           }
         },
         {
-          "description": "Chlorpromazine",
           "variableRole": {
             "coding": [
               {
@@ -374,7 +419,6 @@ json = {
           }
         },
         {
-          "description": "Placebo",
           "variableRole": {
             "coding": [
               {
@@ -449,6 +493,20 @@ json = {
                   "value": 0.9
                 }
               }
+            },
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                    "code": "I-SqHet",
+                    "display": "I-squared heterogeneity"
+                  }
+                ]
+              },
+              "quantity": {
+                "value": 0.72
+              }
             }
           ]
         }
@@ -503,6 +561,9 @@ json = {
               "description": "Very serious inconsistency",
               "note": [
                 {
+                  "text": "inconsistency for this outcome consider  the results of relapse outcome at other timepoints"
+                },
+                {
                   "text": "there was very high heterogeneity in the pooled results."
                 }
               ],
@@ -554,7 +615,7 @@ json = {
               "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
               "type": "Group",
               "identifier": "Group-Schizophrenia",
-              "display": "Schizophrenia"
+              "display": "Patients with Schizophrenia"
             }
           ],
           "sampleSize": {
@@ -652,7 +713,7 @@ json = {
           "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
           "type": "Group",
           "identifier": "Group-Schizophrenia",
-          "display": "Patients with schizophrenia"
+          "display": "Patients with Schizophrenia"
         }
       },
       "variableDefinition": [
@@ -788,7 +849,7 @@ json = {
           "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
           "type": "Group",
           "identifier": "Group-Schizophrenia",
-          "display": "Patients with schizophrenia"
+          "display": "Patients with Schizophrenia"
         }
       },
       "variableDefinition": [
@@ -803,7 +864,7 @@ json = {
             ]
           },
           "actualDefinition": {
-            "display": "Relapse ???"
+            "display": "Relapse (not further defined)"
           },
           "intendedDefinition": {
             "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
@@ -924,7 +985,7 @@ json = {
           "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
           "type": "Group",
           "identifier": "Group-Schizophrenia",
-          "display": "Patients with schizophrenia"
+          "display": "Patients with Schizophrenia"
         }
       },
       "variableDefinition": [
@@ -939,7 +1000,7 @@ json = {
             ]
           },
           "actualDefinition": {
-            "display": "Relapse ???"
+            "display": "Relapse (not further defined)"
           },
           "intendedDefinition": {
             "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
@@ -1045,6 +1106,7 @@ json = {
     {
       "resourceType": "Assertion",
       "id": "Assertion-RelapseTwoYearsFiveYears-AdamsMetaAnalysis",
+      "title": "Adams 2014 Meta-analysis 2 years - 5 years",
       "status": "draft",
       "relatedArtifact": [
         {
@@ -1052,9 +1114,8 @@ json = {
           "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
         }
       ],
-      "description": "Adams 2014 Meta-analysis 2 years - 5 years",
+      "description": "Chlorpromazine vs. Placebo with Relapse (2 years - 5 years) Risk Ratio 0.74 [0.51, 1.09] for patients with Schizophrenia",
       "referentGroup": {
-        "description": "schizophrenia",
         "evidenceSource": {
           "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-GroupSummary-RelapseTwoYearsFiveYears-TwoStudies.html",
           "type": "GroupSummary",
@@ -1064,20 +1125,11 @@ json = {
           "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
           "type": "Group",
           "identifier": "Group-Schizophrenia",
-          "display": "schizophrenia"
-        },
-        "directnessMatch": {
-          "coding": [
-            {
-              "code": "???",
-              "display": "???"
-            }
-          ]
+          "display": "Patients with Schizophrenia"
         }
       },
       "variableDefinition": [
         {
-          "description": "Relapse (2 years - 5 years)",
           "variableRole": {
             "coding": [
               {
@@ -1102,7 +1154,6 @@ json = {
           }
         },
         {
-          "description": "Chlorpromazine",
           "variableRole": {
             "coding": [
               {
@@ -1120,7 +1171,6 @@ json = {
           }
         },
         {
-          "description": "Placebo",
           "variableRole": {
             "coding": [
               {
@@ -1198,37 +1248,6 @@ json = {
             }
           ]
         }
-      ],
-      "certainty": [
-        {
-          "rating": [
-            {
-              "coding": [
-                {
-                  "system": "http://hl7.org/fhir/ValueSet/certainty-rating"
-                }
-              ]
-            }
-          ],
-          "certaintySubcomponent": [
-            {
-              "type": {
-                "coding": [
-                  {
-                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type"
-                  }
-                ]
-              },
-              "rating": {
-                "coding": [
-                  {
-                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating"
-                  }
-                ]
-              }
-            }
-          ]
-        }
       ]
     },
     {
@@ -1257,7 +1276,7 @@ json = {
               "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
               "type": "Group",
               "identifier": "Group-Schizophrenia",
-              "display": "Schizophrenia"
+              "display": "Patients with Schizophrenia"
             }
           ],
           "sampleSize": {
@@ -1350,7 +1369,7 @@ json = {
           "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
           "type": "Group",
           "identifier": "Group-Schizophrenia",
-          "display": "Patients with schizophrenia"
+          "display": "Patients with Schizophrenia"
         }
       },
       "variableDefinition": [
@@ -1365,7 +1384,7 @@ json = {
             ]
           },
           "actualDefinition": {
-            "display": "Relapse ???"
+            "display": "Relapse (not further defined)"
           },
           "intendedDefinition": {
             "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseTwoYearsFiveYears.html",
@@ -1486,7 +1505,7 @@ json = {
           "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
           "type": "Group",
           "identifier": "Group-Schizophrenia",
-          "display": "Patients with schizophrenia"
+          "display": "Patients with Schizophrenia"
         }
       },
       "variableDefinition": [
@@ -1501,7 +1520,7 @@ json = {
             ]
           },
           "actualDefinition": {
-            "display": "Relapse ???"
+            "display": "Relapse (not further defined)"
           },
           "intendedDefinition": {
             "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseTwoYearsFiveYears.html",
