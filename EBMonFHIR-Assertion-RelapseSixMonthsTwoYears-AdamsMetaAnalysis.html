@@ -1016,10 +1016,10 @@ json = {
   ],
   "certainty": [
     {
-      "description": "",
+      "description": "Very low quality",
       "note": [
         {
-          "text": ""
+          "text": "2 trials report this outcome at 0‐8 weeks follow‐up, 3 trials at 6 months to 2 years, and 2 trials 2‐5 years, none showed a significant difference."
         }
       ],
       "rating": [
@@ -1028,8 +1028,8 @@ json = {
             {
               "system": "http://hl7.org/fhir/ValueSet/certainty-rating",
               "version": "",
-              "code": "",
-              "display": "",
+              "code": "very-low",
+              "display": "Very low quality",
               "userSelected": ""
             }
           ],
@@ -1038,10 +1038,10 @@ json = {
       ],
       "certaintySubcomponent": [
         {
-          "description": "",
+          "description": "Serious risk of bias",
           "note": [
             {
-              "text": ""
+              "text": "all studies had an unclear risk of bias for random sequence generation, allocation concealment, blinding of assessors and incomplete data. One also had an unclear risk of other bias as the drugs were provided by a pharmaceutical company."
             }
           ],
           "type": {
@@ -1049,8 +1049,8 @@ json = {
               {
                 "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
                 "version": "",
-                "code": "",
-                "display": "",
+                "code": "RiskOfBias",
+                "display": "Risk of bias",
                 "userSelected": ""
               }
             ],
@@ -1061,8 +1061,40 @@ json = {
               {
                 "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
                 "version": "",
-                "code": "",
-                "display": "",
+                "code": "serious-concern",
+                "display": "serious concern",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          }
+        },
+        {
+          "description": "Very serious inconsistency",
+          "note": [
+            {
+              "text": "there was very high heterogeneity in the pooled results."
+            }
+          ],
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "Inconsistency",
+                "display": "Inconsistency",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "rating": {
+            "coding": [
+              {
+                "system": "",
+                "version": "",
+                "code": "critical concern",
+                "display": "critical-concern",
                 "userSelected": ""
               }
             ],
