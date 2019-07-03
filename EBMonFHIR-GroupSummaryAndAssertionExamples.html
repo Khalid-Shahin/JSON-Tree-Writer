@@ -41,12 +41,17 @@
 
 <script src="JSON_Tree_Writer.js"></script>
 <script>
+function setJsonViewCookieToTrue(){
+	document.cookie = "jsonView=true";
+}
+
 if(window.addEventListener) {
     window.addEventListener('load', initiatePage, false); //W3C
 	window.addEventListener('load', deleteEmptyFieldsAndConvertNoWarning, false);	//This is to delete the empty fields for this page
 	window.addEventListener('load', switchToRead, false);
 	if (getCookie("jsonView") != "false"){
 		window.addEventListener('load', hideShowJSON, false);
+		window.addEventListener('load', setJsonViewCookieToTrue, false);
 	}
 } else {
     window.attachEvent('onload', initiatePage); //Older IE
