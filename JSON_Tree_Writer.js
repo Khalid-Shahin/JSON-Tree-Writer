@@ -377,6 +377,7 @@ function deleteEmptyFieldsAndConvertNoWarning(){
    buildTree(false);
    document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
    convertTreeToJSON();
+   convertJSONToTree();
 }
 
 function BlankCheckBoxReadWrite(){
