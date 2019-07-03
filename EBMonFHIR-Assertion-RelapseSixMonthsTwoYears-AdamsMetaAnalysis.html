@@ -641,7 +641,7 @@ json = {
       "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
       "type": "Group",
       "identifier": "Group-Schizophrenia",
-      "display": "schizophrenia"
+      "display": "Patients with Schizophrenia"
     },
     "directnessMatch": {
       "coding": [
@@ -702,7 +702,7 @@ json = {
       }
     },
     {
-      "description": "Chlorpromazine",
+      "description": "",
       "note": [
         {
           "text": ""
@@ -746,7 +746,7 @@ json = {
       }
     },
     {
-      "description": "Placebo",
+      "description": "",
       "note": [
         {
           "text": ""
@@ -890,6 +890,48 @@ json = {
             },
             "high": {
               "value": 0.9,
+              "unit": "",
+              "system": "",
+              "code": ""
+            }
+          }
+        },
+        {
+          "description": "",
+          "note": [
+            {
+              "text": ""
+            }
+          ],
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                "version": "",
+                "code": "I-SqHet",
+                "display": "I-squared heterogeneity",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "quantity": {
+            "value": 0.72,
+            "comparator": "",
+            "unit": "",
+            "system": "",
+            "code": ""
+          },
+          "level": -0,
+          "range": {
+            "low": {
+              "value": -0,
+              "unit": "",
+              "system": "",
+              "code": ""
+            },
+            "high": {
+              "value": -0,
               "unit": "",
               "system": "",
               "code": ""
@@ -1072,6 +1114,9 @@ json = {
         {
           "description": "Very serious inconsistency",
           "note": [
+            {
+              "text": "inconsistency for this outcome consider  the results of relapse outcome at other timepoints"
+            },
             {
               "text": "there was very high heterogeneity in the pooled results."
             }
