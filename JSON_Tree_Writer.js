@@ -366,6 +366,19 @@ function deleteEmptyFields (){
    document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
 }
 
+function deleteEmptyFieldsAndConvertNoWarning(){
+   var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
+   document.getElementById("]....}?|?|?{....[keepFields").checked = true;
+   var hashBefore = hashCode(JSON.stringify(TreeToJSON()));
+   document.getElementById("]....}?|?|?{....[keepFields").checked = false;
+   var dict = TreeToJSON();
+   var hashAfter = hashCode(JSON.stringify(dict));
+   json = dict;
+   buildTree(false);
+   document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
+   convertTreeToJSON();
+}
+
 function BlankCheckBoxReadWrite(){
    if (!document.getElementById("]....}?|?|?{....[treeWriteChecked").checked) {
 		document.getElementById("]....}?|?|?{....[treeWriteChecked").checked = true;

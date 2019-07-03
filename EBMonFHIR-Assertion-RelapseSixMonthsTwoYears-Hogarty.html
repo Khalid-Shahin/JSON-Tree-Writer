@@ -43,6 +43,7 @@
 <script>
 if(window.addEventListener) {
     window.addEventListener('load', initiatePage, false); //W3C
+	window.addEventListener('load', deleteEmptyFieldsAndConvertNoWarning, false);	//This is to delete the empty fields for this page
 } else {
     window.attachEvent('onload', initiatePage); //Older IE
 }
@@ -682,9 +683,9 @@ json = {
         "display": "Relapse ???"
       },
       "intendedDefinition": {
-        "reference": "url-path ???",
+        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
         "type": "EvidenceVariable",
-        "identifier": "Mid-term-relapse",
+        "identifier": "EvidenceVariable-RelapseSixMonthsTwoYears",
         "display": "Relapse long term (6 months - 2 years)"
       },
       "directnessMatch": {
@@ -726,9 +727,9 @@ json = {
         "display": "Chlorpromazine: dose variable min. 100 mg/day, mean 270 mg/day"
       },
       "intendedDefinition": {
-        "reference": "url-path ???",
+        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
         "type": "EvidenceVariable",
-        "identifier": "Chlorpromazine",
+        "identifier": "EvidenceVariable-Chlorpromazine",
         "display": "Chlorpromazine"
       },
       "directnessMatch": {
@@ -770,9 +771,9 @@ json = {
         "display": "Placebo"
       },
       "intendedDefinition": {
-        "reference": "url-path ???",
+        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
         "type": "EvidenceVariable",
-        "identifier": "Placebo",
+        "identifier": "EvidenceVariable-Placebo",
         "display": "Placebo"
       },
       "directnessMatch": {
