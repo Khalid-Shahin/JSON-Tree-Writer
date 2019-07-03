@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="JSON_Tree_Writer.css">
+	<title>JSON Tree Writer - EBMonFHIR - GroupSummary and Meta-analysis Examples</title>
+</head>
+<body>
+<div class="container">
+     <div class="topArea">
+     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - GroupSummary and Meta-analysis Examples</h2>
+	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. A field value of &quot;null&quot;, all lowercase, in the tree view will be converted to just null in the JSON.\n2. A field value of &quot;true&quot; or &quot;false&quot;, all lowercase, will be converted to just true or false respectively as booleans in the JSON.\n3. 1D arrays work perfectly fine to and from JSON, and interpreting 2D, 3D, and beyond arrays from JSON to Tree View can work well most of the time, but bugs may occur when adding elements in the Tree View for arrays more complex than 1D.')" style="position: absolute; right: 6px; top: 4px;">Limitations</button>
+	 <p style="position: absolute; right: 94px; top: 7px; margin: 0px; color: #AEAEAE; font-size: 13px; font-family: sans-serif"><b>EBSCO Health Innovations</b></p>
+	 <p style="position: absolute; right: 2px; top: 10px;">Convert Tree View to JSON in real time? <input onchange="TreeToJSONsetting();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_RealTime" name="JSONrealtime" value="JSONrealtime" title="If this is checked then the JSON side will be updated automatically as you type and add elements on the Tree View side."></p>
+	 <p style="position: absolute; right: 2px; top: 32px;">Tree onto JSON Sync-Scroll <input onchange="if (this.checked == true) { 	document.cookie = 'treeOntoJsonSync=true;'; document.cookie = 'TreeToJSONrealtime=true;'; document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked= true; } else { document.cookie = 'treeOntoJsonSync=false;'; }" type="checkbox" id="]....}?|?|?{....[TreeOntoJsonSyncScroll" name="TreeOntoJsonSyncScroll" value="TreeOntoJsonSyncScroll" title="When you scroll in the chart view it will approximately scroll the same spot in the JSON view. Only works if Convert Tree to JSON in real time is enabled."></p>
+	 <p style="position: absolute; right: 2px; top: 54px;">Show delete element buttons? <input onchange="ShowDeleteElementButtons();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_ShowDeleteElements" name="ShowDeleteElements" value="ShowDeleteElements" title="Displays the &quot;-&quot; button for each element."></p>
+	 <p style="position: absolute; right: 2px; top: 76px;">Use single-line textboxes? <input onchange="if (this.checked == true) { document.cookie = 'singlelineText=true;'; singlelineText = true; } else { document.cookie = 'singlelineText=false;'; singlelineText = false; } updateTree();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_ShowSingleLineTextBoxes" name="ShowDeleteElements" value="ShowDeleteElements" title="Displays the &quot;-&quot; button for each element."></p>
+     <p style="margin-top: 8px;"><input type="file" id="]....}?|?|?{....[jsonFile" style="width: 500px; border: 1px solid #555555;" accept=".txt, .json, .js, .ts, .tex, .rtf, .odt, .wpd, .text"></p>
+	 <button onclick="SaveTreeToJSON()">Save Tree to JSON</button> <button onclick="SaveTreeToXML(true)" title="Save the Tree View as a FHIR XML file.">Save Tree to XML</button> <button onclick="deleteEmptyFields();">Delete Empty Fields</button> <input onchange="BlankCheckBoxReadWrite();" type="checkbox" id="]....}?|?|?{....[keepFields" name="keepFields" value="keepBlankFields" title="Having this unchecked removes the empty fields from the saved JSON or XML. It also removes empty objects." checked> Keep blank fields when converted to JSON?
+	 <br><br>
+     <span style="display: inline">
+	 <input id="]....}?|?|?{....[treeWriteChecked" type="radio" name="readWriteMode" value="write" onchange="switchReadWrite();" checked="checked"> Write 
+	 <input id="]....}?|?|?{....[treeReadChecked" type="radio" name="readWriteMode" value="read" onchange="switchReadWrite();"> Read
+     <span class="middleButtons">
+     <button class="convertToJSONButton" onclick="convertTreeToJSON()" id="]....}?|?|?{....[convertToJSONButton"><b>Convert Tree to JSON &#8594;</b></button>
+     <button class="convertToTreeButton" onclick="convertJSONToTree()" id="]....}?|?|?{....[convertToTreeButton"><b>&#8592; Convert JSON to Tree</b></button>
+     <button class="swapButton" onclick="swapSides()" style="" title="Swap the sides of the tree and JSON."><b>&#8646;</b></button>
+     </span>
+     </span>
+          <button class="hideJSONButton" id="]....}?|?|?{....[hideJSONButton" onclick="hideShowJSON()" style=""><b>Hide JSON View</b></button>
+     </div>
+     <div class="bottomSection" id="]....}?|?|?{....[bottomSection">
+       <div class="chart" id="]....}?|?|?{....[treeChart" oninput="if (document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked) { convertTreeToJSON(); } if (document.getElementById(']....}?|?|?{....[TreeOntoJsonSyncScroll').checked) { scrollToActiveElement(); }">
+       </div>
+       <div class="jsonArea" id="]....}?|?|?{....[jsonArea">
+       <textarea class="jsonTextArea" id="]....}?|?|?{....[jsonTextArea" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+       </div>
+     </div>
+    <div id="ElementAddedToast">A new element has been added to the end of the list.</div>
+    <div id="NothingToDeleteToast">No blank elements to delete.</div>
+</div>
+
+<script src="JSON_Tree_Writer.js"></script>
+<script>
+if(window.addEventListener) {
+    window.addEventListener('load', initiatePage, false); //W3C
+	window.addEventListener('load', deleteEmptyFieldsAndConvertNoWarning, false);	//This is to delete the empty fields for this page
+	window.addEventListener('load', switchToRead, false);
+	if (getCookie("jsonView") != "false"){
+		window.addEventListener('load', hideShowJSON, false);
+	}
+} else {
+    window.attachEvent('onload', initiatePage); //Older IE
+}
+
+
+json = {
+  "Resource Example": [
+    {
+      "resourceType": "GroupSummary",
+      "id": "GroupSummary-RelapseVariousTermLength-FourMetaAnalysis",
+      "status": "draft",
+      "relatedArtifact": [
+        {
+          "display": "Analysis 1.2",
+          "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
+        }
+      ],
+      "studyType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/study-type",
+            "code": "RCT",
+            "display": "randomized trial"
+          }
+        ]
+      },
+      "population": [
+        {
+          "intendedCohort": [
+            {
+              "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
+              "type": "Group",
+              "identifier": "Group-Schizophrenia",
+              "display": "Schizophrenia"
+            }
+          ]
+        }
+      ],
+      "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseZeroWeeksNineWeeks",
+            "display": "Relapse medium term (0 weeks - 8 weeks)"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseNineWeeksSixMonths",
+            "display": "Relapse medium term (9 weeks - 6 months)"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseSixMonthsTwoYears",
+            "display": "Relapse long term (6 months - 2 years)"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseTwoYearsFiveYears.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseTwoYearsFiveYears",
+            "display": "Relapse (2 years - 5 years)"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "exposure",
+                "display": "exposure"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Chlorpromazine",
+            "display": "Chlorpromazine"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "referenceExposure",
+                "display": "reference exposure"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Placebo",
+            "display": "Placebo"
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "type": "Assertion",
+          "identifier": "Assertion-RelapseZeroWeeksNineWeeks-AdamsMetaAnalysis",
+          "display": "Adams 2014 Meta-analysis 0 weeks - 9 weeks"
+        },
+        {
+          "type": "Assertion",
+          "identifier": "Assertion-RelapseNineWeeksSixMonths-AdamsMetaAnalysis",
+          "display": "Adams 2014 Meta-analysis 9 weeks - 6 months"
+        },
+        {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Assertion-RelapseSixMonthsTwoYears-AdamsMetaAnalysis.html",
+          "type": "Assertion",
+          "identifier": "Assertion-RelapseSixMonthsTwoYears-AdamsMetaAnalysis",
+          "display": "Adams 2014 Meta-analysis 6 months - 2 years"
+        },
+        {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Assertion-RelapseTwoYearsFiveYears-AdamsMetaAnalysis.html",
+          "type": "Assertion",
+          "identifier": "Assertion-RelapseTwoYearsFiveYears-AdamsMetaAnalysis",
+          "display": "Adams 2014 Meta-analysis 2 years - 5 years"
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "Group-Schizophrenia",
+      "actual": false,
+      "characteristic": [
+        {
+          "usageContext": [
+            "A"
+          ],
+          "valueCodeableConcept": {
+            "coding": {
+              "system": "http://hl7.org/fhir/sid/icd-10-cm",
+              "code": "F20",
+              "display": "Schizophrenia"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "EvidenceVariable",
+      "id": "EvidenceVariable-Chlorpromazine",
+      "description": "Chlorpromazine",
+      "characteristic": [
+        {
+          "definitionCodeableConcept": {
+            "coding": {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "1155465",
+              "display": "Chlorpromazine Pill"
+            }
+          },
+          "usageContext": [
+            "A"
+          ]
+        },
+        {
+          "definitionCodeableConcept": {
+            "coding": {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "1155464",
+              "display": "Chlorpromazine Oral Product"
+            }
+          },
+          "usageContext": [
+            "A"
+          ]
+        }
+      ]
+    },
+    {
+      "resourceType": "EvidenceVariable",
+      "id": "EvidenceVariable-Placebo",
+      "description": "Placebo",
+      "characteristic": [
+        {
+          "definitionCodeableConcept": {
+            "coding": {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "8375",
+              "display": "placebo"
+            }
+          },
+          "usageContext": [
+            "A"
+          ]
+        }
+      ]
+    },
+    {
+      "resourceType": "EvidenceVariable",
+      "id": "EvidenceVariable-RelapseSixMonthsTwoYears",
+      "description": "Relapse long term (6 months - 2 years)"
+    },
+    {
+      "resourceType": "EvidenceVariable",
+      "id": "EvidenceVariable-RelapseTwoYearsFiveYears",
+      "description": "Relapse (2 years - 5 years)"
+    },
+    {
+      "resourceType": "Assertion",
+      "id": "Assertion-RelapseSixMonthsTwoYears-AdamsMetaAnalysis",
+      "status": "draft",
+      "relatedArtifact": [
+        {
+          "display": "Analysis 1.2",
+          "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
+        }
+      ],
+      "description": "Adams 2014 Meta-analysis 6 months - 2 years",
+      "referentGroup": {
+        "description": "schizophrenia",
+        "evidenceSource": {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-GroupSummary-RelapseSixMonthsTwoYears-ThreeStudies.html",
+          "type": "GroupSummary",
+          "identifier": "GroupSummary-RelapseSixMonthsTwoYears-ThreeStudies"
+        },
+        "intendedGroup": {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
+          "type": "Group",
+          "identifier": "Group-Schizophrenia",
+          "display": "schizophrenia"
+        },
+        "directnessMatch": {
+          "coding": [
+            {
+              "code": "???",
+              "display": "???"
+            }
+          ]
+        }
+      },
+      "variableDefinition": [
+        {
+          "description": "Relapse long term (6 months - 2 years)",
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseSixMonthsTwoYears",
+            "display": "Relapse long term (6 months - 2 years)"
+          },
+          "directnessMatch": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/directness"
+              }
+            ]
+          }
+        },
+        {
+          "description": "Chlorpromazine",
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "exposure",
+                "display": "exposure"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Chlorpromazine",
+            "display": "Chlorpromazine"
+          }
+        },
+        {
+          "description": "Placebo",
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "referenceExposure",
+                "display": "reference exposure"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Placebo",
+            "display": "Placebo"
+          }
+        }
+      ],
+      "synthesisType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+            "code": "std-MA",
+            "display": "summary data meta-analysis"
+          }
+        ]
+      },
+      "studyType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/study-type",
+            "code": "RCT",
+            "display": "randomized trial"
+          }
+        ]
+      },
+      "statistic": [
+        {
+          "description": "Risk Ratio 0.65 [0.47, 0.90]",
+          "statisticType": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                "code": "relative-RR",
+                "display": "relative risk"
+              }
+            ]
+          },
+          "quantity": {
+            "value": 0.65
+          },
+          "sampleSize": {
+            "numberOfStudies": 3,
+            "numberOfParticipants": 512
+          },
+          "attributeEstimate": [
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                    "code": "CI",
+                    "display": "confidence interval"
+                  }
+                ]
+              },
+              "level": 0.95,
+              "range": {
+                "low": {
+                  "value": 0.47
+                },
+                "high": {
+                  "value": 0.9
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "certainty": [
+        {
+          "description": "Very low quality",
+          "note": [
+            {
+              "text": "2 trials report this outcome at 0‐8 weeks follow‐up, 3 trials at 6 months to 2 years, and 2 trials 2‐5 years, none showed a significant difference."
+            }
+          ],
+          "rating": [
+            {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/ValueSet/certainty-rating",
+                  "code": "very-low",
+                  "display": "Very low quality"
+                }
+              ]
+            }
+          ],
+          "certaintySubcomponent": [
+            {
+              "description": "Serious risk of bias",
+              "note": [
+                {
+                  "text": "all studies had an unclear risk of bias for random sequence generation, allocation concealment, blinding of assessors and incomplete data. One also had an unclear risk of other bias as the drugs were provided by a pharmaceutical company."
+                }
+              ],
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                    "code": "RiskOfBias",
+                    "display": "Risk of bias"
+                  }
+                ]
+              },
+              "rating": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                    "code": "serious-concern",
+                    "display": "serious concern"
+                  }
+                ]
+              }
+            },
+            {
+              "description": "Very serious inconsistency",
+              "note": [
+                {
+                  "text": "there was very high heterogeneity in the pooled results."
+                }
+              ],
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                    "code": "Inconsistency",
+                    "display": "Inconsistency"
+                  }
+                ]
+              },
+              "rating": {
+                "coding": [
+                  {
+                    "code": "critical concern",
+                    "display": "critical-concern"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resourceType": "GroupSummary",
+      "id": "GroupSummary-RelapseSixMonthsTwoYears-ThreeStudies",
+      "status": "draft",
+      "relatedArtifact": [
+        {
+          "display": "Analysis 1.2",
+          "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
+        }
+      ],
+      "studyType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/study-type",
+            "code": "RCT",
+            "display": "randomized trial"
+          }
+        ]
+      },
+      "population": [
+        {
+          "intendedCohort": [
+            {
+              "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
+              "type": "Group",
+              "identifier": "Group-Schizophrenia",
+              "display": "Schizophrenia"
+            }
+          ],
+          "sampleSize": {
+            "numberOfStudies": 3,
+            "numberOfParticipants": 512
+          }
+        }
+      ],
+      "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseSixMonthsTwoYears",
+            "display": "Relapse long term (6 months - 2 years)"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "exposure",
+                "display": "exposure"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Chlorpromazine",
+            "display": "Chlorpromazine"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "referenceExposure",
+                "display": "reference exposure"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Placebo",
+            "display": "Placebo"
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Assertion-RelapseSixMonthsTwoYears-Engelhardt.html",
+          "type": "Assertion",
+          "identifier": "Assertion-RelapseSixMonthsTwoYears-Engelhardt"
+        },
+        {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Assertion-RelapseSixMonthsTwoYears-Hogarty.html",
+          "type": "Assertion",
+          "identifier": "Assertion-RelapseSixMonthsTwoYears-Hogarty"
+        },
+        {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Assertion-RelapseSixMonthsTwoYears-Nishikawa.html",
+          "type": "Assertion",
+          "identifier": "Assertion-RelapseSixMonthsTwoYears-Nishikawa"
+        }
+      ]
+    },
+    {
+      "resourceType": "Assertion",
+      "id": "Assertion-RelapseSixMonthsTwoYears-Engelhardt",
+      "status": "draft",
+      "relatedArtifact": [
+        {
+          "display": "Analysis 1.2",
+          "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
+        }
+      ],
+      "referentGroup": {
+        "evidenceSource": {
+          "display": "Engelhardt 1960"
+        },
+        "intendedGroup": {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
+          "type": "Group",
+          "identifier": "Group-Schizophrenia",
+          "display": "Patients with schizophrenia"
+        }
+      },
+      "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Relapse (Hospitalization) 18 months"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseSixMonthsTwoYears",
+            "display": "Relapse long term (6 months - 2 years)"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "exposure",
+                "display": "exposure"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Chlorpromazine: dose 50-800 mg/day (variable dose regimen)"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Chlorpromazine",
+            "display": "Chlorpromazine"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "referenceExposure",
+                "display": "reference exposure"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Placebo"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Placebo",
+            "display": "Placebo"
+          }
+        }
+      ],
+      "studyType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/study-type",
+            "code": "RCT",
+            "display": "randomized trial"
+          }
+        ]
+      },
+      "statistic": [
+        {
+          "description": "Risk Ratio 0.72 [0.51, 1.02]",
+          "statisticType": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                "code": "relative-RR",
+                "display": "relative risk"
+              }
+            ]
+          },
+          "quantity": {
+            "value": 0.72
+          },
+          "sampleSize": {
+            "numberOfStudies": 1,
+            "numberOfParticipants": 108
+          },
+          "attributeEstimate": [
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                    "code": "CI",
+                    "display": "confidence interval"
+                  }
+                ]
+              },
+              "level": 0.95,
+              "range": {
+                "low": {
+                  "value": 0.51
+                },
+                "high": {
+                  "value": 1.02
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resourceType": "Assertion",
+      "id": "Assertion-RelapseSixMonthsTwoYears-Hogarty",
+      "status": "draft",
+      "relatedArtifact": [
+        {
+          "display": "Analysis 1.2",
+          "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
+        }
+      ],
+      "referentGroup": {
+        "evidenceSource": {
+          "display": "Hogarty 1973"
+        },
+        "intendedGroup": {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
+          "type": "Group",
+          "identifier": "Group-Schizophrenia",
+          "display": "Patients with schizophrenia"
+        }
+      },
+      "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Relapse ???"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseSixMonthsTwoYears",
+            "display": "Relapse long term (6 months - 2 years)"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "exposure",
+                "display": "exposure"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Chlorpromazine: dose variable min. 100 mg/day, mean 270 mg/day"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Chlorpromazine",
+            "display": "Chlorpromazine"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "referenceExposure",
+                "display": "reference exposure"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Placebo"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Placebo",
+            "display": "Placebo"
+          }
+        }
+      ],
+      "studyType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/study-type",
+            "code": "RCT",
+            "display": "randomized trial"
+          }
+        ]
+      },
+      "statistic": [
+        {
+          "description": "Risk Ratio 0.51 [0.41, 0.62]",
+          "statisticType": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                "code": "relative-RR",
+                "display": "relative risk"
+              }
+            ]
+          },
+          "quantity": {
+            "value": 0.51
+          },
+          "sampleSize": {
+            "numberOfStudies": 1,
+            "numberOfParticipants": 374
+          },
+          "attributeEstimate": [
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                    "code": "CI",
+                    "display": "confidence interval"
+                  }
+                ]
+              },
+              "level": 0.95,
+              "range": {
+                "low": {
+                  "value": 0.41
+                },
+                "high": {
+                  "value": 0.62
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resourceType": "Assertion",
+      "id": "Assertion-RelapseSixMonthsTwoYears-Nishikawa",
+      "status": "draft",
+      "relatedArtifact": [
+        {
+          "display": "Analysis 1.2",
+          "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
+        }
+      ],
+      "referentGroup": {
+        "evidenceSource": {
+          "display": "Nishikawa 1982"
+        },
+        "intendedGroup": {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
+          "type": "Group",
+          "identifier": "Group-Schizophrenia",
+          "display": "Patients with schizophrenia"
+        }
+      },
+      "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Relapse ???"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseSixMonthsTwoYears",
+            "display": "Relapse long term (6 months - 2 years)"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "exposure",
+                "display": "exposure"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Chlorpromazine: dose 75 mg/day"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Chlorpromazine",
+            "display": "Chlorpromazine"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "referenceExposure",
+                "display": "reference exposure"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Placebo"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Placebo",
+            "display": "Placebo"
+          }
+        }
+      ],
+      "studyType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/study-type",
+            "code": "RCT",
+            "display": "randomized trial"
+          }
+        ]
+      },
+      "statistic": [
+        {
+          "description": "Risk Ratio 0.81 [0.57, 1.14]",
+          "statisticType": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                "code": "relative-RR",
+                "display": "relative risk"
+              }
+            ]
+          },
+          "quantity": {
+            "value": 0.81
+          },
+          "sampleSize": {
+            "numberOfStudies": 1,
+            "numberOfParticipants": 20
+          },
+          "attributeEstimate": [
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                    "code": "CI",
+                    "display": "confidence interval"
+                  }
+                ]
+              },
+              "level": 0.95,
+              "range": {
+                "low": {
+                  "value": 0.57
+                },
+                "high": {
+                  "value": 1.14
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resourceType": "Assertion",
+      "id": "Assertion-RelapseTwoYearsFiveYears-AdamsMetaAnalysis",
+      "status": "draft",
+      "relatedArtifact": [
+        {
+          "display": "Analysis 1.2",
+          "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
+        }
+      ],
+      "description": "Adams 2014 Meta-analysis 2 years - 5 years",
+      "referentGroup": {
+        "description": "schizophrenia",
+        "evidenceSource": {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-GroupSummary-RelapseTwoYearsFiveYears-TwoStudies.html",
+          "type": "GroupSummary",
+          "identifier": "GroupSummary-RelapseTwoYearsFiveYears-TwoStudies"
+        },
+        "intendedGroup": {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
+          "type": "Group",
+          "identifier": "Group-Schizophrenia",
+          "display": "schizophrenia"
+        },
+        "directnessMatch": {
+          "coding": [
+            {
+              "code": "???",
+              "display": "???"
+            }
+          ]
+        }
+      },
+      "variableDefinition": [
+        {
+          "description": "Relapse (2 years - 5 years)",
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseTwoYearsFiveYears.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseTwoYearsFiveYears",
+            "display": "Relapse (2 years - 5 years)"
+          },
+          "directnessMatch": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/directness"
+              }
+            ]
+          }
+        },
+        {
+          "description": "Chlorpromazine",
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "exposure",
+                "display": "exposure"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Chlorpromazine",
+            "display": "Chlorpromazine"
+          }
+        },
+        {
+          "description": "Placebo",
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "referenceExposure",
+                "display": "reference exposure"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Placebo",
+            "display": "Placebo"
+          }
+        }
+      ],
+      "synthesisType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+            "code": "std-MA",
+            "display": "summary data meta-analysis"
+          }
+        ]
+      },
+      "studyType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/study-type",
+            "code": "RCT",
+            "display": "randomized trial"
+          }
+        ]
+      },
+      "statistic": [
+        {
+          "description": "Risk Ratio 0.74 [0.51, 1.09]",
+          "statisticType": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                "code": "relative-RR",
+                "display": "relative risk"
+              }
+            ]
+          },
+          "quantity": {
+            "value": 0.74
+          },
+          "sampleSize": {
+            "numberOfStudies": 2,
+            "numberOfParticipants": 394
+          },
+          "attributeEstimate": [
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                    "code": "CI",
+                    "display": "confidence interval"
+                  }
+                ]
+              },
+              "level": 0.95,
+              "range": {
+                "low": {
+                  "value": 0.51
+                },
+                "high": {
+                  "value": 1.09
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "certainty": [
+        {
+          "rating": [
+            {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/ValueSet/certainty-rating"
+                }
+              ]
+            }
+          ],
+          "certaintySubcomponent": [
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type"
+                  }
+                ]
+              },
+              "rating": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resourceType": "GroupSummary",
+      "id": "GroupSummary-RelapseTwoYearsFiveYears-TwoStudies",
+      "status": "draft",
+      "relatedArtifact": [
+        {
+          "display": "Analysis 1.2",
+          "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
+        }
+      ],
+      "studyType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/study-type",
+            "code": "RCT",
+            "display": "randomized trial"
+          }
+        ]
+      },
+      "population": [
+        {
+          "intendedCohort": [
+            {
+              "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
+              "type": "Group",
+              "identifier": "Group-Schizophrenia",
+              "display": "Schizophrenia"
+            }
+          ],
+          "sampleSize": {
+            "numberOfStudies": 3,
+            "numberOfParticipants": 512
+          }
+        }
+      ],
+      "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseTwoYearsFiveYears.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseTwoYearsFiveYears",
+            "display": "Relapse (2 years - 5 years)"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "exposure",
+                "display": "exposure"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Chlorpromazine",
+            "display": "Chlorpromazine"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "referenceExposure",
+                "display": "reference exposure"
+              }
+            ]
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Placebo",
+            "display": "Placebo"
+          }
+        }
+      ],
+      "assertions": [
+        {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Assertion-RelapseTwoYearsFiveYears-Hogarty.html",
+          "type": "Assertion",
+          "identifier": "Assertion-RelapseTwoYearsFiveYears-Hogarty"
+        },
+        {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Assertion-RelapseTwoYearsFiveYears-Nishikawa.html",
+          "type": "Assertion",
+          "identifier": "Assertion-RelapseTwoYearsFiveYears-Nishikawa"
+        }
+      ]
+    },
+    {
+      "resourceType": "Assertion",
+      "id": "Assertion-RelapseTwoYearsFiveYears-Hogarty",
+      "status": "draft",
+      "relatedArtifact": [
+        {
+          "display": "Analysis 1.2",
+          "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
+        }
+      ],
+      "referentGroup": {
+        "evidenceSource": {
+          "display": "Hogarty 1973"
+        },
+        "intendedGroup": {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
+          "type": "Group",
+          "identifier": "Group-Schizophrenia",
+          "display": "Patients with schizophrenia"
+        }
+      },
+      "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Relapse ???"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseTwoYearsFiveYears.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseTwoYearsFiveYears",
+            "display": "Relapse (2 years - 5 years )"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "exposure",
+                "display": "exposure"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Chlorpromazine: dose variable min. 100 mg/day, mean 270 mg/day"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Chlorpromazine",
+            "display": "Chlorpromazine"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "referenceExposure",
+                "display": "reference exposure"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Placebo"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Placebo",
+            "display": "Placebo"
+          }
+        }
+      ],
+      "studyType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/study-type",
+            "code": "RCT",
+            "display": "randomized trial"
+          }
+        ]
+      },
+      "statistic": [
+        {
+          "description": "Risk Ratio 0.63 [0.54, 0.73]",
+          "statisticType": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                "code": "relative-RR",
+                "display": "relative risk"
+              }
+            ]
+          },
+          "quantity": {
+            "value": 0.63
+          },
+          "sampleSize": {
+            "numberOfStudies": 1,
+            "numberOfParticipants": 374
+          },
+          "attributeEstimate": [
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                    "code": "CI",
+                    "display": "confidence interval"
+                  }
+                ]
+              },
+              "level": 0.95,
+              "range": {
+                "low": {
+                  "value": 0.54
+                },
+                "high": {
+                  "value": 0.73
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resourceType": "Assertion",
+      "id": "Assertion-RelapseTwoYearsFiveYears-Nishikawa",
+      "status": "draft",
+      "relatedArtifact": [
+        {
+          "display": "Analysis 1.2",
+          "url": "https://doi.org/10.1002/14651858.CD000284.pub3"
+        }
+      ],
+      "referentGroup": {
+        "evidenceSource": {
+          "display": "Nishikawa 1982"
+        },
+        "intendedGroup": {
+          "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
+          "type": "Group",
+          "identifier": "Group-Schizophrenia",
+          "display": "Patients with schizophrenia"
+        }
+      },
+      "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "measuredVariable",
+                "display": "measured variable"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Relapse ???"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseTwoYearsFiveYears.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-RelapseTwoYearsFiveYears",
+            "display": "Relapse (2 years - 5 years)"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "exposure",
+                "display": "exposure"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Chlorpromazine: dose 75 mg/day"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Chlorpromazine",
+            "display": "Chlorpromazine"
+          }
+        },
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/variable-role",
+                "code": "referenceExposure",
+                "display": "reference exposure"
+              }
+            ]
+          },
+          "actualDefinition": {
+            "display": "Placebo"
+          },
+          "intendedDefinition": {
+            "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+            "type": "EvidenceVariable",
+            "identifier": "EvidenceVariable-Placebo",
+            "display": "Placebo"
+          }
+        }
+      ],
+      "studyType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/study-type",
+            "code": "RCT",
+            "display": "randomized trial"
+          }
+        ]
+      },
+      "statistic": [
+        {
+          "description": "Risk Ratio 0.90 [0.69, 1.18]",
+          "statisticType": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+                "code": "relative-RR",
+                "display": "relative risk"
+              }
+            ]
+          },
+          "quantity": {
+            "value": 0.9
+          },
+          "sampleSize": {
+            "numberOfStudies": 1,
+            "numberOfParticipants": 20
+          },
+          "attributeEstimate": [
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                    "code": "CI",
+                    "display": "confidence interval"
+                  }
+                ]
+              },
+              "level": 0.95,
+              "range": {
+                "low": {
+                  "value": 0.69
+                },
+                "high": {
+                  "value": 1.18
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+</script>
+
+</body>
+</html>

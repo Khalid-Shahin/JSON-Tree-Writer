@@ -733,6 +733,12 @@ function scrollToActiveElement(){
 	}
 }
 
+function switchToRead(){
+	document.getElementById("]....}?|?|?{....[treeWriteChecked").checked = false;
+	document.getElementById("]....}?|?|?{....[treeReadChecked").checked = true;
+	switchReadWrite();
+}
+
 function clearDictionary(dict){
 	for (var x in dict){
 		if (typeof dict[x]  == typeof "" ){
