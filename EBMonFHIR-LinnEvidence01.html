@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 	<link rel="stylesheet" type="text/css" href="JSON_Tree_Writer.css">
-	<title>JSON Tree Writer - EBMonFHIR - Engelhardt 1960 6 months - 2 years - Assertion</title>
+	<title>JSON Tree Writer - EBMonFHIR - Mortality row for Linn's example - Evidence 01</title>
 </head>
 <body>
 <div class="container">
      <div class="topArea">
-     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - <span style="color: red;">DO NOT USE</span> use the <a href="https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceSet-RelapseVariousTermLength-FourMetaAnalysis.html">Evidence/EvidenceSet examples</a> instead</h2>
+     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - Mortality row for Linn's example - Evidence 01</h2>
 	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. A field value of &quot;null&quot;, all lowercase, in the tree view will be converted to just null in the JSON.\n2. A field value of &quot;true&quot; or &quot;false&quot;, all lowercase, will be converted to just true or false respectively as booleans in the JSON.\n3. 1D arrays work perfectly fine to and from JSON, and interpreting 2D, 3D, and beyond arrays from JSON to Tree View can work well most of the time, but bugs may occur when adding elements in the Tree View for arrays more complex than 1D.')" style="position: absolute; right: 6px; top: 4px;">Limitations</button>
 	 <p style="position: absolute; right: 94px; top: 7px; margin: 0px; color: #AEAEAE; font-size: 13px; font-family: sans-serif"><b>EBSCO Health Innovations</b></p>
 	 <p style="position: absolute; right: 2px; top: 10px;">Convert Tree View to JSON in real time? <input onchange="TreeToJSONsetting();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_RealTime" name="JSONrealtime" value="JSONrealtime" title="If this is checked then the JSON side will be updated automatically as you type and add elements on the Tree View side."></p>
@@ -43,7 +43,6 @@
 <script>
 if(window.addEventListener) {
     window.addEventListener('load', initiatePage, false); //W3C
-	window.addEventListener('load', deleteEmptyFieldsAndConvertNoWarning, false);	//This is to delete the empty fields for this page
 } else {
     window.attachEvent('onload', initiatePage); //Older IE
 }
@@ -487,8 +486,8 @@ hovertext_json = {
 };
 
 json = {
-  "resourceType": "Assertion",
-  "id": "Assertion-RelapseSixMonthsTwoYears-Engelhardt",
+  "resourceType": "Evidence",
+  "id": "Evidence-MortalityLongTerm-Corticosteroids-vs-NoCorticosteroids",
   "url": "",
   "identifier": [
     {
@@ -519,58 +518,8 @@ json = {
     }
   ],
   "version": "",
-  "title": "",
+  "title": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Mortality (60 days to 1 year)",
   "status": "draft",
-  "useContext": [
-    {
-      "code": {
-        "system": "",
-        "version": "",
-        "code": "",
-        "display": "",
-        "userSelected": ""
-      },
-      "valueCodeableConcept": {
-        "coding": [
-          {
-            "system": "",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "valueQuantity": {
-        "value": -0,
-        "comparator": "",
-        "unit": "",
-        "system": "",
-        "code": ""
-      },
-      "valueRange": {
-        "low": {
-          "value": -0,
-          "unit": "",
-          "system": "",
-          "code": ""
-        },
-        "high": {
-          "value": -0,
-          "unit": "",
-          "system": "",
-          "code": ""
-        }
-      },
-      "valueReference": {
-        "reference": "",
-        "type": "",
-        "identifier": "",
-        "display": ""
-      }
-    }
-  ],
   "date": "",
   "copyright": "",
   "approvalDate": "",
@@ -602,9 +551,9 @@ json = {
     {
       "type": "",
       "label": "",
-      "display": "Analysis 1.2",
+      "display": "",
       "citation": "",
-      "url": "https://doi.org/10.1002/14651858.CD000284.pub3",
+      "url": "https://app.magicapp.org/public/guideline/EZ1w8n/pico/31831/widget?tab=outcome",
       "document": {
         "contentType": "",
         "language": "",
@@ -618,14 +567,14 @@ json = {
       "resource": ""
     }
   ],
-  "description": "",
+  "description": "Mortality reduced with RR 0.94 with Corticosteroids vs no corticosteroids for patients with sepsis",
   "note": [
     {
       "text": ""
     }
   ],
   "referentGroup": {
-    "description": "",
+    "description": "Patients with sepsis",
     "note": [
       {
         "text": ""
@@ -633,23 +582,23 @@ json = {
     ],
     "evidenceSource": {
       "reference": "",
-      "type": "",
-      "identifier": "",
-      "display": "Engelhardt 1960"
+      "type": "Group",
+      "identifier": "???",
+      "display": "???"
     },
     "intendedGroup": {
-      "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
+      "reference": "",
       "type": "Group",
-      "identifier": "Group-Schizophrenia",
-      "display": "Patients with Schizophrenia"
+      "identifier": "Group-Sepsis",
+      "display": "Patients with sepsis"
     },
     "directnessMatch": {
       "coding": [
         {
-          "system": "",
+          "system": "http://hl7.org/fhir/ValueSet/directness",
           "version": "",
-          "code": "",
-          "display": "",
+          "code": "???",
+          "display": "???",
           "userSelected": ""
         }
       ],
@@ -658,7 +607,7 @@ json = {
   },
   "variableDefinition": [
     {
-      "description": "",
+      "description": "Mortality Longer term (60 days to 1 year)",
       "note": [
         {
           "text": ""
@@ -678,23 +627,23 @@ json = {
       },
       "actualDefinition": {
         "reference": "",
-        "type": "",
-        "identifier": "",
-        "display": "Relapse (Hospitalization) 18 months"
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "many studies had shorter term outcomes"
       },
       "intendedDefinition": {
-        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
+        "reference": "",
         "type": "EvidenceVariable",
-        "identifier": "EvidenceVariable-RelapseSixMonthsTwoYears",
-        "display": "Relapse long term (6 months - 2 years)"
+        "identifier": "EvidenceVariable-Mortality-Long-Term",
+        "display": "Mortality Longer term (Follow up: 60 days to 1 year)"
       },
       "directnessMatch": {
         "coding": [
           {
-            "system": "",
+            "system": "http://hl7.org/fhir/ValueSet/directness",
             "version": "",
-            "code": "",
-            "display": "",
+            "code": "moderate",
+            "display": "moderate",
             "userSelected": ""
           }
         ],
@@ -702,7 +651,7 @@ json = {
       }
     },
     {
-      "description": "",
+      "description": "Corticosteroids",
       "note": [
         {
           "text": ""
@@ -722,23 +671,23 @@ json = {
       },
       "actualDefinition": {
         "reference": "",
-        "type": "",
-        "identifier": "",
-        "display": "Chlorpromazine: dose 50-800 mg/day (variable dose regimen)"
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
       },
       "intendedDefinition": {
-        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+        "reference": "",
         "type": "EvidenceVariable",
-        "identifier": "EvidenceVariable-Chlorpromazine",
-        "display": "Chlorpromazine"
+        "identifier": "EvidenceVariable-Steroids",
+        "display": "Corticosteroids"
       },
       "directnessMatch": {
         "coding": [
           {
-            "system": "",
+            "system": "http://hl7.org/fhir/ValueSet/directness",
             "version": "",
-            "code": "",
-            "display": "",
+            "code": "???",
+            "display": "???",
             "userSelected": ""
           }
         ],
@@ -746,7 +695,7 @@ json = {
       }
     },
     {
-      "description": "",
+      "description": "No corticosteroids",
       "note": [
         {
           "text": ""
@@ -766,23 +715,23 @@ json = {
       },
       "actualDefinition": {
         "reference": "",
-        "type": "",
-        "identifier": "",
-        "display": "Placebo"
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
       },
       "intendedDefinition": {
-        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+        "reference": "",
         "type": "EvidenceVariable",
-        "identifier": "EvidenceVariable-Placebo",
-        "display": "Placebo"
+        "identifier": "EvidenceVariable-No-Steroids",
+        "display": "No corticosteroids"
       },
       "directnessMatch": {
         "coding": [
           {
-            "system": "",
+            "system": "http://hl7.org/fhir/ValueSet/directness",
             "version": "",
-            "code": "",
-            "display": "",
+            "code": "???",
+            "display": "???",
             "userSelected": ""
           }
         ],
@@ -793,10 +742,10 @@ json = {
   "synthesisType": {
     "coding": [
       {
-        "system": "",
+        "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
         "version": "",
-        "code": "",
-        "display": "",
+        "code": "std-MA",
+        "display": "summary data meta-analysis",
         "userSelected": ""
       }
     ],
@@ -816,10 +765,10 @@ json = {
   },
   "statistic": [
     {
-      "description": "Risk Ratio 0.72 [0.51, 1.02]",
+      "description": "Relative risk 0.94",
       "note": [
         {
-          "text": ""
+          "text": "Based on data from 6438 patients in 9 studies "
         }
       ],
       "statisticType": {
@@ -835,7 +784,7 @@ json = {
         "text": ""
       },
       "quantity": {
-        "value": 0.72,
+        "value": 0.94,
         "comparator": "",
         "unit": "",
         "system": "",
@@ -845,17 +794,17 @@ json = {
         "description": "",
         "note": [
           {
-            "text": ""
+            "text": "Based on data from 6438 patients in 9 studies "
           }
         ],
-        "numberOfStudies": 1,
-        "numberOfParticipants": 108,
+        "numberOfStudies": 9,
+        "numberOfParticipants": 6438,
         "knownDataCount": -0,
         "numeratorCount": -0
       },
       "attributeEstimate": [
         {
-          "description": "",
+          "description": "(CI 95% 0.89 - 1.00)",
           "note": [
             {
               "text": ""
@@ -883,13 +832,96 @@ json = {
           "level": 0.95,
           "range": {
             "low": {
-              "value": 0.51,
+              "value": 0.89,
               "unit": "",
               "system": "",
               "code": ""
             },
             "high": {
-              "value": 1.02,
+              "value": 1,
+              "unit": "",
+              "system": "",
+              "code": ""
+            }
+          }
+        }
+      ]
+    },
+    {
+      "description": "Absolute risk difference: 22 fewer per 1000",
+      "note": [
+        {
+          "text": "Difference: 22 fewer per 1000"
+        }
+      ],
+      "statisticType": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+            "version": "",
+            "code": "absolute-ARD",
+            "display": "absolute risk difference",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "quantity": {
+        "value": 0.022,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "sampleSize": {
+        "description": "",
+        "note": [
+          {
+            "text": "Based on data from 6438 patients in 9 studies "
+          }
+        ],
+        "numberOfStudies": 9,
+        "numberOfParticipants": 6438,
+        "knownDataCount": "",
+        "numeratorCount": ""
+      },
+      "attributeEstimate": [
+        {
+          "description": "(CI 95% 0.041 - 0.00)",
+          "note": [
+            {
+              "text": ""
+            }
+          ],
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
+                "version": "",
+                "code": "CI",
+                "display": "confidence interval",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "quantity": {
+            "value": "",
+            "comparator": "",
+            "unit": "",
+            "system": "",
+            "code": ""
+          },
+          "level": -0,
+          "range": {
+            "low": {
+              "value": 0.041,
+              "unit": "",
+              "system": "",
+              "code": ""
+            },
+            "high": {
+              "value": 0,
               "unit": "",
               "system": "",
               "code": ""
@@ -899,124 +931,9 @@ json = {
       ]
     }
   ],
-  "distribution": [
-    {
-      "description": "",
-      "note": [
-        {
-          "text": ""
-        }
-      ],
-      "numberOfIntervals": -0,
-      "bottomOfFirstInterval": {
-        "value": -0,
-        "comparator": "",
-        "unit": "",
-        "system": "",
-        "code": ""
-      },
-      "interval": [
-        {
-          "rankOrder": -0,
-          "topOfInterval": {
-            "value": -0,
-            "comparator": "",
-            "unit": "",
-            "system": "",
-            "code": ""
-          },
-          "intervalStatistic": [
-            {
-              "description": "",
-              "note": [
-                {
-                  "text": ""
-                }
-              ],
-              "statisticType": {
-                "coding": [
-                  {
-                    "system": "",
-                    "version": "",
-                    "code": "",
-                    "display": "",
-                    "userSelected": ""
-                  }
-                ],
-                "text": ""
-              },
-              "quantity": {
-                "value": -0,
-                "comparator": "",
-                "unit": "",
-                "system": "",
-                "code": ""
-              },
-              "sampleSize": {
-                "description": "",
-                "note": [
-                  {
-                    "text": ""
-                  }
-                ],
-                "numberOfStudies": -0,
-                "numberOfParticipants": -0,
-                "knownDataCount": -0,
-                "numeratorCount": -0
-              },
-              "attributeEstimate": [
-                {
-                  "description": "",
-                  "note": [
-                    {
-                      "text": ""
-                    }
-                  ],
-                  "type": {
-                    "coding": [
-                      {
-                        "system": "",
-                        "version": "",
-                        "code": "",
-                        "display": "",
-                        "userSelected": ""
-                      }
-                    ],
-                    "text": ""
-                  },
-                  "quantity": {
-                    "value": -0,
-                    "comparator": "",
-                    "unit": "",
-                    "system": "",
-                    "code": ""
-                  },
-                  "level": -0,
-                  "range": {
-                    "low": {
-                      "value": -0,
-                      "unit": "",
-                      "system": "",
-                      "code": ""
-                    },
-                    "high": {
-                      "value": -0,
-                      "unit": "",
-                      "system": "",
-                      "code": ""
-                    }
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
   "certainty": [
     {
-      "description": "",
+      "description": "Low, due to serious imprecision and indirectness.",
       "note": [
         {
           "text": ""
@@ -1026,11 +943,10 @@ json = {
         {
           "coding": [
             {
-              "system": "",
+              "system": "http://hl7.org/fhir/ValueSet/certainty-rating",
               "version": "",
-              "code": "",
-              "display": "",
-              "userSelected": ""
+              "code": "low",
+              "display": "Low quality"
             }
           ],
           "text": ""
@@ -1041,17 +957,16 @@ json = {
           "description": "",
           "note": [
             {
-              "text": ""
+              "text": "Note that all studies that reported 90 day to 1 year mortality also reported 28-30 day mortality: the CI 95% around the pooled effect for short term mortality also excludes no effect: RR 0.91 (CI 95% 0.84 - 0.98)."
             }
           ],
           "type": {
             "coding": [
               {
-                "system": "",
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
                 "version": "",
-                "code": "",
-                "display": "",
-                "userSelected": ""
+                "code": "RiskOfBias",
+                "display": "Risk of bias"
               }
             ],
             "text": ""
@@ -1059,11 +974,130 @@ json = {
           "rating": {
             "coding": [
               {
-                "system": "",
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
                 "version": "",
-                "code": "",
-                "display": "",
-                "userSelected": ""
+                "code": "no-concern",
+                "display": "no serious concern"
+              }
+            ],
+            "text": ""
+          }
+        },
+        {
+          "description": "",
+          "note": [
+            {
+              "text": ""
+            }
+          ],
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "Inconsistency",
+                "display": "Inconsistency"
+              }
+            ],
+            "text": ""
+          },
+          "rating": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "no-concern",
+                "display": "no serious concern"
+              }
+            ],
+            "text": ""
+          }
+        },
+        {
+          "description": "",
+          "note": [
+            {
+              "text": "Only a small proportion of studies reported longer-term mortality."
+            }
+          ],
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "Indirectness",
+                "display": "Indirectness"
+              }
+            ],
+            "text": ""
+          },
+          "rating": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "serious-concern",
+                "display": "serious concern"
+              }
+            ],
+            "text": ""
+          }
+        },
+        {
+          "description": "",
+          "note": [
+            {
+              "text": "Confidence interval includes no effect."
+            }
+          ],
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "Imprecision",
+                "display": "Imprecision"
+              }
+            ],
+            "text": ""
+          },
+          "rating": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "serious-concern",
+                "display": "serious concern"
+              }
+            ],
+            "text": ""
+          }
+        },
+        {
+          "description": "",
+          "note": [
+            {
+              "text": ""
+            }
+          ],
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
+                "version": "",
+                "code": "PublicationBias",
+                "display": "Publication bias"
+              }
+            ],
+            "text": ""
+          },
+          "rating": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
+                "version": "",
+                "code": "no-concern",
+                "display": "no serious concern"
               }
             ],
             "text": ""
@@ -1073,6 +1107,7 @@ json = {
     }
   ]
 };
+
 </script>
 
 </body>

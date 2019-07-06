@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 	<link rel="stylesheet" type="text/css" href="JSON_Tree_Writer.css">
-	<title>JSON Tree Writer - EBMonFHIR - Engelhardt 1960 6 months - 2 years - Assertion</title>
+	<title>JSON Tree Writer - EBMonFHIR - Linn EvidenceSet (All Outcomes)</title>
 </head>
 <body>
 <div class="container">
      <div class="topArea">
-     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - <span style="color: red;">DO NOT USE</span> use the <a href="https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceSet-RelapseVariousTermLength-FourMetaAnalysis.html">Evidence/EvidenceSet examples</a> instead</h2>
+     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - Linn EvidenceSet (All Outcomes)</h2>
 	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. A field value of &quot;null&quot;, all lowercase, in the tree view will be converted to just null in the JSON.\n2. A field value of &quot;true&quot; or &quot;false&quot;, all lowercase, will be converted to just true or false respectively as booleans in the JSON.\n3. 1D arrays work perfectly fine to and from JSON, and interpreting 2D, 3D, and beyond arrays from JSON to Tree View can work well most of the time, but bugs may occur when adding elements in the Tree View for arrays more complex than 1D.')" style="position: absolute; right: 6px; top: 4px;">Limitations</button>
 	 <p style="position: absolute; right: 94px; top: 7px; margin: 0px; color: #AEAEAE; font-size: 13px; font-family: sans-serif"><b>EBSCO Health Innovations</b></p>
 	 <p style="position: absolute; right: 2px; top: 10px;">Convert Tree View to JSON in real time? <input onchange="TreeToJSONsetting();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_RealTime" name="JSONrealtime" value="JSONrealtime" title="If this is checked then the JSON side will be updated automatically as you type and add elements on the Tree View side."></p>
@@ -43,7 +43,6 @@
 <script>
 if(window.addEventListener) {
     window.addEventListener('load', initiatePage, false); //W3C
-	window.addEventListener('load', deleteEmptyFieldsAndConvertNoWarning, false);	//This is to delete the empty fields for this page
 } else {
     window.attachEvent('onload', initiatePage); //Older IE
 }
@@ -487,8 +486,8 @@ hovertext_json = {
 };
 
 json = {
-  "resourceType": "Assertion",
-  "id": "Assertion-RelapseSixMonthsTwoYears-Engelhardt",
+  "resourceType": "EvidenceSet",
+  "id": "",
   "url": "",
   "identifier": [
     {
@@ -520,189 +519,95 @@ json = {
   ],
   "version": "",
   "title": "",
-  "status": "draft",
-  "useContext": [
-    {
-      "code": {
-        "system": "",
-        "version": "",
-        "code": "",
-        "display": "",
-        "userSelected": ""
-      },
-      "valueCodeableConcept": {
-        "coding": [
-          {
-            "system": "",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "valueQuantity": {
-        "value": -0,
-        "comparator": "",
-        "unit": "",
-        "system": "",
-        "code": ""
-      },
-      "valueRange": {
-        "low": {
-          "value": -0,
-          "unit": "",
-          "system": "",
-          "code": ""
-        },
-        "high": {
-          "value": -0,
-          "unit": "",
-          "system": "",
-          "code": ""
-        }
-      },
-      "valueReference": {
-        "reference": "",
-        "type": "",
-        "identifier": "",
-        "display": ""
-      }
-    }
-  ],
+  "shortTitle": "",
+  "subTitle": "",
+  "status": "",
   "date": "",
   "copyright": "",
   "approvalDate": "",
   "lastReviewDate": "",
+  "summaryPublisher": [
+    {
+      "name": "MAGIC"
+    }
+  ],
   "contributor": [
     {
       "type": "",
-      "name": "",
-      "contact": [
-        {
-          "name": "",
-          "telecom": [
-            {
-              "system": "",
-              "value": "",
-              "use": "",
-              "rank": "",
-              "period": {
-                "start": "",
-                "end": ""
-              }
-            }
-          ]
-        }
-      ]
+      "name": ""
     }
   ],
   "relatedArtifact": [
     {
       "type": "",
       "label": "",
-      "display": "Analysis 1.2",
+      "display": "",
       "citation": "",
-      "url": "https://doi.org/10.1002/14651858.CD000284.pub3",
-      "document": {
-        "contentType": "",
-        "language": "",
-        "data": "",
-        "url": "",
-        "size": "",
-        "hash": "",
-        "title": "",
-        "creation": ""
-      },
+      "url": "https://app.magicapp.org/public/guideline/EZ1w8n/pico/31831/widget?tab=outcome",
       "resource": ""
     }
   ],
-  "description": "",
+  "description": "Corticosteroids vs no corticosteroids for patients with sepsis",
   "note": [
     {
       "text": ""
     }
   ],
-  "referentGroup": {
-    "description": "",
-    "note": [
+  "synthesisType": {
+    "coding": [
       {
-        "text": ""
+        "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
+        "version": "",
+        "code": "std-MA",
+        "display": "summary data meta-analysis",
+        "userSelected": ""
       }
     ],
-    "evidenceSource": {
-      "reference": "",
-      "type": "",
-      "identifier": "",
-      "display": "Engelhardt 1960"
-    },
-    "intendedGroup": {
-      "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
-      "type": "Group",
-      "identifier": "Group-Schizophrenia",
-      "display": "Patients with Schizophrenia"
-    },
-    "directnessMatch": {
-      "coding": [
-        {
-          "system": "",
-          "version": "",
-          "code": "",
-          "display": "",
-          "userSelected": ""
-        }
-      ],
-      "text": ""
-    }
+    "text": ""
   },
-  "variableDefinition": [
+  "studyType": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/study-type",
+        "version": "",
+        "code": "RCT",
+        "display": "randomized trial",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "population": [
     {
-      "description": "",
+      "description": "Patients with sepsis",
       "note": [
         {
           "text": ""
         }
       ],
-      "variableRole": {
-        "coding": [
+      "intendedCohort": [
+        {
+          "reference": "",
+          "type": "Group",
+          "identifier": "Group-Sepsis",
+          "display": "Patients with sepsis"
+        }
+      ],
+      "sampleSize": {
+        "description": "",
+        "note": [
           {
-            "system": "http://hl7.org/fhir/ValueSet/variable-role",
-            "version": "",
-            "code": "measuredVariable",
-            "display": "measured variable",
-            "userSelected": ""
+            "text": ""
           }
         ],
-        "text": ""
-      },
-      "actualDefinition": {
-        "reference": "",
-        "type": "",
-        "identifier": "",
-        "display": "Relapse (Hospitalization) 18 months"
-      },
-      "intendedDefinition": {
-        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
-        "type": "EvidenceVariable",
-        "identifier": "EvidenceVariable-RelapseSixMonthsTwoYears",
-        "display": "Relapse long term (6 months - 2 years)"
-      },
-      "directnessMatch": {
-        "coding": [
-          {
-            "system": "",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
+        "numberOfStudies": -0,
+        "numberOfParticipants": -0
       }
-    },
+    }
+  ],
+  "variableDefinition": [
     {
-      "description": "",
+      "description": "Corticosteroids",
       "note": [
         {
           "text": ""
@@ -722,31 +627,19 @@ json = {
       },
       "actualDefinition": {
         "reference": "",
-        "type": "",
-        "identifier": "",
-        "display": "Chlorpromazine: dose 50-800 mg/day (variable dose regimen)"
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
       },
       "intendedDefinition": {
-        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
+        "reference": "",
         "type": "EvidenceVariable",
-        "identifier": "EvidenceVariable-Chlorpromazine",
-        "display": "Chlorpromazine"
-      },
-      "directnessMatch": {
-        "coding": [
-          {
-            "system": "",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
+        "identifier": "EvidenceVariable-Steroids",
+        "display": "Corticosteroids"
       }
     },
     {
-      "description": "",
+      "description": "No corticosteroids",
       "note": [
         {
           "text": ""
@@ -758,7 +651,7 @@ json = {
             "system": "http://hl7.org/fhir/ValueSet/variable-role",
             "version": "",
             "code": "referenceExposure",
-            "display": "reference exposure",
+            "display": "referenceExposure",
             "userSelected": ""
           }
         ],
@@ -766,313 +659,772 @@ json = {
       },
       "actualDefinition": {
         "reference": "",
-        "type": "",
-        "identifier": "",
-        "display": "Placebo"
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
       },
       "intendedDefinition": {
-        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
+        "reference": "",
         "type": "EvidenceVariable",
-        "identifier": "EvidenceVariable-Placebo",
-        "display": "Placebo"
-      },
-      "directnessMatch": {
-        "coding": [
-          {
-            "system": "",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
+        "identifier": "EvidenceVariable-No-Steroids",
+        "display": "No corticosteroids"
       }
-    }
-  ],
-  "synthesisType": {
-    "coding": [
-      {
-        "system": "",
-        "version": "",
-        "code": "",
-        "display": "",
-        "userSelected": ""
-      }
-    ],
-    "text": ""
-  },
-  "studyType": {
-    "coding": [
-      {
-        "system": "http://hl7.org/fhir/ValueSet/study-type",
-        "version": "",
-        "code": "RCT",
-        "display": "randomized trial",
-        "userSelected": ""
-      }
-    ],
-    "text": ""
-  },
-  "statistic": [
+    },
     {
-      "description": "Risk Ratio 0.72 [0.51, 1.02]",
+      "description": "Mortality Longer term (60 days to 1 year)",
       "note": [
         {
           "text": ""
         }
       ],
-      "statisticType": {
+      "variableRole": {
         "coding": [
           {
-            "system": "http://hl7.org/fhir/ValueSet/statistic-type",
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
             "version": "",
-            "code": "relative-RR",
-            "display": "relative risk",
+            "code": "measuredVariable",
+            "display": "measured variable",
             "userSelected": ""
           }
         ],
         "text": ""
       },
-      "quantity": {
-        "value": 0.72,
-        "comparator": "",
-        "unit": "",
-        "system": "",
-        "code": ""
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
       },
-      "sampleSize": {
-        "description": "",
-        "note": [
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Mortality-Long-Term",
+        "display": "Mortality Longer term (Follow up: 60 days to 1 year)"
+      }
+    },
+    {
+      "description": "Mortality Short term (28-31 days)",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
           {
-            "text": ""
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
           }
         ],
-        "numberOfStudies": 1,
-        "numberOfParticipants": 108,
-        "knownDataCount": -0,
-        "numeratorCount": -0
+        "text": ""
       },
-      "attributeEstimate": [
-        {
-          "description": "",
-          "note": [
-            {
-              "text": ""
-            }
-          ],
-          "type": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
-                "version": "",
-                "code": "CI",
-                "display": "confidence interval",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
-          },
-          "quantity": {
-            "value": -0,
-            "comparator": "",
-            "unit": "",
-            "system": "",
-            "code": ""
-          },
-          "level": 0.95,
-          "range": {
-            "low": {
-              "value": 0.51,
-              "unit": "",
-              "system": "",
-              "code": ""
-            },
-            "high": {
-              "value": 1.02,
-              "unit": "",
-              "system": "",
-              "code": ""
-            }
-          }
-        }
-      ]
-    }
-  ],
-  "distribution": [
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Mortality-Short-Term",
+        "display": "Mortality Short term (Follow up: 14-30 days)"
+      }
+    },
     {
-      "description": "",
+      "description": "Shock reversal 1 week",
       "note": [
         {
           "text": ""
         }
       ],
-      "numberOfIntervals": -0,
-      "bottomOfFirstInterval": {
-        "value": -0,
-        "comparator": "",
-        "unit": "",
-        "system": "",
-        "code": ""
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
       },
-      "interval": [
-        {
-          "rankOrder": -0,
-          "topOfInterval": {
-            "value": -0,
-            "comparator": "",
-            "unit": "",
-            "system": "",
-            "code": ""
-          },
-          "intervalStatistic": [
-            {
-              "description": "",
-              "note": [
-                {
-                  "text": ""
-                }
-              ],
-              "statisticType": {
-                "coding": [
-                  {
-                    "system": "",
-                    "version": "",
-                    "code": "",
-                    "display": "",
-                    "userSelected": ""
-                  }
-                ],
-                "text": ""
-              },
-              "quantity": {
-                "value": -0,
-                "comparator": "",
-                "unit": "",
-                "system": "",
-                "code": ""
-              },
-              "sampleSize": {
-                "description": "",
-                "note": [
-                  {
-                    "text": ""
-                  }
-                ],
-                "numberOfStudies": -0,
-                "numberOfParticipants": -0,
-                "knownDataCount": -0,
-                "numeratorCount": -0
-              },
-              "attributeEstimate": [
-                {
-                  "description": "",
-                  "note": [
-                    {
-                      "text": ""
-                    }
-                  ],
-                  "type": {
-                    "coding": [
-                      {
-                        "system": "",
-                        "version": "",
-                        "code": "",
-                        "display": "",
-                        "userSelected": ""
-                      }
-                    ],
-                    "text": ""
-                  },
-                  "quantity": {
-                    "value": -0,
-                    "comparator": "",
-                    "unit": "",
-                    "system": "",
-                    "code": ""
-                  },
-                  "level": -0,
-                  "range": {
-                    "low": {
-                      "value": -0,
-                      "unit": "",
-                      "system": "",
-                      "code": ""
-                    },
-                    "high": {
-                      "value": -0,
-                      "unit": "",
-                      "system": "",
-                      "code": ""
-                    }
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "certainty": [
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Shock-reversal",
+        "display": "Shock reversal (Follow up: 7 days)"
+      }
+    },
     {
-      "description": "",
+      "description": "Neuromuscular weakness",
       "note": [
         {
           "text": ""
         }
       ],
-      "rating": [
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Neuromuscular-Weakness",
+        "display": "Neuromuscular weakness"
+      }
+    },
+    {
+      "description": "Gastrointestinal bleeding",
+      "note": [
         {
-          "coding": [
-            {
-              "system": "",
-              "version": "",
-              "code": "",
-              "display": "",
-              "userSelected": ""
-            }
-          ],
           "text": ""
         }
       ],
-      "certaintySubcomponent": [
-        {
-          "description": "",
-          "note": [
-            {
-              "text": ""
-            }
-          ],
-          "type": {
-            "coding": [
-              {
-                "system": "",
-                "version": "",
-                "code": "",
-                "display": "",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
-          },
-          "rating": {
-            "coding": [
-              {
-                "system": "",
-                "version": "",
-                "code": "",
-                "display": "",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
           }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Gastrointestinal-Bleeding",
+        "display": "Gastrointestinal bleeding"
+      }
+    },
+    {
+      "description": "Neuropsychiatric events",
+      "note": [
+        {
+          "text": ""
         }
-      ]
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Neuropsychiatric-Events",
+        "display": "Neuropsychiatric events"
+      }
+    },
+    {
+      "description": "Hypernatremia",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Hypernatremia",
+        "display": "Hypernatremia"
+      }
+    },
+    {
+      "description": "Superinfection",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Superinfection",
+        "display": "Superinfection"
+      }
+    },
+    {
+      "description": "Stroke",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Stroke",
+        "display": "Stroke"
+      }
+    },
+    {
+      "description": "Myocardial infarction",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Myocardial-Infarction",
+        "display": "Myocardial infarction"
+      }
+    },
+    {
+      "description": "Hyperglycaemia",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Hyperglycaemia",
+        "display": "Hyperglycaemia"
+      }
+    },
+    {
+      "description": "ICU length of stay",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-ICU-Length-Of-Stay",
+        "display": "ICU length of stay"
+      }
+    },
+    {
+      "description": "Hospital length of stay",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Hospital-Length-Of-Stay",
+        "display": "Hospital length of stay"
+      }
+    },
+    {
+      "description": "Organ dysfunction",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Organ-Dysfunction",
+        "display": "Organ dysfunction (Follow up: 7 days)"
+      }
+    },
+    {
+      "description": "Quality of Life",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/variable-role",
+            "version": "",
+            "code": "measuredVariable",
+            "display": "measured variable",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "???",
+        "display": "???"
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "EvidenceVariable-Quality-Of-Life",
+        "display": "Quality of Life"
+      }
+    }
+  ],
+  "evidenceStatement": [
+    {
+      "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-LinnEvidence01.html",
+      "type": "Evidence",
+      "identifier": "Evidence-MortalityLongTerm-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Mortality (60 days to 1 year)"
+    },
+    {
+      "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-LinnEvidence02.html",
+      "type": "Evidence",
+      "identifier": "Evidence-MortalityLongTerm-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Mortality (60 days to 1 year)"
+    },
+    {
+      "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-LinnEvidence03.html",
+      "type": "Evidence",
+      "identifier": "Evidence-MortalityLongTerm-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Mortality (60 days to 1 year)"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-MortalityShortTerm-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Mortality Short term (Follow up: 14-30 days)"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-MortalityShortTerm-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Mortality Short term (Follow up: 14-30 days)"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-MortalityShortTerm-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Mortality Short term (Follow up: 14-30 days)"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-ShockReversal-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Shock reversal (Follow up: 7 days)"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-ShockReversal-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Shock reversal (Follow up: 7 days)"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-ShockReversal-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Shock reversal (Follow up: 7 days)"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-NeuromuscularWeakness-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Neuromuscular weakness"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-NeuromuscularWeakness-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Neuromuscular weakness"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-NeuromuscularWeakness-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Neuromuscular weakness"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-GastrointestinalBleeding-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Neuromuscular weakness"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-GastrointestinalBleeding-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Neuromuscular weakness"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-GastrointestinalBleeding-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Gastrointestinal bleeding"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-NeuropsychiatricEvents-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Neuropsychiatric events"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-NeuropsychiatricEvents-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Neuropsychiatric events"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-NeuropsychiatricEvents-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Neuropsychiatric events"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Hypernatremia-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Hypernatremia"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Hypernatremia-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Hypernatremia"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Hypernatremia-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Hypernatremia"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Superinfection-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Superinfection"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Superinfection-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Superinfection"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Superinfection-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Superinfection"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Stroke-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Stroke"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Stroke-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Stroke"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Stroke-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Stroke"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-MyocardialInfarction-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Myocardial infarction"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-MyocardialInfarction-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Myocardial infarction"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-MyocardialInfarction-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Myocardial infarction"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Hyperglycaemia-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Hyperglycaemia"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Hyperglycaemia-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Hyperglycaemia"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-Hyperglycaemia-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Hyperglycaemia"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-ICULengthOfStay-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with ICU length of stay"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-ICULengthOfStay-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with ICU length of stay"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-ICULengthOfStay-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with ICU length of stay"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-HospitalLengthOfStay-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Hospital length of stay"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-HospitalLengthOfStay-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Hospital length of stay"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-HospitalLengthOfStay-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Hospital length of stay"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-OrganDysfunction-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Organ dysfunction (Follow up: 7 days)"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-OrganDysfunction-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Organ dysfunction (Follow up: 7 days)"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-OrganDysfunction-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Organ dysfunction (Follow up: 7 days)"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-QualityOfLife-Corticosteroids-vs-NoCorticosteroids",
+      "display": "Corticosteroids vs No corticosteroids for Patients with Sepsis with Quality of Life"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-QualityOfLife-Corticosteroids",
+      "display": "Corticosteroids for Patients with Sepsis with Quality of Life"
+    },
+    {
+      "reference": "",
+      "type": "Evidence",
+      "identifier": "Evidence-QualityOfLife-NoCorticosteroids",
+      "display": "No corticosteroids for Patients with Sepsis with Quality of Life"
     }
   ]
 };
+
 </script>
 
 </body>
