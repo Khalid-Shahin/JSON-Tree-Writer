@@ -68,7 +68,7 @@ json = {
 		"usageContext---HoVeR": "[0..*]",
         "period": "",
 		"period---HoVeR": "The period over which the characteristic is tested; e.g. the patient had an operation during the month of June. [0..1]",
-        "value[x]": {
+
             "valueCodeableConcept": {
 				"coding": {
 					"system": "",
@@ -88,13 +88,21 @@ json = {
 				"low": "",
 				"high": ""
 			},
-            "valueReference": ""
-        },
-		"value[x]---HoVeR": "The value of the trait that holds (or does not hold - see 'exclude') for members of the group. [1..1]"
+            "valueReference": {
+               "reference": "",
+               "type": "",
+               "identifier": "",
+               "display": ""
+            }
     } ],
 	"characteristic---HoVeR": "Identifies traits whose presence r absence is shared by members of the group. [0..*]",
     "member": [{
-        "entity": "",
+        "entity": {
+           "reference": "",
+           "type": "",
+           "identifier": "",
+           "display": ""
+        },
 		"entity---HoVeR": "A reference to the entity that is a member of the group. Must be consistent with Group.type. If the entity is another group, then the type must be the same. [1..1]",
         "period": "",
         "period---HoVeR": "The period that the member was in the group, if known. [0..1]",
