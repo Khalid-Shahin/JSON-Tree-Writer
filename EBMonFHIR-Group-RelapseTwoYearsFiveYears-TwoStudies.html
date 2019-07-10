@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 	<link rel="stylesheet" type="text/css" href="JSON_Tree_Writer.css">
-	<title>JSON Tree Writer - EBMonFHIR - Adams 2014 Meta-analysis 6 months - 2 years - Evidence</title>
+	<title>JSON Tree Writer - EBMonFHIR - Two Individual Studies - 2 years - 5 years - Group</title>
 </head>
 <body>
 <div class="container">
      <div class="topArea">
-     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - Adams 2014 Meta-analysis 6 months - 2 years - Evidence</h2>
+     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - Two Individual Studies - 2 years - 5 years - Group</h2>
 	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. A field value of &quot;null&quot;, all lowercase, in the tree view will be converted to just null in the JSON.\n2. A field value of &quot;true&quot; or &quot;false&quot;, all lowercase, will be converted to just true or false respectively as booleans in the JSON.\n3. 1D arrays work perfectly fine to and from JSON, and interpreting 2D, 3D, and beyond arrays from JSON to Tree View can work well most of the time, but bugs may occur when adding elements in the Tree View for arrays more complex than 1D.')" style="position: absolute; right: 6px; top: 4px;">Limitations</button>
 	 <p style="position: absolute; right: 94px; top: 7px; margin: 0px; color: #AEAEAE; font-size: 13px; font-family: sans-serif"><b>EBSCO Health Innovations</b></p>
 	 <p style="position: absolute; right: 2px; top: 10px;">Convert Tree View to JSON in real time? <input onchange="TreeToJSONsetting();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_RealTime" name="JSONrealtime" value="JSONrealtime" title="If this is checked then the JSON side will be updated automatically as you type and add elements on the Tree View side."></p>
@@ -487,9 +487,8 @@ hovertext_json = {
 };
 
 json = {
-  "resourceType": "Evidence",
-  "id": "Evidence-RelapseSixMonthsTwoYears-AdamsMetaAnalysis",
-  "url": "",
+  "resourceType": "Group",
+  "id": "Group-RelapseTwoYearsFiveYears-TwoStudies",
   "identifier": [
     {
       "use": "",
@@ -518,50 +517,38 @@ json = {
       }
     }
   ],
-  "version": "",
-  "title": "Adams 2014 Meta-analysis 6 months - 2 years",
-  "status": "draft",
-  "useContext": [
+  "active": "",
+  "name": "",
+  "type": "",
+  "code": "",
+  "actual": true,
+  "quantity": -0,
+  "characteristic": [
     {
-      "code": {
-        "system": "",
-        "version": "",
-        "code": "",
-        "display": "",
-        "userSelected": ""
-      },
+      "code": "",
+      "exclude": "",
+      "usageContext": [
+        ""
+      ],
+      "period": "",
       "valueCodeableConcept": {
-        "coding": [
-          {
-            "system": "",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
+        "coding": {
+          "system": "",
+          "code": "",
+          "display": ""
+        }
       },
+      "valueBoolean": "",
       "valueQuantity": {
-        "value": -0,
+        "value": "",
         "comparator": "",
         "unit": "",
         "system": "",
         "code": ""
       },
       "valueRange": {
-        "low": {
-          "value": -0,
-          "unit": "",
-          "system": "",
-          "code": ""
-        },
-        "high": {
-          "value": -0,
-          "unit": "",
-          "system": "",
-          "code": ""
-        }
+        "low": "",
+        "high": ""
       },
       "valueReference": {
         "reference": "",
@@ -571,582 +558,26 @@ json = {
       }
     }
   ],
-  "date": "",
-  "copyright": "",
-  "approvalDate": "",
-  "lastReviewDate": "",
-  "contributor": [
+  "member": [
     {
-      "type": "",
-      "name": "",
-      "contact": [
-        {
-          "name": "",
-          "telecom": [
-            {
-              "system": "",
-              "value": "",
-              "use": "",
-              "rank": "",
-              "period": {
-                "start": "",
-                "end": ""
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "relatedArtifact": [
-    {
-      "type": "",
-      "label": "",
-      "display": "Analysis 1.2",
-      "citation": "",
-      "url": "https://doi.org/10.1002/14651858.CD000284.pub3",
-      "document": {
-        "contentType": "",
-        "language": "",
-        "data": "",
-        "url": "",
-        "size": "",
-        "hash": "",
-        "title": "",
-        "creation": ""
-      },
-      "resource": ""
-    }
-  ],
-  "description": "Chlorpromazine vs. Placebo with Relapse (6 months - 2 years) Risk Ratio 0.65 [0.47, 0.90] for patients with Schizophrenia",
-  "note": [
-    {
-      "text": ""
-    }
-  ],
-  "referentGroup": {
-    "description": "",
-    "note": [
-      {
-        "text": ""
-      }
-    ],
-    "evidenceSource": {
-      "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-RelapseSixMonthsTwoYears-ThreeStudies.html",
-      "type": "Group",
-      "identifier": "Group-RelapseSixMonthsTwoYears-ThreeStudies",
-      "display": ""
-    },
-    "intendedGroup": {
-      "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Group-Schizophrenia.html",
-      "type": "Group",
-      "identifier": "Group-Schizophrenia",
-      "display": "Patients with Schizophrenia"
-    },
-    "directnessMatch": {
-      "coding": [
-        {
-          "system": "",
-          "version": "",
-          "code": "",
-          "display": "",
-          "userSelected": ""
-        }
-      ],
-      "text": ""
-    }
-  },
-  "variableDefinition": [
-    {
-      "description": "",
-      "note": [
-        {
-          "text": ""
-        }
-      ],
-      "variableRole": {
-        "coding": [
-          {
-            "system": "http://hl7.org/fhir/ValueSet/variable-role",
-            "version": "",
-            "code": "measuredVariable",
-            "display": "measured variable",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "actualDefinition": {
-        "reference": "",
-        "type": "",
-        "identifier": "",
+      "entity": {
+        "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Evidence-RelapseTwoYearsFiveYears-Hogarty.html",
+        "type": "Evidence",
+        "identifier": "Evidence-RelapseTwoYearsFiveYears-Hogarty",
         "display": ""
       },
-      "intendedDefinition": {
-        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-RelapseSixMonthsTwoYears.html",
-        "type": "EvidenceVariable",
-        "identifier": "EvidenceVariable-RelapseSixMonthsTwoYears",
-        "display": "Relapse long term (6 months - 2 years)"
-      },
-      "directnessMatch": {
-        "coding": [
-          {
-            "system": "",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      }
+      "period": "",
+      "inactive": ""
     },
     {
-      "description": "",
-      "note": [
-        {
-          "text": ""
-        }
-      ],
-      "variableRole": {
-        "coding": [
-          {
-            "system": "http://hl7.org/fhir/ValueSet/variable-role",
-            "version": "",
-            "code": "exposure",
-            "display": "exposure",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "actualDefinition": {
-        "reference": "",
-        "type": "",
-        "identifier": "",
+      "entity": {
+        "reference": "https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-Evidence-RelapseTwoYearsFiveYears-Nishikawa.html",
+        "type": "Evidence",
+        "identifier": "Evidence-RelapseTwoYearsFiveYears-Nishikawa",
         "display": ""
       },
-      "intendedDefinition": {
-        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Chlorpromazine.html",
-        "type": "EvidenceVariable",
-        "identifier": "EvidenceVariable-Chlorpromazine",
-        "display": "Chlorpromazine"
-      },
-      "directnessMatch": {
-        "coding": [
-          {
-            "system": "",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      }
-    },
-    {
-      "description": "",
-      "note": [
-        {
-          "text": ""
-        }
-      ],
-      "variableRole": {
-        "coding": [
-          {
-            "system": "http://hl7.org/fhir/ValueSet/variable-role",
-            "version": "",
-            "code": "referenceExposure",
-            "display": "reference exposure",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "actualDefinition": {
-        "reference": "",
-        "type": "",
-        "identifier": "",
-        "display": ""
-      },
-      "intendedDefinition": {
-        "reference": "http://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceVariable-Placebo.html",
-        "type": "EvidenceVariable",
-        "identifier": "EvidenceVariable-Placebo",
-        "display": "Placebo"
-      },
-      "directnessMatch": {
-        "coding": [
-          {
-            "system": "",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      }
-    }
-  ],
-  "synthesisType": {
-    "coding": [
-      {
-        "system": "http://hl7.org/fhir/ValueSet/synthesis-type",
-        "version": "",
-        "code": "std-MA",
-        "display": "summary data meta-analysis",
-        "userSelected": ""
-      }
-    ],
-    "text": ""
-  },
-  "studyType": {
-    "coding": [
-      {
-        "system": "http://hl7.org/fhir/ValueSet/study-type",
-        "version": "",
-        "code": "RCT",
-        "display": "randomized trial",
-        "userSelected": ""
-      }
-    ],
-    "text": ""
-  },
-  "statistic": [
-    {
-      "description": "Risk Ratio 0.65 [0.47, 0.90]",
-      "note": [
-        {
-          "text": ""
-        }
-      ],
-      "statisticType": {
-        "coding": [
-          {
-            "system": "http://hl7.org/fhir/ValueSet/statistic-type",
-            "version": "",
-            "code": "relative-RR",
-            "display": "relative risk",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "quantity": {
-        "value": 0.65,
-        "comparator": "",
-        "unit": "",
-        "system": "",
-        "code": ""
-      },
-      "sampleSize": {
-        "description": "",
-        "note": [
-          {
-            "text": ""
-          }
-        ],
-        "numberOfStudies": 3,
-        "numberOfParticipants": 512,
-        "knownDataCount": -0,
-        "numeratorCount": -0
-      },
-      "attributeEstimate": [
-        {
-          "description": "",
-          "note": [
-            {
-              "text": ""
-            }
-          ],
-          "type": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
-                "version": "",
-                "code": "CI",
-                "display": "confidence interval",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
-          },
-          "quantity": {
-            "value": -0,
-            "comparator": "",
-            "unit": "",
-            "system": "",
-            "code": ""
-          },
-          "level": 0.95,
-          "range": {
-            "low": {
-              "value": 0.47,
-              "unit": "",
-              "system": "",
-              "code": ""
-            },
-            "high": {
-              "value": 0.9,
-              "unit": "",
-              "system": "",
-              "code": ""
-            }
-          }
-        },
-        {
-          "description": "",
-          "note": [
-            {
-              "text": ""
-            }
-          ],
-          "type": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/precision-estimate-type",
-                "version": "",
-                "code": "I-SqHet",
-                "display": "I-squared heterogeneity",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
-          },
-          "quantity": {
-            "value": 0.72,
-            "comparator": "",
-            "unit": "",
-            "system": "",
-            "code": ""
-          },
-          "level": -0,
-          "range": {
-            "low": {
-              "value": -0,
-              "unit": "",
-              "system": "",
-              "code": ""
-            },
-            "high": {
-              "value": -0,
-              "unit": "",
-              "system": "",
-              "code": ""
-            }
-          }
-        }
-      ]
-    }
-  ],
-  "distribution": [
-    {
-      "description": "",
-      "note": [
-        {
-          "text": ""
-        }
-      ],
-      "numberOfIntervals": -0,
-      "bottomOfFirstInterval": {
-        "value": -0,
-        "comparator": "",
-        "unit": "",
-        "system": "",
-        "code": ""
-      },
-      "interval": [
-        {
-          "rankOrder": -0,
-          "topOfInterval": {
-            "value": -0,
-            "comparator": "",
-            "unit": "",
-            "system": "",
-            "code": ""
-          },
-          "intervalStatistic": [
-            {
-              "description": "",
-              "note": [
-                {
-                  "text": ""
-                }
-              ],
-              "statisticType": {
-                "coding": [
-                  {
-                    "system": "",
-                    "version": "",
-                    "code": "",
-                    "display": "",
-                    "userSelected": ""
-                  }
-                ],
-                "text": ""
-              },
-              "quantity": {
-                "value": -0,
-                "comparator": "",
-                "unit": "",
-                "system": "",
-                "code": ""
-              },
-              "sampleSize": {
-                "description": "",
-                "note": [
-                  {
-                    "text": ""
-                  }
-                ],
-                "numberOfStudies": -0,
-                "numberOfParticipants": -0,
-                "knownDataCount": -0,
-                "numeratorCount": -0
-              },
-              "attributeEstimate": [
-                {
-                  "description": "",
-                  "note": [
-                    {
-                      "text": ""
-                    }
-                  ],
-                  "type": {
-                    "coding": [
-                      {
-                        "system": "",
-                        "version": "",
-                        "code": "",
-                        "display": "",
-                        "userSelected": ""
-                      }
-                    ],
-                    "text": ""
-                  },
-                  "quantity": {
-                    "value": -0,
-                    "comparator": "",
-                    "unit": "",
-                    "system": "",
-                    "code": ""
-                  },
-                  "level": -0,
-                  "range": {
-                    "low": {
-                      "value": -0,
-                      "unit": "",
-                      "system": "",
-                      "code": ""
-                    },
-                    "high": {
-                      "value": -0,
-                      "unit": "",
-                      "system": "",
-                      "code": ""
-                    }
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "certainty": [
-    {
-      "description": "Very low quality",
-      "note": [
-        {
-          "text": "2 trials report this outcome at 0‐8 weeks follow‐up, 3 trials at 6 months to 2 years, and 2 trials 2‐5 years, none showed a significant difference."
-        }
-      ],
-      "rating": [
-        {
-          "coding": [
-            {
-              "system": "http://hl7.org/fhir/ValueSet/certainty-rating",
-              "version": "",
-              "code": "very-low",
-              "display": "Very low quality",
-              "userSelected": ""
-            }
-          ],
-          "text": ""
-        }
-      ],
-      "certaintySubcomponent": [
-        {
-          "description": "Serious risk of bias",
-          "note": [
-            {
-              "text": "all studies had an unclear risk of bias for random sequence generation, allocation concealment, blinding of assessors and incomplete data. One also had an unclear risk of other bias as the drugs were provided by a pharmaceutical company."
-            }
-          ],
-          "type": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
-                "version": "",
-                "code": "RiskOfBias",
-                "display": "Risk of bias",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
-          },
-          "rating": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating",
-                "version": "",
-                "code": "serious-concern",
-                "display": "serious concern",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
-          }
-        },
-        {
-          "description": "Very serious inconsistency",
-          "note": [
-            {
-              "text": "inconsistency for this outcome consider  the results of relapse outcome at other timepoints"
-            },
-            {
-              "text": "there was very high heterogeneity in the pooled results."
-            }
-          ],
-          "type": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type",
-                "version": "",
-                "code": "Inconsistency",
-                "display": "Inconsistency",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
-          },
-          "rating": {
-            "coding": [
-              {
-                "system": "",
-                "version": "",
-                "code": "critical concern",
-                "display": "critical-concern",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
-          }
-        }
-      ]
+      "period": "",
+      "inactive": ""
     }
   ]
 };
