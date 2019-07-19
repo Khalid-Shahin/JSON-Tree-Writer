@@ -525,15 +525,16 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 		
 		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
 			<div class="group" style="margin-left: 0px;">
-				<select class="dropdownInput precisionEstimateType" name="precisionEstimateType" style="width: 212px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; precisionEstimatePick(this);" required="">
+				<select class="dropdownInput attributeEstimateType" name="attributeEstimateType" style="width: 212px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; attributeEstimatePick(this);" required="">
 					<option value="" disabled="" selected=""> -- select -- </option>
 					<option value="CI" style="color: black;">confidence interval</option>
 					<option value="pValue" style="color: black;">p value</option>
 					<option value="CrI" style="color: black;">credible interval</option>
+					<option value="iSq" style="color: black;">I-sq</option>
 					<option value="IQR" style="color: black;">interquartile range</option>
 					<option value="SD" style="color: black;">standard deviation</option>
 					<option value="SE" style="color: black;">standard error</option>
-				</select><label class="textLabel unselectable">Precision estimate type</label><span class="bar"></span>
+				</select><label class="textLabel unselectable">Attribute estimate type</label><span class="bar"></span>
 				<p style="position: absolute; margin-top: -21px; margin-left: 194px; pointer-events: none;">▼</p>
 			</div>
 			<div class="group peQuantityGroup" style="margin-left: 8px; display: none;"><input class="textInput outcomeDetail peQuantity" type="text" name="peQuantity" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Quantity</label></div>
@@ -1093,7 +1094,7 @@ function updateAllInterventions(){
 	}
 }
 
-function precisionEstimatePick(element){
+function attributeEstimatePick(element){
    var p = element.value;
    var parent = element.parentElement.parentElement;
    
@@ -1502,26 +1503,26 @@ function convertToJSON() {
 					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["sampleSize"]["numeratorCount"] = Number(temp);
 				}
 				
-				var statPrecisionEstimate = statistics[y].getElementsByClassName("precisionEstimateType")[0].value;
-				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["type"]["coding"][0]["code"] = statPrecisionEstimate;
-				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["type"]["coding"][0]["display"] = precisionEstimateSet[statPrecisionEstimate];
+				var statattributeEstimate = statistics[y].getElementsByClassName("attributeEstimateType")[0].value;
+				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["type"]["coding"][0]["code"] = statattributeEstimate;
+				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["type"]["coding"][0]["display"] = attributeEstimateSet[statattributeEstimate];
 				
 				
 				var temp = statistics[y].getElementsByClassName("peQuantity")[0].value;
 				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["quantity"]["value"] = Number(temp);
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["quantity"]["value"] = Number(temp);
 				}
 				var temp = statistics[y].getElementsByClassName("peLevel")[0].value;
 				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["level"] = Number(temp);
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["level"] = Number(temp);
 				}
 				var temp = statistics[y].getElementsByClassName("peFrom")[0].value;
 				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["range"]["low"]["value"] = Number(temp);
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["range"]["low"]["value"] = Number(temp);
 				}
 				var temp = statistics[y].getElementsByClassName("peTo")[0].value;
 				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["precisionEstimate"][0]["range"]["high"]["value"] = Number(temp);
+					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["range"]["high"]["value"] = Number(temp);
 				}
 				
 				if (statistics[y].getElementsByClassName("certaintyCheck")[0].checked){
@@ -1672,7 +1673,7 @@ var statTypeSet = {
 	"mean": "mean",
 	"median": "median"
 };
-var precisionEstimateSet = {
+var attributeEstimateSet = {
 	"CI": "confidence interval",
 	"pValue": "p value",
 	"CrI": "credible interval",
@@ -1938,7 +1939,7 @@ var blankJson = {
                       }
                     ]
                   },
-                  "precisionEstimate": [
+                  "attributeEstimate": [
                     {
                       "description": "",
                       "note": [
@@ -2004,7 +2005,7 @@ var blankJson = {
                         "system": "",
                         "code": ""
                       },
-                      "precisionEstimate": [
+                      "attributeEstimate": [
                         {
                           "description": "",
                           "note": [
@@ -2164,7 +2165,7 @@ var blankJson = {
                           }
                         ]
                       },
-                      "precisionEstimate": [
+                      "attributeEstimate": [
                         {
                           "description": "",
                           "note": [
@@ -2230,7 +2231,7 @@ var blankJson = {
                             "system": "",
                             "code": ""
                           },
-                          "precisionEstimate": [
+                          "attributeEstimate": [
                             {
                               "description": "",
                               "note": [
@@ -2417,7 +2418,7 @@ var blankJson = {
                           }
                         ]
                       },
-                      "precisionEstimate": [
+                      "attributeEstimate": [
                         {
                           "description": "",
                           "note": [
@@ -2483,7 +2484,7 @@ var blankJson = {
                             "system": "",
                             "code": ""
                           },
-                          "precisionEstimate": [
+                          "attributeEstimate": [
                             {
                               "description": "",
                               "note": [
@@ -2643,7 +2644,7 @@ var blankJson = {
                               }
                             ]
                           },
-                          "precisionEstimate": [
+                          "attributeEstimate": [
                             {
                               "description": "",
                               "note": [
@@ -2709,7 +2710,7 @@ var blankJson = {
                                 "system": "",
                                 "code": ""
                               },
-                              "precisionEstimate": [
+                              "attributeEstimate": [
                                 {
                                   "description": "",
                                   "note": [
@@ -2892,7 +2893,7 @@ var blankJson = {
                           }
                         ]
                       },
-                      "precisionEstimate": [
+                      "attributeEstimate": [
                         {
                           "description": "",
                           "note": [
@@ -2958,7 +2959,7 @@ var blankJson = {
                             "system": "",
                             "code": ""
                           },
-                          "precisionEstimate": [
+                          "attributeEstimate": [
                             {
                               "description": "",
                               "note": [
