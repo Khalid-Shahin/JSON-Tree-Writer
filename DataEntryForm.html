@@ -516,29 +516,36 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			
 		</div>
 		
-		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
-			<div class="group" style="margin-left: 0px;">
-				<select class="dropdownInput attributeEstimateType" name="attributeEstimateType" style="width: 212px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; attributeEstimatePick(this);" required="">
-					<option value="" disabled="" selected=""> -- select -- </option>
-					<option value="CI" style="color: black;">confidence interval</option>
-					<option value="pValue" style="color: black;">p value</option>
-					<option value="CrI" style="color: black;">credible interval</option>
-					<option value="iSq" style="color: black;">I-sq</option>
-					<option value="IQR" style="color: black;">interquartile range</option>
-					<option value="SD" style="color: black;">standard deviation</option>
-					<option value="SE" style="color: black;">standard error</option>
-				</select><label class="textLabel unselectable">Attribute estimate type</label><span class="bar"></span>
-				<p style="position: absolute; margin-top: -21px; margin-left: 194px; pointer-events: none;">▼</p>
-			</div>
-			<div class="group peQuantityGroup" style="margin-left: 8px; display: none;"><input class="textInput outcomeDetail peQuantity" type="text" name="peQuantity" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Quantity</label></div>
-			<div class="group peFromGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peFrom" type="text" name="peFrom" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">From</label></div>
-			<div class="group peToGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peTo" type="text" name="peTo" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">To</label></div>
-			<div class="group peLevelGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peLevel" type="text" name="peLevel" value="0.95" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Level</label></div>
-		
+		<div class="attributes" id="attributes">
+
 		</div>
 	
 		</div>
 
+	</div>
+	
+	<div class="box statisticAttributeBox" id="statisticAttributeBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
+	<p style="margin-top: 4px; margin-bottom: 4px; font-size:16px;"> <span style="margin-left: 6px; color: #808080" class="outcomeStatisticAttributeNumberLabel">1</span>
+		<div class="group" style="margin-left: 16px;">
+			<select class="dropdownInput attributeEstimateType" name="attributeEstimateType" style="width: 212px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; attributeEstimatePick(this);" required="">
+				<option value="" disabled="" selected=""> -- select -- </option>
+				<option value="CI" style="color: black;">confidence interval</option>
+				<option value="pValue" style="color: black;">p value</option>
+				<option value="CrI" style="color: black;">credible interval</option>
+				<option value="iSq" style="color: black;">I-sq</option>
+				<option value="IQR" style="color: black;">interquartile range</option>
+				<option value="SD" style="color: black;">standard deviation</option>
+				<option value="SE" style="color: black;">standard error</option>
+			</select><label class="textLabel unselectable">Attribute estimate type</label><span class="bar"></span>
+			<p style="position: absolute; margin-top: -21px; margin-left: 194px; pointer-events: none;">▼</p>
+		</div>
+		<div class="group peQuantityGroup" style="margin-left: 8px; display: none;"><input class="textInput outcomeDetail peQuantity" type="text" name="peQuantity" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Quantity</label></div>
+		<div class="group peFromGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peFrom" type="text" name="peFrom" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">From</label></div>
+		<div class="group peToGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peTo" type="text" name="peTo" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">To</label></div>
+		<div class="group peLevelGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peLevel" type="text" name="peLevel" value="0.95" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Level</label></div>
+		<b><p align="left" text-align="left" style="padding-left: 64px; margin-top:2px; margin-bottom: 2px;">
+			<input class="addAttributeButton" id="addAttributeButton" type="button" value="➕"></span> Add Attribute
+		</p></b>
 	</div>
 
 	<div class="certaintyBox" name="certaintyBox" id="certaintyBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; background-color: #F0F0FE;">
@@ -743,8 +750,6 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 
 		<br>
 
-
-			
 
 		<div id="ResultOutcomes">
 
@@ -1060,6 +1065,7 @@ var numberOfResults = 0;
 
 var numberOfResultOutcomes = 0;
 var outcomeStatistics = [];
+var outcomeStatisticAttribute = [];
 
 function loadStatistic(element){
 	if (element.parentElement.nextElementSibling.style.display == "none"){
@@ -1254,6 +1260,7 @@ function addResult(){
 function addResultOutcome(){
    numberOfResultOutcomes += 1;
    outcomeStatistics.push(0);
+   outcomeStatisticAttribute.push([]);
    var itm = document.getElementById("resultOutcomeBox");
    var cln = itm.cloneNode(true);
    cln.id = "";
@@ -1272,11 +1279,27 @@ function enableCreateStudyResultsButton(num){
 
 function addStatistic(element, resultOutcomeNumber){
    outcomeStatistics[resultOutcomeNumber-1] += 1;
+   outcomeStatisticAttribute[resultOutcomeNumber-1].push(0);
    var itm = document.getElementById("statisticBox");
    var cln = itm.cloneNode(true);
    cln.id = "";
    cln.getElementsByClassName("outcomeStatisticNumberLabel")[0].innerHTML = outcomeStatistics[resultOutcomeNumber-1];
-   element.getElementsByClassName("statistics")[0].appendChild(cln);   
+   addAttribute(cln, resultOutcomeNumber, outcomeStatisticAttribute[resultOutcomeNumber-1].length-1);
+   element.getElementsByClassName("statistics")[0].appendChild(cln);
+}
+
+function addAttribute(element, resultOutcomeNumber, resultStatisticNumber){
+   outcomeStatisticAttribute[resultOutcomeNumber-1][resultStatisticNumber] += 1;
+   var itm = document.getElementById("statisticAttributeBox");
+   var cln = itm.cloneNode(true);
+   cln.id = "";
+   cln.getElementsByClassName("outcomeStatisticAttributeNumberLabel")[0].innerHTML = outcomeStatisticAttribute[resultOutcomeNumber-1][resultStatisticNumber];
+   cln.getElementsByClassName("addAttributeButton")[0].onclick = function(){
+				addAttribute(this.parentElement.parentElement.parentElement.parentElement.parentElement, resultOutcomeNumber, resultStatisticNumber);
+				this.parentElement.style.display = 'none';
+			};
+   //cln.getElementsByClassName("outcomeStatisticAttributeNumberLabel")[0].innerHTML = outcomeStatistics[resultOutcomeNumber-1];
+   element.getElementsByClassName("attributes")[0].appendChild(cln);   
 }
 
 function addCertainty(element){
