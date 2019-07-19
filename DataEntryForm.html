@@ -1,6 +1,21 @@
 
 <!-- saved from url=(0095)file:///C:/Users/kshahin/Documents/Evidence%20Data%20Entry%20Form/Evidence-Data-Entry-Form.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body onload="prepareForm();">
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script src="http://igniteui.com/js/modernizr.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.core.js"></script>
+	<script src="http://cdn-na.infragistics.com/igniteui/latest/js/infragistics.lob.js"></script>
+	<link href="http://cdn-na.infragistics.com/igniteui/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet"></link>
+	<link href="http://cdn-na.infragistics.com/igniteui/latest/css/structure/infragistics.css" rel="stylesheet"></link>
+</head>
+
+
+<body onload="prepareForm();">
+
 
 <title>DynaMed Evidence Data Entry Form (Preview)</title>
 
@@ -339,14 +354,15 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			<p style="position: absolute; margin-top: -21px; margin-left: 302; pointer-events: none;">▼</p>
 		</div>
 		
-		<div class="group resultMultiStudiesGroup" style="margin-left: 8px; display: none;">
+		
+		<div class="group resultMultiStudiesGroup" id="resultMultiStudiesGroup" style="margin-left: 8px; display: none;">
 			<select class="dropdownInput resultMultiStudies" id="resultMultiStudies" style="width: 319px; height: 28px; color: rgb(255,255,255);" onchange="" required="">
 				<option value="" disabled="" selected=""> -- select -- </option>
 				<option value="std-MA" style="color: black;">Adams 2014</option>
 				<option value="IPD-MA" style="color: black;">Engelhardt 1960</option>
 				<option value="indirect-NMA" style="color: black;">Hogarty 1973</option>
 				<option value="combined-NMA" style="color: black;">Nishikawa 1982</option>
-			
+				<option value="combined-NMA" style="color: black;" selected>Adams 2014, Hogarty 1973, Nishikawa 1982</option>
 			</select><label class="textLabel unselectable">Select the studies used for this synthesis</label><span class="bar"></span>
 			<p style="position: absolute; margin-top: -21px; margin-left: 300px; pointer-events: none;">▼</p>
 		</div>
@@ -858,17 +874,9 @@ function loadPage3(resultID){
 		iOutcome.appendChild(el);
    }
    
-   //TO DO, it cna't be the studies. It has to be the EVIDENCE that exists with the same PICO, and then the display in the list would be the study name
-   var outcomeStudies = document.getElementById("resultMultiStudies");
-   outcomeStudies.innerHTML = '<option value="" disabled="" selected=""> -- select -- </option>';
-   for (var j = 0; j < singleStudyList.length; j++){
-		var opt = singleStudyList[j];
-		var el = document.createElement("option");
-		el.textContent = opt;
-		el.value = opt;
-		el.style = "color: black";
-		outcomeStudies.appendChild(el);
-   }
+   //TO DO, it can't be the studies. It has to be the EVIDENCE that exists with the same PICO, and then the display in the list would be the study name
+   //var outcomeStudies = document.getElementById("resultMultiStudies");
+
 
    //Populates the actual PICO dropdowns
    //Populate the Intended Outcome dropdown, and auto-select the outcome if there's only one
@@ -902,6 +910,7 @@ function loadPage3(resultID){
 		page3.getElementsByClassName("resultOutcomeMatchGroup")[0].style.display = "none";
 		page3.getElementsByClassName("numberOfStudiesGroup")[0].style.display = "flex";
 		page3.getElementsByClassName("resultMultiStudiesGroup")[0].style.display = "inline";
+		page3.getElementsByClassName("resultMultiStudies")[0].style.color = "#000000";
    }
    //Loads the display for Synthesis if it is Synthesis
    
