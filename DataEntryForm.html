@@ -329,7 +329,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			</div>
 		
 		</div>
-		
+
 
 	<div class="box resultOutcomeBox" id="resultOutcomeBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 960px; max-width: 99%; margin-bottom: 16px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">
 		<p style="margin: 0px; font-size:18px; font-weight: bold;">Outcome <span style="color: #777777" class="resultOutcomeNumberLabel"></span></p>
@@ -347,18 +347,24 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			<p style="position: absolute; margin-top: -21px; margin-left: 302; pointer-events: none;">▼</p>
 		</div>
 		
-		
-		<div class="group resultMultiStudiesGroup" id="resultMultiStudiesGroup" style="margin-left: 8px; display: none;">
-			<select class="dropdownInput resultMultiStudies" id="resultMultiStudies" style="width: 319px; height: 28px; color: rgb(255,255,255);" onchange="" required="">
-				<option value="" disabled="" selected=""> -- select -- </option>
-				<option value="std-MA" style="color: black;">Adams 2014</option>
-				<option value="IPD-MA" style="color: black;">Engelhardt 1960</option>
-				<option value="indirect-NMA" style="color: black;">Hogarty 1973</option>
-				<option value="combined-NMA" style="color: black;">Nishikawa 1982</option>
-				<option value="combined-NMA" style="color: black;" selected>Engelhardt 1960, Hogarty 1973, Nishikawa 1982</option>
-			</select><label class="textLabel unselectable">Select the studies used for this synthesis</label><span class="bar"></span>
-			<p style="position: absolute; margin-top: -21px; margin-left: 300px; pointer-events: none;">▼</p>
+			
+	  <div class="multiselect multiSelectComponent contributingStudiesMultiSelect" id="contributingStudiesMultiSelect" style="margin-left: 8px; display: none; z-index: 100;">
+		<div id="selectBox" class="group selectBox multiSelectComponent" style="width: 528px;">
+		  <select class="dropdownInput multiSelectComponent" style="height: 28px;" required>
+			<option class="resultsEvidenceLabel" id="resultsEvidenceLabel"  style="multiSelectComponent" selected hidden>Select the studies used for this synthesis</option>
+		  </select>
+		  <label class="textLabel unselectable">Contributing Studies</label>
+
 		</div>
+		<div id="checkboxes" class="checkboxes multiSelectComponent multiSelectDropDownOptions" onchange="changeResultsEvidenceLabel(this);" style="width: 528px; position: absolute; background-color: #FFFFFF;">
+		  <label class="unselectable">
+			<input class="evidenceInput" type="checkbox" value="Engelhardt 1960"/>Engelhardt 1960</label>
+		  <label class="unselectable">
+			<input class="evidenceInput" type="checkbox" value="Hogarty 1973"/>Hogarty 1973</label>
+		  <label class="unselectable">
+			<input class="evidenceInput" type="checkbox" value="Nishikawa 1982"/>Nishikawa 1982</label>
+		</div>
+	  </div>
 		
 		<div class="group resultActualOutcomeGroup" style="margin-left: 8px;">
 		  <input class="textInput resultActualOutcome" type="text" id="resultActualOutcome" list="resultActualOutcomeList" style="width: 380px;" value="" required="">
@@ -771,6 +777,47 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 
 <script>
 
+  
+var page3Open = false;
+  
+	function toggleCheckboxDropDown(multiSelect) {
+	  var checkboxDropDown = document.getElementById(multiSelect).getElementsByClassName("checkboxes")[0];
+	  if (checkboxDropDown.style.display != "block") {
+		checkboxDropDown.style.display = "block";
+	  } else {
+		checkboxDropDown.style.display = "none";
+	  }
+	}
+	
+	function hideCheckboxDropDown(multiSelect){
+	    if (page3Open){
+			var checkboxDropDown = document.getElementById(multiSelect).getElementsByClassName("checkboxes")[0];
+			checkboxDropDown.style.display = "none";
+		}
+	}
+	
+	function changeResultsEvidenceLabel(checkBoxGroup){
+		var selectedStudies = getCheckBoxSelection(checkBoxGroup);
+		if (selectedStudies.length == 0) {
+			selectedStudies = "Select the studies used for this synthesis";
+		} else {
+			selectedStudies = selectedStudies.toString();
+		}
+		checkBoxGroup.parentElement.getElementsByClassName("resultsEvidenceLabel")[0].innerHTML = selectedStudies;
+	}
+	
+	function getCheckBoxSelection(checkBoxGroup){
+		var selectedStudies = [];
+		var evidenceInputs = checkBoxGroup.getElementsByClassName("evidenceInput");
+		for (var i = 0; i < evidenceInputs.length; i++){
+			if (evidenceInputs[i].checked) {
+				selectedStudies.push(evidenceInputs[i].value);
+			}
+		}
+		return selectedStudies;
+	}
+
+
 var studyList = [];
 var singleStudyList = [];
 var synthesisList = [];
@@ -824,6 +871,7 @@ function loadPage2(){
 function loadPage3(resultID){
    page2.style.display = "none";
    page3.style.display = "block";
+   page3Open = true;
    var itm = document.getElementById("studyResultPage");
    
    var aPopulation = document.getElementById("resultActualPopulationList");
@@ -881,10 +929,10 @@ function loadPage3(resultID){
    //Populate the Intended Outcome dropdown, and auto-select the outcome if there's only one
    var cln = itm.cloneNode(true);
    document.getElementById("page3").appendChild(cln);
-   addResultOutcome();
    page3.getElementsByClassName("resultStudy")[0].value = document.getElementById("resultStudyDropDown-"+resultID).value;
    page3.getElementsByClassName("resultIntendedPopulation")[0].value = identifierMapping[document.getElementById("resultPopulationDropDown-"+resultID).value];
    page3.getElementsByClassName("resultIntendedIntervention")[0].value = identifierMapping[document.getElementById("resultInterventionDropDown-"+resultID).value];
+   addResultOutcome();
    var comparatorSelection = identifierMapping[document.getElementById("resultComparatorDropDown-"+resultID).value];
    if (comparatorSelection != "none"){
 		page3.getElementsByClassName("resultIntendedComparator")[0].value = comparatorSelection;
@@ -896,32 +944,9 @@ function loadPage3(resultID){
 	 page3.getElementsByClassName("resultIntendedOutcome")[0].selectedIndex = 1;
    }
    
-   if (synthesisList.indexOf(page3.getElementsByClassName("resultStudy")[0].value) != -1){
-		page3.getElementsByClassName("singleStudyHeader")[0].style.display = "none";
-		page3.getElementsByClassName("synthesisHeader")[0].style.display = "inline";
-		page3.getElementsByClassName("resultActualPopulationGroup")[0].style.display = "none";
-		page3.getElementsByClassName("resultPopulationMatchGroup")[0].style.display = "none";
-		page3.getElementsByClassName("resultActualInterventionGroup")[0].style.display = "none";
-		page3.getElementsByClassName("resultInterventionMatchGroup")[0].style.display = "none";
-		page3.getElementsByClassName("resultActualComparatorGroup")[0].style.display = "none";
-		page3.getElementsByClassName("resultComparatorMatchGroup")[0].style.display = "none";
-		page3.getElementsByClassName("resultActualOutcomeGroup")[0].style.display = "none";
-		page3.getElementsByClassName("resultOutcomeMatchGroup")[0].style.display = "none";
-		page3.getElementsByClassName("numberOfStudiesGroup")[0].style.display = "flex";
-		page3.getElementsByClassName("resultMultiStudiesGroup")[0].style.display = "inline";
-		page3.getElementsByClassName("resultMultiStudies")[0].style.color = "#000000";
-   }
    //Loads the display for Synthesis if it is Synthesis
    
    //Then loads previous data for this if it exists
-}
-
-function saveQuitPage3(){
-	page3.innerHTML = "";
-	numberOfResultOutcomes = 0;
-	outcomeStatistics = [];
-	page3.style.display = "none";
-	page2.style.display = "block";
 }
 
 function componentListCreate(){
@@ -1066,6 +1091,22 @@ var numberOfResults = 0;
 var numberOfResultOutcomes = 0;
 var outcomeStatistics = [];
 var outcomeStatisticAttribute = [];
+
+function saveQuitPage3(){
+	page3Open = false;
+	var old_element = document.getElementById("page3");
+	var new_element = old_element.cloneNode(true);
+	old_element.parentNode.replaceChild(new_element, old_element);	//To clear event listeners
+
+	page3.innerHTML = "";
+	numberOfResultOutcomes = 0;
+	outcomeStatistics = [];
+	outcomeStatisticAttribute = [];
+	page3.style.display = "none";
+	page2.style.display = "block";
+	
+
+}
 
 function loadStatistic(element){
 	if (element.parentElement.nextElementSibling.style.display == "none"){
@@ -1264,11 +1305,49 @@ function addResultOutcome(){
    var itm = document.getElementById("resultOutcomeBox");
    var cln = itm.cloneNode(true);
    cln.id = "";
+   var temp = 'contributingStudiesMultiSelect-'+numberOfResultOutcomes.toString();
    cln.getElementsByClassName("resultOutcomeNumberLabel")[0].innerHTML = numberOfResultOutcomes;
+   cln.getElementsByClassName("contributingStudiesMultiSelect")[0].id = temp;
+   
+   cln.getElementsByClassName("contributingStudiesMultiSelect")[0].onclick = function(){ toggleCheckboxDropDown(temp) };
    cln.setAttribute("resultOutcomeNumber", numberOfResultOutcomes.toString());
+
+   if (synthesisList.indexOf(page3.getElementsByClassName("resultStudy")[0].value) != -1){
+		page3.getElementsByClassName("singleStudyHeader")[0].style.display = "none";
+		page3.getElementsByClassName("synthesisHeader")[0].style.display = "inline";
+		page3.getElementsByClassName("resultActualPopulationGroup")[0].style.display = "none";
+		page3.getElementsByClassName("resultPopulationMatchGroup")[0].style.display = "none";
+		page3.getElementsByClassName("resultActualInterventionGroup")[0].style.display = "none";
+		page3.getElementsByClassName("resultInterventionMatchGroup")[0].style.display = "none";
+		page3.getElementsByClassName("resultActualComparatorGroup")[0].style.display = "none";
+		page3.getElementsByClassName("resultComparatorMatchGroup")[0].style.display = "none";
+		cln.getElementsByClassName("resultActualOutcomeGroup")[0].style.display = "none";
+		cln.getElementsByClassName("resultOutcomeMatchGroup")[0].style.display = "none";
+		cln.getElementsByClassName("contributingStudiesMultiSelect")[0].style.display = "inline";
+   }
+   
    document.getElementById("ResultOutcomes").appendChild(cln);
    var newestOutcome = document.getElementById("ResultOutcomes").lastChild;
    addStatistic(newestOutcome, numberOfResultOutcomes);		//Needs to have an element parameter
+
+   
+
+	if (synthesisList.indexOf(page3.getElementsByClassName("resultStudy")[0].value) != -1){
+	    var specifiedElement = document.getElementById(temp);
+		var checkBoxes = specifiedElement.getElementsByClassName("evidenceInput");
+		for (var i = 0; i < checkBoxes.length; i++){
+			checkBoxes[i].checked = true;
+		}
+		changeResultsEvidenceLabel(specifiedElement.getElementsByClassName("multiSelectDropDownOptions")[0]);
+		page3.addEventListener('click', function(event) {
+		   var isClickInside = specifiedElement.contains(event.target);
+
+		   if (!isClickInside) {
+			  hideCheckboxDropDown(temp); //close dropdown if click outside <select>
+		   }
+		});
+	}
+
 }
 
 function enableCreateStudyResultsButton(num){
@@ -1284,6 +1363,9 @@ function addStatistic(element, resultOutcomeNumber){
    var cln = itm.cloneNode(true);
    cln.id = "";
    cln.getElementsByClassName("outcomeStatisticNumberLabel")[0].innerHTML = outcomeStatistics[resultOutcomeNumber-1];
+   if (synthesisList.indexOf(page3.getElementsByClassName("resultStudy")[0].value) != -1) {
+		cln.getElementsByClassName("numberOfStudiesGroup")[0].style.display = "flex";
+   }
    addAttribute(cln, resultOutcomeNumber, outcomeStatisticAttribute[resultOutcomeNumber-1].length-1);
    element.getElementsByClassName("statistics")[0].appendChild(cln);
 }
@@ -3089,6 +3171,42 @@ var blankJson = {
 </script>
 
 <style>
+.multiselect {
+  width: 200px;
+}
+
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+  font-weight: normal;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes label {
+  display: block;
+}
+
+#checkboxes label:hover {
+  background-color: #1e90ff;
+}
+
+
+
 * {
  font-family: Arial;
 }
