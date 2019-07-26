@@ -518,8 +518,18 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 				<p style="position: absolute; margin-top: -21px; margin-left: 190px; pointer-events: none;">▼</p>
 			</div>
 			<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticValue" type="text" name="statisticValue" style="width: 154px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Value</label></div>
-			
-			
+			<div class="group" style="margin-left: 8px;">
+				<select class="dropdownInput statisticInequality" name="statisticInequality" style="width: 112px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+					<option value="" disabled="" selected=""> -- select -- </option>
+					<option value="=" style="color: black;">=</option>
+					<option value="<" style="color: black;">&lt;</option>
+					<option value=">" style="color: black;">&gt;</option>
+					<option value="<=" style="color: black;">&lt;=</option>
+					<option value=">=" style="color: black;">&gt;=</option>
+				</select><label class="textLabel unselectable">Inequality</label><span class="bar"></span>
+				<p style="position: absolute; margin-top: -21px; margin-left: 94px; pointer-events: none;">▼</p>
+			</div>
+			<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticUnit" type="text" name="statisticUnit" style="width: 160px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Unit</label></div>
 		</div>
 		
 		<div class="attributes" id="attributes">
@@ -531,27 +541,43 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 	</div>
 	
 	<div class="box statisticAttributeBox" id="statisticAttributeBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
-	<p style="margin-top: 4px; margin-bottom: 4px; font-size:16px;"> <span style="margin-left: 6px; color: #808080" class="outcomeStatisticAttributeNumberLabel">1</span>
+		<p style="margin-top: 4px; margin-bottom: 4px; font-size:16px;"><span style="margin-left: 6px; color: #808080" class="outcomeStatisticAttributeNumberLabel">1</span></p>
 		<div class="group" style="margin-left: 16px;">
 			<select class="dropdownInput attributeEstimateType" name="attributeEstimateType" style="width: 212px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; attributeEstimatePick(this);" required="">
 				<option value="" disabled="" selected=""> -- select -- </option>
 				<option value="CI" style="color: black;">confidence interval</option>
-				<option value="pValue" style="color: black;">p value</option>
 				<option value="CrI" style="color: black;">credible interval</option>
-				<option value="iSq" style="color: black;">I-sq</option>
 				<option value="IQR" style="color: black;">interquartile range</option>
 				<option value="SD" style="color: black;">standard deviation</option>
 				<option value="SE" style="color: black;">standard error</option>
+				<option value="pValue" style="color: black;">p-value</option>
+				<option value="bayesFactor" style="color: black;">Bayes factor</option>
+				<option value="likelihoodRatio" style="color: black;">likelihood ratio</option>
+				<option value="iSq" style="color: black;">I²</option>
+				<option value="tauSq" style="color: black;">tau²</option>
 			</select><label class="textLabel unselectable">Attribute estimate type</label><span class="bar"></span>
 			<p style="position: absolute; margin-top: -21px; margin-left: 194px; pointer-events: none;">▼</p>
 		</div>
 		<div class="group peQuantityGroup" style="margin-left: 8px; display: none;"><input class="textInput outcomeDetail peQuantity" type="text" name="peQuantity" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Quantity</label></div>
+		<div class="group peInequalityGroup" style="margin-left: 8px; display: none;">
+			<select class="dropdownInput peInequality" name="peInequality" style="width: 112px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+				<option value="" disabled="" selected=""> -- select -- </option>
+				<option value="=" style="color: black;">=</option>
+				<option value="<" style="color: black;">&lt;</option>
+				<option value=">" style="color: black;">&gt;</option>
+				<option value="<=" style="color: black;">&lt;=</option>
+				<option value=">=" style="color: black;">&gt;=</option>
+			</select><label class="textLabel unselectable">Inequality</label><span class="bar"></span>
+			<p style="position: absolute; margin-top: -21px; margin-left: 94px; pointer-events: none;">▼</p>
+		</div>
 		<div class="group peFromGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peFrom" type="text" name="peFrom" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">From</label></div>
 		<div class="group peToGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peTo" type="text" name="peTo" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">To</label></div>
 		<div class="group peLevelGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peLevel" type="text" name="peLevel" value="0.95" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Level</label></div>
-		<b><p align="left" text-align="left" style="padding-left: 64px; margin-top:2px; margin-bottom: 2px;">
-			<input class="addAttributeButton" id="addAttributeButton" type="button" value="➕"></span> Add Attribute
-		</p></b>
+		<div style="margin-left: auto;">
+			<b><p align="left" text-align="left" style="padding-left: 24px; padding-right: 8px; margin-top:2px; margin-bottom: 2px;">
+				<input class="addAttributeButton" id="addAttributeButton" type="button" value="➕"></span> Add Attribute
+			</p><b>
+		</div>
 	</div>
 
 	<div class="certaintyBox" name="certaintyBox" id="certaintyBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; background-color: #F0F0FE;">
@@ -1143,21 +1169,31 @@ function attributeEstimatePick(element){
 	  parent.getElementsByClassName('peFromGroup')[0].style.display = "block";
 	  parent.getElementsByClassName('peToGroup')[0].style.display = "block";
 	  parent.getElementsByClassName('peLevelGroup')[0].style.display = "block";
-   } else if (p == "pValue"){
-      parent.getElementsByClassName('peQuantityGroup')[0].style.display = "block";
-	  parent.getElementsByClassName('peFromGroup')[0].style.display = "block";
-	  parent.getElementsByClassName('peToGroup')[0].style.display = "block";
-	  parent.getElementsByClassName('peLevelGroup')[0].style.display = "none";
+	  parent.getElementsByClassName('peInequalityGroup')[0].style.display = "none";
    } else if (p == "IQR"){
       parent.getElementsByClassName('peQuantityGroup')[0].style.display = "none";
 	  parent.getElementsByClassName('peFromGroup')[0].style.display = "block";
 	  parent.getElementsByClassName('peToGroup')[0].style.display = "block";
 	  parent.getElementsByClassName('peLevelGroup')[0].style.display = "none";
-   } else if (p == "SD" || p == "SE"){
+	  parent.getElementsByClassName('peInequalityGroup')[0].style.display = "none";
+   } else if (p == "iSq" || p == "tauSq"){
+      parent.getElementsByClassName('peQuantityGroup')[0].style.display = "none";
+	  parent.getElementsByClassName('peFromGroup')[0].style.display = "block";
+	  parent.getElementsByClassName('peToGroup')[0].style.display = "block";
+	  parent.getElementsByClassName('peLevelGroup')[0].style.display = "none";
+	  parent.getElementsByClassName('peInequalityGroup')[0].style.display = "none";
+   } else if (p == "pValue"){
+      parent.getElementsByClassName('peQuantityGroup')[0].style.display = "block";
+	  parent.getElementsByClassName('peFromGroup')[0].style.display = "none";		//Could be here, but rare
+	  parent.getElementsByClassName('peToGroup')[0].style.display = "none";		//Could be here, but rare
+	  parent.getElementsByClassName('peLevelGroup')[0].style.display = "none";
+	  parent.getElementsByClassName('peInequalityGroup')[0].style.display = "block";
+   } else if (p == "SD" || p == "SE" || p == "bayesFactor" || p == "likelihoodRatio"){
       parent.getElementsByClassName('peQuantityGroup')[0].style.display = "block";
 	  parent.getElementsByClassName('peFromGroup')[0].style.display = "none";
 	  parent.getElementsByClassName('peToGroup')[0].style.display = "none";
 	  parent.getElementsByClassName('peLevelGroup')[0].style.display = "none";
+	  parent.getElementsByClassName('peInequalityGroup')[0].style.display = "none";
    }
    
 }
@@ -1377,7 +1413,7 @@ function addAttribute(element, resultOutcomeNumber, resultStatisticNumber){
    cln.id = "";
    cln.getElementsByClassName("outcomeStatisticAttributeNumberLabel")[0].innerHTML = outcomeStatisticAttribute[resultOutcomeNumber-1][resultStatisticNumber];
    cln.getElementsByClassName("addAttributeButton")[0].onclick = function(){
-				addAttribute(this.parentElement.parentElement.parentElement.parentElement.parentElement, resultOutcomeNumber, resultStatisticNumber);
+				addAttribute(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, resultOutcomeNumber, resultStatisticNumber);
 				this.parentElement.style.display = 'none';
 			};
    //cln.getElementsByClassName("outcomeStatisticAttributeNumberLabel")[0].innerHTML = outcomeStatistics[resultOutcomeNumber-1];
