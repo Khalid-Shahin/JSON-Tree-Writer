@@ -493,33 +493,32 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 				<label class="textLabel unselectable">Number of participants</label>
 			</div>		
 			<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail knownDataCount" type="text" name="knownDataCount" style="width: 236px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Known data count</label></div>
-			<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail numeratorCount" type="text" name="numeratorCount" style="width: 236px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Numerator count (number of events)</label></div>
+			<div class="group numeratorCountGroup" style="margin-left: 8px"><input class="textInput outcomeDetail numeratorCount" type="text" name="numeratorCount" style="width: 236px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Numerator count (number of events)</label></div>
 		</div>
 			
 
 		
 		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
-			
-			<div class="group" style="margin-left: 0px;">
-				<select class="dropdownInput statisticType" name="statisticType" style="width: 208px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+			<div class="group statisticTypeGroup" style="margin-left: 0px;">
+				<select class="dropdownInput statisticType" name="statisticType" style="width: 208px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; statisticTypePick(this);" required="">
 					<option value="" disabled="" selected=""> -- select -- </option>
-					<option value="relative-RR" style="color: black;">relative risk</option>
-					<option value="count" style="color: black;">count</option>
-					<option value="percentage" style="color: black;">percentage</option>		<!-- proportion -->
-					<option value="perthousand" style="color: black;">per 1,000</option>		<!-- proportion -->
-					<option value="derivedProportion" style="color: black;">derived proportion</option>
-					<option value="relative-OR" style="color: black;">odds ratio</option>
-					<option value="relative-HR" style="color: black;">hazard ratio</option>
-					<option value="absolute-ARD" style="color: black;">absolute risk difference</option>
-					<option value="absolute-SMD" style="color: black;">standardized mean difference</option>
-					<option value="absolute-MedianDiff" style="color: black;">median difference</option>
-					<option value="mean" style="color: black;">mean</option>
-					<option value="median" style="color: black;">median</option>
+					<option class="mean" value="mean" style="color: black;">mean</option>
+					<option class="median" value="median" style="color: black;">median</option>
+					<option class="count" value="count" style="color: black;">count</option>
+					<option class="proportion" value="proportion" style="color: black;">proportion</option>
+					<option class="derivedProportion" value="derivedProportion" style="color: black;">derived proportion</option>
+					<option class="relative-RR" value="relative-RR" style="color: black;">relative risk</option>
+					<option class="relative-OR" value="relative-OR" style="color: black;">odds ratio</option>
+					<option class="relative-HR" value="relative-HR" style="color: black;">hazard ratio</option>
+					<option class="absolute-ARD" value="absolute-ARD" style="color: black;">absolute risk difference</option>
+					<option class="absolute-SMD" value="absolute-SMD" style="color: black;">standardized mean difference</option>
+					<option class="meanDifference" value="meanDifference" style="color: black;">mean difference</option>
+					<option class="absolute-MedianDiff" value="absolute-MedianDiff" style="color: black;">median difference</option>
 				</select><label class="textLabel unselectable">Statistic Type</label><span class="bar"></span>
 				<p style="position: absolute; margin-top: -21px; margin-left: 190px; pointer-events: none;">▼</p>
 			</div>
-			<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticValue" type="text" name="statisticValue" style="width: 154px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Value</label></div>
-			<div class="group" style="margin-left: 8px;">
+			<div class="group statisticValueGroup" style="margin-left: 8px"><input class="textInput outcomeDetail statisticValue" type="text" name="statisticValue" style="width: 154px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Value</label></div>
+			<div class="group statisticInequalityGroup" style="margin-left: 8px;">
 				<select class="dropdownInput statisticInequality" name="statisticInequality" style="width: 112px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
 					<option value="" disabled="" selected=""> -- select -- </option>
 					<option value="=" style="color: black;">=</option>
@@ -530,7 +529,14 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 				</select><label class="textLabel unselectable">Inequality</label><span class="bar"></span>
 				<p style="position: absolute; margin-top: -21px; margin-left: 94px; pointer-events: none;">▼</p>
 			</div>
-			<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail statisticUnit" type="text" name="statisticUnit" style="width: 160px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Unit</label></div>
+
+			<div class="group statisticUnitGroup" style="margin-left: 8px;">
+			  <input class="textInput outcomeDetail statisticUnit" type="text" id="statisticUnit" list="statisticUnitList" style="width: 160px;" required="">
+			  <span class="highlight"></span>
+			  <span class="bar"></span>
+			  <label class="textLabel unselectable">Unit</label>
+			  <datalist class="statisticUnitList" id="statisticUnitList"><option value="%" style="color: black;">percent</option><option value="per 1,000" style="color: black;">per one-thousand</option></datalist>
+			</div>
 		</div>
 		
 		<div class="attributes" id="attributes">
@@ -906,7 +912,7 @@ function loadPage3(resultID){
    for (var j = 0; j < populationList.length; j++){
 		var opt = populationList[j];
 		var el = document.createElement("option");
-		el.textContent = identifierMapping[opt][0];;
+		el.textContent = identifierMapping[opt][0];
 		el.value = opt;
 		el.style = "color: black";
 		aPopulation.appendChild(el);
@@ -919,7 +925,7 @@ function loadPage3(resultID){
    for (var j = 0; j < exposureList.length; j++){
 		var opt = exposureList[j];
 		var el = document.createElement("option");
-		el.textContent = identifierMapping[opt][0];;
+		el.textContent = identifierMapping[opt][0];
 		el.value = opt;
 		el.style = "color: black";
 		aIntervention.appendChild(el);
@@ -931,7 +937,7 @@ function loadPage3(resultID){
    for (var j = 0; j < outcomeList.length; j++){
 		var opt = outcomeList[j];
 		var el = document.createElement("option");
-		el.textContent = identifierMapping[opt][0];;
+		el.textContent = identifierMapping[opt][0];
 		el.value = opt;
 		el.style = "color: black";
 		aOutcome.appendChild(el);
@@ -942,7 +948,7 @@ function loadPage3(resultID){
    for (var j = 0; j < intendedOutcomeList.length; j++){
 		var opt = intendedOutcomeList[j];
 		var el = document.createElement("option");
-		el.textContent = identifierMapping[opt][0];;
+		el.textContent = identifierMapping[opt][0];
 		el.value = opt;
 		el.style = "color: black";
 		iOutcome.appendChild(el);
@@ -959,13 +965,14 @@ function loadPage3(resultID){
    page3.getElementsByClassName("resultStudy")[0].value = document.getElementById("resultStudyDropDown-"+resultID).value;
    page3.getElementsByClassName("resultIntendedPopulation")[0].value = identifierMapping[document.getElementById("resultPopulationDropDown-"+resultID).value];
    page3.getElementsByClassName("resultIntendedIntervention")[0].value = identifierMapping[document.getElementById("resultInterventionDropDown-"+resultID).value];
-   addResultOutcome();
    var comparatorSelection = identifierMapping[document.getElementById("resultComparatorDropDown-"+resultID).value];
-   if (comparatorSelection != "none"){
+   if (comparatorSelection != "none" && document.getElementById("resultComparatorDropDown-"+resultID).value in identifierMapping){
 		page3.getElementsByClassName("resultIntendedComparator")[0].value = comparatorSelection;
    } else {
 		page3.getElementsByClassName("resultComparatorBox")[0].style.display = "none";
    }
+   addResultOutcome();
+
    if (intendedOutcomeList.length == 1){
      page3.getElementsByClassName("resultIntendedOutcome")[0].style.color = '#000000';
 	 page3.getElementsByClassName("resultIntendedOutcome")[0].selectedIndex = 1;
@@ -1158,6 +1165,52 @@ function updateAllInterventions(){
 	var statisticInterventions = document.getElementsByName("statisticIntervention");
 	for (var x = 0; x < statisticInterventions.length; x++){
 	   statisticInterventions[x].value = document.getElementById("interventionName").value;
+	}
+}
+
+function statisticTypePick(element){
+	var p = element.value;
+	var parent = element.parentElement.parentElement;
+	console.log(p);
+	if (p == "mean" ||  p == "median" || p == "count"  || p == "relative-RR" || p == "relative-OR" || p == "relative-HR"
+	|| p == "absolute-ARD" || p == "absolute-SMD" || p == "meanDifference" || p == "absolute-MedianDiff") {
+		parent.getElementsByClassName('statisticInequalityGroup')[0].style.display = "none";
+	} else {
+		parent.getElementsByClassName('statisticInequalityGroup')[0].style.display = "block";
+	}
+	
+	if (p == "mean" ||  p == "median" || p == "proportion" || p == "derivedProportion"	|| p == "absolute-ARD") {
+		parent.getElementsByClassName('statisticUnitGroup')[0].style.display = "block";
+		var unitList = document.getElementById("statisticUnitList");
+		unitList.innerHTML = "";
+		if (p == "mean" || p == "median") {
+			var el = document.createElement("option");
+			el.textContent = "%";
+			el.value = "%";
+			el.style = "color: black";
+			unitList.appendChild(el);
+			
+			var el = document.createElement("option");
+			el.textContent = "per 1,000";
+			el.value = "per 1,000";
+			el.style = "color: black";
+			unitList.appendChild(el);
+   
+		} else {
+			var el = document.createElement("option");
+			el.textContent = "mg/dL";
+			el.value = "mg/dL";
+			el.style = "color: black";
+			unitList.appendChild(el);
+			
+			var el = document.createElement("option");
+			el.textContent = "mm Hg";
+			el.value = "mm Hg";
+			el.style = "color: black";
+			unitList.appendChild(el);
+		}
+	} else {
+		parent.getElementsByClassName('statisticUnitGroup')[0].style.display = "none";
 	}
 }
 
@@ -1366,7 +1419,6 @@ function addResultOutcome(){
    document.getElementById("ResultOutcomes").appendChild(cln);
    var newestOutcome = document.getElementById("ResultOutcomes").lastChild;
    addStatistic(newestOutcome, numberOfResultOutcomes);		//Needs to have an element parameter
-
    
 
 	if (synthesisList.indexOf(page3.getElementsByClassName("resultStudy")[0].value) != -1){
@@ -1402,6 +1454,22 @@ function addStatistic(element, resultOutcomeNumber){
    cln.getElementsByClassName("outcomeStatisticNumberLabel")[0].innerHTML = outcomeStatistics[resultOutcomeNumber-1];
    if (synthesisList.indexOf(page3.getElementsByClassName("resultStudy")[0].value) != -1) {
 		cln.getElementsByClassName("numberOfStudiesGroup")[0].style.display = "flex";
+   }
+   if (page3.getElementsByClassName("resultComparatorBox")[0].style.display == "none"){
+		cln.getElementsByClassName("numeratorCountGroup")[0].style.display = "none";
+		cln.getElementsByClassName("relative-RR")[0].style.display = "none";
+		cln.getElementsByClassName("relative-OR")[0].style.display = "none";
+		cln.getElementsByClassName("relative-HR")[0].style.display = "none";
+		cln.getElementsByClassName("absolute-ARD")[0].style.display = "none";
+		cln.getElementsByClassName("absolute-SMD")[0].style.display = "none";
+		cln.getElementsByClassName("meanDifference")[0].style.display = "none";
+		cln.getElementsByClassName("absolute-MedianDiff")[0].style.display = "none";
+   } else {
+		cln.getElementsByClassName("mean")[0].style.display = "none";
+		cln.getElementsByClassName("median")[0].style.display = "none";
+		cln.getElementsByClassName("count")[0].style.display = "none";
+		cln.getElementsByClassName("proportion")[0].style.display = "none";
+		cln.getElementsByClassName("derivedProportion")[0].style.display = "none";
    }
    addAttribute(cln, resultOutcomeNumber, outcomeStatisticAttribute[resultOutcomeNumber-1].length-1);
    element.getElementsByClassName("statistics")[0].appendChild(cln);
@@ -1796,19 +1864,18 @@ var studyTypeSet = {
 	"mixed": "mixed methods"
 };
 var statTypeSet = {
-	"relative-RR": "relative risk",
+	"mean": "mean",
+	"median": "median",
 	"count": "count",
-	"percentage": "proportion",
-	"perthousand": "proportion",
 	"proportion": "proportion",
 	"derivedProportion": "derived proportion",
+	"relative-RR": "relative risk",
 	"relative-OR": "odds ratio",
 	"relative-HR": "hazard ratio",
 	"absolute-ARD": "absolute risk difference",
 	"absolute-SMD": "standardized mean difference",
+	"meanDifference": "mean difference",
 	"absolute-MedianDiff": "median difference",
-	"mean": "mean",
-	"median": "median"
 };
 var attributeEstimateSet = {
 	"CI": "confidence interval",
