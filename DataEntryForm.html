@@ -1390,6 +1390,7 @@ function addResult(){
    if (autoCount == 3){
 		page2.getElementsByClassName("createStudyResultsButton")[numberOfResults-1].disabled = false;
    }
+   enableCreateStudyResultsButton(numberOfResults);
 }
 
 function addResultOutcome(){
@@ -1444,19 +1445,63 @@ function addResultOutcome(){
 }
 
 function enableCreateStudyResultsButton(num){
-	if (resultCheckStudyPICcombo(num) && document.getElementById("resultPopulationDropDown-"+num).value != "" &&	document.getElementById("resultInterventionDropDown-"+num).value && document.getElementById("resultComparatorDropDown-"+num).value) {
+	if (resultCheckStudyPICcombo(num) && document.getElementById("resultPopulationDropDown-"+num).value != "" && document.getElementById("resultInterventionDropDown-"+num).value && document.getElementById("resultComparatorDropDown-"+num).value) {
 		document.getElementById("createStudyResultsButton-"+num).disabled = false;
+		document.getElementById("createStudyResultsButton-"+num).style.display = "block";
+	} else {
+		if (!resultCheckStudyPICcombo(num)){
+			document.getElementById("createStudyResultsButton-"+num).disabled = true;
+			document.getElementById("createStudyResultsButton-"+num).style.display = "none";
+		}
 	}
 }
 
 function resultCheckStudyPICcombo(num){
-	var resultBoxes = document.getElementsByClassName("resultBox");
+	
+	var existingStudyPICcombos = {}
+
+	var resultBoxes = page2.getElementsByClassName("resultBox");
 	for (var x = 0; x < resultBoxes.length; x++){
 		var tempStudy = resultBoxes[x].getElementsByClassName("resultStudyDropDown")[0].value;
 		var tempPopulation = resultBoxes[x].getElementsByClassName("resultPopulationDropDown")[0].value;
 		var tempIntervention = resultBoxes[x].getElementsByClassName("resultInterventionDropDown")[0].value;
 		var tempComparator = resultBoxes[x].getElementsByClassName("resultComparatorDropDown")[0].value;
+		
+		var doesntExist = true;
+		if (tempStudy in existingStudyPICcombos){
+			if (tempPopulation in existingStudyPICcombos[tempStudy]){
+				if (tempIntervention in existingStudyPICcombos[tempStudy][tempPopulation]){
+					if (tempComparator in existingStudyPICcombos[tempStudy][tempPopulation][tempIntervention]){
+						doesntExist = false;
+					} else {
+						existingStudyPICcombos[tempStudy][tempPopulation][tempIntervention][tempComparator] =  "";
+					}
+				} else {
+					existingStudyPICcombos[tempStudy][tempPopulation][tempIntervention] =  {};
+					existingStudyPICcombos[tempStudy][tempPopulation][tempIntervention][tempComparator] =  "";
+				}
+			} else {
+				existingStudyPICcombos[tempStudy][tempPopulation] = {};
+				existingStudyPICcombos[tempStudy][tempPopulation][tempIntervention] =  {};
+				existingStudyPICcombos[tempStudy][tempPopulation][tempIntervention][tempComparator] =  "";
+			}
+		} else {
+			existingStudyPICcombos[tempStudy] = {};
+			existingStudyPICcombos[tempStudy][tempPopulation] = {};
+			existingStudyPICcombos[tempStudy][tempPopulation][tempIntervention] =  {};
+			existingStudyPICcombos[tempStudy][tempPopulation][tempIntervention][tempComparator] =  "";
+		}
+		if ((x+1).toString() == num){
+			if (doesntExist){
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
 	}
+	
+	console.log("THIS SHOULDN'T HAVE HAPPENED. This code shouldn't have executed.");
 	return true;
 }
 
