@@ -693,7 +693,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 		</div>
 
 		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 960px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">
-			<p style="margin: 0px; font-size:18px; font-weight: bold;">Intervention</p>
+			<p id="interventionLabel" class="interventionLabel" style="margin: 0px; font-size:18px; font-weight: bold;">Intervention</p><p id="exposureLabel" class="exposureLabel" style="margin: 0px; font-size:18px; font-weight: bold; display: none;">Exposure</p>
 
 			<div class="group" style="margin-left: 8px;">
 				<input class="textInputAlways resultIntendedIntervention" type="text" id="resultIntendedIntervention" style="width: 269px;" value="" required="" disabled>
@@ -968,8 +968,12 @@ function loadPage3(resultID){
    var comparatorSelection = identifierMapping[document.getElementById("resultComparatorDropDown-"+resultID).value];
    if (comparatorSelection != "none" && document.getElementById("resultComparatorDropDown-"+resultID).value in identifierMapping){
 		page3.getElementsByClassName("resultIntendedComparator")[0].value = comparatorSelection;
+		page3.getElementsByClassName("interventionLabel")[0].style.display = "block";
+		page3.getElementsByClassName("exposureLabel")[0].style.display = "none";
    } else {
 		page3.getElementsByClassName("resultComparatorBox")[0].style.display = "none";
+		page3.getElementsByClassName("interventionLabel")[0].style.display = "none";
+		page3.getElementsByClassName("exposureLabel")[0].style.display = "block";
    }
    addResultOutcome();
 
@@ -1448,7 +1452,10 @@ function enableCreateStudyResultsButton(num){
 function resultCheckStudyPICcombo(num){
 	var resultBoxes = document.getElementsByClassName("resultBox");
 	for (var x = 0; x < resultBoxes.length; x++){
-		//resultBoxes[x].getElementsByClassName("resultStudyDropDown")[0].value
+		var tempStudy = resultBoxes[x].getElementsByClassName("resultStudyDropDown")[0].value;
+		var tempPopulation = resultBoxes[x].getElementsByClassName("resultPopulationDropDown")[0].value;
+		var tempIntervention = resultBoxes[x].getElementsByClassName("resultInterventionDropDown")[0].value;
+		var tempComparator = resultBoxes[x].getElementsByClassName("resultComparatorDropDown")[0].value;
 	}
 	return true;
 }
