@@ -17,15 +17,16 @@
     <br>
     <h3 style="vertical-align: top; display: inline; font-family: Arial; font-weight: normal">
       Study Component Page
-    </h3><input style="margin-left: 606px;" type="button" value="Load Demo Sample Data" onclick="loadDemoData();"><br>
+    </h3><input style="margin-left: 606px;" type="button" value="Load Demo Sample Data" onclick="loadDemoData();">
+	<br>
     <br>
     <div style="margin-bottom: 6px; margin-top: 8px; display: flex; flex-flow: row wrap;">
       <div class="group" style="">
         <input class="textInput" type="text" id="resourceCollectionTitle" style="width: 976px;" required=""> <label class="textLabel unselectable">Resource Collection Name</label>
       </div>
-    </div><br>
+    </div>
+	<br>
     <br>
-	
 	
     <div id="Studies">
 
@@ -71,13 +72,15 @@
       <p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;">
         <b><input type="button" value="➕" onclick="addOutcome()"> Add Outcome</b>
       </p>
-    </div><br>
+    </div>
+	<br>
     <br>
     <div>
       <p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;">
         <b><input type="button" value="Next Page to Create Study Results" onclick="loadPage2();"></b>
       </p>
-    </div><br>
+    </div>
+	<br>
 
 </div>
 
@@ -128,7 +131,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
         <input class="textInput pmid" type="number" id="pmid" style="width: 70px;" required=""> <label class="textLabel unselectable">PMID</label>
       </div>
       <p align="left" text-align="left" style="padding-left: 4px; margin-top: 4px; margin-bottom: 0px;">
-        <b><input class="pmidLoadButton" id="pmidLoadButton-1" type="button" style="font-weight: bold;" value="Load PMID Info" onclick="loadPMIDinfo(1);"></b>
+        <b><input class="pmidLoadButton" id="pmidLoadButton-1" type="button" style="font-weight: bold;" value="Load PMID Info"></b>
       </p>
       <div class="group" style="margin-left: 12px;">
         <input class="textInput studyTitle" type="text" id="studyTitle-1" style="width: 250px;" required=""> <label class="textLabel unselectable">Title</label>
@@ -412,7 +415,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 		<div style="float: left;">
 			
 		<div style="padding-bottom: 6px; margin-top: 12px;"><input type="checkbox" class="certaintyCheck" id="" name="" onchange="if (this.checked) { this.parentElement.nextElementSibling.style.display = 'block'; } else { this.parentElement.nextElementSibling.style.display = 'none'; }"> Rate certainty?</div>
-		<div class="certaintySection" name="certaintySection" style="display: none; padding-bottom: 26px;">
+		<div class="certaintySection" name="certaintySection" style="display: none; padding-bottom: 0px;">
 				<div class="certainty" name="certainty">
 					<div class="certaintyBox" name="certaintyBox" id="" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 940px; max-width: 99%; margin-bottom: 10px; background-color: #F0F0FE;">
 			
@@ -1439,70 +1442,72 @@ function loadPMIDinfo(num) {
 	var start = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=';
 	var end = '&retmode=json';
 	
-	request.open('GET', start + pmid+ end, true);
-	request.onload = function () {
-		var data = JSON.parse(this.response);
-		
-		document.getElementById("studyAuthors-"+num).value = "";
-		var authors = "";
-		for (var author in data["result"][pmid]["authors"]){
-			authors += data["result"][pmid]["authors"][author]["name"] + "; ";
-		}
-		authors = authors.substring(0, authors.length - 2);
-		document.getElementById("studyAuthors-"+num).value = authors;
-		
-		var pmidDate = data["result"][pmid]["pubdate"];
-		if (pmidDate){
-			document.getElementById("studyDate-"+num).value = pmidDate;
-		} else {
-			document.getElementById("studyDate-"+num).value = "";
-		}
-		
-		var pmidPages = data["result"][pmid]["pages"];
-		if (pmidPages){
-			document.getElementById("studyPages-"+num).value = pmidPages;
-		} else {
-			document.getElementById("studyPages-"+num).value = "";
-		}
-		
-		
-		var pmidPublisher = data["result"][pmid]["source"];
-		if (pmidPublisher){
-			document.getElementById("studyPublisher-"+num).value = pmidPublisher;
-		} else {
-			document.getElementById("studyPublisher-"+num).value = "";
-		}
-		
-		var pmidTitle = data["result"][pmid]["title"];
-		if (pmidTitle){
-			document.getElementById("studyTitle-"+num).value = pmidTitle;
-		} else {
-			document.getElementById("studyTitle-"+num).value = "";
-		}
-		
-		for (var article in data["result"][pmid]["articleids"]){
-			if (data["result"][pmid]["articleids"][article]["idtype"] == "doi") {
-				document.getElementById("studyURL-"+num).value = "https://doi.org/" + data["result"][pmid]["articleids"][article]["value"];
-				break;
-			} else {
-				document.getElementById("studyURL-"+num).value = "";
+		if (pmid != ""){
+		request.open('GET', start + pmid + end, true);
+		request.onload = function () {
+			var data = JSON.parse(this.response);
+			
+			document.getElementById("studyAuthors-"+num).value = "";
+			var authors = "";
+			for (var author in data["result"][pmid]["authors"]){
+				authors += data["result"][pmid]["authors"][author]["name"] + "; ";
 			}
-		}
-		
-		for (var type in data["result"][pmid]["pubtype"]){
-			if (data["result"][pmid]["pubtype"][type] == "Randomized Controlled Trial") {
-				document.getElementById("studyType-"+num).value = "RCT";
-				document.getElementById("studyType-"+num).style.color = "#000000";
-				break;
+			authors = authors.substring(0, authors.length - 2);
+			document.getElementById("studyAuthors-"+num).value = authors;
+			
+			var pmidDate = data["result"][pmid]["pubdate"];
+			if (pmidDate){
+				document.getElementById("studyDate-"+num).value = pmidDate;
 			} else {
-				document.getElementById("studyType-"+num).value = "";
-				document.getElementById("studyType-"+num).style.color = "#FFFFFF";	
+				document.getElementById("studyDate-"+num).value = "";
 			}
+			
+			var pmidPages = data["result"][pmid]["pages"];
+			if (pmidPages){
+				document.getElementById("studyPages-"+num).value = pmidPages;
+			} else {
+				document.getElementById("studyPages-"+num).value = "";
+			}
+			
+			
+			var pmidPublisher = data["result"][pmid]["source"];
+			if (pmidPublisher){
+				document.getElementById("studyPublisher-"+num).value = pmidPublisher;
+			} else {
+				document.getElementById("studyPublisher-"+num).value = "";
+			}
+			
+			var pmidTitle = data["result"][pmid]["title"];
+			if (pmidTitle){
+				document.getElementById("studyTitle-"+num).value = pmidTitle;
+			} else {
+				document.getElementById("studyTitle-"+num).value = "";
+			}
+			
+			for (var article in data["result"][pmid]["articleids"]){
+				if (data["result"][pmid]["articleids"][article]["idtype"] == "doi") {
+					document.getElementById("studyURL-"+num).value = "https://doi.org/" + data["result"][pmid]["articleids"][article]["value"];
+					break;
+				} else {
+					document.getElementById("studyURL-"+num).value = "";
+				}
+			}
+			
+			for (var type in data["result"][pmid]["pubtype"]){
+				if (data["result"][pmid]["pubtype"][type] == "Randomized Controlled Trial") {
+					document.getElementById("studyType-"+num).value = "RCT";
+					document.getElementById("studyType-"+num).style.color = "#000000";
+					break;
+				} else {
+					document.getElementById("studyType-"+num).value = "";
+					document.getElementById("studyType-"+num).style.color = "#FFFFFF";	
+				}
+			}
+			
+			
 		}
-		
-		
+		request.send();
 	}
-	request.send();
 }
 
 function convertToJSON() {
