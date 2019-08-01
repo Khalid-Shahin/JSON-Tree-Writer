@@ -1171,7 +1171,6 @@ function updateAllInterventions(){
 function statisticTypePick(element){
 	var p = element.value;
 	var parent = element.parentElement.parentElement;
-	console.log(p);
 	if (p == "mean" ||  p == "median" || p == "count"  || p == "relative-RR" || p == "relative-OR" || p == "relative-HR"
 	|| p == "absolute-ARD" || p == "absolute-SMD" || p == "meanDifference" || p == "absolute-MedianDiff") {
 		parent.getElementsByClassName('statisticInequalityGroup')[0].style.display = "none";
@@ -1456,7 +1455,6 @@ function addStatistic(element, resultOutcomeNumber){
 		cln.getElementsByClassName("numberOfStudiesGroup")[0].style.display = "flex";
    }
    if (page3.getElementsByClassName("resultComparatorBox")[0].style.display == "none"){
-		cln.getElementsByClassName("numeratorCountGroup")[0].style.display = "none";
 		cln.getElementsByClassName("relative-RR")[0].style.display = "none";
 		cln.getElementsByClassName("relative-OR")[0].style.display = "none";
 		cln.getElementsByClassName("relative-HR")[0].style.display = "none";
@@ -1465,6 +1463,7 @@ function addStatistic(element, resultOutcomeNumber){
 		cln.getElementsByClassName("meanDifference")[0].style.display = "none";
 		cln.getElementsByClassName("absolute-MedianDiff")[0].style.display = "none";
    } else {
+		cln.getElementsByClassName("numeratorCountGroup")[0].style.display = "none";
 		cln.getElementsByClassName("mean")[0].style.display = "none";
 		cln.getElementsByClassName("median")[0].style.display = "none";
 		cln.getElementsByClassName("count")[0].style.display = "none";
