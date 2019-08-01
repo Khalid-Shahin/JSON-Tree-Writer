@@ -1184,6 +1184,19 @@ function statisticTypePick(element){
 		unitList.innerHTML = "";
 		if (p == "mean" || p == "median") {
 			var el = document.createElement("option");
+			el.textContent = "mg/dL";
+			el.value = "mg/dL";
+			el.style = "color: black";
+			unitList.appendChild(el);
+			
+			var el = document.createElement("option");
+			el.textContent = "mm Hg";
+			el.value = "mm Hg";
+			el.style = "color: black";
+			unitList.appendChild(el);
+		} else {
+
+			var el = document.createElement("option");
 			el.textContent = "%";
 			el.value = "%";
 			el.style = "color: black";
@@ -1195,18 +1208,6 @@ function statisticTypePick(element){
 			el.style = "color: black";
 			unitList.appendChild(el);
    
-		} else {
-			var el = document.createElement("option");
-			el.textContent = "mg/dL";
-			el.value = "mg/dL";
-			el.style = "color: black";
-			unitList.appendChild(el);
-			
-			var el = document.createElement("option");
-			el.textContent = "mm Hg";
-			el.value = "mm Hg";
-			el.style = "color: black";
-			unitList.appendChild(el);
 		}
 	} else {
 		parent.getElementsByClassName('statisticUnitGroup')[0].style.display = "none";
@@ -1383,7 +1384,7 @@ function addResult(){
 		autoCount += 2;
    }
    if (autoCount == 3){
-	page2.getElementsByClassName("createStudyResultsButton")[numberOfResults-1].disabled = false;
+		page2.getElementsByClassName("createStudyResultsButton")[numberOfResults-1].disabled = false;
    }
 }
 
@@ -1439,9 +1440,17 @@ function addResultOutcome(){
 }
 
 function enableCreateStudyResultsButton(num){
-	if (document.getElementById("resultPopulationDropDown-"+num).value != "" &&	document.getElementById("resultInterventionDropDown-"+num).value && document.getElementById("resultComparatorDropDown-"+num).value) {
+	if (resultCheckStudyPICcombo(num) && document.getElementById("resultPopulationDropDown-"+num).value != "" &&	document.getElementById("resultInterventionDropDown-"+num).value && document.getElementById("resultComparatorDropDown-"+num).value) {
 		document.getElementById("createStudyResultsButton-"+num).disabled = false;
 	}
+}
+
+function resultCheckStudyPICcombo(num){
+	var resultBoxes = document.getElementsByClassName("resultBox");
+	for (var x = 0; x < resultBoxes.length; x++){
+		//resultBoxes[x].getElementsByClassName("resultStudyDropDown")[0].value
+	}
+	return true;
 }
 
 function addStatistic(element, resultOutcomeNumber){
