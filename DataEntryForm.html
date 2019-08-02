@@ -419,7 +419,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			
 			
 				<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;">
-					<div>Certainty system: <select name="certaintySystem" class="certaintySystem" style="width: 210px;" onchange="this.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'none'; this.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'none'; if (this.value == 'GRADE') { this.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'block'; } else if(this.value == 'DynaMed') { this.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'block'; }"> <option value=""> -- select -- </option> <option selected="" value="GRADE">GRADE</option> <option value="DynaMed">DynaMed Levels of Evidence</option> </select></div>
+					<div>Certainty system: <select name="certaintySystem" class="certaintySystem" style="width: 210px;" onchange="changeCertaintySystem(this);"> <option value=""> -- select -- </option> <option selected="" value="GRADE">GRADE</option> <option value="DynaMed">DynaMed Levels of Evidence</option> </select></div>
 				</div>
 				
 				<div class="GRADEcertainty" id="GRADEcertainty" style="display: block;">
@@ -1042,6 +1042,16 @@ var currentIntendedPopulation = "";
 var currentIntendedIntervention = "";
 var currentIntendedComparator = "";
 
+function changeCertaintySystem(certaintyElement){
+	certaintyElement.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'none';
+	certaintyElement.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'none';
+	if (certaintyElement.value == 'GRADE') {
+		certaintyElement.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'block';
+	} else if (certaintyElement.value == 'DynaMed'){
+		certaintyElement.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'block';
+	}
+}
+
 function loadPage3(resultID){
    page2.style.display = "none";
    page3.style.display = "block";
@@ -1185,7 +1195,81 @@ function loadResultData(resultData){
 	page3.getElementsByClassName("resultPopulationNotes")[0].value = resultData["population notes match"];
 	page3.getElementsByClassName("resultInterventionNotes")[0].value = resultData["intervention notes match"];
 	page3.getElementsByClassName("resultComparatorNotes")[0].value = resultData["comparator notes match"];
+	
+	var storedOutcomes = resultData["outcomes"];
+	
+	for(var x = 0; x < storedOutcomes.length; x++){
+		if (x > 0){
+			addResultOutcome();
+		}
 		
+		page3.getElementsByClassName("resultIntendedOutcome")[x].value = storedOutcomes[x]["intended outcome identifier"];
+		if (page3.getElementsByClassName("resultIntendedOutcome")[x].value != ""){
+			page3.getElementsByClassName("resultIntendedOutcome")[x].style.color = '#000000';
+		}
+		
+		if ("actual outcome identifier" in storedOutcomes[x] && storedOutcomes[x]["actual outcome identifier"] != ""){
+			page3.getElementsByClassName("resultActualOutcome")[x].value = storedOutcomes[x]["actual outcome identifier"];
+		} else {
+			page3.getElementsByClassName("resultActualOutcome")[x].value = storedOutcomes[x]["actual outcome display"];
+		}
+		
+		page3.getElementsByClassName("resultOutcomeMatch")[x].value = storedOutcomes[x]["outcome directness match"];
+		page3.getElementsByClassName("resultOutcomeDescription")[x].value = storedOutcomes[x]["outcome description"];
+		page3.getElementsByClassName("resultOutcomeNotes")[x].value = storedOutcomes[x]["outcome notes"];
+		page3.getElementsByClassName("resultEvidenceName")[x].value = storedOutcomes[x]["evidence short display name"];
+		page3.getElementsByClassName("resultEvidenceIdentifier")[x].value = storedOutcomes[x]["evidence identifier"];
+		page3.getElementsByClassName("resultEvidenceDescription")[x].value = storedOutcomes[x]["evidence description"];
+		page3.getElementsByClassName("resultEvidenceNotes")[x].value = storedOutcomes[x]["evidence notes"];
+		
+		page3.getElementsByClassName("certaintyCheck")[x].checked = storedOutcomes[x]["certainty checkbox"];
+	
+		page3.getElementsByClassName("certaintySystem")[x].value = storedOutcomes[x]["certainty"][0]["certainty system"];
+		page3.getElementsByClassName("GRADEcertaintyOfEvidence")[x].value = storedOutcomes[x]["certainty"][0]["GRADE certainty of evidence"];
+		page3.getElementsByClassName("GRADEcertaintyComments")[x].value = storedOutcomes[x]["certainty"][0]["GRADE comments on certainty"];
+		page3.getElementsByClassName("GRADEcertaintySub1")[x].value = storedOutcomes[x]["certainty"][0]["GRADE risk of bias"];
+		page3.getElementsByClassName("GRADEcertaintySubComments1")[x].value = storedOutcomes[x]["certainty"][0]["GRADE comments on risk of bias"];
+		page3.getElementsByClassName("GRADEcertaintySub2")[x].value = storedOutcomes[x]["certainty"][0]["GRADE inconsistency"];
+		page3.getElementsByClassName("GRADEcertaintySubComments2")[x].value = storedOutcomes[x]["certainty"][0]["GRADE comments on inconsistency"];
+		page3.getElementsByClassName("GRADEcertaintySub3")[x].value = storedOutcomes[x]["certainty"][0]["GRADE indirectness"];
+		page3.getElementsByClassName("GRADEcertaintySubComments3")[x].value = storedOutcomes[x]["certainty"][0]["GRADE comments on indrectness"];
+		page3.getElementsByClassName("GRADEcertaintySub4")[x].value = storedOutcomes[x]["certainty"][0]["GRADE imprecision"];
+		page3.getElementsByClassName("GRADEcertaintySubComments4")[x].value = storedOutcomes[x]["certainty"][0]["GRADE comments on imprecision"];
+		page3.getElementsByClassName("GRADEcertaintySub5")[x].value = storedOutcomes[x]["certainty"][0]["GRADE publication bias"];
+		page3.getElementsByClassName("GRADEcertaintySubComments5")[x].value = storedOutcomes[x]["certainty"][0]["GRADE comments on publication bias"];
+		page3.getElementsByClassName("DynaMedcertaintyOfEvidence")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed certainty of evidence"];
+		page3.getElementsByClassName("DynaMedcertaintyComments")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on certainty"];
+		page3.getElementsByClassName("DynaMedcertaintySub1")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed clinical outcome"];
+		page3.getElementsByClassName("DynaMedcertaintySubComments1")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on clinical outcome"];
+		page3.getElementsByClassName("DynaMedcertaintySub2")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed directness"];
+		page3.getElementsByClassName("DynaMedcertaintySubComments2")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on directness"];
+		page3.getElementsByClassName("DynaMedcertaintySub3")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed randomization"];
+		page3.getElementsByClassName("DynaMedcertaintySubComments3")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on randomization"];
+		page3.getElementsByClassName("DynaMedcertaintySub4")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed blinding"];
+		page3.getElementsByClassName("DynaMedcertaintySubComments4")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on blinding"];
+		page3.getElementsByClassName("DynaMedcertaintySub5")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed follow up"];
+		page3.getElementsByClassName("DynaMedcertaintySubComments5")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on follow up"];
+		page3.getElementsByClassName("DynaMedcertaintySub6")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed dropouts"];
+		page3.getElementsByClassName("DynaMedcertaintySubComments6")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on dropouts"];
+		page3.getElementsByClassName("DynaMedcertaintySub7")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed precision"];
+		page3.getElementsByClassName("DynaMedcertaintySubComments7")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on precision"];
+		page3.getElementsByClassName("DynaMedcertaintySub8")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed consistency"];
+		page3.getElementsByClassName("DynaMedcertaintySubComments8")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on consistency"];
+		page3.getElementsByClassName("DynaMedcertaintySub9")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed allocation concealment"];
+		page3.getElementsByClassName("DynaMedcertaintySubComments9")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on allocation concealment"];
+		page3.getElementsByClassName("DynaMedcertaintySub10")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed itt analysis"];
+		page3.getElementsByClassName("DynaMedcertaintySubComments10")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on itt analysis"];
+		page3.getElementsByClassName("DynaMedcertaintySub11")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed other"];
+		page3.getElementsByClassName("DynaMedcertaintySubComments11")[x].value = storedOutcomes[x]["certainty"][0]["DynaMed comments on other"];
+		
+		if (page3.getElementsByClassName("resultOutcomeMatch")[x].value != ""){
+			page3.getElementsByClassName("resultOutcomeMatch")[x].style.color = '#000000';
+		}
+		
+		if (page3.getElementsByClassName("certaintyCheck")[x].checked) { page3.getElementsByClassName("certaintyCheck")[x].parentElement.nextElementSibling.style.display = 'block'; } else { page3.getElementsByClassName("certaintyCheck")[x].parentElement.nextElementSibling.style.display = 'none'; }
+		changeCertaintySystem(page3.getElementsByClassName("certaintySystem")[x]);
+		
+	}
 	
 }
 
@@ -1252,7 +1336,83 @@ function saveQuitPage3(){
 	thisResult["intervention notes match"] = page3.getElementsByClassName("resultInterventionNotes")[0].value;
 	thisResult["comparator notes match"] = page3.getElementsByClassName("resultComparatorNotes")[0].value;
 	
-	//Outcomes now
+	thisResult["outcomes"] = [];
+	
+	var resultOutcomes = page3.getElementsByClassName("resultOutcomeBox");
+	for (var x = 0; x < resultOutcomes.length; x++){
+		var thisOutcome = {};
+		if (resultOutcomes[x].getElementsByClassName("resultIntendedOutcome")[0].value != ""){
+			thisOutcome["intended outcome display"] = identifierMapping[resultOutcomes[x].getElementsByClassName("resultIntendedOutcome")[0].value][0];
+		} else {
+			thisOutcome["intended outcome display"] = "";
+		}
+		thisOutcome["intended outcome identifier"] = resultOutcomes[x].getElementsByClassName("resultIntendedOutcome")[0].value;
+
+		var thisActualOutcome = resultOutcomes[x].getElementsByClassName("resultActualOutcome")[0].value;
+		if (thisActualOutcome in identifierMapping){
+			thisOutcome["actual outcome display"] = identifierMapping[thisActualOutcome][0];
+			thisOutcome["actual outcome identifier"] = thisActualOutcome;
+		} else {
+			thisOutcome["actual outcome display"] = thisActualOutcome;
+			thisOutcome["actual outcome identifier"] = "";
+		}
+	
+		thisOutcome["outcome directness match"] = resultOutcomes[x].getElementsByClassName("resultOutcomeMatch")[0].value;
+		thisOutcome["outcome description"] = resultOutcomes[x].getElementsByClassName("resultOutcomeDescription")[0].value;
+		thisOutcome["outcome notes"] = resultOutcomes[x].getElementsByClassName("resultOutcomeNotes")[0].value;
+		thisOutcome["evidence short display name"] = resultOutcomes[x].getElementsByClassName("resultEvidenceName")[0].value;
+		thisOutcome["evidence identifier"] = resultOutcomes[x].getElementsByClassName("resultEvidenceIdentifier")[0].value;
+		thisOutcome["evidence description"] = resultOutcomes[x].getElementsByClassName("resultEvidenceDescription")[0].value;
+		thisOutcome["evidence notes"] = resultOutcomes[x].getElementsByClassName("resultEvidenceNotes")[0].value;
+				
+		thisOutcome["certainty checkbox"] = resultOutcomes[x].getElementsByClassName("certaintyCheck")[0].checked;
+		thisOutcome["certainty"] = [{}];
+		thisOutcome["certainty"][0]["certainty system"] = resultOutcomes[x].getElementsByClassName("certaintySystem")[0].value;
+		thisOutcome["certainty"][0]["GRADE certainty of evidence"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintyOfEvidence")[0].value;
+		thisOutcome["certainty"][0]["GRADE comments on certainty"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintyComments")[0].value;
+		thisOutcome["certainty"][0]["GRADE risk of bias"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintySub1")[0].value;
+		thisOutcome["certainty"][0]["GRADE comments on risk of bias"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintySubComments1")[0].value;
+		thisOutcome["certainty"][0]["GRADE inconsistency"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintySub2")[0].value;
+		thisOutcome["certainty"][0]["GRADE comments on inconsistency"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintySubComments2")[0].value;
+		thisOutcome["certainty"][0]["GRADE indirectness"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintySub3")[0].value;
+		thisOutcome["certainty"][0]["GRADE comments on indrectness"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintySubComments3")[0].value;
+		thisOutcome["certainty"][0]["GRADE imprecision"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintySub4")[0].value;
+		thisOutcome["certainty"][0]["GRADE comments on imprecision"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintySubComments4")[0].value;
+		thisOutcome["certainty"][0]["GRADE publication bias"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintySub5")[0].value;
+		thisOutcome["certainty"][0]["GRADE comments on publication bias"] = resultOutcomes[x].getElementsByClassName("GRADEcertaintySubComments5")[0].value;
+		thisOutcome["certainty"][0]["DynaMed certainty of evidence"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintyOfEvidence")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on certainty"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintyComments")[0].value;
+		thisOutcome["certainty"][0]["DynaMed clinical outcome"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub1")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on clinical outcome"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments1")[0].value;
+		thisOutcome["certainty"][0]["DynaMed directness"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub2")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on directness"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments2")[0].value;
+		thisOutcome["certainty"][0]["DynaMed randomization"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub3")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on randomization"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments3")[0].value;
+		thisOutcome["certainty"][0]["DynaMed blinding"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub4")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on blinding"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments4")[0].value;
+		thisOutcome["certainty"][0]["DynaMed follow up"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub5")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on follow up"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments5")[0].value;
+		thisOutcome["certainty"][0]["DynaMed dropouts"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub6")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on dropouts"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments6")[0].value;
+		thisOutcome["certainty"][0]["DynaMed precision"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub7")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on precision"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments7")[0].value;
+		thisOutcome["certainty"][0]["DynaMed consistency"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub8")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on consistency"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments8")[0].value;
+		thisOutcome["certainty"][0]["DynaMed allocation concealment"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub9")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on allocation concealment"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments9")[0].value;
+		thisOutcome["certainty"][0]["DynaMed itt analysis"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub10")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on itt analysis"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments10")[0].value;
+		thisOutcome["certainty"][0]["DynaMed other"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub11")[0].value;
+		thisOutcome["certainty"][0]["DynaMed comments on other"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments11")[0].value;
+		
+		//I'll have to temp-store Statistics and Attributes within now
+		
+		thisResult["outcomes"].push(thisOutcome);
+	}
+	
+
+	
+	
 	
 	savedResults[currentStudy][currentIntendedPopulation][currentIntendedIntervention][currentIntendedComparator] = thisResult;
 	
