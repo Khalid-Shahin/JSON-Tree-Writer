@@ -1269,6 +1269,35 @@ function loadResultData(resultData){
 		if (page3.getElementsByClassName("certaintyCheck")[x].checked) { page3.getElementsByClassName("certaintyCheck")[x].parentElement.nextElementSibling.style.display = 'block'; } else { page3.getElementsByClassName("certaintyCheck")[x].parentElement.nextElementSibling.style.display = 'none'; }
 		changeCertaintySystem(page3.getElementsByClassName("certaintySystem")[x]);
 		
+		var storedStatistics = storedOutcomes[x]["statistics"];
+		var thisOutcome = page3.getElementsByClassName("resultOutcomeBox")[x];
+		for(var y = 0; y < storedStatistics.length; y++){
+			if (y > 0){
+				addStatistic(thisOutcome, thisOutcome.getAttribute('resultOutcomeNumber'));
+			}
+			thisOutcome.getElementsByClassName("statisticDescription")[y].value = storedStatistics[y]["statistic description"];
+			thisOutcome.getElementsByClassName("statisticNotes")[y].value = storedStatistics[y]["statistic notes"];
+			thisOutcome.getElementsByClassName("numberOfStudies")[y].value = storedStatistics[y]["number of studies"];
+			thisOutcome.getElementsByClassName("numberOfParticipants")[y].value = storedStatistics[y]["number of participants"];
+			thisOutcome.getElementsByClassName("knownDataCount")[y].value = storedStatistics[y]["known data count"];
+			thisOutcome.getElementsByClassName("numeratorCount")[y].value = storedStatistics[y]["numerator count"];
+			thisOutcome.getElementsByClassName("statisticType")[y].value = storedStatistics[y]["statistic type"];
+			thisOutcome.getElementsByClassName("statisticValue")[y].value = storedStatistics[y]["statistic value"];
+			thisOutcome.getElementsByClassName("statisticInequality")[y].value = storedStatistics[y]["statistic inequality"];
+			thisOutcome.getElementsByClassName("statisticUnit")[y].value = storedStatistics[y]["statistic unit"];
+			
+			if (thisOutcome.getElementsByClassName("statisticType")[y].value != ""){
+				thisOutcome.getElementsByClassName("statisticType")[y].style.color = '#000000';
+				statisticTypePick(thisOutcome.getElementsByClassName("statisticType")[y]);
+			}
+			
+			if (thisOutcome.getElementsByClassName("statisticInequality")[y].value != ""){
+				thisOutcome.getElementsByClassName("statisticInequality")[y].style.color = '#000000';
+			}
+			
+			
+		}
+		
 	}
 	
 }
@@ -1405,7 +1434,45 @@ function saveQuitPage3(){
 		thisOutcome["certainty"][0]["DynaMed other"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySub11")[0].value;
 		thisOutcome["certainty"][0]["DynaMed comments on other"] = resultOutcomes[x].getElementsByClassName("DynaMedcertaintySubComments11")[0].value;
 		
-		//I'll have to temp-store Statistics and Attributes within now
+		//I'll have to temp-store Statistics and Attributes within this Outcome now
+		
+		thisOutcome["statistics"] = [];
+		
+		var thisOutcomeStatistics = resultOutcomes[x].getElementsByClassName("statisticBox");
+		for (var y = 0; y < thisOutcomeStatistics.length; y++){
+			var thisStatistic = {};
+			
+			thisStatistic["statistic description"] = thisOutcomeStatistics[y].getElementsByClassName("statisticDescription")[0].value;
+			thisStatistic["statistic notes"] = thisOutcomeStatistics[y].getElementsByClassName("statisticNotes")[0].value;
+			thisStatistic["number of studies"] = thisOutcomeStatistics[y].getElementsByClassName("numberOfStudies")[0].value;
+			thisStatistic["number of participants"] = thisOutcomeStatistics[y].getElementsByClassName("numberOfParticipants")[0].value;
+			thisStatistic["known data count"] = thisOutcomeStatistics[y].getElementsByClassName("knownDataCount")[0].value;
+			thisStatistic["numerator count"] = thisOutcomeStatistics[y].getElementsByClassName("numeratorCount")[0].value;
+			thisStatistic["statistic type"] = thisOutcomeStatistics[y].getElementsByClassName("statisticType")[0].value;
+			thisStatistic["statistic value"] = thisOutcomeStatistics[y].getElementsByClassName("statisticValue")[0].value;
+			thisStatistic["statistic inequality"] = thisOutcomeStatistics[y].getElementsByClassName("statisticInequality")[0].value;
+			thisStatistic["statistic unit"] = thisOutcomeStatistics[y].getElementsByClassName("statisticUnit")[0].value;
+
+			thisStatistic["attributes"] = [];
+			var thisAttributes = thisOutcomeStatistics[y].getElementsByClassName("statisticAttributeBox");
+			for (var z = 0; z < thisAttributes.length; z++){
+				var thisAtrribute = {};
+				
+				//thisAttributes[z]
+				thisAtrribute["attribute estimate type"] = thisAttributes[z].getElementsByClassName("attributeEstimateType")[0].value;
+				thisAtrribute["attribute quantity"] = thisAttributes[z].getElementsByClassName("peQuantity")[0].value;
+				thisAtrribute["attribute from"] = thisAttributes[z].getElementsByClassName("peFrom")[0].value;
+				thisAtrribute["attribute to"] = thisAttributes[z].getElementsByClassName("peTo")[0].value;
+				thisAtrribute["attribute level"] = thisAttributes[z].getElementsByClassName("peLevel")[0].value;
+				thisAtrribute["attribute inequality"] = thisAttributes[z].getElementsByClassName("peInequality")[0].value;
+				
+				thisStatistic["attributes"].push(thisAtrribute);
+			}
+			
+			
+			thisOutcome["statistics"].push(thisStatistic);
+		}
+		
 		
 		thisResult["outcomes"].push(thisOutcome);
 	}
