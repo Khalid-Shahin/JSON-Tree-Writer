@@ -263,6 +263,7 @@ function convertJSONToTree(){
 				var dictionaryParse;
 				eval('dictionaryParse = ' + jsonTextAreaChecked);
 				var dictionaryToJSON = JSON.stringify(dictionaryParse);
+				
 				var convertingJSON = JSON.parse(dictionaryToJSON);
 				
 				if (confirm("Invalid JSON formatting, but changes can be made to the input to make it work. The most common problem that gets fixed is having integers as the keyname, a misplaced comma, or the use of single quotes in place of double quotes. A correction attempt can be made although it may not be accurate or desired. Do you want your JSON to be automatically corrected?")) {
@@ -275,7 +276,17 @@ function convertJSONToTree(){
 				
 
 			} else {
-				CRASH();
+				try {
+					console.log("test");
+					var convertingJSON = JSON.parse("{" + document.getElementById("]....}?|?|?{....[jsonTextArea").value + "}");
+					if (confirm("Invalid JSON formatting, but this can be fixed by having your input inside two curly braces. Automatically make this change?")){
+						json = convertingJSON;
+						buildTree(true);
+						convertTreeToJSON();
+					}
+				} catch(err){
+					CRASH(err);
+				}
 			}
 		 } catch(err) {
 			alert("Invalid JSON formatting");
