@@ -1296,6 +1296,36 @@ function loadResultData(resultData){
 			}
 			
 			
+			var storedAttributes = storedStatistics[y]["attributes"];
+			var thisStatistic = thisOutcome.getElementsByClassName("statisticBox")[y];
+			for(var z = 0; z < storedAttributes.length; z++){
+				if (z > 0){
+					addAttribute(thisStatistic, thisOutcome.getAttribute('resultOutcomeNumber'));
+				}
+
+				thisStatistic.getElementsByClassName("attributeEstimateType")[z].value = storedAttributes[z]["attribute estimate type"];
+				thisStatistic.getElementsByClassName("peQuantity")[z].value = storedAttributes[z]["attribute quantity"];
+				thisStatistic.getElementsByClassName("peFrom")[z].value = storedAttributes[z]["attribute from"];
+				thisStatistic.getElementsByClassName("peTo")[z].value = storedAttributes[z]["attribute to"];
+				thisStatistic.getElementsByClassName("peLevel")[z].value = storedAttributes[z]["attribute level"];
+				thisStatistic.getElementsByClassName("peInequality")[z].value = storedAttributes[z]["attribute inequality"];
+
+				if (thisStatistic.getElementsByClassName("attributeEstimateType")[z].value != ""){
+					thisStatistic.getElementsByClassName("attributeEstimateType")[z].style.color = '#000000';
+					attributeEstimatePick(thisStatistic.getElementsByClassName("attributeEstimateType")[z]);
+				}
+				
+				if (thisStatistic.getElementsByClassName("peInequality")[z].value != ""){
+					thisStatistic.getElementsByClassName("peInequality")[z].style.color = '#000000';
+				}
+				
+			}
+			
+			var allAttributeButtons = thisOutcome.getElementsByClassName("addAttributeButton");
+			for(var button = 0; button < allAttributeButtons.length - 1; button++){
+				allAttributeButtons[button].parentElement.style.display = 'none';
+			}
+
 		}
 		
 	}
@@ -1311,7 +1341,6 @@ var numberOfResults = 0;
 
 var numberOfResultOutcomes = 0;
 var outcomeStatistics = [];
-var outcomeStatisticAttribute = [];
 
 function saveQuitPage3(){
 
@@ -1458,7 +1487,6 @@ function saveQuitPage3(){
 			for (var z = 0; z < thisAttributes.length; z++){
 				var thisAtrribute = {};
 				
-				//thisAttributes[z]
 				thisAtrribute["attribute estimate type"] = thisAttributes[z].getElementsByClassName("attributeEstimateType")[0].value;
 				thisAtrribute["attribute quantity"] = thisAttributes[z].getElementsByClassName("peQuantity")[0].value;
 				thisAtrribute["attribute from"] = thisAttributes[z].getElementsByClassName("peFrom")[0].value;
@@ -1496,7 +1524,6 @@ function saveQuitPage3(){
 	page3.innerHTML = "";
 	numberOfResultOutcomes = 0;
 	outcomeStatistics = [];
-	outcomeStatisticAttribute = [];
 	page3.style.display = "none";
 	page2.style.display = "block";
 	
@@ -1753,7 +1780,6 @@ function addResult(){
 function addResultOutcome(){
    numberOfResultOutcomes += 1;
    outcomeStatistics.push(0);
-   outcomeStatisticAttribute.push([]);
    var itm = document.getElementById("resultOutcomeBox");
    var cln = itm.cloneNode(true);
    cln.id = "";
@@ -1864,7 +1890,6 @@ function resultCheckStudyPICcombo(num){
 
 function addStatistic(element, resultOutcomeNumber){
    outcomeStatistics[resultOutcomeNumber-1] += 1;
-   outcomeStatisticAttribute[resultOutcomeNumber-1].push(0);
    var itm = document.getElementById("statisticBox");
    var cln = itm.cloneNode(true);
    cln.id = "";
@@ -1888,21 +1913,21 @@ function addStatistic(element, resultOutcomeNumber){
 		cln.getElementsByClassName("proportion")[0].style.display = "none";
 		cln.getElementsByClassName("derivedProportion")[0].style.display = "none";
    }
-   addAttribute(cln, resultOutcomeNumber, outcomeStatisticAttribute[resultOutcomeNumber-1].length-1);
+   addAttribute(cln, resultOutcomeNumber);
    element.getElementsByClassName("statistics")[0].appendChild(cln);
 }
 
-function addAttribute(element, resultOutcomeNumber, resultStatisticNumber){
-   outcomeStatisticAttribute[resultOutcomeNumber-1][resultStatisticNumber] += 1;
+function addAttribute(element, resultOutcomeNumber){   
+   var resultStatisticNumber = element.getElementsByClassName("statisticAttributeBox").length+1;
    var itm = document.getElementById("statisticAttributeBox");
    var cln = itm.cloneNode(true);
    cln.id = "";
-   cln.getElementsByClassName("outcomeStatisticAttributeNumberLabel")[0].innerHTML = outcomeStatisticAttribute[resultOutcomeNumber-1][resultStatisticNumber];
+   cln.getElementsByClassName("outcomeStatisticAttributeNumberLabel")[0].innerHTML = resultStatisticNumber;
    cln.getElementsByClassName("addAttributeButton")[0].onclick = function(){
-				addAttribute(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, resultOutcomeNumber, resultStatisticNumber);
+				addAttribute(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, resultOutcomeNumber);
 				this.parentElement.style.display = 'none';
 			};
-   //cln.getElementsByClassName("outcomeStatisticAttributeNumberLabel")[0].innerHTML = outcomeStatistics[resultOutcomeNumber-1];
+
    element.getElementsByClassName("attributes")[0].appendChild(cln);   
 }
 
