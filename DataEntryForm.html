@@ -346,25 +346,6 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			<p class="unselectable" style="position: absolute; margin-top: -21px; margin-left: 302; pointer-events: none;">▼</p>
 		</div>
 		
-			
-	  <div class="multiselect multiSelectComponent contributingStudiesMultiSelect" id="contributingStudiesMultiSelect" style="margin-left: 8px; display: none; z-index: 100;">
-		<div id="selectBox" class="group selectBox multiSelectComponent" style="width: 528px;">
-		  <select class="dropdownInput multiSelectComponent" style="height: 28px;" required>
-			<option class="resultsEvidenceLabel" id="resultsEvidenceLabel"  style="multiSelectComponent" selected hidden>Select the studies used for this synthesis</option>
-		  </select>
-		  <label class="textLabel unselectable">Contributing Studies</label>
-
-		</div>
-		<div id="checkboxes" class="checkboxes multiSelectComponent multiSelectDropDownOptions" onchange="changeResultsEvidenceLabel(this);" style="width: 528px; position: absolute; background-color: #FFFFFF;">
-		  <label class="unselectable">
-			<input class="evidenceInput" type="checkbox" value="Engelhardt 1960"/>Engelhardt 1960</label>
-		  <label class="unselectable">
-			<input class="evidenceInput" type="checkbox" value="Hogarty 1973"/>Hogarty 1973</label>
-		  <label class="unselectable">
-			<input class="evidenceInput" type="checkbox" value="Nishikawa 1982"/>Nishikawa 1982</label>
-		</div>
-	  </div>
-		
 		<div class="group resultActualOutcomeGroup" style="margin-left: 8px;">
 		  <input class="textInput resultActualOutcome" type="text" id="resultActualOutcome" list="resultActualOutcomeList" style="width: 380px;" value="" required="">
 		  <span class="highlight"></span>
@@ -387,18 +368,32 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			<p class="unselectable" style="position: absolute; margin-top: -21px; margin-left: 121; pointer-events: none;">▼</p>
 		</div>
 		<div style="margin-top: 8px; display: flex; flex-flow: row wrap;">
-			<div class="group" style=""> <input class="textInput resultOutcomeDescription" type="text" id="outcomeNotes" style="width: 475px;" required=""> <span class="highlight"></span> <span class="bar"></span>
+			<div class="group" style=""> <input class="textInput resultOutcomeDescription" type="text" id="outcomeDescription" style="width: 475px;" required=""> <span class="highlight"></span> <span class="bar"></span>
 			<label class="textLabel unselectable">Outcome Description</label></div>
 			<div class="group" style="margin-left: 8px;"> <input class="textInput resultOutcomeNotes" type="text" id="outcomeNotes" style="width: 475px;" required=""> <span class="highlight"></span> <span class="bar"></span>
 			<label class="textLabel unselectable">Outcome Notes</label></div>
 		</div>
+		<div style="margin-top: 16px; display: flex; flex-flow: row wrap; font-weight: normal; font-size: 15px;">Name the Evidence (Study + PICO) to be represented here:</div>
 		<div style="margin-top: 8px; display: flex; flex-flow: row wrap;">
-			<div class="group" style=""> <input class="textInput resultEvidenceName" type="text" id="outcomeNotes" style="width: 210px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Short Display Name</label></div>
-			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceIdentifier" type="text" id="outcomeNotes" style="width: 274px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Identifier</label></div>
-			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceDescription" type="text" id="outcomeNotes" style="width: 240px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Description</label></div>
-			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceNotes" type="text" id="outcomeNotes" style="width: 210px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Notes</label></div>
+			<div class="group" style=""> <input class="textInput resultEvidenceName" type="text" id="resultEvidenceName" style="width: 210px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Short Display Name</label></div>
+			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceIdentifier" type="text" id="resultEvidenceIdentifier" style="width: 274px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Identifier</label></div>
+			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceDescription" type="text" id="resultEvidenceDescription" style="width: 240px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Description</label></div>
+			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceNotes" type="text" id="resultEvidenceNotes" style="width: 210px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Notes</label></div>
 		</div>
-		
+		<div style="margin-top: 8px; display: none; flex-flow: row wrap;" class="evidenceSourceRow">
+			  <div class="group" style=""> <input class="textInput resultEvidenceSourceDescribe" type="text" id="resultEvidenceSourceDescribe" style="width: 422px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Describe Evidence Source</label></div>
+			  <div class="multiselect multiSelectComponent contributingStudiesMultiSelect" id="contributingStudiesMultiSelect" style="margin-left: 8px; z-index: 100;">
+				<div id="selectBox" class="group selectBox multiSelectComponent" style="width: 528px;">
+				  <select class="dropdownInput multiSelectComponent" style="height: 28px;" required>
+					<option class="resultsEvidenceLabel" id="resultsEvidenceLabel"  style="multiSelectComponent" selected hidden>Select the studies used for this synthesis</option>
+				  </select>
+				  <label class="textLabel unselectable">Contributing Studies</label>
+
+				</div>
+				<div id="checkboxes" class="checkboxes multiSelectComponent multiSelectDropDownOptions" onchange="changeResultsEvidenceLabel(this);" style="width: 528px; position: absolute; background-color: #FFFFFF;">
+				</div>
+			  </div>
+		</div>
 		<b>
 			<div class="statistics" name="statistics" id="statistics" align="center">
 
@@ -491,11 +486,9 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 				<label class="textLabel unselectable">Number of participants</label>
 			</div>		
 			<div class="group" style="margin-left: 8px"><input class="textInput outcomeDetail knownDataCount" type="text" name="knownDataCount" style="width: 236px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Known data count</label></div>
-			<div class="group numeratorCountGroup" style="margin-left: 8px"><input class="textInput outcomeDetail numeratorCount" type="text" name="numeratorCount" style="width: 236px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Numerator count (number of events)</label></div>
+			<div class="group numeratorCountGroup" style="margin-left: 8px"><input class="textInput outcomeDetail numeratorCount" type="text" name="numeratorCount" style="width: 236px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Total number of events</label></div>
 		</div>
-			
-
-		
+					
 		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
 			<div class="group statisticTypeGroup" style="margin-left: 0px;">
 				<select class="dropdownInput statisticType" name="statisticType" style="width: 208px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; statisticTypePick(this);" required="">
@@ -815,42 +808,45 @@ var savedResults = {
 
 var page3Open = false;
   
-	function toggleCheckboxDropDown(multiSelect) {
-	  var checkboxDropDown = document.getElementById(multiSelect).getElementsByClassName("checkboxes")[0];
-	  if (checkboxDropDown.style.display != "block") {
-		checkboxDropDown.style.display = "block";
-	  } else {
+function toggleCheckboxDropDown(multiSelect) {
+  var checkboxDropDown = document.getElementById(multiSelect).getElementsByClassName("checkboxes")[0];
+  if (checkboxDropDown.style.display != "block") {
+	checkboxDropDown.style.display = "block";
+  } else {
+	checkboxDropDown.style.display = "none";
+  }
+}
+
+function hideCheckboxDropDown(multiSelect){
+	if (page3Open){
+		var checkboxDropDown = document.getElementById(multiSelect).getElementsByClassName("checkboxes")[0];
 		checkboxDropDown.style.display = "none";
-	  }
 	}
-	
-	function hideCheckboxDropDown(multiSelect){
-	    if (page3Open){
-			var checkboxDropDown = document.getElementById(multiSelect).getElementsByClassName("checkboxes")[0];
-			checkboxDropDown.style.display = "none";
+}
+
+function changeResultsEvidenceLabel(checkBoxGroup){
+	var selectedChecks = getCheckBoxSelection(checkBoxGroup);
+	selectedStudies = selectedChecks[1];
+	if (selectedStudies.length == 0) {
+		selectedStudies = "Select the studies used for this synthesis";
+	} else {
+		selectedStudies = selectedStudies.toString();
+	}
+	checkBoxGroup.parentElement.getElementsByClassName("resultsEvidenceLabel")[0].innerHTML = selectedStudies;
+}
+
+function getCheckBoxSelection(checkBoxGroup){
+	var selectedStudies = [];
+	var selectedEvidence = [];
+	var evidenceInputs = checkBoxGroup.getElementsByClassName("evidenceInput");
+	for (var i = 0; i < evidenceInputs.length; i++){
+		if (evidenceInputs[i].checked) {
+			selectedStudies.push(checkBoxGroup.getElementsByClassName("evidenceLabel")[i].innerText);
+			selectedEvidence.push(evidenceInputs[i].value);
 		}
 	}
-	
-	function changeResultsEvidenceLabel(checkBoxGroup){
-		var selectedStudies = getCheckBoxSelection(checkBoxGroup);
-		if (selectedStudies.length == 0) {
-			selectedStudies = "Select the studies used for this synthesis";
-		} else {
-			selectedStudies = selectedStudies.toString();
-		}
-		checkBoxGroup.parentElement.getElementsByClassName("resultsEvidenceLabel")[0].innerHTML = selectedStudies;
-	}
-	
-	function getCheckBoxSelection(checkBoxGroup){
-		var selectedStudies = [];
-		var evidenceInputs = checkBoxGroup.getElementsByClassName("evidenceInput");
-		for (var i = 0; i < evidenceInputs.length; i++){
-			if (evidenceInputs[i].checked) {
-				selectedStudies.push(evidenceInputs[i].value);
-			}
-		}
-		return selectedStudies;
-	}
+	return [selectedEvidence, selectedStudies];
+}
 
 
 var studyList = [];
@@ -878,6 +874,43 @@ function loadDemoData(){
 	document.getElementById("studyType-1").style.color = '#000000';
 	document.getElementById("studyDetailsDropDown-1").style.display = 'flex';
 	document.getElementById("synthesisTypeDropDown-1").style.display = 'none';
+	if (!document.getElementById("studyName-2")){
+		addStudy();
+	}
+	document.getElementById("studyName-2").value = "Hogarty 1973";
+	document.getElementById("studyDate-2").value = "1973";
+	document.getElementById("singleStudyRadio-2").checked = true;
+	document.getElementById("studyType-2").value = "RCT";
+	document.getElementById("studyType-2").style.color = '#000000';
+	document.getElementById("studyDetailsDropDown-2").style.display = 'flex';
+	document.getElementById("synthesisTypeDropDown-2").style.display = 'none';	
+	if (!document.getElementById("studyName-3")){
+		addStudy();
+	}
+	document.getElementById("studyName-3").value = "Nishikawa 1982";
+	document.getElementById("studyDate-3").value = "1982";
+	document.getElementById("singleStudyRadio-3").checked = true;
+	document.getElementById("studyType-3").value = "RCT";
+	document.getElementById("studyType-3").style.color = '#000000';
+	document.getElementById("studyDetailsDropDown-3").style.display = 'flex';
+	document.getElementById("synthesisTypeDropDown-3").style.display = 'none';	
+	if (!document.getElementById("studyName-4")){
+		addStudy();
+	}
+	document.getElementById("studyName-4").value = "Adams 2014";
+	document.getElementById("pmid-4").value = "24395698";
+	document.getElementById("studyTitle-4").value = "Chlorpromazine versus placebo for schizophrenia.";
+	document.getElementById("studyURL-4").value = "https://doi.org/10.1002/14651858.CD000284.pub3";
+	document.getElementById("studyPublisher-4").value = "Cochrane Database Syst Rev";
+	document.getElementById("studyDate-4").value = "2014";
+	document.getElementById("studyPages-4").value = "CD000284";
+	document.getElementById("studyAuthors-4").value = "Adams CE; Awad GA; Rathbone J; Thornley B; Soares-Weiser K";
+	document.getElementById("synthesisRadio-4").checked = true;
+	document.getElementById("studyType-4").value = "RCT";
+	document.getElementById("studyType-4").style.color = '#000000';
+	document.getElementById("studyDetailsDropDown-4").style.display = 'flex';
+	document.getElementById("synthesisTypeDropDown-4").style.display = 'none';	
+	
 	document.getElementById("populationName-1").value = "Patients with Schizophrenia";
 	document.getElementById("populationIdentifier-1").value = "Group-Schizophrenia";
 	document.getElementById("populationIntendedRadio-1").checked = true;
@@ -887,11 +920,65 @@ function loadDemoData(){
 	document.getElementById("exposureName-2").value = "Placebo";
 	document.getElementById("exposureIdentifier-2").value = "EvidenceVariable-Placebo";
 	document.getElementById("exposureIntendedRadio-2").checked = true;
+	
 	document.getElementById("outcomeName-1").value = "Relapse long term (6 months - 2 years)";
 	document.getElementById("outcomeIdentifier-1").value = "EvidenceVariable-RelapseSixMonthsTwoYears";
 	document.getElementById("outcomeIntendedRadio-1").checked = true;
+	if (!document.getElementById("outcomeName-2")){
+		addOutcome();
+	}
+	document.getElementById("outcomeName-2").value = "Relapse (2 years - 5 years)";
+	document.getElementById("outcomeIdentifier-2").value = "EvidenceVariable-RelapseTwoYearsFiveYears";
+	document.getElementById("outcomeIntendedRadio-2").checked = true;
+	//addOutcome();
+	//addOutcome();
+	
+	savedResults = {"Engelhardt 1960":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Engelhardt 1960","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"","actual population identifier":"","actual intervention display":"","actual intervention identifier":"","actual comparator display":"","actual comparator identifier":"","population directness match":"","intervention directness match":"","comparator directness match":"","population description match":"","intervention description match":"","comparator description match":"","population notes match":"","intervention notes match":"","comparator notes match":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseSixMonthsTwoYears-Engelhardt","evidence description":"","evidence notes":"","describe evidence source":"undefined","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"","statistic notes":"","number of studies":"","number of participants":"","known data count":"","numerator count":"","statistic type":"","statistic value":"","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"","attribute quantity":"","attribute from":"","attribute to":"","attribute level":"0.95","attribute inequality":""}]}]}]}}}},"Hogarty 1973":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Hogarty 1973","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"","actual population identifier":"","actual intervention display":"","actual intervention identifier":"","actual comparator display":"","actual comparator identifier":"","population directness match":"","intervention directness match":"","comparator directness match":"","population description match":"","intervention description match":"","comparator description match":"","population notes match":"","intervention notes match":"","comparator notes match":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseSixMonthsTwoYears-Hogarty","evidence description":"","evidence notes":"","describe evidence source":"undefined","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"","statistic notes":"","number of studies":"","number of participants":"","known data count":"","numerator count":"","statistic type":"","statistic value":"","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"","attribute quantity":"","attribute from":"","attribute to":"","attribute level":"0.95","attribute inequality":""}]}]},{"intended outcome display":"Relapse (2 years - 5 years)","intended outcome identifier":"EvidenceVariable-RelapseTwoYearsFiveYears","actual outcome display":"","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"","evidence description":"","evidence notes":"","describe evidence source":"","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"","statistic notes":"","number of studies":"","number of participants":"","known data count":"","numerator count":"","statistic type":"","statistic value":"","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"","attribute quantity":"","attribute from":"","attribute to":"","attribute level":"0.95","attribute inequality":""}]}]}]}}}},"Nishikawa 1982":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Nishikawa 1982","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"","actual population identifier":"","actual intervention display":"","actual intervention identifier":"","actual comparator display":"","actual comparator identifier":"","population directness match":"","intervention directness match":"","comparator directness match":"","population description match":"","intervention description match":"","comparator description match":"","population notes match":"","intervention notes match":"","comparator notes match":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseSixMonthsTwoYears-Nishikawa","evidence description":"","evidence notes":"","describe evidence source":"undefined","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"","statistic notes":"","number of studies":"","number of participants":"","known data count":"","numerator count":"","statistic type":"","statistic value":"","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"","attribute quantity":"","attribute from":"","attribute to":"","attribute level":"0.95","attribute inequality":""}]}]},{"intended outcome display":"Relapse (2 years - 5 years)","intended outcome identifier":"EvidenceVariable-RelapseTwoYearsFiveYears","actual outcome display":"","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"","evidence description":"","evidence notes":"","describe evidence source":"","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"","statistic notes":"","number of studies":"","number of participants":"","known data count":"","numerator count":"","statistic type":"","statistic value":"","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"","attribute quantity":"","attribute from":"","attribute to":"","attribute level":"0.95","attribute inequality":""}]}]}]}}}},"Adams 2014":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Adams 2014","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"","actual population identifier":"","actual intervention display":"","actual intervention identifier":"","actual comparator display":"","actual comparator identifier":"","population directness match":"","intervention directness match":"","comparator directness match":"","population description match":"","intervention description match":"","comparator description match":"","population notes match":"","intervention notes match":"","comparator notes match":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"","evidence description":"","evidence notes":"","describe evidence source":"","contributing studies":["Evidence-RelapseSixMonthsTwoYears-Engelhardt","Evidence-RelapseSixMonthsTwoYears-Hogarty","Evidence-RelapseSixMonthsTwoYears-Nishikawa"],"contributing studies labels":["Engelhardt 1960","Hogarty 1973","Nishikawa 1982"],"certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"","statistic notes":"","number of studies":"","number of participants":"","known data count":"","numerator count":"","statistic type":"","statistic value":"","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"","attribute quantity":"","attribute from":"","attribute to":"","attribute level":"0.95","attribute inequality":""}]}]}]}}}}};
+	loadResultList(savedResults);
 }
 
+
+function loadResultList(dict){
+	var results = [];
+	var layerOne = Object.keys(dict);
+	for(var w = 0; w < layerOne.length; w++){
+		var a = layerOne[w];
+		var layerTwo = Object.keys(dict[a]);
+		for(var x = 0; x < layerTwo.length; x++){
+			var b = layerTwo[x];
+			var layerThree = Object.keys(dict[a][b]);
+			for(var y = 0; y < layerThree.length; y++){
+				var c = layerThree[y];
+				var layerFour = Object.keys(dict[a][b][c]);
+				for(var z = 0; z < layerFour.length; z++){
+					var d = layerFour[z];
+					results.push([a, b, c, d])
+				}
+			}
+		}
+	}
+	componentListCreate();
+	for(var i = 0; i < results.length; i++){
+		if(i >= numberOfResults){
+			addResult();
+		}
+		
+		page2.getElementsByClassName("resultStudyDropDown")[i].value = results[i][0];
+		page2.getElementsByClassName("resultStudyDropDown")[i].style.color = '#000000';
+		
+		page2.getElementsByClassName("resultPopulationDropDown")[i].value = results[i][1];
+		page2.getElementsByClassName("resultPopulationDropDown")[i].style.color = '#000000';
+
+		page2.getElementsByClassName("resultInterventionDropDown")[i].value = results[i][2];
+		page2.getElementsByClassName("resultInterventionDropDown")[i].style.color = '#000000';
+		
+		page2.getElementsByClassName("resultComparatorDropDown")[i].value = results[i][3];
+		page2.getElementsByClassName("resultComparatorDropDown")[i].style.color = '#000000';
+		
+		document.getElementById("restOfResultRow-" + (i+1).toString()).style.display = 'flex';
+		enableCreateStudyResultsButton(i+1);
+	}
+}
 
 function loadPage2(){
 	page1.style.display = 'none';
@@ -1206,6 +1293,7 @@ function loadResultData(resultData){
 		page3.getElementsByClassName("resultIntendedOutcome")[x].value = storedOutcomes[x]["intended outcome identifier"];
 		if (page3.getElementsByClassName("resultIntendedOutcome")[x].value != ""){
 			page3.getElementsByClassName("resultIntendedOutcome")[x].style.color = '#000000';
+			generateContributingStudies(x+1);
 		}
 		
 		if ("actual outcome identifier" in storedOutcomes[x] && storedOutcomes[x]["actual outcome identifier"] != ""){
@@ -1221,6 +1309,27 @@ function loadResultData(resultData){
 		page3.getElementsByClassName("resultEvidenceIdentifier")[x].value = storedOutcomes[x]["evidence identifier"];
 		page3.getElementsByClassName("resultEvidenceDescription")[x].value = storedOutcomes[x]["evidence description"];
 		page3.getElementsByClassName("resultEvidenceNotes")[x].value = storedOutcomes[x]["evidence notes"];
+		page3.getElementsByClassName("resultEvidenceSourceDescribe")[x].value = storedOutcomes[x]["describe evidence source"];
+		
+		var dropDownEvidenceInputs = page3.getElementsByClassName("multiSelectDropDownOptions")[x].getElementsByClassName("evidenceInput");
+		var dropDownEvidenceLabels = page3.getElementsByClassName("multiSelectDropDownOptions")[x].getElementsByClassName("evidenceLabel");
+		console.log("------------------");
+		for (var i = 0; i < dropDownEvidenceInputs.length; i++){
+			//console.log(storedOutcomes[x]["contributing studies"]);
+			//console.log(storedOutcomes[x]["contributing studies labels"]);
+			//console.log(dropDownEvidenceInputs[i].value);
+			if (dropDownEvidenceInputs[i].value && storedOutcomes[x]["contributing studies"].indexOf(dropDownEvidenceInputs[i].value) != -1){
+				console.log("HERE");
+				dropDownEvidenceInputs[i].checked = true;
+			} else {
+				if (!dropDownEvidenceInputs[i].value && storedOutcomes[x]["contributing studies labels"].indexOf(dropDownEvidenceLabels[i].innerText) != -1){
+					dropDownEvidenceInputs[i].checked = true;
+				} else {
+					dropDownEvidenceInputs[i].checked = false;
+				}
+			}
+		}
+		changeResultsEvidenceLabel(page3.getElementsByClassName("multiSelectDropDownOptions")[x]);
 		
 		page3.getElementsByClassName("certaintyCheck")[x].checked = storedOutcomes[x]["certainty checkbox"];
 	
@@ -1422,7 +1531,13 @@ function saveQuitPage3(){
 		thisOutcome["evidence identifier"] = resultOutcomes[x].getElementsByClassName("resultEvidenceIdentifier")[0].value;
 		thisOutcome["evidence description"] = resultOutcomes[x].getElementsByClassName("resultEvidenceDescription")[0].value;
 		thisOutcome["evidence notes"] = resultOutcomes[x].getElementsByClassName("resultEvidenceNotes")[0].value;
-				
+		thisOutcome["describe evidence source"] = resultOutcomes[x].getElementsByClassName("resultEvidenceSourceDescribe")[0].value;
+		var contributingStudies = getCheckBoxSelection(resultOutcomes[x].getElementsByClassName("multiSelectDropDownOptions")[0]);
+		if (contributingStudies[0].length){
+			thisOutcome["contributing studies"] = contributingStudies[0];
+			thisOutcome["contributing studies labels"] = contributingStudies[1];
+		}
+		
 		thisOutcome["certainty checkbox"] = resultOutcomes[x].getElementsByClassName("certaintyCheck")[0].checked;
 		thisOutcome["certainty"] = [{}];
 		thisOutcome["certainty"][0]["certainty system"] = resultOutcomes[x].getElementsByClassName("certaintySystem")[0].value;
@@ -1779,13 +1894,17 @@ function addResult(){
 
 function addResultOutcome(){
    numberOfResultOutcomes += 1;
+   var num = numberOfResultOutcomes;
    outcomeStatistics.push(0);
    var itm = document.getElementById("resultOutcomeBox");
    var cln = itm.cloneNode(true);
    cln.id = "";
-   var temp = 'contributingStudiesMultiSelect-'+numberOfResultOutcomes.toString();
+   
    cln.getElementsByClassName("resultOutcomeNumberLabel")[0].innerHTML = numberOfResultOutcomes;
+   var temp = 'contributingStudiesMultiSelect-'+numberOfResultOutcomes.toString();
    cln.getElementsByClassName("contributingStudiesMultiSelect")[0].id = temp;
+   
+   cln.getElementsByClassName("resultIntendedOutcome")[0].onchange = function(){ this.style.color = '#000000'; generateContributingStudies(num); };
    
    cln.getElementsByClassName("contributingStudiesMultiSelect")[0].onclick = function(){ toggleCheckboxDropDown(temp) };
    cln.setAttribute("resultOutcomeNumber", numberOfResultOutcomes.toString());
@@ -1801,7 +1920,7 @@ function addResultOutcome(){
 		page3.getElementsByClassName("resultComparatorMatchGroup")[0].style.display = "none";
 		cln.getElementsByClassName("resultActualOutcomeGroup")[0].style.display = "none";
 		cln.getElementsByClassName("resultOutcomeMatchGroup")[0].style.display = "none";
-		cln.getElementsByClassName("contributingStudiesMultiSelect")[0].style.display = "inline";
+		cln.getElementsByClassName("evidenceSourceRow")[0].style.display = "flex";
    }
    
    document.getElementById("ResultOutcomes").appendChild(cln);
@@ -1811,11 +1930,7 @@ function addResultOutcome(){
 
 	if (synthesisList.indexOf(page3.getElementsByClassName("resultStudy")[0].value) != -1){
 	    var specifiedElement = document.getElementById(temp);
-		var checkBoxes = specifiedElement.getElementsByClassName("evidenceInput");
-		for (var i = 0; i < checkBoxes.length; i++){
-			checkBoxes[i].checked = true;
-		}
-		changeResultsEvidenceLabel(specifiedElement.getElementsByClassName("multiSelectDropDownOptions")[0]);
+		
 		page3.addEventListener('click', function(event) {
 		   var isClickInside = specifiedElement.contains(event.target);
 
@@ -1825,6 +1940,51 @@ function addResultOutcome(){
 		});
 	}
 
+}
+
+function generateContributingStudies(num){
+	//checks to be sure it is a synthesis
+	var matchingPICO = [];
+	if (synthesisList.indexOf(currentStudy) != -1){
+		var currentIntendedOutcome = page3.getElementsByClassName("resultIntendedOutcome")[num-1].value;
+		
+		var s = Object.keys(savedResults);
+		for (var i = 0; i < s.length; i++){
+			var x = savedResults[s[i]];
+			if (s[i] != currentStudy && currentIntendedPopulation in x && currentIntendedIntervention in x[currentIntendedPopulation]
+			&& currentIntendedComparator in x[currentIntendedPopulation][currentIntendedIntervention]){
+				
+				var matching = x[currentIntendedPopulation][currentIntendedIntervention][currentIntendedComparator];
+				var matchPICO = false;
+				var matchingEvidence = [];
+				for (var y = 0; y < matching["outcomes"].length; y++){
+					if (matching["outcomes"][y]["intended outcome identifier"] == currentIntendedOutcome){
+						matchPICO = true;
+						matchingEvidence.push(matching["outcomes"][y]["evidence identifier"]);
+					}
+				}
+				if (matchPICO){
+					//POSSIBLY TODO, to do
+					//It only keeps the first matching Evidence in the Study-P-I-C-O because there should only be one, I believe.
+					matchingPICO.push([s[i], matchingEvidence[0]]);
+				}
+			}
+		}
+	}
+	//GENERATE THE DROP DOWN
+	//DELETE CONTENTS OF DROP DOWN LIST
+	var dropDownOptions = "";
+	for (var x = 0; x < matchingPICO.length; x++){
+		//ADD CHECKBOXES AND LABEL TO THE LIST
+		var studyChecked = "";
+		if (synthesisList.indexOf(matchingPICO[x][0]) == -1){
+			studyChecked = " checked";
+		}
+		
+		dropDownOptions += '<label class="unselectable"><input class="evidenceInput" type="checkbox" value="' + matchingPICO[x][1] + '"' + studyChecked + '><span class="evidenceLabel">' + matchingPICO[x][0] + '</span></label>';
+	}
+	page3.getElementsByClassName("multiSelectDropDownOptions")[num-1].innerHTML = dropDownOptions;
+	changeResultsEvidenceLabel(page3.getElementsByClassName("multiSelectDropDownOptions")[num-1]);
 }
 
 function enableCreateStudyResultsButton(num){
@@ -1906,7 +2066,7 @@ function addStatistic(element, resultOutcomeNumber){
 		cln.getElementsByClassName("meanDifference")[0].style.display = "none";
 		cln.getElementsByClassName("absolute-MedianDiff")[0].style.display = "none";
    } else {
-		cln.getElementsByClassName("numeratorCountGroup")[0].style.display = "none";
+		//cln.getElementsByClassName("numeratorCountGroup")[0].style.display = "none";
 		cln.getElementsByClassName("mean")[0].style.display = "none";
 		cln.getElementsByClassName("median")[0].style.display = "none";
 		cln.getElementsByClassName("count")[0].style.display = "none";
