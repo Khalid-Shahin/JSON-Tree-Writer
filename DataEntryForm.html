@@ -1313,13 +1313,12 @@ function loadResultData(resultData){
 		
 		var dropDownEvidenceInputs = page3.getElementsByClassName("multiSelectDropDownOptions")[x].getElementsByClassName("evidenceInput");
 		var dropDownEvidenceLabels = page3.getElementsByClassName("multiSelectDropDownOptions")[x].getElementsByClassName("evidenceLabel");
-		console.log("------------------");
+		//console.log("------------------");
 		for (var i = 0; i < dropDownEvidenceInputs.length; i++){
 			//console.log(storedOutcomes[x]["contributing studies"]);
 			//console.log(storedOutcomes[x]["contributing studies labels"]);
 			//console.log(dropDownEvidenceInputs[i].value);
 			if (dropDownEvidenceInputs[i].value && storedOutcomes[x]["contributing studies"].indexOf(dropDownEvidenceInputs[i].value) != -1){
-				console.log("HERE");
 				dropDownEvidenceInputs[i].checked = true;
 			} else {
 				if (!dropDownEvidenceInputs[i].value && storedOutcomes[x]["contributing studies labels"].indexOf(dropDownEvidenceLabels[i].innerText) != -1){
