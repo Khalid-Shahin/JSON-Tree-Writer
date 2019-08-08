@@ -1885,7 +1885,7 @@ function addResult(){
    cln.getElementsByClassName("resultComparatorDropDown")[0].id = "resultComparatorDropDown-"+num;
    cln.getElementsByClassName("restOfResultRow")[0].id = "restOfResultRow-"+num;
    cln.getElementsByClassName("createStudyResultsButton")[0].id = "createStudyResultsButton-"+num;
-   cln.getElementsByClassName("resultStudyDropDown")[0].onchange = function(){this.style.color = '#000000'; document.getElementById("restOfResultRow-" + num).style.display = 'flex'; changeTextOnResultsButton(parseInt(num)-1); };
+   cln.getElementsByClassName("resultStudyDropDown")[0].onchange = function(){this.style.color = '#000000'; document.getElementById("restOfResultRow-" + num).style.display = 'flex'; changeTextOnResultsButton(parseInt(num)-1); enableCreateStudyResultsButton(num); };
    cln.getElementsByClassName("resultPopulationDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); };
    cln.getElementsByClassName("resultInterventionDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); };
    cln.getElementsByClassName("resultComparatorDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); };
