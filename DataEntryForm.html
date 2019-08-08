@@ -954,6 +954,41 @@ function loadDemoData(){
 	loadResultList(savedResults);
 }
 
+function updateAllResultsButtons(){
+	var resultsButtons = page2.getElementsByClassName("createStudyResultsButton");
+	for(var x = 0; x < resultsButtons.length; x++){
+		changeTextOnResultsButton(x);
+	}
+}
+
+function changeTextOnResultsButton(num){
+	var tempStudy = page2.getElementsByClassName("resultStudyDropDown")[num].value;
+	var tempPopulation = page2.getElementsByClassName("resultPopulationDropDown")[num].value;
+	var tempIntervention = page2.getElementsByClassName("resultInterventionDropDown")[num].value;
+	var tempComparator = page2.getElementsByClassName("resultComparatorDropDown")[num].value;
+	var entryExists = false;
+	try {
+		var theResults = savedResults[tempStudy][tempPopulation][tempIntervention][tempComparator]
+		if (theResults){
+			entryExists = true;
+		}
+	} catch(err) {
+	}
+	if (synthesisList.indexOf(tempStudy) != -1){
+		if (entryExists){
+			page2.getElementsByClassName("createStudyResultsButton")[num].value = "Edit Synthesis Results";
+		} else {
+			page2.getElementsByClassName("createStudyResultsButton")[num].value = "Create Synthesis Results";
+		}
+	} else {
+		if (entryExists){
+			page2.getElementsByClassName("createStudyResultsButton")[num].value = "Edit Study Results";
+		} else {
+			page2.getElementsByClassName("createStudyResultsButton")[num].value = "Create Study Results";
+		}
+	}
+}
+
 
 function loadResultList(dict){
 	var results = [];
@@ -995,6 +1030,7 @@ function loadResultList(dict){
 		document.getElementById("restOfResultRow-" + (i+1).toString()).style.display = 'flex';
 		enableCreateStudyResultsButton(i+1);
 	}
+	updateAllResultsButtons();
 }
 
 function loadPage2(){
@@ -1005,6 +1041,7 @@ function loadPage2(){
 	if (numberOfResults == 0){
 		addResult();
 	}
+	updateAllResultsButtons();
 }
 
 
@@ -1658,7 +1695,7 @@ function saveQuitPage3(){
 	page3.style.display = "none";
 	page2.style.display = "block";
 	
-
+	updateAllResultsButtons();
 }
 
 function loadStatistic(element){
@@ -1880,10 +1917,10 @@ function addResult(){
    cln.getElementsByClassName("resultComparatorDropDown")[0].id = "resultComparatorDropDown-"+num;
    cln.getElementsByClassName("restOfResultRow")[0].id = "restOfResultRow-"+num;
    cln.getElementsByClassName("createStudyResultsButton")[0].id = "createStudyResultsButton-"+num;
-   cln.getElementsByClassName("resultStudyDropDown")[0].onchange = function(){this.style.color = '#000000'; document.getElementById("restOfResultRow-" + num).style.display = 'flex';};
-   cln.getElementsByClassName("resultPopulationDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); };
-   cln.getElementsByClassName("resultInterventionDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); };
-   cln.getElementsByClassName("resultComparatorDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); };
+   cln.getElementsByClassName("resultStudyDropDown")[0].onchange = function(){this.style.color = '#000000'; document.getElementById("restOfResultRow-" + num).style.display = 'flex'; changeTextOnResultsButton(parseInt(num)-1); };
+   cln.getElementsByClassName("resultPopulationDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); };
+   cln.getElementsByClassName("resultInterventionDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); };
+   cln.getElementsByClassName("resultComparatorDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); };
    cln.getElementsByClassName("createStudyResultsButton")[0].onclick = function(){ loadPage3(num); };
    document.getElementById("Results").appendChild(cln);
    resultsLoadDropDowns();
