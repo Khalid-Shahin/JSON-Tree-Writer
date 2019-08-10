@@ -4,14 +4,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 
-
 <body onload="prepareForm();">
 
 
 <title>DynaMed Evidence Data Entry Form (Preview)</title>
 
+<div id="allPageHeader">
 <img src="DynaMed-New-Logo-Lagoon.jpg"><h2 style="vertical-align: top; display: inline; font-family: Arial; font-weight: normal"> Evidence Data Entry Form (Preview)</h2>
-
+</div>
 
 <div id="page1">
     <br>
@@ -98,7 +98,7 @@
 	
 	<br>
 	<div>
-		<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" value="Next Page to Create Report" onclick="window.open('https://khalid-shahin.github.io/JSON-Tree-Writer/EBMonFHIR-EvidenceExamplesAndEtcExamples.html');"></p></b>
+		<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" value="Next Page to Create Report" onclick="loadPage4();"></p></b>
 		<br>
 		<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" value="< Back" onclick="page1.style.display = 'block'; page2.style.display = 'none';"></p></b>
 	</div>
@@ -109,9 +109,45 @@
 
 </div>
 
+<div id="page4" class="container" style="display: none;">
+     <div class="topArea">
+     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - THE TREE VIEW DOESN'T WORK YET</h2>
+	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. A field value of &quot;null&quot;, all lowercase, in the tree view will be converted to just null in the JSON.\n2. A field value of &quot;true&quot; or &quot;false&quot;, all lowercase, will be converted to just true or false respectively as booleans in the JSON.\n3. 1D arrays work perfectly fine to and from JSON, and interpreting 2D, 3D, and beyond arrays from JSON to Tree View can work well most of the time, but bugs may occur when adding elements in the Tree View for arrays more complex than 1D.')" style="position: absolute; right: 6px; top: 4px;">Limitations</button>
+	 <p style="position: absolute; right: 94px; top: 7px; margin: 0px; color: #AEAEAE; font-size: 13px; font-family: sans-serif"><b>EBSCO Health Innovations</b></p>
+	 <p style="position: absolute; right: 2px; top: 10px;">Convert Tree View to JSON in real time? <input onchange="TreeToJSONsetting();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_RealTime" name="JSONrealtime" value="JSONrealtime" title="If this is checked then the JSON side will be updated automatically as you type and add elements on the Tree View side."></p>
+	 <p style="position: absolute; right: 2px; top: 32px;">Tree onto JSON Sync-Scroll <input onchange="if (this.checked == true) { 	document.cookie = 'treeOntoJsonSync=true;'; document.cookie = 'TreeToJSONrealtime=true;'; document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked= true; } else { document.cookie = 'treeOntoJsonSync=false;'; }" type="checkbox" id="]....}?|?|?{....[TreeOntoJsonSyncScroll" name="TreeOntoJsonSyncScroll" value="TreeOntoJsonSyncScroll" title="When you scroll in the chart view it will approximately scroll the same spot in the JSON view. Only works if Convert Tree to JSON in real time is enabled."></p>
+	 <p style="position: absolute; right: 2px; top: 54px;">Show delete element buttons? <input onchange="ShowDeleteElementButtons();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_ShowDeleteElements" name="ShowDeleteElements" value="ShowDeleteElements" title="Displays the &quot;-&quot; button for each element."></p>
+	 <p style="position: absolute; right: 2px; top: 76px;">Use single-line textboxes? <input onchange="if (this.checked == true) { document.cookie = 'singlelineText=true;'; singlelineText = true; } else { document.cookie = 'singlelineText=false;'; singlelineText = false; } updateTree();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_ShowSingleLineTextBoxes" name="ShowDeleteElements" value="ShowDeleteElements" title="Displays the &quot;-&quot; button for each element."></p>
+     <p style="margin-top: 8px;"><input type="file" id="]....}?|?|?{....[jsonFile" style="width: 500px; border: 1px solid #555555;" accept=".txt, .json, .js, .ts, .tex, .rtf, .odt, .wpd, .text"></p>
+	 <button onclick="SaveTreeToJSON()">Save Tree to JSON</button> <button onclick="SaveTreeToXML(true)" title="Save the Tree View as a FHIR XML file.">Save Tree to XML</button> <button onclick="deleteEmptyFields();">Delete Empty Fields</button> <input onchange="BlankCheckBoxReadWrite();" type="checkbox" id="]....}?|?|?{....[keepFields" name="keepFields" value="keepBlankFields" title="Having this unchecked removes the empty fields from the saved JSON or XML. It also removes empty objects." checked> Keep blank fields when converted to JSON?
+	 <br><br>
+     <span style="display: inline">
+	 <input id="]....}?|?|?{....[treeWriteChecked" type="radio" name="readWriteMode" value="write" onchange="switchReadWrite();" checked="checked"> Write 
+	 <input id="]....}?|?|?{....[treeReadChecked" type="radio" name="readWriteMode" value="read" onchange="switchReadWrite();"> Read
+     <span class="middleButtons">
+     <button class="convertToJSONButton" onclick="convertTreeToJSON()" id="]....}?|?|?{....[convertToJSONButton"><b>Convert Tree to JSON &#8594;</b></button>
+     <button class="convertToTreeButton" onclick="convertJSONToTree()" id="]....}?|?|?{....[convertToTreeButton"><b>&#8592; Convert JSON to Tree</b></button>
+     <button class="swapButton" onclick="swapSides()" style="" title="Swap the sides of the tree and JSON."><b>&#8646;</b></button>
+     </span>
+     </span>
+          <button class="hideJSONButton" id="]....}?|?|?{....[hideJSONButton" onclick="hideShowJSON()" style=""><b>Hide JSON View</b></button>
+     </div>
+     <div class="bottomSection" id="]....}?|?|?{....[bottomSection">
+       <div class="chart" id="]....}?|?|?{....[treeChart" oninput="if (document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked) { convertTreeToJSON(); } if (document.getElementById(']....}?|?|?{....[TreeOntoJsonSyncScroll').checked) { scrollToActiveElement(); }">
+       </div>
+       <div class="jsonArea" id="]....}?|?|?{....[jsonArea">
+       <textarea class="jsonTextArea" id="]....}?|?|?{....[jsonTextArea" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+       </div>
+     </div>
+    <div id="ElementAddedToast">A new element has been added to the end of the list.</div>
+    <div id="NothingToDeleteToast">No blank elements to delete.</div>
+</div>
+
+
 <br>
 
-<footer style="font-size: 12px; text-align: center;">
+
+<footer id="allPageFooter" style="font-size: 12px; text-align: center;">
 Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction of part or all of the content produced using this tool is permitted for personal, non-commercial use only. Commercial use or reproduction of the software is permitted only with express written permission. Contact <a href="mailto:balper@ebsco.com" target="_top">balper@ebsco.com</a> for commercial use.
 </footer>
 
@@ -838,14 +874,16 @@ function changeResultsEvidenceLabel(checkBoxGroup){
 function getCheckBoxSelection(checkBoxGroup){
 	var selectedStudies = [];
 	var selectedEvidence = [];
+	var selectedEvidenceShortDisplayName = [];
 	var evidenceInputs = checkBoxGroup.getElementsByClassName("evidenceInput");
 	for (var i = 0; i < evidenceInputs.length; i++){
 		if (evidenceInputs[i].checked) {
 			selectedStudies.push(checkBoxGroup.getElementsByClassName("evidenceLabel")[i].innerText);
 			selectedEvidence.push(evidenceInputs[i].value);
+			selectedEvidenceShortDisplayName.push(evidenceInputs[i].getAttribute("data-shortdisplayname"));
 		}
 	}
-	return [selectedEvidence, selectedStudies];
+	return [selectedEvidence, selectedStudies, selectedEvidenceShortDisplayName];
 }
 
 
@@ -950,7 +988,7 @@ function loadDemoData(){
 	//addOutcome();
 	//addOutcome();
 	
-	savedResults = {"Engelhardt 1960":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Engelhardt 1960","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"Engelhardt 1960","actual population identifier":"","actual intervention display":"Chlorpromazine: dose 50-800 mg/day (variable dose regimen)","actual intervention identifier":"","actual comparator display":"Placebo","actual comparator identifier":"EvidenceVariable-Placebo","population directness match":"","intervention directness match":"","comparator directness match":"Exact","population description match":"","intervention description match":"","comparator description match":"","population notes match":"","intervention notes match":"","comparator notes match":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"Relapse (Hospitalization) 18 months","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseSixMonthsTwoYears-Engelhardt","evidence description":"","evidence notes":"","describe evidence source":"undefined","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.72 [0.51, 1.02]","statistic notes":"","number of studies":"","number of participants":"108","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.72","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.51","attribute to":"1.02.","attribute level":"0.95","attribute inequality":""}]}]}]}}}},"Hogarty 1973":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Hogarty 1973","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"Hogarty 1973","actual population identifier":"","actual intervention display":"Chlorpromazine: dose variable min. 100 mg/day, mean 270 mg/day","actual intervention identifier":"","actual comparator display":"Placebo","actual comparator identifier":"EvidenceVariable-Placebo","population directness match":"","intervention directness match":"","comparator directness match":"Exact","population description match":"","intervention description match":"","comparator description match":"","population notes match":"","intervention notes match":"","comparator notes match":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"Relapse (not further defined)","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseSixMonthsTwoYears-Hogarty","evidence description":"","evidence notes":"","describe evidence source":"undefined","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.51 [0.41, 0.62]","statistic notes":"","number of studies":"","number of participants":"374","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.51","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.41","attribute to":"0.62","attribute level":"0.95","attribute inequality":""}]}]},{"intended outcome display":"Relapse (2 years - 5 years)","intended outcome identifier":"EvidenceVariable-RelapseTwoYearsFiveYears","actual outcome display":"Relapse (not further defined)","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseTwoYearsFiveYears-Hogarty","evidence description":"","evidence notes":"","describe evidence source":"","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.63 [0.54, 0.73]","statistic notes":"","number of studies":"","number of participants":"374","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.63","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.54","attribute to":"0.73","attribute level":"0.95","attribute inequality":""}]}]}]}}}},"Nishikawa 1982":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Nishikawa 1982","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"Nishikawa 1982","actual population identifier":"","actual intervention display":"Chlorpromazine: dose 75 mg/day","actual intervention identifier":"","actual comparator display":"Placebo","actual comparator identifier":"EvidenceVariable-Placebo","population directness match":"","intervention directness match":"","comparator directness match":"Exact","population description match":"","intervention description match":"","comparator description match":"","population notes match":"","intervention notes match":"","comparator notes match":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"Relapse (not further defined)","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseSixMonthsTwoYears-Nishikawa","evidence description":"","evidence notes":"","describe evidence source":"undefined","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.81 [0.57, 1.14]","statistic notes":"","number of studies":"","number of participants":"20","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.81","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.57","attribute to":"1.14","attribute level":"0.95","attribute inequality":""}]}]},{"intended outcome display":"Relapse (2 years - 5 years)","intended outcome identifier":"EvidenceVariable-RelapseTwoYearsFiveYears","actual outcome display":"Relapse (not further defined)","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseTwoYearsFiveYears-Nishikawa","evidence description":"","evidence notes":"","describe evidence source":"","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.90 [0.69, 1.18]","statistic notes":"","number of studies":"","number of participants":"20","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.90","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.69","attribute to":"1.18","attribute level":"0.95","attribute inequality":""}]}]}]}}}},"Adams 2014":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Adams 2014","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"","actual population identifier":"","actual intervention display":"","actual intervention identifier":"","actual comparator display":"","actual comparator identifier":"","population directness match":"","intervention directness match":"","comparator directness match":"","population description match":"","intervention description match":"","comparator description match":"","population notes match":"","intervention notes match":"","comparator notes match":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"Adams 2014 Meta-analysis 6 months - 2 years","evidence identifier":"Evidence-RelapseSixMonthsTwoYears-AdamsMetaAnalysis","evidence description":"Chlorpromazine vs. Placebo with Relapse (6 months - 2 years) Risk Ratio 0.65 [0.47, 0.90] for patients with Schizophrenia","evidence notes":"","describe evidence source":"Group-RelapseSixMonthsTwoYears-ThreeStudies","contributing studies":["Evidence-RelapseSixMonthsTwoYears-Engelhardt","Evidence-RelapseSixMonthsTwoYears-Hogarty","Evidence-RelapseSixMonthsTwoYears-Nishikawa"],"contributing studies labels":["Engelhardt 1960","Hogarty 1973","Nishikawa 1982"],"certainty checkbox":true,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"very-low","GRADE comments on certainty":"2 trials report this outcome at 0‐8 weeks follow‐up, 3 trials at 6 months to 2 years, and 2 trials 2‐5 years, none showed a significant difference.","GRADE risk of bias":"serious-concern","GRADE comments on risk of bias":"all studies had an unclear risk of bias for random sequence generation, allocation concealment, blinding of assessors and incomplete data. One also had an unclear risk of other bias as the drugs were provided by a pharmaceutical company.","GRADE inconsistency":"critical-concern","GRADE comments on inconsistency":"inconsistency for this outcome consider the results of relapse outcome at other timepoints; there was very high heterogeneity in the pooled results.","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.65 [0.47, 0.90]","statistic notes":"","number of studies":"3","number of participants":"512","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.65","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.47","attribute to":"0.90","attribute level":"0.95","attribute inequality":""},{"attribute estimate type":"iSq","attribute quantity":"0.72","attribute from":"","attribute to":"","attribute level":"0.95","attribute inequality":""}]}]},{"intended outcome display":"Relapse (2 years - 5 years)","intended outcome identifier":"EvidenceVariable-RelapseTwoYearsFiveYears","actual outcome display":"","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"Adams 2014 Meta-analysis 2 years - 5 years","evidence identifier":"Evidence-RelapseTwoYearsFiveYears-AdamsMetaAnalysis","evidence description":"Chlorpromazine vs. Placebo with Relapse (2 years - 5 years) Risk Ratio 0.74 [0.51, 1.09] for patients with Schizophrenia","evidence notes":"","describe evidence source":"Group-RelapseTwoYearsFiveYears-TwoStudies","contributing studies":["Evidence-RelapseTwoYearsFiveYears-Hogarty","Evidence-RelapseTwoYearsFiveYears-Nishikawa"],"contributing studies labels":["Hogarty 1973","Nishikawa 1982"],"certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.74 [0.51, 1.09]","statistic notes":"","number of studies":"2","number of participants":"394","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.74","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.51","attribute to":"1.09","attribute level":"0.95","attribute inequality":""}]}]}]}}}}};
+	savedResults = {"Engelhardt 1960":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Engelhardt 1960","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"Engelhardt 1960","actual population identifier":"","actual intervention display":"Chlorpromazine: dose 50-800 mg/day (variable dose regimen)","actual intervention identifier":"","actual comparator display":"Placebo","actual comparator identifier":"EvidenceVariable-Placebo","population directness match":"","intervention directness match":"","comparator directness match":"Exact","population description":"","intervention description":"","comparator description":"","population notes":"","intervention notes":"","comparator notes":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"Relapse (Hospitalization) 18 months","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseSixMonthsTwoYears-Engelhardt","evidence description":"","evidence notes":"","describe evidence source":"undefined","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.72 [0.51, 1.02]","statistic notes":"","number of studies":"","number of participants":"108","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.72","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.51","attribute to":"1.02.","attribute level":"0.95","attribute inequality":""}]}]}]}}}},"Hogarty 1973":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Hogarty 1973","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"Hogarty 1973","actual population identifier":"","actual intervention display":"Chlorpromazine: dose variable min. 100 mg/day, mean 270 mg/day","actual intervention identifier":"","actual comparator display":"Placebo","actual comparator identifier":"EvidenceVariable-Placebo","population directness match":"","intervention directness match":"","comparator directness match":"Exact","population description":"","intervention description":"","comparator description":"","population notes":"","intervention notes":"","comparator notes":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"Relapse (not further defined)","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseSixMonthsTwoYears-Hogarty","evidence description":"","evidence notes":"","describe evidence source":"undefined","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.51 [0.41, 0.62]","statistic notes":"","number of studies":"","number of participants":"374","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.51","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.41","attribute to":"0.62","attribute level":"0.95","attribute inequality":""}]}]},{"intended outcome display":"Relapse (2 years - 5 years)","intended outcome identifier":"EvidenceVariable-RelapseTwoYearsFiveYears","actual outcome display":"Relapse (not further defined)","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseTwoYearsFiveYears-Hogarty","evidence description":"","evidence notes":"","describe evidence source":"","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.63 [0.54, 0.73]","statistic notes":"","number of studies":"","number of participants":"374","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.63","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.54","attribute to":"0.73","attribute level":"0.95","attribute inequality":""}]}]}]}}}},"Nishikawa 1982":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Nishikawa 1982","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"Nishikawa 1982","actual population identifier":"","actual intervention display":"Chlorpromazine: dose 75 mg/day","actual intervention identifier":"","actual comparator display":"Placebo","actual comparator identifier":"EvidenceVariable-Placebo","population directness match":"","intervention directness match":"","comparator directness match":"Exact","population description":"","intervention description":"","comparator description":"","population notes":"","intervention notes":"","comparator notes":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"Relapse (not further defined)","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseSixMonthsTwoYears-Nishikawa","evidence description":"","evidence notes":"","describe evidence source":"undefined","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.81 [0.57, 1.14]","statistic notes":"","number of studies":"","number of participants":"20","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.81","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.57","attribute to":"1.14","attribute level":"0.95","attribute inequality":""}]}]},{"intended outcome display":"Relapse (2 years - 5 years)","intended outcome identifier":"EvidenceVariable-RelapseTwoYearsFiveYears","actual outcome display":"Relapse (not further defined)","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"","evidence identifier":"Evidence-RelapseTwoYearsFiveYears-Nishikawa","evidence description":"","evidence notes":"","describe evidence source":"","certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.90 [0.69, 1.18]","statistic notes":"","number of studies":"","number of participants":"20","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.90","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.69","attribute to":"1.18","attribute level":"0.95","attribute inequality":""}]}]}]}}}},"Adams 2014":{"Group-Schizophrenia":{"EvidenceVariable-Chlorpromazine":{"EvidenceVariable-Placebo":{"study":"Adams 2014","intended population identifier":"Group-Schizophrenia","intended intervention identifier":"EvidenceVariable-Chlorpromazine","intended comparator identifier":"EvidenceVariable-Placebo","intended population display":"Patients with Schizophrenia","intended intervention display":"Chlorpromazine","intended comparator display":"Placebo","actual population display":"","actual population identifier":"","actual intervention display":"","actual intervention identifier":"","actual comparator display":"","actual comparator identifier":"","population directness match":"","intervention directness match":"","comparator directness match":"","population description":"","intervention description":"","comparator description":"","population notes":"","intervention notes":"","comparator notes":"","outcomes":[{"intended outcome display":"Relapse long term (6 months - 2 years)","intended outcome identifier":"EvidenceVariable-RelapseSixMonthsTwoYears","actual outcome display":"","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"Adams 2014 Meta-analysis 6 months - 2 years","evidence identifier":"Evidence-RelapseSixMonthsTwoYears-AdamsMetaAnalysis","evidence description":"Chlorpromazine vs. Placebo with Relapse (6 months - 2 years) Risk Ratio 0.65 [0.47, 0.90] for patients with Schizophrenia","evidence notes":"","describe evidence source":"Group-RelapseSixMonthsTwoYears-ThreeStudies","contributing studies":["Evidence-RelapseSixMonthsTwoYears-Engelhardt","Evidence-RelapseSixMonthsTwoYears-Hogarty","Evidence-RelapseSixMonthsTwoYears-Nishikawa"],"contributing studies labels":["Engelhardt 1960","Hogarty 1973","Nishikawa 1982"],"contributing studies short display names":["","",""],"certainty checkbox":true,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"very-low","GRADE comments on certainty":"2 trials report this outcome at 0‐8 weeks follow‐up, 3 trials at 6 months to 2 years, and 2 trials 2‐5 years, none showed a significant difference.","GRADE risk of bias":"serious-concern","GRADE comments on risk of bias":"all studies had an unclear risk of bias for random sequence generation, allocation concealment, blinding of assessors and incomplete data. One also had an unclear risk of other bias as the drugs were provided by a pharmaceutical company.","GRADE inconsistency":"critical-concern","GRADE comments on inconsistency":"inconsistency for this outcome consider the results of relapse outcome at other timepoints; there was very high heterogeneity in the pooled results.","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.65 [0.47, 0.90]","statistic notes":"","number of studies":"3","number of participants":"512","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.65","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.47","attribute to":"0.90","attribute level":"0.95","attribute inequality":""},{"attribute estimate type":"iSq","attribute quantity":"0.72","attribute from":"","attribute to":"","attribute level":"0.95","attribute inequality":""}]}]},{"intended outcome display":"Relapse (2 years - 5 years)","intended outcome identifier":"EvidenceVariable-RelapseTwoYearsFiveYears","actual outcome display":"","actual outcome identifier":"","outcome directness match":"","outcome description":"","outcome notes":"","evidence short display name":"Adams 2014 Meta-analysis 2 years - 5 years","evidence identifier":"Evidence-RelapseTwoYearsFiveYears-AdamsMetaAnalysis","evidence description":"Chlorpromazine vs. Placebo with Relapse (2 years - 5 years) Risk Ratio 0.74 [0.51, 1.09] for patients with Schizophrenia","evidence notes":"","describe evidence source":"Group-RelapseTwoYearsFiveYears-TwoStudies","contributing studies":["Evidence-RelapseTwoYearsFiveYears-Hogarty","Evidence-RelapseTwoYearsFiveYears-Nishikawa"],"contributing studies labels":["Hogarty 1973","Nishikawa 1982"],"contributing studies short display names":["",""],"certainty checkbox":false,"certainty":[{"certainty system":"GRADE","GRADE certainty of evidence":"","GRADE comments on certainty":"","GRADE risk of bias":"","GRADE comments on risk of bias":"","GRADE inconsistency":"","GRADE comments on inconsistency":"","GRADE indirectness":"","GRADE comments on indrectness":"","GRADE imprecision":"","GRADE comments on imprecision":"","GRADE publication bias":"","GRADE comments on publication bias":"","DynaMed certainty of evidence":"","DynaMed comments on certainty":"","DynaMed clinical outcome":"","DynaMed comments on clinical outcome":"","DynaMed directness":"","DynaMed comments on directness":"","DynaMed randomization":"","DynaMed comments on randomization":"","DynaMed blinding":"","DynaMed comments on blinding":"","DynaMed follow up":"","DynaMed comments on follow up":"","DynaMed dropouts":"","DynaMed comments on dropouts":"","DynaMed precision":"","DynaMed comments on precision":"","DynaMed consistency":"","DynaMed comments on consistency":"","DynaMed allocation concealment":"","DynaMed comments on allocation concealment":"","DynaMed itt analysis":"","DynaMed comments on itt analysis":"","DynaMed other":"","DynaMed comments on other":""}],"statistics":[{"statistic description":"Risk Ratio 0.74 [0.51, 1.09]","statistic notes":"","number of studies":"2","number of participants":"394","known data count":"","numerator count":"","statistic type":"relative-RR","statistic value":"0.74","statistic inequality":"","statistic unit":"","attributes":[{"attribute estimate type":"CI","attribute quantity":"","attribute from":"0.51","attribute to":"1.09","attribute level":"0.95","attribute inequality":""}]}]}]}}}}};
 	
 }
 
@@ -1297,13 +1335,13 @@ function loadResultData(resultData){
 	if (page3.getElementsByClassName("resultInterventionMatch")[0].value != ""){ page3.getElementsByClassName("resultInterventionMatch")[0].style.color = '#000000'; }
 	if (page3.getElementsByClassName("resultComparatorMatch")[0].value != ""){ page3.getElementsByClassName("resultComparatorMatch")[0].style.color = '#000000'; }
 
-	page3.getElementsByClassName("resultPopulationDescription")[0].value = resultData["population description match"];
-	page3.getElementsByClassName("resultInterventionDescription")[0].value = resultData["intervention description match"];
-	page3.getElementsByClassName("resultComparatorDescription")[0].value = resultData["comparator description match"];
+	page3.getElementsByClassName("resultPopulationDescription")[0].value = resultData["population description"];
+	page3.getElementsByClassName("resultInterventionDescription")[0].value = resultData["intervention description"];
+	page3.getElementsByClassName("resultComparatorDescription")[0].value = resultData["comparator description"];
 	
-	page3.getElementsByClassName("resultPopulationNotes")[0].value = resultData["population notes match"];
-	page3.getElementsByClassName("resultInterventionNotes")[0].value = resultData["intervention notes match"];
-	page3.getElementsByClassName("resultComparatorNotes")[0].value = resultData["comparator notes match"];
+	page3.getElementsByClassName("resultPopulationNotes")[0].value = resultData["population notes"];
+	page3.getElementsByClassName("resultInterventionNotes")[0].value = resultData["intervention notes"];
+	page3.getElementsByClassName("resultComparatorNotes")[0].value = resultData["comparator notes"];
 	
 	var storedOutcomes = resultData["outcomes"];
 	
@@ -1516,13 +1554,34 @@ function saveQuitPage3(){
 	thisResult["intervention directness match"] = page3.getElementsByClassName("resultInterventionMatch")[0].value;
 	thisResult["comparator directness match"] = page3.getElementsByClassName("resultComparatorMatch")[0].value;
 	
-	thisResult["population description match"] = page3.getElementsByClassName("resultPopulationDescription")[0].value;
-	thisResult["intervention description match"] = page3.getElementsByClassName("resultInterventionDescription")[0].value;
-	thisResult["comparator description match"] = page3.getElementsByClassName("resultComparatorDescription")[0].value;
+	thisResult["population description"] = page3.getElementsByClassName("resultPopulationDescription")[0].value;
+	thisResult["intervention description"] = page3.getElementsByClassName("resultInterventionDescription")[0].value;
+	thisResult["comparator description"] = page3.getElementsByClassName("resultComparatorDescription")[0].value;
 	
-	thisResult["population notes match"] = page3.getElementsByClassName("resultPopulationNotes")[0].value;
-	thisResult["intervention notes match"] = page3.getElementsByClassName("resultInterventionNotes")[0].value;
-	thisResult["comparator notes match"] = page3.getElementsByClassName("resultComparatorNotes")[0].value;
+	thisResult["population notes"] = page3.getElementsByClassName("resultPopulationNotes")[0].value;
+	thisResult["intervention notes"] = page3.getElementsByClassName("resultInterventionNotes")[0].value;
+	thisResult["comparator notes"] = page3.getElementsByClassName("resultComparatorNotes")[0].value;
+	
+	
+	if (synthesisList.indexOf(currentStudy) != -1){
+		thisResult["actual population display"] = "";
+		thisResult["actual population identifier"] = "";
+		thisResult["population directness match"] = "";
+		
+		thisResult["actual intervention display"] = "";
+		thisResult["actual intervention identifier"] = "";
+		thisResult["intervention directness match"] = "";
+		
+		thisResult["actual comparator display"] = "";
+		thisResult["actual comparator identifier"] = "";
+		thisResult["comparator directness match"] = "";
+	}
+	
+	if (page3.getElementsByClassName("resultComparatorBox")[0].style.display == "none"){
+		thisResult["actual comparator display"] = "";
+		thisResult["actual comparator identifier"] = "";
+		thisResult["comparator directness match"] = "";
+	}
 	
 	thisResult["outcomes"] = [];
 	
@@ -1544,8 +1603,9 @@ function saveQuitPage3(){
 			thisOutcome["actual outcome display"] = thisActualOutcome;
 			thisOutcome["actual outcome identifier"] = "";
 		}
-	
+		
 		thisOutcome["outcome directness match"] = resultOutcomes[x].getElementsByClassName("resultOutcomeMatch")[0].value;
+				
 		thisOutcome["outcome description"] = resultOutcomes[x].getElementsByClassName("resultOutcomeDescription")[0].value;
 		thisOutcome["outcome notes"] = resultOutcomes[x].getElementsByClassName("resultOutcomeNotes")[0].value;
 		thisOutcome["evidence short display name"] = resultOutcomes[x].getElementsByClassName("resultEvidenceName")[0].value;
@@ -1557,6 +1617,18 @@ function saveQuitPage3(){
 		if (contributingStudies[0].length){
 			thisOutcome["contributing studies"] = contributingStudies[0];
 			thisOutcome["contributing studies labels"] = contributingStudies[1];
+			thisOutcome["contributing studies short display names"] = contributingStudies[2];
+		}
+		
+		if (synthesisList.indexOf(currentStudy) != -1){
+			thisOutcome["actual outcome display"] = "";
+			thisOutcome["actual outcome identifier"] = "";
+			thisOutcome["outcome directness match"] = "";
+		} else {
+			thisOutcome["describe evidence source"] = "";
+			thisOutcome["contributing studies"] = [];
+			thisOutcome["contributing studies labels"] = [];
+			thisOutcome["contributing studies short display names"] = [];
 		}
 		
 		thisOutcome["certainty checkbox"] = resultOutcomes[x].getElementsByClassName("certaintyCheck")[0].checked;
@@ -1618,6 +1690,14 @@ function saveQuitPage3(){
 			thisStatistic["statistic inequality"] = thisOutcomeStatistics[y].getElementsByClassName("statisticInequality")[0].value;
 			thisStatistic["statistic unit"] = thisOutcomeStatistics[y].getElementsByClassName("statisticUnit")[0].value;
 
+			
+			if (thisOutcomeStatistics[y].getElementsByClassName("numeratorCountGroup")[0].style.display == "none") { thisStatistic["numerator count"] = ""; }
+			if (thisOutcomeStatistics[y].getElementsByClassName("numberOfStudies")[0].style.display == "none") { thisStatistic["number of studies"] = ""; }
+			if (thisOutcomeStatistics[y].getElementsByClassName("statisticValueGroup")[0].style.display == "none") { thisStatistic["statistic value"] = ""; }
+			if (thisOutcomeStatistics[y].getElementsByClassName("statisticInequalityGroup")[0].style.display == "none") { thisStatistic["statistic inequality"] = ""; }
+			if (thisOutcomeStatistics[y].getElementsByClassName("statisticUnitGroup")[0].style.display == "none") { thisStatistic["statistic unit"] = ""; }
+			
+			
 			thisStatistic["attributes"] = [];
 			var thisAttributes = thisOutcomeStatistics[y].getElementsByClassName("statisticAttributeBox");
 			for (var z = 0; z < thisAttributes.length; z++){
@@ -1630,6 +1710,12 @@ function saveQuitPage3(){
 				thisAtrribute["attribute level"] = thisAttributes[z].getElementsByClassName("peLevel")[0].value;
 				thisAtrribute["attribute inequality"] = thisAttributes[z].getElementsByClassName("peInequality")[0].value;
 				
+				if (thisAttributes[z].getElementsByClassName("peQuantityGroup")[0].style.display == "none") { thisAtrribute["attribute quantity"] = ""; }
+				if (thisAttributes[z].getElementsByClassName("peInequalityGroup")[0].style.display == "none") { thisAtrribute["attribute inequality"] = ""; }
+				if (thisAttributes[z].getElementsByClassName("peFromGroup")[0].style.display == "none") { thisAtrribute["attribute from"] = ""; }
+				if (thisAttributes[z].getElementsByClassName("peToGroup")[0].style.display == "none") { thisAtrribute["attribute to"] = ""; }
+				if (thisAttributes[z].getElementsByClassName("peLevelGroup")[0].style.display == "none") { thisAtrribute["attribute level"] = ""; }
+
 				thisStatistic["attributes"].push(thisAtrribute);
 			}
 			
@@ -1980,16 +2066,18 @@ function generateContributingStudies(num){
 				var matching = x[currentIntendedPopulation][currentIntendedIntervention][currentIntendedComparator];
 				var matchPICO = false;
 				var matchingEvidence = [];
+				var matchingEvidenceShortDisplayName = [];
 				for (var y = 0; y < matching["outcomes"].length; y++){
 					if (matching["outcomes"][y]["intended outcome identifier"] == currentIntendedOutcome){
 						matchPICO = true;
 						matchingEvidence.push(matching["outcomes"][y]["evidence identifier"]);
+						matchingEvidenceShortDisplayName.push(matching["outcomes"][y]["evidence short display name"]);
 					}
 				}
 				if (matchPICO){
 					//POSSIBLY TODO, to do
 					//It only keeps the first matching Evidence in the Study-P-I-C-O because there should only be one, I believe.
-					matchingPICO.push([s[i], matchingEvidence[0]]);
+					matchingPICO.push([s[i], matchingEvidence[0], matchingEvidenceShortDisplayName[0]]);
 				}
 			}
 		}
@@ -2004,7 +2092,7 @@ function generateContributingStudies(num){
 			studyChecked = " checked";
 		}
 		
-		dropDownOptions += '<label class="unselectable"><input class="evidenceInput" type="checkbox" value="' + matchingPICO[x][1] + '"' + studyChecked + '><span class="evidenceLabel">' + matchingPICO[x][0] + '</span></label>';
+		dropDownOptions += '<label class="unselectable"><input class="evidenceInput" type="checkbox" value="' + matchingPICO[x][1] + '" data-shortdisplayname="' + matchingPICO[x][2] + '"' + studyChecked + '><span class="evidenceLabel">' + matchingPICO[x][0] + '</span></label>';
 	}
 	page3.getElementsByClassName("multiSelectDropDownOptions")[num-1].innerHTML = dropDownOptions;
 	changeResultsEvidenceLabel(page3.getElementsByClassName("multiSelectDropDownOptions")[num-1]);
@@ -2232,229 +2320,485 @@ function loadPMIDinfo(num) {
 					document.getElementById("studyType-"+num).style.color = "#FFFFFF";	
 				}
 			}
-			
 		}
 		request.send();
 	}
 }
 
-function convertToJSON() {
-	var json = JSON.parse(JSON.stringify(blankJson));
-	json["title"] = document.getElementById("studyTitle").value;
-	json["relatedArtifact"][0]["url"] = document.getElementById("studyURL").value;
-	json["summaryPublisher"][0]["name"] = document.getElementById("studyPublisher").value;
-	json["contributor"][0]["name"] = document.getElementById("studyAuthors").value;
-	var synthType = document.getElementById("studySynthesisType").value;
-	if (synthType){
-		json["synthesisType"]["coding"][0]["code"] = synthType;
-		json["synthesisType"]["coding"][0]["display"] = synthesisTypeSet[synthType];
+
+function formToJSON(){
+
+	//Gathers the Group and EvidenceVariable Resources Details
+
+	var populationBoxes = page1.getElementsByClassName("populationBox");
+	var exposureBoxes = page1.getElementsByClassName("exposureBox");
+	var outcomeBoxes = page1.getElementsByClassName("outcomeBox");
+
+	fhirGroupList = [];
+	for (var p = 0; p < populationBoxes.length; p++){
+		var pop = populationBoxes[p];
+		
+		var thisGroup = JSON.parse(JSON.stringify(blankGroup));
+				
+		thisGroup["id"] = pop.getElementsByClassName("populationIdentifier")[0].value
+		thisGroup["name"] = pop.getElementsByClassName("populationName")[0].value;
+		thisGroup["actual"] = pop.getElementsByClassName("populationActualRadio")[0].checked;
+		
+		//pop.getElementsByClassName("populationDescription")[0].value;
+		//pop.getElementsByClassName("populationNotes")[0].value;
+		
+		fhirGroupList.push(thisGroup);
 	}
-	var studyType = document.getElementById("studyType").value;
-	if (studyType){
-		json["studyType"]["coding"][0]["code"] = studyType;
-		json["studyType"]["coding"][0]["display"] = studyTypeSet[studyType];
-	}
-	json["note"][0]["text"] = document.getElementById("studyNotes").value;
-	var populationName = document.getElementById("populationName").value;
-	var populationIdentifier = document.getElementById("populationIdentifier").value;
-	json["population"][0]["intendedCohort"][0]["display"] = populationName;
-	json["population"][0]["intendedCohort"][0]["identifier"] = populationIdentifier;
-	json["population"][0]["note"][0]["text"] = document.getElementById("populationNotes").value;	
-	json["population"][0]["sampleSize"]["numberOfStudies"] = document.getElementById("numberOfStudies").value;
-	json["population"][0]["sampleSize"]["numberOfParticipants"] = document.getElementById("numberOfParticipants").value;
 	
-	var outcomes = document.getElementsByClassName("outcomeBox");
-	for (var x = 0; x < numberOfOutcomes; x++) {
-		var outcomeName = outcomes[x].getElementsByClassName("outcomeName")[0].value;
-		var outcomeIdentifier = outcomes[x].getElementsByClassName("outcomeIdentifier")[0].value;
-		var outcomeNotes = outcomes[x].getElementsByClassName("outcomeNotes")[0].value;
-		if (!json["population"][0]["evidenceVariable"][x]){
-		   json["population"][0]["evidenceVariable"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0])));
-		}
-		json["population"][0]["evidenceVariable"][x]["variableDefinition"]["display"] = outcomeName;
-		json["population"][0]["evidenceVariable"][x]["variableDefinition"]["identifier"] = outcomeIdentifier;
-		json["population"][0]["evidenceVariable"][x]["note"][0]["text"] = outcomeNotes;
-		var statistics = outcomes[x].getElementsByClassName("statisticBox");
-		var exposures = {};
-		var uniNew = {};
-		var compNew = {};
-		for (var y = 0; y < outcomeStatistics[x]; y++) {
-			var uni = false;
-			var comp = false;
-			if (statistics[y].getElementsByClassName("UnivariateRadio")[0].checked) {
-				var exp = statistics[y].getElementsByClassName("statisticExposure")[0].value;
-				uni = true;
-			} else if (statistics[y].getElementsByClassName("ComparativeRadio")[0].checked) {
-				var exp = statistics[y].getElementsByClassName("statisticIntervention")[0].value;
-				comp = true;
+	fhirEvidenceVariableList = [];
+	for (var e = 0; e < exposureBoxes.length; e++){
+		var exp = exposureBoxes[e];
+		
+		var thisEvidenceVariable = JSON.parse(JSON.stringify(blankEvidenceVariable));
+				
+		thisEvidenceVariable["id"] = exp.getElementsByClassName("exposureIdentifier")[0].value;
+		thisEvidenceVariable["name"] = exp.getElementsByClassName("exposureName")[0].value;
+		thisEvidenceVariable["actual"] = exp.getElementsByClassName("exposureActualRadio")[0].checked;
+		
+		thisEvidenceVariable["description"] = exp.getElementsByClassName("exposureDescription")[0].value;
+		thisEvidenceVariable["note"][0]["text"] = exp.getElementsByClassName("exposureNotes")[0].value;
+		
+		fhirEvidenceVariableList.push(thisEvidenceVariable);
+	}
+	for (var m = 0; m < outcomeBoxes.length; m++){
+		var outcomeBox = outcomeBoxes[m];
+		
+		var thisEvidenceVariable = JSON.parse(JSON.stringify(blankEvidenceVariable));
+				
+		thisEvidenceVariable["id"] = outcomeBox.getElementsByClassName("outcomeIdentifier")[0].value;
+		thisEvidenceVariable["name"] = outcomeBox.getElementsByClassName("outcomeName")[0].value;
+		thisEvidenceVariable["actual"] = outcomeBox.getElementsByClassName("outcomeActualRadio")[0].checked;
+		
+		thisEvidenceVariable["description"] = outcomeBox.getElementsByClassName("outcomeDescription")[0].value;
+		thisEvidenceVariable["note"][0]["text"] = outcomeBox.getElementsByClassName("outcomeNotes")[0].value;
+		
+		fhirEvidenceVariableList.push(thisEvidenceVariable);
+	}
+		
+	var blankMember = JSON.parse(JSON.stringify(blankGroup["member"][0]));
+	
+	//Incoroporate this into the Data Entry Form to Evidence resource JSON process, or keep it separate? I think keep it separate?
+	var studysInSavedResults = Object.keys(savedResults);
+	for (var s = 0; s < studysInSavedResults.length; s++){
+		if (synthesisList.indexOf(studysInSavedResults[s]) != -1){
+			var studyResults1 = savedResults[studysInSavedResults[s]];
+			var pops = Object.keys(studyResults1);
+			for (var x = 0; x < pops.length; x++){
+				var studyResults2 = studyResults1[pops[x]];
+				var inters = Object.keys(studyResults2);
+				for (var y = 0; y < inters.length; y++){
+					var studyResults3 = studyResults2[inters[y]];
+					var comps = Object.keys(studyResults3);
+					for (var z = 0; z < comps.length; z++){
+						var studyResults4 = studyResults3[comps[z]];
+						var outs = studyResults4["outcomes"];
+						for (var i = 0; i < outs.length; i++){
+							var thisGroup = JSON.parse(JSON.stringify(blankGroup));
+
+							var out = outs[i];
+							
+							thisGroup["id"] = out["describe evidence source"];
+							//thisGroup["name"] = ; //TO DO TODO
+							thisGroup["actual"] = true;	
+							
+							for (var j = 0; j < out["contributing studies"].length; j++){
+								if (j >= thisGroup["member"].length){
+									thisGroup["member"].push(JSON.parse(JSON.stringify(blankMember)));
+								}
+								thisGroup["member"][j]["entity"]["identifier"] = out["contributing studies"][j];
+								thisGroup["member"][j]["entity"]["display"] = out["contributing studies short display names"][j];
+								thisGroup["member"][j]["entity"]["type"] = "Evidence";
+							}
+							out["evidence group unique id"] = fhirGroupList.length;
+							fhirGroupList.push(thisGroup);
+						}
+					}
+				}
 			}
-			if (exp) {
-				if (!exposures[exp]){
-					exposures[exp] = JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0]));
-					exposures[exp]["variableDefinition"]["display"] = exp;
-					var exposureLikes = document.getElementsByClassName("exposureLike");
-					for (var z = 0; z < numberOfComparators + 1; z++) {
-						if (exposureLikes[z].value == exp){
-							exposures[exp]["variableDefinition"]["identifier"] = document.getElementsByClassName("exposureLikeId")[z].value;
+		}
+	}
+	
+	var blankContributor = JSON.parse(JSON.stringify(blankEvidence["contributor"][0]));
+	var blankStatistic = JSON.parse(JSON.stringify(blankEvidence["statistic"][0]));
+	var blankAttribute = JSON.parse(JSON.stringify(blankEvidence["statistic"][0]["attributeEstimate"][0]));
+	
+	//Goes through all the Study-P-I-C-O combinations and creates the Evidence resources for each of them
+	fhirEvidenceList = [];
+	for (var s = 0; s < studysInSavedResults.length; s++){
+		var studyResults1 = savedResults[studysInSavedResults[s]];
+		var pops = Object.keys(studyResults1);
+		for (var x = 0; x < pops.length; x++){
+			var studyResults2 = studyResults1[pops[x]];
+			var inters = Object.keys(studyResults2);
+			for (var y = 0; y < inters.length; y++){
+				var studyResults3 = studyResults2[inters[y]];
+				var comps = Object.keys(studyResults3);
+				for (var z = 0; z < comps.length; z++){				
+					var studyResults4 = studyResults3[comps[z]];
+					var result = studyResults4;
+					var outs = studyResults4["outcomes"];
+					for (var i = 0; i < outs.length; i++){
+						var thisEvidence = JSON.parse(JSON.stringify(blankEvidence));
+						
+						var out = outs[i];
+
+						thisEvidence["id"] = out["evidence identifier"];
+						thisEvidence["title"] = out["evidence short display name"];
+						thisEvidence["description"] = out["evidence description"];
+						thisEvidence["note"][0]["text"] = out["evidence notes"];
+						
+						var studyNumber = studyList.indexOf(studysInSavedResults[s]);
+						
+						var studyURL = page1.getElementsByClassName("studyURL")[studyNumber].value;
+						var studyTitle = page1.getElementsByClassName("studyTitle")[studyNumber].value;
+						
+						if (page1.getElementsByClassName("synthesisRadio")[studyNumber].checked){
+							thisEvidence["synthesisType"]["coding"][0]["code"] = page1.getElementsByClassName("synthesisType")[studyNumber].value;
+							thisEvidence["synthesisType"]["coding"][0]["display"] = page1.getElementsByClassName("synthesisType")[studyNumber].options[page1.getElementsByClassName("synthesisType")[studyNumber].selectedIndex].text;
 						}
-					}
-				}
-				var statisticLocation;
-				if (uni) {
-					if (!uniNew[exp]){
-						uniNew[exp] = true;
-					} else {
-						exposures[exp]["univariateStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0]["univariateStatistic"][0])));
-					}
-					statisticLocation = "univariateStatistic";
-										
-				} else if (comp){
-					if (!compNew[exp]){
-						compNew[exp] = true;
-					} else {
-						exposures[exp]["compoundStatistic"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0]["compoundStatistic"][0])));
-					}
-					statisticLocation = "compoundStatistic";
-					var comparatorDisplay = statistics[y].getElementsByClassName("statisticComparator")[0].value;
-					exposures[exp]["note"][0]["text"] = document.getElementById("interventionNotes").value;
-					exposures[exp]["compoundStatistic"][0]["additionalVariable"][0]["variableDefinition"]["display"] = comparatorDisplay;
-					var exposureLikes = document.getElementsByClassName("exposureLike");
-					for (var z = 0; z < numberOfComparators + 1; z++) {
-						if (exposureLikes[z].value == comparatorDisplay){
-							exposures[exp]["compoundStatistic"][0]["additionalVariable"][0]["variableDefinition"]["identifier"] = document.getElementsByClassName("exposureLikeId")[z].value;
+						
+						thisEvidence["studyType"]["coding"][0]["code"] = page1.getElementsByClassName("studyType")[studyNumber].value;
+						thisEvidence["studyType"]["coding"][0]["display"] = page1.getElementsByClassName("studyType")[studyNumber].options[page1.getElementsByClassName("studyType")[studyNumber].selectedIndex].text;
+						
+						thisEvidence["relatedArtifact"][0]["url"] = studyURL;
+						thisEvidence["relatedArtifact"][0]["display"] = studyTitle;
+
+						var authors = page1.getElementsByClassName("studyAuthors")[studyNumber].value;
+						if (authors.indexOf(";") != -1){
+							authors = authors.split(";");
+						} else {
+							authors = [authors];
 						}
-					}
-				}
-				
-				var statSynthType = statistics[y].getElementsByClassName("statisticSynthesisType")[0].value;
-				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["synthesisType"]["coding"][0]["code"] = statSynthType;
-				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["synthesisType"]["coding"][0]["display"] = synthesisTypeSet[statSynthType];
-				var statStudyType = statistics[y].getElementsByClassName("statisticStudyType")[0].value;
-				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["studyType"]["coding"][0]["code"] = statStudyType;
-				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["studyType"]["coding"][0]["display"] = studyTypeSet[statStudyType];
-				
-				var statType = statistics[y].getElementsByClassName("statisticType")[0].value;
-				var formStatType = statType;
-				if (statType == "percentage" || statType == "perthousand") {
-					statType = "proportion";
-				}
-				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["statisticType"]["coding"][0]["code"] = statType;
-				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["statisticType"]["coding"][0]["display"] = statTypeSet[statType];
-				var temp = statistics[y].getElementsByClassName("statisticValue")[0].value;
-				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["quantity"]["value"] = Number(temp);
-				}
-				
-				var statInequality = statistics[y].getElementsByClassName("statisticInequality")[0].value;
-				if (statInequality != "=") {
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["quantity"]["comparator"] = statInequality;
-				}
-				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["quantity"]["unit"] = statistics[y].getElementsByClassName("statisticUnit")[0].value;
-				
-				var temp = statistics[y].getElementsByClassName("statisticNumberOfStudies")[0].value;
-				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["sampleSize"]["numberOfStudies"] = Number(temp);
-				}
-				var temp = statistics[y].getElementsByClassName("statisticNumberOfParticipants")[0].value;
-				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["sampleSize"]["numberOfParticipants"] = Number(temp);
-				}
-				var temp = statistics[y].getElementsByClassName("statisticKnownDataCount")[0].value;
-				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["sampleSize"]["knownDataCount"] = Number(temp);
-				}
-				var temp = statistics[y].getElementsByClassName("statisticNumeratorCount")[0].value;
-				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["sampleSize"]["numeratorCount"] = Number(temp);
-				}
-				
-				var statattributeEstimate = statistics[y].getElementsByClassName("attributeEstimateType")[0].value;
-				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["type"]["coding"][0]["code"] = statattributeEstimate;
-				exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["type"]["coding"][0]["display"] = attributeEstimateSet[statattributeEstimate];
-				
-				
-				var temp = statistics[y].getElementsByClassName("peQuantity")[0].value;
-				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["quantity"]["value"] = Number(temp);
-				}
-				var temp = statistics[y].getElementsByClassName("peLevel")[0].value;
-				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["level"] = Number(temp);
-				}
-				var temp = statistics[y].getElementsByClassName("peFrom")[0].value;
-				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["range"]["low"]["value"] = Number(temp);
-				}
-				var temp = statistics[y].getElementsByClassName("peTo")[0].value;
-				if (temp != ""){
-					exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["attributeEstimate"][0]["range"]["high"]["value"] = Number(temp);
-				}
-				
-				if (statistics[y].getElementsByClassName("certaintyCheck")[0].checked){
-					var certaintys = statistics[y].getElementsByClassName("certaintyBox");
-					for (var z = 0; z < certaintys.length; z++) {
-						var certaintySystem = statistics[y].getElementsByClassName("certaintySystem")[z].value;
-						if (certaintySystem){
-							if (!exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]){
-								exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0][statisticLocation][0]["statistic"][0]["certainty"][0])));
+						for (var a = 0; a < authors.length; a++){
+							if (a >= thisEvidence["contributor"].length){
+								thisEvidence["contributor"].push(JSON.parse(JSON.stringify(blankContributor)));
 							}
-							if (certaintySystem == "GRADE"){
-							
-								exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["rating"][0]["coding"][0]["system"] = "http://hl7.org/fhir/ValueSet/certainty-rating";
-								for (var a = 0; a < 5; a++) {
-									if (a > 0) {
-										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0][statisticLocation][0]["statistic"][0]["certainty"][0]["certaintySubcomponent"][0])));
-									}
-									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["note"][0]["text"] = certaintys[z].getElementsByClassName("GRADEcertaintySubComments"+(a+1).toString())[0].value;
-									var certaintySub = certaintys[z].getElementsByClassName("GRADEcertaintySub"+(a+1).toString())[0];
-									var criteria = certaintySub.name;
-									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["system"] = "http://hl7.org/fhir/ValueSet/certainty-subcomponent-type";
-									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["code"] = criteria; //And then display
-									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["display"] = gradeCertaintySubcomponentCriteriaTypeSet[criteria]; //And then display
-									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["system"] = "http://hl7.org/fhir/ValueSet/certainty-subcomponent-rating";
-									if (certaintySub.value) {
-										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["code"] = certaintySub.value;
-										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["display"] = gradeCertaintySubcomponentCodeTypeSet[certaintySub.value];
-									}
-								}
-							} else if (certaintySystem == "DynaMed") {
-								exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["rating"][0]["coding"][0]["system"] = "http://www.dynamed.com/home/content/levels-of-evidence";
-								for (var a = 0; a < 11; a++) {
-									if (a > 0) {
-										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(blankJson["population"][0]["evidenceVariable"][0]["nestedVariable"][0][statisticLocation][0]["statistic"][0]["certainty"][0]["certaintySubcomponent"][0])));
-									}
-									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["note"][0]["text"] = certaintys[z].getElementsByClassName("DynaMedcertaintySubComments"+(a+1).toString())[0].value;
-									var certaintySub = certaintys[z].getElementsByClassName("DynaMedcertaintySub"+(a+1).toString())[0];
-									var criteria = certaintySub.name;
-									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["system"] = "DynaMed criteria";
-									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["code"] = criteria; //And then display
-									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["type"]["coding"][0]["display"] = dynamedCertaintySubcomponentCriteriaTypeSet[criteria]; //And then display
-									exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["system"] = "DynaMed concern";
-									if (certaintySub.value) {
-										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["code"] = certaintySub.value;
-										exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["certaintySubcomponent"][a]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[certaintySub.value];
-									}
-								}
-							}
-							exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["rating"][0]["coding"][0]["code"] = certaintys[z].getElementsByClassName(certaintySystem+"certaintyOfEvidence")[0].value;
-							exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["rating"][0]["coding"][0]["display"] = certaintyOfEvidenceTypeSet[certaintys[z].getElementsByClassName(certaintySystem+"certaintyOfEvidence")[0].value];
-							exposures[exp][statisticLocation][exposures[exp][statisticLocation].length-1]["statistic"][0]["certainty"][z]["note"][0]["text"] = certaintys[z].getElementsByClassName(certaintySystem+"certaintyComments")[0].value;
-							
+							thisEvidence["contributor"][a]["name"] = authors[a].trim();
+							thisEvidence["contributor"][a]["type"] = "author";
 						}
-					}
-				}
+						//thisEvidence["contributor"][0]["name"] =
+						
+						thisEvidence["status"] = "draft";
+
+						thisEvidence["referentGroup"]["description"] = result["population description"];
+						thisEvidence["referentGroup"]["note"][0]["text"] = result["population notes"];
+						thisEvidence["referentGroup"]["intendedGroup"]["display"] = result["intended population display"];
+						thisEvidence["referentGroup"]["intendedGroup"]["identifier"] = result["intended population identifier"];
+						thisEvidence["referentGroup"]["evidenceSource"]["display"] = result["actual population display"];
+						thisEvidence["referentGroup"]["evidenceSource"]["identifier"] = result["actual population identifier"];
+						thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["display"] = result["population directness match"];
+						thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["code"]    = result["population directness match"];	//TO DO TODO get the proper codes for directness match
 					
+						//MORE STUFF FOR THE STUDY GROUP IF SYNTHESIS
+						
+						if (synthesisList.indexOf(studysInSavedResults[s]) != -1){
+							//thisEvidence["referentGroup"]["evidenceSource"]["reference"] = "";		//TO DO TODO ?
+							thisEvidence["referentGroup"]["evidenceSource"]["identifier"] = out["describe evidence source"];
+							//thisEvidence["referentGroup"]["evidenceSource"]["display"] = "";		//TO DO TODO
+						}
+						
+						//MAKE SURE IT DOESN'T USE INVISIBLE FIELDS, HOW DO I CHECK THIS? SHOULD I MAKE ANOTHER FIELD IN THE JSON THAT KEEPS TRACK?
+					
+						thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(thisEvidence["variableDefinition"][0])));
+						
+						thisEvidence["variableDefinition"][0]["variableRole"]["coding"][0]["code"] = "measuredVariable";
+						thisEvidence["variableDefinition"][0]["variableRole"]["coding"][0]["display"] = "measured variable";
+						thisEvidence["variableDefinition"][0]["description"] = out["outcome description"];
+						thisEvidence["variableDefinition"][0]["note"][0]["text"] = out["outcome notes"];
+						thisEvidence["variableDefinition"][0]["intendedDefinition"]["display"] = out["intended outcome display"];
+						thisEvidence["variableDefinition"][0]["intendedDefinition"]["identifier"] = out["intended outcome identifier"];
+						thisEvidence["variableDefinition"][0]["actualDefinition"]["display"] = out["actual outcome display"];
+						thisEvidence["variableDefinition"][0]["actualDefinition"]["identifier"] = out["actual outcome identifier"];
+						thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["display"] = out["outcome directness match"];
+						thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["code"]    = out["outcome directness match"];	//TO DO TODO get the proper codes for directness match
+
+						if (comps[z] != "" && comps[z] != "none" && comps[z] != inters[y]){
+							thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(thisEvidence["variableDefinition"][1])));
+						}
+						
+						thisEvidence["variableDefinition"][1]["variableRole"]["coding"][0]["code"] = "exposure";
+						thisEvidence["variableDefinition"][1]["variableRole"]["coding"][0]["display"] = "exposure";
+						thisEvidence["variableDefinition"][1]["description"] = result["intervention description"];
+						thisEvidence["variableDefinition"][1]["note"][0]["text"] = result["intervention notes"];
+						thisEvidence["variableDefinition"][1]["intendedDefinition"]["display"] = result["intended intervention display"];
+						thisEvidence["variableDefinition"][1]["intendedDefinition"]["identifier"] = result["intended intervention identifier"];
+						thisEvidence["variableDefinition"][1]["actualDefinition"]["display"] = result["actual intervention display"];
+						thisEvidence["variableDefinition"][1]["actualDefinition"]["identifier"] = result["actual intervention identifier"];
+						thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["display"] = result["intervention directness match"];
+						thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["code"]    = result["intervention directness match"];	//TO DO TODO get the proper codes for directness match
+
+						
+						if (thisEvidence["variableDefinition"].length > 2){
+							thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["code"] = "referenceExposure";
+							thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["display"] = "reference exposure";
+							thisEvidence["variableDefinition"][2]["description"] = result["comparator description"];
+							thisEvidence["variableDefinition"][2]["note"][0]["text"] = result["comparator notes"];
+							thisEvidence["variableDefinition"][2]["intendedDefinition"]["display"] = result["intended comparator display"];
+							thisEvidence["variableDefinition"][2]["intendedDefinition"]["identifier"] = result["intended comparator identifier"];
+							thisEvidence["variableDefinition"][2]["actualDefinition"]["display"] = result["actual comparator display"];
+							thisEvidence["variableDefinition"][2]["actualDefinition"]["identifier"] = result["actual comparator identifier"];
+							thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["display"] = result["comparator directness match"];
+							thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["code"]    = result["comparator directness match"];	//TO DO TODO get the proper codes for directness match
+						}
+																								
+						//Gets Certainty
+						
+						if (out["certainty checkbox"]){
+							if (out["certainty"][0]["certainty system"] == "GRADE"){
+								thisEvidence["certainty"][0]["description"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["GRADE certainty of evidence"]];
+								thisEvidence["certainty"][0]["note"][0]["text"] = out["certainty"][0]["GRADE comments on certainty"];
+								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["code"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["GRADE certainty of evidence"]];
+								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["display"] = out["certainty"][0]["GRADE certainty of evidence"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE risk of bias"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["note"][0]["text"] = out["certainty"][0]["GRADE comments on risk of bias"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["code"] = "RiskOfBias";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["display"] = "Risk of bias";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE risk of bias"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE risk of bias"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE inconsistency"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["note"][0]["text"] = out["certainty"][0]["GRADE comments on inconsistency"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["code"] = "Inconsistency";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["display"] = "Inconsistency";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE inconsistency"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE inconsistency"];
+								
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE indrectness"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["note"][0]["text"] = out["certainty"][0]["GRADE comments on indrectness"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["code"] = "Indirectness";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["display"] = "Indirectness";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE indrectness"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE indrectness"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE imprecision"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["note"][0]["text"] = out["certainty"][0]["GRADE comments on imprecision"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["code"] = "Imprecision";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["display"] = "Imprecision";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE imprecision"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE imprecision"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE publication bias"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["note"][0]["text"] = out["certainty"][0]["GRADE comments on publication bias"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["code"] = "PublicationBias";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["display"] = "Publication bias";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE publication bias"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE publication bias"];
+								
+							} else if(out["certainty"][0]["certainty system"] == "DynaMed"){						
+								thisEvidence["certainty"][0]["description"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["DynaMed certainty of evidence"]];
+								thisEvidence["certainty"][0]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on certainty"];
+								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["system"] =  "http://www.dynamed.com/home/content/levels-of-evidencee";
+								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["code"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["DynaMed certainty of evidence"]];
+								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["display"] = out["certainty"][0]["DynaMed certainty of evidence"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed clinical outcome"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on clinical outcome"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["code"] = "clinical-outcome";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["display"] = "Clinical outcome";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed clinical outcome"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed clinical outcome"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed directness"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on directness"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["code"] = "directness";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["display"] = "Directness";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed directness"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed directness"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed randomization"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on randomization"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["code"] = "randomization";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["display"] = "Randomization";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed randomization"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed randomization"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed blinding"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on blinding"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["code"] = "blinding";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["display"] = "Blinding";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed blinding"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed blinding"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed follow up"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on follow up"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["code"] = "follow-up";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["display"] = "Follow up";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed follow up"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed follow up"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed dropouts"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on dropouts"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["type"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["type"]["coding"][0]["code"] = "dropouts";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["type"]["coding"][0]["display"] = "Dropouts";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["rating"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed dropouts"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed dropouts"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed precision"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on precision"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["type"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["type"]["coding"][0]["code"] = "precision";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["type"]["coding"][0]["display"] = "Precision";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["rating"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed precision"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed precision"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed consistency"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on consistency"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["type"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["type"]["coding"][0]["code"] = "consistency";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["type"]["coding"][0]["display"] = "Consistency";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["rating"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed consistency"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed consistency"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed concealment"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on concealment"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["type"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["type"]["coding"][0]["code"] = "concealment";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["type"]["coding"][0]["display"] = "Concealment";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["rating"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed concealment"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed concealment"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed itt analysis"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on itt analysis"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["type"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["type"]["coding"][0]["code"] = "itt-analysis";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["type"]["coding"][0]["display"] = "III analysis";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["rating"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed itt analysis"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed itt analysis"];
+								
+								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed other"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on other"];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["type"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["type"]["coding"][0]["code"] = "other";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["type"]["coding"][0]["display"] = "Other";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["rating"]["coding"][0]["system"] = "";
+								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed other"]];
+								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed other"];
+							}
+						
+						}
+						
+						//Iterates through all Statistics, and all the Attributes within it
+						
+						var stats = out["statistics"];
+						for (var b = 0; b < stats.length; b++){
+							var stat = stats[b];		
+							
+							if (b >= thisEvidence["statistic"].length){
+								thisEvidence["statistic"].push(JSON.parse(JSON.stringify(blankStatistic)));
+							}
+							
+							var thisStatistic = thisEvidence["statistic"][b];
+							
+							thisStatistic["description"] = stat["statistic description"];
+							thisStatistic["note"][0]["text"] = stat["statistic notes"];
+							
+							thisStatistic["statisticType"]["coding"][0]["code"] = stat["statistic type"];
+							thisStatistic["statisticType"]["coding"][0]["display"] = statTypeSet[stat["statistic type"]];
+							
+							thisStatistic["quantity"]["value"] = parseFloat(stat["statistic value"]);
+							thisStatistic["quantity"]["comparator"] = stat["statistic inequality"];
+							thisStatistic["quantity"]["unit"] = stat["statistic unit"];
+							
+							thisStatistic["sampleSize"]["numberOfStudies"] = parseInt(stat["number of studies"]);
+							thisStatistic["sampleSize"]["numberOfParticipants"] = parseInt(stat["number of participants"]);
+							thisStatistic["sampleSize"]["knownDataCount"] = parseInt(stat["known data count"]);
+							thisStatistic["sampleSize"]["numeratorCount"] = parseInt(stat["numerator count"]);
+
+							atts = stat["attributes"];
+							for (var c = 0; c < atts.length; c++){
+								var att = atts[c];
+								
+								if (c >= thisStatistic["attributeEstimate"].length){
+									thisStatistic["attributeEstimate"].push(JSON.parse(JSON.stringify(blankAttribute)));
+								}
+								
+								var thisAttribute = thisStatistic["attributeEstimate"][c];
+								
+								thisAttribute["type"]["coding"][0]["code"] = att["attribute estimate type"];
+								thisAttribute["type"]["coding"][0]["display"] = attributeEstimateSet[att["attribute estimate type"]];
+								
+								thisAttribute["quantity"]["value"] = parseFloat(att["attribute quantity"]);
+								thisAttribute["quantity"]["comparator"] = att["attribute inequality"];
+								thisAttribute["level"] = att["attribute level"];
+								
+								thisAttribute["range"]["low"]["value"] = parseFloat(att["attribute from"]);
+								thisAttribute["range"]["high"]["value"] = parseFloat(att["attribute to"]);
+								
+							}
+						}
+						
+						//TODO: It needs to do all the conditional stuff, and doesn't use most if not all of the hidden fields in the form.
+						//TODO: Make sure everything is converted to the correct data type.
+						
+						fhirEvidenceList.push(thisEvidence);
+					}
+				}
 			}
-			//console.log(exposures);
-		}
-		var yCount = 0;
-		for (var y in exposures){
-			json["population"][0]["evidenceVariable"][x]["nestedVariable"][yCount] = exposures[y];
-			yCount += 1;
 		}
 	}
+}
+
+function loadPage4(){
+	formToJSON();
+	page2.style.display = "none";
+	allPageHeader.style.display = "none";
+	allPageFooter.style.display = "none";
+
+	var allResources = {
+		"Resource Example █████████████████████████████████████████████████████████████████████": fhirGroupList.concat(fhirEvidenceVariableList).concat(fhirEvidenceList)
+	};
+	json = allResources;
 	
-    document.getElementById("jsonArea").value = JSON.stringify(json, null, 2);
+	document.getElementById("]....}?|?|?{....[jsonTextArea").value = JSON.stringify(allResources, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0").replace(/([^\r])\n/g, "$1\r\n");
+	page4.style.display = "block";
+	
+	//TODO TO DO DOESN'T WORK YET
+	
+	//deleteEmptyFields();
+	//convertTreeToJSON();
+	
+	fhirGroupList, fhirEvidenceVariableList, fhirEvidenceList
+
+
 }
 
 var gradeCertaintySubcomponentCodeTypeSet = {
@@ -2540,15 +2884,689 @@ var statTypeSet = {
 };
 var attributeEstimateSet = {
 	"CI": "confidence interval",
-	"pValue": "p value",
 	"CrI": "credible interval",
 	"IQR": "interquartile range",
 	"SD": "standard deviation",
-	"SE": "standard error"
+	"SE": "standard error",
+	"pValue": "p value",
+	"bayesFactor": "Bayes factor",
+	"likelihoodRatio": "likelihood ratio",
+	"iSq": "I²",
+	"tauSq": "tau²"
 }
+
+
+var fhirGroupList = [];
+var fhirEvidenceVariableList = [];
+var fhirEvidenceList = [];
+
+var blankGroup = {
+  "resourceType": "Group",
+  "id": "",
+  "identifier": [
+    {
+      "use": "",
+      "type": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "system": "",
+      "value": "",
+      "period": {
+        "start": "",
+        "end": ""
+      },
+      "assigner": {
+        "reference": "",
+        "type": "",
+        "display": ""
+      }
+    }
+  ],
+  "active": "",
+  "name": "",
+  "type": "",
+  "code": "",
+  "actual": "",
+  "characteristic": [
+    {
+      "code": "",
+      "exclude": "",
+      "usageContext": [
+        ""
+      ],
+      "period": "",
+      "valueCodeableConcept": {
+        "coding": {
+          "system": "",
+          "code": "",
+          "display": ""
+        }
+      },
+      "valueBoolean": "",
+      "valueQuantity": {
+        "value": "",
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "valueRange": {
+        "low": "",
+        "high": ""
+      },
+      "valueReference": {
+        "reference": "",
+        "type": "",
+        "identifier": "",
+        "display": ""
+      }
+    }
+  ],
+  "quantity": -0,
+  "member": [
+    {
+      "entity": {
+        "reference": "",
+        "type": "",
+        "identifier": "",
+        "display": ""
+      },
+      "period": "",
+      "inactive": ""
+    }
+  ]
+};
+
+var blankEvidenceVariable = {
+  "resourceType": "EvidenceVariable",
+  "id": "",
+  "url": "",
+  "title": "",
+  "name": "",
+  "date": "",
+  "publisher": "",
+  "author": [
+    ""
+  ],
+  "description": "",
+  "note": [
+    {
+      "text": ""
+    }
+  ],
+  "type": "",
+  "actual": "",
+  "characteristic": [
+    {
+      "description": "",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "definition[x]": {
+        "defintionReference": "",
+        "definitionCanonical": "",
+        "definitionCodeableConcept": {
+          "coding": {
+            "system": "",
+            "code": "",
+            "display": ""
+          }
+        },
+        "definitionExpression": {
+          "description": "",
+          "name": "",
+          "language": "",
+          "expression": "",
+          "reference": ""
+        },
+        "definitionDataRequirement": "",
+        "definitionTriggerDefinition": ""
+      },
+      "method": {
+        "coding": {
+          "system": "",
+          "code": "",
+          "display": ""
+        }
+      },
+      "device": {
+        "reference": "",
+        "type": "",
+        "identifier": "",
+        "display": ""
+      },
+      "usageContext": [
+        ""
+      ],
+      "exclude": "",
+      "participantEffective[x]": {
+        "participantEffectiveDateTime": "",
+        "participantEffectivePeriod": "",
+        "participantEffectiveDuration": "",
+        "participantEffectiveTiming": ""
+      },
+      "timeFromStart": "",
+      "groupMeasure": ""
+    }
+  ]
+};
+
+var blankEvidence = {
+  "resourceType": "Evidence",
+  "id": "",
+  "url": "",
+  "identifier": [
+    {
+      "use": "",
+      "type": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "system": "",
+      "value": "",
+      "period": {
+        "start": "",
+        "end": ""
+      },
+      "assigner": {
+        "reference": "",
+        "type": "",
+        "display": ""
+      }
+    }
+  ],
+  "version": "",
+  "title": "",
+  "status": "",
+  "useContext": [
+    {
+      "code": {
+        "system": "",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      },
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "valueQuantity": {
+        "value": -0,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "valueRange": {
+        "low": {
+          "value": -0,
+          "unit": "",
+          "system": "",
+          "code": ""
+        },
+        "high": {
+          "value": -0,
+          "unit": "",
+          "system": "",
+          "code": ""
+        }
+      },
+      "valueReference": {
+        "reference": "",
+        "type": "",
+        "identifier": "",
+        "display": ""
+      }
+    }
+  ],
+  "date": "",
+  "copyright": "",
+  "approvalDate": "",
+  "lastReviewDate": "",
+  "contributor": [
+    {
+      "type": "",
+      "name": "",
+      "contact": [
+        {
+          "name": "",
+          "telecom": [
+            {
+              "system": "",
+              "value": "",
+              "use": "",
+              "rank": "",
+              "period": {
+                "start": "",
+                "end": ""
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "relatedArtifact": [
+    {
+      "type": "",
+      "label": "",
+      "display": "",
+      "citation": "",
+      "url": "",
+      "document": {
+        "contentType": "",
+        "language": "",
+        "data": "",
+        "url": "",
+        "size": "",
+        "hash": "",
+        "title": "",
+        "creation": ""
+      },
+      "resource": ""
+    }
+  ],
+  "description": "",
+  "note": [
+    {
+      "text": ""
+    }
+  ],
+  "assertion": "",
+  "referentGroup": {
+    "description": "",
+    "note": [
+      {
+        "text": ""
+      }
+    ],
+    "evidenceSource": {
+      "reference": "",
+      "type": "Group",
+      "identifier": "",
+      "display": ""
+    },
+    "intendedGroup": {
+      "reference": "",
+      "type": "Group",
+      "identifier": "",
+      "display": ""
+    },
+    "directnessMatch": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/directness",
+          "version": "",
+          "code": "",
+          "display": "",
+          "userSelected": ""
+        }
+      ],
+      "text": ""
+    }
+  },
+  "variableDefinition": [
+    {
+      "description": "",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "",
+        "display": ""
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "",
+        "display": ""
+      },
+      "directnessMatch": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/directness",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      }
+    }
+  ],
+  "synthesisType": {
+    "coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/synthesis-type",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "studyType": {
+    "coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/study-type",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "statistic": [
+    {
+      "description": "",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "statisticType": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/statistic-type",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "quantity": {
+        "value": -0,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "sampleSize": {
+        "description": "",
+        "note": [
+          {
+            "text": ""
+          }
+        ],
+        "numberOfStudies": -0,
+        "numberOfParticipants": -0,
+        "knownDataCount": -0,
+        "numeratorCount": -0
+      },
+      "attributeEstimate": [
+        {
+          "description": "",
+          "note": [
+            {
+              "text": ""
+            }
+          ],
+          "type": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/effect-estimate-type",
+                "version": "",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "quantity": {
+            "value": -0,
+            "comparator": "",
+            "unit": "",
+            "system": "",
+            "code": ""
+          },
+          "level": -0,
+          "range": {
+            "low": {
+              "value": -0,
+              "unit": "",
+              "system": "",
+              "code": ""
+            },
+            "high": {
+              "value": -0,
+              "unit": "",
+              "system": "",
+              "code": ""
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "distribution": [
+    {
+      "description": "",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "numberOfIntervals": -0,
+      "bottomOfFirstInterval": {
+        "value": -0,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "interval": [
+        {
+          "rankOrder": -0,
+          "topOfInterval": {
+            "value": -0,
+            "comparator": "",
+            "unit": "",
+            "system": "",
+            "code": ""
+          },
+          "intervalStatistic": [
+            {
+              "description": "",
+              "note": [
+                {
+                  "text": ""
+                }
+              ],
+              "statisticType": {
+                "coding": [
+                  {
+                    "system": "http://terminology.hl7.org/CodeSystem/statistic-type",
+                    "version": "",
+                    "code": "",
+                    "display": "",
+                    "userSelected": ""
+                  }
+                ],
+                "text": ""
+              },
+              "quantity": {
+                "value": -0,
+                "comparator": "",
+                "unit": "",
+                "system": "",
+                "code": ""
+              },
+              "sampleSize": {
+                "description": "",
+                "note": [
+                  {
+                    "text": ""
+                  }
+                ],
+                "numberOfStudies": -0,
+                "numberOfParticipants": -0,
+                "knownDataCount": -0,
+                "numeratorCount": -0
+              },
+              "attributeEstimate": [
+                {
+                  "description": "",
+                  "note": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": {
+                    "coding": [
+                      {
+                        "system": "http://terminology.hl7.org/CodeSystem/effect-estimate-type",
+                        "version": "",
+                        "code": "",
+                        "display": "",
+                        "userSelected": ""
+                      }
+                    ],
+                    "text": ""
+                  },
+                  "quantity": {
+                    "value": -0,
+                    "comparator": "",
+                    "unit": "",
+                    "system": "",
+                    "code": ""
+                  },
+                  "level": -0,
+                  "range": {
+                    "low": {
+                      "value": -0,
+                      "unit": "",
+                      "system": "",
+                      "code": ""
+                    },
+                    "high": {
+                      "value": -0,
+                      "unit": "",
+                      "system": "",
+                      "code": ""
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "certainty": [
+    {
+      "description": "",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "rating": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/certainty-rating",
+              "version": "",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        }
+      ],
+      "certaintySubcomponent": [
+        {
+          "description": "",
+          "note": [
+            {
+              "text": ""
+            }
+          ],
+          "type": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type",
+                "version": "",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "rating": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating",
+                "version": "",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          }
+        }
+      ]
+    }
+  ]
+};
+
 var loadedJson;
 //Update to the newest one, and update the convert to JSON code.
 var blankJson = {};
+
 </script>
 
 <style>
@@ -3069,6 +4087,853 @@ input[type=text]:disabled {
     color: white;
 }
 </style>
+
+<style>
+/*NOT MY CSS */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+.inputField::-webkit-scrollbar {
+	display: none;
+}
+
+.circle {
+  border: 1px solid #aaa;
+  box-shadow: inset 1px 1px 3px #DDDDDD;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  position: relative;
+  margin: 0px;
+  margin-left: 2px;
+  margin-top: -3px;
+  display: inline-block;
+  vertical-align: middle;
+  background: #DDDDDD;
+}
+
+.circle:hover {
+  background: #F2F2F2;
+}
+
+.circle:active {
+  background: #60606080;
+}
+
+.circle:before,
+.circle:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* PLUS */
+
+.circle.plus:before,
+.circle.plus:after {
+  background: black;
+}
+
+.circle.plus:before {
+  margin: 3px auto;
+  width: 2px;
+}
+
+.circle.plus:after {
+  margin: auto 3px;
+  height: 2px;
+}
+
+.circle.minus:before,
+.circle.minus:after {
+  background: #CC3333;
+}
+
+.circle.minus:before {
+  margin: 3px auto;
+  width: 0px;
+}
+
+.circle.minus:after {
+  margin: auto 3px;
+  height: 2px;
+}
+
+
+#ElementAddedToast {
+  visibility: hidden;
+  min-width: 460px;
+  margin-left: -230px;
+  background-color: #339033;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 10px;
+  font-size: 18px;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+#NothingToDeleteToast {
+  visibility: hidden;
+  min-width: 300px;
+  margin-left: -150px;
+  background-color: #903333;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 10px;
+  font-size: 18px;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+#URLCopiedToast {
+  visibility: hidden;
+  min-width: 300px;
+  margin-left: -150px;
+  background-color: #21C996;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 10px;
+  font-size: 18px;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+#ElementAddedToast.show, #NothingToDeleteToast.show, #URLCopiedToast.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 10px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 10px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 10px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 10px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+
+head {
+   height: 0px;
+   padding: 0px;
+   margin: 0px;
+}
+
+html {
+   height: 100%;
+}
+
+  
+#page4 {
+  font-family: Georgia, serif !important;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0px;
+  padding-top: 0px;
+  margin-bottom: 0px;
+  max-width: 100%;
+  height: 100%;
+}
+
+.container {
+   height: 100%;
+   padding: 0px;
+   margin: 0px;
+}
+
+.topArea {
+  width: 100%;
+  border-bottom: 2px solid;
+  max-height: 136px;
+}
+
+.bottomSection {
+   /** height: 81%; **/
+   height: calc(100vh - 148px);
+   padding: 0px;
+   margin: 0px;
+   border-bottom: 2px solid;
+   border-left: 2px solid;
+   border-right: 2px solid;
+}
+
+.chart {
+   float: left;
+   width: 50%;
+   overflow-y: auto;
+   height: 100%;  
+}
+
+.jsonArea {
+   float: right;
+   width: 50%;
+   overflow: hidden;
+   padding: 0px;
+   margin: 0px;
+   height: 100.4%;
+}
+
+.jsonTextArea {
+   width: 99.6%;
+   height: 99.4%;
+   padding: 0px;
+   margin: 0px;
+   resize: none;
+}
+
+.middleButtons {
+}
+
+.swapButton {
+   left: 50%;
+   width: 28px;
+   height: 23px;
+   margin-top: -6px;
+   margin-left: -14px;
+   display: inline;
+   position: absolute;
+}
+
+.convertToJSONButton {
+   left: 50%;
+   margin-left: -210px;
+   right: auto;
+   margin-right: auto;
+   margin-top: -6px;
+   display: inline;
+   position: absolute;
+}
+
+.convertToTreeButton {
+   right: 50%;
+   margin-right: -210px;
+   left: auto;
+   margin-left: auto;
+   margin-top: -6px;
+   display: inline;
+   position: absolute;
+}
+
+.hideJSONButton {
+    right: 8px;
+    position: absolute;
+    display: block;
+    margin-top: -23px;
+}
+
+p.copyURLElement input[type=url] {
+  padding: 1px;
+  font-size: 14px;
+  border: 1px solid #555555;
+  float: left;
+  width: 60%;
+  background: #F2F2F2;
+}
+
+p.copyURLElement button {
+  float: left;
+  width: 40%;
+  padding: 1px;
+  background: #21C996;
+  color: #FFFFFF;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #555555;
+  border-left: none;
+}
+
+p.copyURLElement button:hover {
+  background: #0BDA7D;
+}
+
+p.copyURLElement::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
+
+<script src="JSON_Tree_Writer.js"></script>
+<script>
+if(window.addEventListener) {
+    window.addEventListener('load', initiatePage, false); //W3C
+} else {
+    window.attachEvent('onload', initiatePage); //Older IE
+}
+
+hovertext_json = {};
+
+json = {
+  "resourceType": "Evidence",
+  "id": "",
+  "url": "",
+  "identifier": [
+    {
+      "use": "",
+      "type": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "system": "",
+      "value": "",
+      "period": {
+        "start": "",
+        "end": ""
+      },
+      "assigner": {
+        "reference": "",
+        "type": "",
+        "display": ""
+      }
+    }
+  ],
+  "version": "",
+  "title": "",
+  "status": "",
+  "useContext": [
+    {
+      "code": {
+        "system": "",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      },
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "valueQuantity": {
+        "value": -0,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "valueRange": {
+        "low": {
+          "value": -0,
+          "unit": "",
+          "system": "",
+          "code": ""
+        },
+        "high": {
+          "value": -0,
+          "unit": "",
+          "system": "",
+          "code": ""
+        }
+      },
+      "valueReference": {
+        "reference": "",
+        "type": "",
+        "identifier": "",
+        "display": ""
+      }
+    }
+  ],
+  "date": "",
+  "copyright": "",
+  "approvalDate": "",
+  "lastReviewDate": "",
+  "contributor": [
+    {
+      "type": "",
+      "name": "",
+      "contact": [
+        {
+          "name": "",
+          "telecom": [
+            {
+              "system": "",
+              "value": "",
+              "use": "",
+              "rank": "",
+              "period": {
+                "start": "",
+                "end": ""
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "relatedArtifact": [
+    {
+      "type": "",
+      "label": "",
+      "display": "",
+      "citation": "",
+      "url": "",
+      "document": {
+        "contentType": "",
+        "language": "",
+        "data": "",
+        "url": "",
+        "size": "",
+        "hash": "",
+        "title": "",
+        "creation": ""
+      },
+      "resource": ""
+    }
+  ],
+  "description": "",
+  "note": [
+    {
+      "text": ""
+    }
+  ],
+  "assertion": "",
+  "referentGroup": {
+    "description": "",
+    "note": [
+      {
+        "text": ""
+      }
+    ],
+    "evidenceSource": {
+      "reference": "",
+      "type": "Group",
+      "identifier": "",
+      "display": ""
+    },
+    "intendedGroup": {
+      "reference": "",
+      "type": "Group",
+      "identifier": "",
+      "display": ""
+    },
+    "directnessMatch": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/directness",
+          "version": "",
+          "code": "",
+          "display": "",
+          "userSelected": ""
+        }
+      ],
+      "text": ""
+    }
+  },
+  "variableDefinition": [
+    {
+      "description": "",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "actualDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "",
+        "display": ""
+      },
+      "intendedDefinition": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "identifier": "",
+        "display": ""
+      },
+      "directnessMatch": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/directness",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      }
+    }
+  ],
+  "synthesisType": {
+    "coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/synthesis-type",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "studyType": {
+    "coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/study-type",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "statistic": [
+    {
+      "description": "",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "statisticType": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/statistic-type",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "quantity": {
+        "value": -0,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "sampleSize": {
+        "description": "",
+        "note": [
+          {
+            "text": ""
+          }
+        ],
+        "numberOfStudies": -0,
+        "numberOfParticipants": -0,
+        "knownDataCount": -0,
+        "numeratorCount": -0
+      },
+      "attributeEstimate": [
+        {
+          "description": "",
+          "note": [
+            {
+              "text": ""
+            }
+          ],
+          "type": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/effect-estimate-type",
+                "version": "",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "quantity": {
+            "value": -0,
+            "comparator": "",
+            "unit": "",
+            "system": "",
+            "code": ""
+          },
+          "level": -0,
+          "range": {
+            "low": {
+              "value": -0,
+              "unit": "",
+              "system": "",
+              "code": ""
+            },
+            "high": {
+              "value": -0,
+              "unit": "",
+              "system": "",
+              "code": ""
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "distribution": [
+    {
+      "description": "",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "numberOfIntervals": -0,
+      "bottomOfFirstInterval": {
+        "value": -0,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "interval": [
+        {
+          "rankOrder": -0,
+          "topOfInterval": {
+            "value": -0,
+            "comparator": "",
+            "unit": "",
+            "system": "",
+            "code": ""
+          },
+          "intervalStatistic": [
+            {
+              "description": "",
+              "note": [
+                {
+                  "text": ""
+                }
+              ],
+              "statisticType": {
+                "coding": [
+                  {
+                    "system": "http://terminology.hl7.org/CodeSystem/statistic-type",
+                    "version": "",
+                    "code": "",
+                    "display": "",
+                    "userSelected": ""
+                  }
+                ],
+                "text": ""
+              },
+              "quantity": {
+                "value": -0,
+                "comparator": "",
+                "unit": "",
+                "system": "",
+                "code": ""
+              },
+              "sampleSize": {
+                "description": "",
+                "note": [
+                  {
+                    "text": ""
+                  }
+                ],
+                "numberOfStudies": -0,
+                "numberOfParticipants": -0,
+                "knownDataCount": -0,
+                "numeratorCount": -0
+              },
+              "attributeEstimate": [
+                {
+                  "description": "",
+                  "note": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "type": {
+                    "coding": [
+                      {
+                        "system": "http://terminology.hl7.org/CodeSystem/effect-estimate-type",
+                        "version": "",
+                        "code": "",
+                        "display": "",
+                        "userSelected": ""
+                      }
+                    ],
+                    "text": ""
+                  },
+                  "quantity": {
+                    "value": -0,
+                    "comparator": "",
+                    "unit": "",
+                    "system": "",
+                    "code": ""
+                  },
+                  "level": -0,
+                  "range": {
+                    "low": {
+                      "value": -0,
+                      "unit": "",
+                      "system": "",
+                      "code": ""
+                    },
+                    "high": {
+                      "value": -0,
+                      "unit": "",
+                      "system": "",
+                      "code": ""
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "certainty": [
+    {
+      "description": "",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "rating": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/certainty-rating",
+              "version": "",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        }
+      ],
+      "certaintySubcomponent": [
+        {
+          "description": "",
+          "note": [
+            {
+              "text": ""
+            }
+          ],
+          "type": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type",
+                "version": "",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "rating": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating",
+                "version": "",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          }
+        }
+      ]
+    }
+  ]
+};
+
+</script>
 
 </body>
 </html>
