@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 
-<body onload="prepareForm();">
+<body onload="prepareForm();" style="margin-bottom: 0px;">
 
 
 <title>DynaMed Evidence Data Entry Form (Preview)</title>
@@ -98,7 +98,7 @@
 	
 	<br>
 	<div>
-		<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" value="Next Page to Create Report" onclick="loadPage4();"></p></b>
+		<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" value="Next Page to Create Report (Just JSON for now)" onclick="loadPage4();"></p></b>
 		<br>
 		<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" value="< Back" onclick="page1.style.display = 'block'; page2.style.display = 'none';"></p></b>
 	</div>
@@ -111,7 +111,7 @@
 
 <div id="page4" class="container" style="display: none;">
      <div class="topArea">
-     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - THE TREE VIEW DOESN'T WORK YET</h2>
+     <span style="display: flex;"><input style="height: 22px;" type="button" value="Back to Previous Page" onclick="backToPage2();"> <h2 style="margin: 0px; margin-left: 4px;">JSON Tree Writer - EBMonFHIR Resource Export</h2></span>
 	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. A field value of &quot;null&quot;, all lowercase, in the tree view will be converted to just null in the JSON.\n2. A field value of &quot;true&quot; or &quot;false&quot;, all lowercase, will be converted to just true or false respectively as booleans in the JSON.\n3. 1D arrays work perfectly fine to and from JSON, and interpreting 2D, 3D, and beyond arrays from JSON to Tree View can work well most of the time, but bugs may occur when adding elements in the Tree View for arrays more complex than 1D.')" style="position: absolute; right: 6px; top: 4px;">Limitations</button>
 	 <p style="position: absolute; right: 94px; top: 7px; margin: 0px; color: #AEAEAE; font-size: 13px; font-family: sans-serif"><b>EBSCO Health Innovations</b></p>
 	 <p style="position: absolute; right: 2px; top: 10px;">Convert Tree View to JSON in real time? <input onchange="TreeToJSONsetting();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_RealTime" name="JSONrealtime" value="JSONrealtime" title="If this is checked then the JSON side will be updated automatically as you type and add elements on the Tree View side."></p>
@@ -1050,6 +1050,10 @@ function loadPage2(){
 	updateAllResultsButtons();
 }
 
+function backToPage2(){
+	page4.style.display = 'none';
+	page2.style.display = 'block';
+}
 
 function componentListCreate(){
 	studyList = [];
@@ -2458,10 +2462,12 @@ function formToJSON(){
 						var studyTitle = page1.getElementsByClassName("studyTitle")[studyNumber].value;
 						
 						if (page1.getElementsByClassName("synthesisRadio")[studyNumber].checked){
+							thisEvidence["synthesisType"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/synthesis-type";
 							thisEvidence["synthesisType"]["coding"][0]["code"] = page1.getElementsByClassName("synthesisType")[studyNumber].value;
 							thisEvidence["synthesisType"]["coding"][0]["display"] = page1.getElementsByClassName("synthesisType")[studyNumber].options[page1.getElementsByClassName("synthesisType")[studyNumber].selectedIndex].text;
 						}
 						
+						thisEvidence["studyType"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/study-type";
 						thisEvidence["studyType"]["coding"][0]["code"] = page1.getElementsByClassName("studyType")[studyNumber].value;
 						thisEvidence["studyType"]["coding"][0]["display"] = page1.getElementsByClassName("studyType")[studyNumber].options[page1.getElementsByClassName("studyType")[studyNumber].selectedIndex].text;
 						
@@ -2491,6 +2497,7 @@ function formToJSON(){
 						thisEvidence["referentGroup"]["intendedGroup"]["identifier"] = result["intended population identifier"];
 						thisEvidence["referentGroup"]["evidenceSource"]["display"] = result["actual population display"];
 						thisEvidence["referentGroup"]["evidenceSource"]["identifier"] = result["actual population identifier"];
+						thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
 						thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["display"] = result["population directness match"];
 						thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["code"]    = result["population directness match"];	//TO DO TODO get the proper codes for directness match
 					
@@ -2506,6 +2513,7 @@ function formToJSON(){
 					
 						thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(thisEvidence["variableDefinition"][0])));
 						
+						thisEvidence["variableDefinition"][0]["variableRole"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/variable-role";
 						thisEvidence["variableDefinition"][0]["variableRole"]["coding"][0]["code"] = "measuredVariable";
 						thisEvidence["variableDefinition"][0]["variableRole"]["coding"][0]["display"] = "measured variable";
 						thisEvidence["variableDefinition"][0]["description"] = out["outcome description"];
@@ -2514,6 +2522,7 @@ function formToJSON(){
 						thisEvidence["variableDefinition"][0]["intendedDefinition"]["identifier"] = out["intended outcome identifier"];
 						thisEvidence["variableDefinition"][0]["actualDefinition"]["display"] = out["actual outcome display"];
 						thisEvidence["variableDefinition"][0]["actualDefinition"]["identifier"] = out["actual outcome identifier"];
+						thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
 						thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["display"] = out["outcome directness match"];
 						thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["code"]    = out["outcome directness match"];	//TO DO TODO get the proper codes for directness match
 
@@ -2521,6 +2530,7 @@ function formToJSON(){
 							thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(thisEvidence["variableDefinition"][1])));
 						}
 						
+						thisEvidence["variableDefinition"][1]["variableRole"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/variable-role";
 						thisEvidence["variableDefinition"][1]["variableRole"]["coding"][0]["code"] = "exposure";
 						thisEvidence["variableDefinition"][1]["variableRole"]["coding"][0]["display"] = "exposure";
 						thisEvidence["variableDefinition"][1]["description"] = result["intervention description"];
@@ -2529,11 +2539,13 @@ function formToJSON(){
 						thisEvidence["variableDefinition"][1]["intendedDefinition"]["identifier"] = result["intended intervention identifier"];
 						thisEvidence["variableDefinition"][1]["actualDefinition"]["display"] = result["actual intervention display"];
 						thisEvidence["variableDefinition"][1]["actualDefinition"]["identifier"] = result["actual intervention identifier"];
+						thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
 						thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["display"] = result["intervention directness match"];
 						thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["code"]    = result["intervention directness match"];	//TO DO TODO get the proper codes for directness match
 
 						
 						if (thisEvidence["variableDefinition"].length > 2){
+							thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/variable-role";
 							thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["code"] = "referenceExposure";
 							thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["display"] = "reference exposure";
 							thisEvidence["variableDefinition"][2]["description"] = result["comparator description"];
@@ -2542,8 +2554,11 @@ function formToJSON(){
 							thisEvidence["variableDefinition"][2]["intendedDefinition"]["identifier"] = result["intended comparator identifier"];
 							thisEvidence["variableDefinition"][2]["actualDefinition"]["display"] = result["actual comparator display"];
 							thisEvidence["variableDefinition"][2]["actualDefinition"]["identifier"] = result["actual comparator identifier"];
-							thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["display"] = result["comparator directness match"];
-							thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["code"]    = result["comparator directness match"];	//TO DO TODO get the proper codes for directness match
+							if (result["comparator directness match"]){
+								thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
+								thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["display"] = result["comparator directness match"];
+								thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["code"]    = result["comparator directness match"];	//TO DO TODO get the proper codes for directness match
+							}
 						}
 																								
 						//Gets Certainty
@@ -2552,49 +2567,71 @@ function formToJSON(){
 							if (out["certainty"][0]["certainty system"] == "GRADE"){
 								thisEvidence["certainty"][0]["description"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["GRADE certainty of evidence"]];
 								thisEvidence["certainty"][0]["note"][0]["text"] = out["certainty"][0]["GRADE comments on certainty"];
-								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["code"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["GRADE certainty of evidence"]];
-								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["display"] = out["certainty"][0]["GRADE certainty of evidence"];
+								if (out["certainty"][0]["GRADE certainty of evidence"]){
+									thisEvidence["certainty"][0]["rating"][0]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-rating";
+									thisEvidence["certainty"][0]["rating"][0]["coding"][0]["code"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["GRADE certainty of evidence"]];
+									thisEvidence["certainty"][0]["rating"][0]["coding"][0]["display"] = out["certainty"][0]["GRADE certainty of evidence"];
+								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
 								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
 								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
 								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
 								
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE risk of bias"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["note"][0]["text"] = out["certainty"][0]["GRADE comments on risk of bias"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["code"] = "RiskOfBias";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["display"] = "Risk of bias";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE risk of bias"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE risk of bias"];
+								if (out["certainty"][0]["GRADE risk of bias"]){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE risk of bias"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["note"][0]["text"] = out["certainty"][0]["GRADE comments on risk of bias"];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["code"] = "RiskOfBias";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["display"] = "Risk of bias";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE risk of bias"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE risk of bias"];
+								}
 								
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE inconsistency"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["note"][0]["text"] = out["certainty"][0]["GRADE comments on inconsistency"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["code"] = "Inconsistency";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["display"] = "Inconsistency";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE inconsistency"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE inconsistency"];
+								if (out["certainty"][0]["GRADE inconsistency"]){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE inconsistency"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["note"][0]["text"] = out["certainty"][0]["GRADE comments on inconsistency"];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["code"] = "Inconsistency";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["display"] = "Inconsistency";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE inconsistency"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE inconsistency"];
+								}
 								
+								if (out["certainty"][0]["GRADE indrectness"]){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE indrectness"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["note"][0]["text"] = out["certainty"][0]["GRADE comments on indrectness"];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["code"] = "Indirectness";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["display"] = "Indirectness";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE indrectness"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE indrectness"];
+								}
 								
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE indrectness"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["note"][0]["text"] = out["certainty"][0]["GRADE comments on indrectness"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["code"] = "Indirectness";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["display"] = "Indirectness";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE indrectness"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE indrectness"];
+								if (out["certainty"][0]["GRADE imprecision"]){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE imprecision"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["note"][0]["text"] = out["certainty"][0]["GRADE comments on imprecision"];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["code"] = "Imprecision";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["display"] = "Imprecision";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE imprecision"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE imprecision"];
+								}
 								
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE imprecision"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["note"][0]["text"] = out["certainty"][0]["GRADE comments on imprecision"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["code"] = "Imprecision";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["display"] = "Imprecision";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE imprecision"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE imprecision"];
-								
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE publication bias"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["note"][0]["text"] = out["certainty"][0]["GRADE comments on publication bias"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["code"] = "PublicationBias";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["display"] = "Publication bias";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE publication bias"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE publication bias"];
+								if (out["certainty"][0]["GRADE publication bias"]){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["description"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE publication bias"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["note"][0]["text"] = out["certainty"][0]["GRADE comments on publication bias"];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["code"] = "PublicationBias";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["display"] = "Publication bias";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE publication bias"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE publication bias"];
+								}
 								
 							} else if(out["certainty"][0]["certainty system"] == "DynaMed"){						
 								thisEvidence["certainty"][0]["description"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["DynaMed certainty of evidence"]];
@@ -2731,6 +2768,7 @@ function formToJSON(){
 							thisStatistic["description"] = stat["statistic description"];
 							thisStatistic["note"][0]["text"] = stat["statistic notes"];
 							
+							thisStatistic["statisticType"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/statistic-type";
 							thisStatistic["statisticType"]["coding"][0]["code"] = stat["statistic type"];
 							thisStatistic["statisticType"]["coding"][0]["display"] = statTypeSet[stat["statistic type"]];
 							
@@ -2753,6 +2791,7 @@ function formToJSON(){
 								
 								var thisAttribute = thisStatistic["attributeEstimate"][c];
 								
+								thisAttribute["type"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/effect-estimate-type";
 								thisAttribute["type"]["coding"][0]["code"] = att["attribute estimate type"];
 								thisAttribute["type"]["coding"][0]["display"] = attributeEstimateSet[att["attribute estimate type"]];
 								
@@ -2784,13 +2823,23 @@ function loadPage4(){
 	allPageFooter.style.display = "none";
 
 	var allResources = {
-		"Resource Example █████████████████████████████████████████████████████████████████████": fhirGroupList.concat(fhirEvidenceVariableList).concat(fhirEvidenceList)
+		"Resource Example ██████████████████████████████████": fhirGroupList.concat(fhirEvidenceVariableList).concat(fhirEvidenceList)
 	};
-	json = allResources;
+	//json = allResources;
+	var stringJSON = JSON.stringify(allResources, null, 2).replace(/([^\r])\n/g, "$1\r\n");
 	
-	document.getElementById("]....}?|?|?{....[jsonTextArea").value = JSON.stringify(allResources, null, 2).replace(/"{\[{NeGaTiVe!_!0}]}"/g, "-0").replace(/"{\[{NeGaTiVe!_!0pointZERO}]}"/g, "-0.0").replace(/([^\r])\n/g, "$1\r\n");
+	console.log(stringJSON);
+	
+	document.getElementById("]....}?|?|?{....[jsonTextArea").value = stringJSON;
+
+	convertJSONToTree();
+	deleteEmptyFieldsAndConvertNoWarning();
+	
 	page4.style.display = "block";
 	
+	loopDictionary(hovertext_json, 1, "", 0, 0); //For the hover text
+	buildTree(false);
+	hashDict = hashCode(JSON.stringify(convertTreeToJSON()));
 	//TODO TO DO DOESN'T WORK YET
 	
 	//deleteEmptyFields();
@@ -2971,7 +3020,6 @@ var blankGroup = {
       }
     }
   ],
-  "quantity": -0,
   "member": [
     {
       "entity": {
@@ -3119,7 +3167,6 @@ var blankEvidence = {
         "text": ""
       },
       "valueQuantity": {
-        "value": -0,
         "comparator": "",
         "unit": "",
         "system": "",
@@ -3127,13 +3174,11 @@ var blankEvidence = {
       },
       "valueRange": {
         "low": {
-          "value": -0,
           "unit": "",
           "system": "",
           "code": ""
         },
         "high": {
-          "value": -0,
           "unit": "",
           "system": "",
           "code": ""
@@ -3223,7 +3268,6 @@ var blankEvidence = {
     "directnessMatch": {
       "coding": [
         {
-          "system": "http://terminology.hl7.org/CodeSystem/directness",
           "version": "",
           "code": "",
           "display": "",
@@ -3244,7 +3288,6 @@ var blankEvidence = {
       "variableRole": {
         "coding": [
           {
-            "system": "http://terminology.hl7.org/CodeSystem/variable-role",
             "version": "",
             "code": "",
             "display": "",
@@ -3268,7 +3311,6 @@ var blankEvidence = {
       "directnessMatch": {
         "coding": [
           {
-            "system": "http://terminology.hl7.org/CodeSystem/directness",
             "version": "",
             "code": "",
             "display": "",
@@ -3282,7 +3324,6 @@ var blankEvidence = {
   "synthesisType": {
     "coding": [
       {
-        "system": "http://terminology.hl7.org/CodeSystem/synthesis-type",
         "version": "",
         "code": "",
         "display": "",
@@ -3294,7 +3335,6 @@ var blankEvidence = {
   "studyType": {
     "coding": [
       {
-        "system": "http://terminology.hl7.org/CodeSystem/study-type",
         "version": "",
         "code": "",
         "display": "",
@@ -3314,7 +3354,6 @@ var blankEvidence = {
       "statisticType": {
         "coding": [
           {
-            "system": "http://terminology.hl7.org/CodeSystem/statistic-type",
             "version": "",
             "code": "",
             "display": "",
@@ -3324,7 +3363,6 @@ var blankEvidence = {
         "text": ""
       },
       "quantity": {
-        "value": -0,
         "comparator": "",
         "unit": "",
         "system": "",
@@ -3336,11 +3374,7 @@ var blankEvidence = {
           {
             "text": ""
           }
-        ],
-        "numberOfStudies": -0,
-        "numberOfParticipants": -0,
-        "knownDataCount": -0,
-        "numeratorCount": -0
+        ]
       },
       "attributeEstimate": [
         {
@@ -3353,7 +3387,6 @@ var blankEvidence = {
           "type": {
             "coding": [
               {
-                "system": "http://terminology.hl7.org/CodeSystem/effect-estimate-type",
                 "version": "",
                 "code": "",
                 "display": "",
@@ -3363,22 +3396,18 @@ var blankEvidence = {
             "text": ""
           },
           "quantity": {
-            "value": -0,
             "comparator": "",
             "unit": "",
             "system": "",
             "code": ""
           },
-          "level": -0,
           "range": {
             "low": {
-              "value": -0,
               "unit": "",
               "system": "",
               "code": ""
             },
             "high": {
-              "value": -0,
               "unit": "",
               "system": "",
               "code": ""
@@ -3396,9 +3425,7 @@ var blankEvidence = {
           "text": ""
         }
       ],
-      "numberOfIntervals": -0,
       "bottomOfFirstInterval": {
-        "value": -0,
         "comparator": "",
         "unit": "",
         "system": "",
@@ -3406,9 +3433,7 @@ var blankEvidence = {
       },
       "interval": [
         {
-          "rankOrder": -0,
           "topOfInterval": {
-            "value": -0,
             "comparator": "",
             "unit": "",
             "system": "",
@@ -3425,7 +3450,6 @@ var blankEvidence = {
               "statisticType": {
                 "coding": [
                   {
-                    "system": "http://terminology.hl7.org/CodeSystem/statistic-type",
                     "version": "",
                     "code": "",
                     "display": "",
@@ -3435,7 +3459,6 @@ var blankEvidence = {
                 "text": ""
               },
               "quantity": {
-                "value": -0,
                 "comparator": "",
                 "unit": "",
                 "system": "",
@@ -3448,10 +3471,6 @@ var blankEvidence = {
                     "text": ""
                   }
                 ],
-                "numberOfStudies": -0,
-                "numberOfParticipants": -0,
-                "knownDataCount": -0,
-                "numeratorCount": -0
               },
               "attributeEstimate": [
                 {
@@ -3464,7 +3483,6 @@ var blankEvidence = {
                   "type": {
                     "coding": [
                       {
-                        "system": "http://terminology.hl7.org/CodeSystem/effect-estimate-type",
                         "version": "",
                         "code": "",
                         "display": "",
@@ -3474,22 +3492,18 @@ var blankEvidence = {
                     "text": ""
                   },
                   "quantity": {
-                    "value": -0,
                     "comparator": "",
                     "unit": "",
                     "system": "",
                     "code": ""
                   },
-                  "level": -0,
                   "range": {
                     "low": {
-                      "value": -0,
                       "unit": "",
                       "system": "",
                       "code": ""
                     },
                     "high": {
-                      "value": -0,
                       "unit": "",
                       "system": "",
                       "code": ""
@@ -3515,7 +3529,6 @@ var blankEvidence = {
         {
           "coding": [
             {
-              "system": "http://terminology.hl7.org/CodeSystem/certainty-rating",
               "version": "",
               "code": "",
               "display": "",
@@ -3536,7 +3549,6 @@ var blankEvidence = {
           "type": {
             "coding": [
               {
-                "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type",
                 "version": "",
                 "code": "",
                 "display": "",
@@ -3548,7 +3560,6 @@ var blankEvidence = {
           "rating": {
             "coding": [
               {
-                "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating",
                 "version": "",
                 "code": "",
                 "display": "",
@@ -4424,514 +4435,6 @@ p.copyURLElement::after {
 
 <script src="JSON_Tree_Writer.js"></script>
 <script>
-if(window.addEventListener) {
-    window.addEventListener('load', initiatePage, false); //W3C
-} else {
-    window.attachEvent('onload', initiatePage); //Older IE
-}
-
-hovertext_json = {};
-
-json = {
-  "resourceType": "Evidence",
-  "id": "",
-  "url": "",
-  "identifier": [
-    {
-      "use": "",
-      "type": {
-        "coding": [
-          {
-            "system": "",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "system": "",
-      "value": "",
-      "period": {
-        "start": "",
-        "end": ""
-      },
-      "assigner": {
-        "reference": "",
-        "type": "",
-        "display": ""
-      }
-    }
-  ],
-  "version": "",
-  "title": "",
-  "status": "",
-  "useContext": [
-    {
-      "code": {
-        "system": "",
-        "version": "",
-        "code": "",
-        "display": "",
-        "userSelected": ""
-      },
-      "valueCodeableConcept": {
-        "coding": [
-          {
-            "system": "",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "valueQuantity": {
-        "value": -0,
-        "comparator": "",
-        "unit": "",
-        "system": "",
-        "code": ""
-      },
-      "valueRange": {
-        "low": {
-          "value": -0,
-          "unit": "",
-          "system": "",
-          "code": ""
-        },
-        "high": {
-          "value": -0,
-          "unit": "",
-          "system": "",
-          "code": ""
-        }
-      },
-      "valueReference": {
-        "reference": "",
-        "type": "",
-        "identifier": "",
-        "display": ""
-      }
-    }
-  ],
-  "date": "",
-  "copyright": "",
-  "approvalDate": "",
-  "lastReviewDate": "",
-  "contributor": [
-    {
-      "type": "",
-      "name": "",
-      "contact": [
-        {
-          "name": "",
-          "telecom": [
-            {
-              "system": "",
-              "value": "",
-              "use": "",
-              "rank": "",
-              "period": {
-                "start": "",
-                "end": ""
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "relatedArtifact": [
-    {
-      "type": "",
-      "label": "",
-      "display": "",
-      "citation": "",
-      "url": "",
-      "document": {
-        "contentType": "",
-        "language": "",
-        "data": "",
-        "url": "",
-        "size": "",
-        "hash": "",
-        "title": "",
-        "creation": ""
-      },
-      "resource": ""
-    }
-  ],
-  "description": "",
-  "note": [
-    {
-      "text": ""
-    }
-  ],
-  "assertion": "",
-  "referentGroup": {
-    "description": "",
-    "note": [
-      {
-        "text": ""
-      }
-    ],
-    "evidenceSource": {
-      "reference": "",
-      "type": "Group",
-      "identifier": "",
-      "display": ""
-    },
-    "intendedGroup": {
-      "reference": "",
-      "type": "Group",
-      "identifier": "",
-      "display": ""
-    },
-    "directnessMatch": {
-      "coding": [
-        {
-          "system": "http://terminology.hl7.org/CodeSystem/directness",
-          "version": "",
-          "code": "",
-          "display": "",
-          "userSelected": ""
-        }
-      ],
-      "text": ""
-    }
-  },
-  "variableDefinition": [
-    {
-      "description": "",
-      "note": [
-        {
-          "text": ""
-        }
-      ],
-      "variableRole": {
-        "coding": [
-          {
-            "system": "http://terminology.hl7.org/CodeSystem/variable-role",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "actualDefinition": {
-        "reference": "",
-        "type": "EvidenceVariable",
-        "identifier": "",
-        "display": ""
-      },
-      "intendedDefinition": {
-        "reference": "",
-        "type": "EvidenceVariable",
-        "identifier": "",
-        "display": ""
-      },
-      "directnessMatch": {
-        "coding": [
-          {
-            "system": "http://terminology.hl7.org/CodeSystem/directness",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      }
-    }
-  ],
-  "synthesisType": {
-    "coding": [
-      {
-        "system": "http://terminology.hl7.org/CodeSystem/synthesis-type",
-        "version": "",
-        "code": "",
-        "display": "",
-        "userSelected": ""
-      }
-    ],
-    "text": ""
-  },
-  "studyType": {
-    "coding": [
-      {
-        "system": "http://terminology.hl7.org/CodeSystem/study-type",
-        "version": "",
-        "code": "",
-        "display": "",
-        "userSelected": ""
-      }
-    ],
-    "text": ""
-  },
-  "statistic": [
-    {
-      "description": "",
-      "note": [
-        {
-          "text": ""
-        }
-      ],
-      "statisticType": {
-        "coding": [
-          {
-            "system": "http://terminology.hl7.org/CodeSystem/statistic-type",
-            "version": "",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "quantity": {
-        "value": -0,
-        "comparator": "",
-        "unit": "",
-        "system": "",
-        "code": ""
-      },
-      "sampleSize": {
-        "description": "",
-        "note": [
-          {
-            "text": ""
-          }
-        ],
-        "numberOfStudies": -0,
-        "numberOfParticipants": -0,
-        "knownDataCount": -0,
-        "numeratorCount": -0
-      },
-      "attributeEstimate": [
-        {
-          "description": "",
-          "note": [
-            {
-              "text": ""
-            }
-          ],
-          "type": {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/effect-estimate-type",
-                "version": "",
-                "code": "",
-                "display": "",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
-          },
-          "quantity": {
-            "value": -0,
-            "comparator": "",
-            "unit": "",
-            "system": "",
-            "code": ""
-          },
-          "level": -0,
-          "range": {
-            "low": {
-              "value": -0,
-              "unit": "",
-              "system": "",
-              "code": ""
-            },
-            "high": {
-              "value": -0,
-              "unit": "",
-              "system": "",
-              "code": ""
-            }
-          }
-        }
-      ]
-    }
-  ],
-  "distribution": [
-    {
-      "description": "",
-      "note": [
-        {
-          "text": ""
-        }
-      ],
-      "numberOfIntervals": -0,
-      "bottomOfFirstInterval": {
-        "value": -0,
-        "comparator": "",
-        "unit": "",
-        "system": "",
-        "code": ""
-      },
-      "interval": [
-        {
-          "rankOrder": -0,
-          "topOfInterval": {
-            "value": -0,
-            "comparator": "",
-            "unit": "",
-            "system": "",
-            "code": ""
-          },
-          "intervalStatistic": [
-            {
-              "description": "",
-              "note": [
-                {
-                  "text": ""
-                }
-              ],
-              "statisticType": {
-                "coding": [
-                  {
-                    "system": "http://terminology.hl7.org/CodeSystem/statistic-type",
-                    "version": "",
-                    "code": "",
-                    "display": "",
-                    "userSelected": ""
-                  }
-                ],
-                "text": ""
-              },
-              "quantity": {
-                "value": -0,
-                "comparator": "",
-                "unit": "",
-                "system": "",
-                "code": ""
-              },
-              "sampleSize": {
-                "description": "",
-                "note": [
-                  {
-                    "text": ""
-                  }
-                ],
-                "numberOfStudies": -0,
-                "numberOfParticipants": -0,
-                "knownDataCount": -0,
-                "numeratorCount": -0
-              },
-              "attributeEstimate": [
-                {
-                  "description": "",
-                  "note": [
-                    {
-                      "text": ""
-                    }
-                  ],
-                  "type": {
-                    "coding": [
-                      {
-                        "system": "http://terminology.hl7.org/CodeSystem/effect-estimate-type",
-                        "version": "",
-                        "code": "",
-                        "display": "",
-                        "userSelected": ""
-                      }
-                    ],
-                    "text": ""
-                  },
-                  "quantity": {
-                    "value": -0,
-                    "comparator": "",
-                    "unit": "",
-                    "system": "",
-                    "code": ""
-                  },
-                  "level": -0,
-                  "range": {
-                    "low": {
-                      "value": -0,
-                      "unit": "",
-                      "system": "",
-                      "code": ""
-                    },
-                    "high": {
-                      "value": -0,
-                      "unit": "",
-                      "system": "",
-                      "code": ""
-                    }
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "certainty": [
-    {
-      "description": "",
-      "note": [
-        {
-          "text": ""
-        }
-      ],
-      "rating": [
-        {
-          "coding": [
-            {
-              "system": "http://terminology.hl7.org/CodeSystem/certainty-rating",
-              "version": "",
-              "code": "",
-              "display": "",
-              "userSelected": ""
-            }
-          ],
-          "text": ""
-        }
-      ],
-      "certaintySubcomponent": [
-        {
-          "description": "",
-          "note": [
-            {
-              "text": ""
-            }
-          ],
-          "type": {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type",
-                "version": "",
-                "code": "",
-                "display": "",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
-          },
-          "rating": {
-            "coding": [
-              {
-                "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating",
-                "version": "",
-                "code": "",
-                "display": "",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
-          }
-        }
-      ]
-    }
-  ]
-};
 
 </script>
 
