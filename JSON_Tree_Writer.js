@@ -375,7 +375,7 @@ function TreeToJSONsetting(){
 	}
 }
 
-function deleteEmptyFields (){
+function deleteEmptyFields(){
    var previousCheck = document.getElementById("]....}?|?|?{....[keepFields").checked;
    document.getElementById("]....}?|?|?{....[keepFields").checked = true;
    var hashBefore = hashCode(JSON.stringify(TreeToJSON()));
