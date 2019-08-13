@@ -13,6 +13,10 @@
 </div>
 
 <div id="page1">
+	<br>	
+	<div id="jsonLoadPanel">
+		<textarea id="jsonInput" style="width: 42%;" spellcheck="false"></textarea> <input style="margin: 0px;" type="button" value="Load JSON Data" onclick="jsonToForm();">
+	</div>
     <br>
     <h3 style="vertical-align: top; display: inline; font-family: Arial; font-weight: normal">
       Study Component Page
@@ -2329,8 +2333,94 @@ function loadPMIDinfo(num) {
 }
 
 function jsonToForm(){
-	jsoninput = document.getElementById(jsonInput).value;
-	
+	try {
+		jsoninput = JSON.parse(document.getElementById("jsonInput").value);
+	} catch (err){
+		return;
+	}
+	jsonKeys = Object.keys(jsoninput);
+	jsonresources = [];
+	for (var key in jsonKeys){
+		var res = jsoninput[jsonKeys[key]];
+		if (Array.isArray(res)){
+			jsonresources = jsonresources.concat(res);
+		} else {
+			jsonresources.push(res);
+		}
+	}
+	var studyLabels = {};
+	var studyNumber = 0;
+	for (var r = 0; r < jsonresources.length; r++){
+		var resource = jsonresources[r];
+		
+		if (resource["resourceType"] == "Evidence"){
+			if ("relatedArtifact" in resource && resource["relatedArtifact"][0]["label"] && !(resource["relatedArtifact"][0]["label"] in studyLabels)){
+				
+				if (studyNumber >= page1.getElementsByClassName("studyBox").length){
+					addStudy();
+				}
+			
+				var label = resource["relatedArtifact"][0]["label"];
+				page1.getElementsByClassName("studyName")[studyNumber].value = label;
+				studyLabels[label] = "";
+				
+				var studyURL = resource["relatedArtifact"][0]["url"];
+				var studyDisplay = resource["relatedArtifact"][0]["display"];
+				if (studyURL){
+					page1.getElementsByClassName("studyURL")[studyNumber].value = studyURL;
+				}
+				if (studyDisplay){
+					page1.getElementsByClassName("studyTitle")[studyNumber].value = studyDisplay;
+				}
+				
+				var extensionFields = {};
+				
+				if ("extension" in resource["relatedArtifact"][0]){
+					var extensions = resource["relatedArtifact"][0]["extension"];
+					for (var x = 0; x < extensions.length; x++){
+						extensionFields[extensions[x]["url"]] = extensions[x]["valueCoding"]["display"];
+					}
+					if ("publicationDate" in extensionFields){
+						page1.getElementsByClassName("studyDate")[studyNumber].value = extensionFields["publicationDate"];
+					}
+					if ("pmid" in extensionFields){
+						page1.getElementsByClassName("pmid")[studyNumber].value = extensionFields["pmid"];
+					}
+					if ("singleStudyOrSynthesis" in extensionFields){
+						if (extensionFields["singleStudyOrSynthesis"] == "Synthesis Study"){
+							page1.getElementsByClassName("synthesisRadio")[studyNumber].checked = true;
+						} else {
+							page1.getElementsByClassName("singleStudyRadio")[studyNumber].checked = true;
+						}
+					}
+					if ("pages" in extensionFields){
+						page1.getElementsByClassName("studyPages")[studyNumber].value = extensionFields["pages"];
+					}
+					if ("journal" in extensionFields){
+						page1.getElementsByClassName("studyPublisher")[studyNumber].value = extensionFields["journal"];
+					}
+				}
+				
+				var authors = "";
+				if ("contributor" in resource){
+					for (var c = 0; c < resource["contributor"].length; c++){
+						var contributor = resource["contributor"][c];
+						if (contributor["type"] == "author"){
+							authors += contributor["name"];
+							if (c > 0 && c < resource["contributor"].length - 1){
+								authors += "; ";
+							}
+						}
+					}
+				}
+				console.log(authors);
+				page1.getElementsByClassName("studyAuthors")[studyNumber].value = authors;
+				
+				studyNumber += 1;
+			}
+		}
+	}
+
 }
 
 function formToJSON(){
@@ -2465,6 +2555,7 @@ function formToJSON(){
 						var studyPMID = page1.getElementsByClassName("pmid")[studyNumber].value;
 						var studyDate = page1.getElementsByClassName("studyDate")[studyNumber].value;
 						var studyPages = page1.getElementsByClassName("studyPages")[studyNumber].value;
+						var studyJournal = page1.getElementsByClassName("studyPublisher")[studyNumber].value;
 						var studyURL = page1.getElementsByClassName("studyURL")[studyNumber].value;
 						var studyTitle = page1.getElementsByClassName("studyTitle")[studyNumber].value;
 
@@ -2486,7 +2577,7 @@ function formToJSON(){
 						//thisEvidence["relatedArtifact"][0]["citation"] = //GENERATED CITATION FROM PMID
 						thisEvidence["relatedArtifact"][0]["url"] = studyURL;
 						thisEvidence["relatedArtifact"][0]["display"] = studyTitle;
-
+						
 						thisEvidence["relatedArtifact"][0]["extension"] = [];
 						
 						if (studyDate) {
@@ -2501,6 +2592,9 @@ function formToJSON(){
 						if (studyPages) {
 							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "pages", "valueCoding": {"display": studyPages} });
 						}
+						if (studyJournal) {
+							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "journal", "valueCoding": {"display": studyJournal} });
+						}
 						
 						var authors = page1.getElementsByClassName("studyAuthors")[studyNumber].value;
 						if (authors.indexOf(";") != -1){
@@ -2513,7 +2607,9 @@ function formToJSON(){
 								thisEvidence["contributor"].push(JSON.parse(JSON.stringify(blankContributor)));
 							}
 							thisEvidence["contributor"][a]["name"] = authors[a].trim();
-							thisEvidence["contributor"][a]["type"] = "author";
+							if (thisEvidence["contributor"][a]["name"]){
+								thisEvidence["contributor"][a]["type"] = "author";
+							}
 						}
 						//thisEvidence["contributor"][0]["name"] =
 						
