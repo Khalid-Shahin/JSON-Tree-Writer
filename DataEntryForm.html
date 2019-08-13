@@ -6,10 +6,10 @@
 
 <body onload="prepareForm();" style="margin-bottom: 0px;">
 
-<title>DynaMed Evidence Data Entry Form (Preview: It can't load data yet.)</title>
+<title>DynaMed Evidence Data Entry Form (Preview)</title>
 
 <div id="allPageHeader">
-<img src="DynaMed-New-Logo-Lagoon.jpg"><h2 style="vertical-align: top; display: inline; font-family: Arial; font-weight: normal"> Evidence Data Entry Form (Preview)</h2>
+<img src="DynaMed-New-Logo-Lagoon.jpg"><h2 style="vertical-align: top; display: inline; font-family: Arial; font-weight: normal"> Evidence Data Entry Form (Preview: It can't load data yet.)</h2>
 </div>
 
 <div id="page1">
@@ -2356,11 +2356,43 @@ function jsonToForm(){
 		var resource = jsonresources[r];
 		
 		if (resource["resourceType"] == "Group"){
-			var groupID = resource["id"];
-			var groupName = resource["name"];
-			var groupActual = resource["actual"];
+			if (!("member" in resource)){
 			
-			//LOAD ONLY INTENDED GROUP AND EVIDENCE VARIABLE?
+				if (populationNumber >= page1.getElementsByClassName("populationBox").length){
+					addPopulation();
+				}
+				
+				console.log(resource);
+			
+				var groupID = resource["id"];
+				var groupName = resource["name"];
+				var groupDescription = resource["description"];
+				var groupNote = "";
+				var groupActual = resource["actual"];
+				
+				if ("note" in resource){
+					groupNote = resource["note"][0]["text"];
+				}
+				
+				page1.getElementsByClassName("populationName")[populationNumber].value = groupName;
+				page1.getElementsByClassName("populationIdentifier")[populationNumber].value = groupID;
+				if (groupDescription){
+					page1.getElementsByClassName("populationDescription")[populationNumber].value = groupDescription;
+				}
+				if (groupNote){
+					page1.getElementsByClassName("populationNotes")[populationNumber].value = groupNote;
+				}
+				
+				if (groupActual){
+					page1.getElementsByClassName("populationActualRadio")[populationNumber].checked = true;
+				} else {
+					page1.getElementsByClassName("populationIntendedRadio")[populationNumber].checked = true;
+				}
+				
+			
+				populationNumber += 1;
+			}	
+
 		}
 		
 		if (resource["resourceType"] == "Evidence"){
