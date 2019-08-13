@@ -6,7 +6,6 @@
 
 <body onload="prepareForm();" style="margin-bottom: 0px;">
 
-
 <title>DynaMed Evidence Data Entry Form (Preview)</title>
 
 <div id="allPageHeader">
@@ -2329,6 +2328,10 @@ function loadPMIDinfo(num) {
 	}
 }
 
+function jsonToForm(){
+	jsoninput = document.getElementById(jsonInput).value;
+	
+}
 
 function formToJSON(){
 
@@ -2457,23 +2460,49 @@ function formToJSON(){
 						thisEvidence["note"][0]["text"] = out["evidence notes"];
 						
 						var studyNumber = studyList.indexOf(studysInSavedResults[s]);
-						
+												
+						var studyName = page1.getElementsByClassName("studyName")[studyNumber].value;
+						var studyPMID = page1.getElementsByClassName("pmid")[studyNumber].value;
+						var studyDate = page1.getElementsByClassName("studyDate")[studyNumber].value;
+						var studyPages = page1.getElementsByClassName("studyPages")[studyNumber].value;
 						var studyURL = page1.getElementsByClassName("studyURL")[studyNumber].value;
 						var studyTitle = page1.getElementsByClassName("studyTitle")[studyNumber].value;
-						
+
+						var singleStudyOrSynthesis = "Single Study";
+
 						if (page1.getElementsByClassName("synthesisRadio")[studyNumber].checked){
 							thisEvidence["synthesisType"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/synthesis-type";
 							thisEvidence["synthesisType"]["coding"][0]["code"] = page1.getElementsByClassName("synthesisType")[studyNumber].value;
 							thisEvidence["synthesisType"]["coding"][0]["display"] = page1.getElementsByClassName("synthesisType")[studyNumber].options[page1.getElementsByClassName("synthesisType")[studyNumber].selectedIndex].text;
+							singleStudyOrSynthesis = "Synthesis Study";
 						}
 						
 						thisEvidence["studyType"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/study-type";
 						thisEvidence["studyType"]["coding"][0]["code"] = page1.getElementsByClassName("studyType")[studyNumber].value;
 						thisEvidence["studyType"]["coding"][0]["display"] = page1.getElementsByClassName("studyType")[studyNumber].options[page1.getElementsByClassName("studyType")[studyNumber].selectedIndex].text;
 						
+						thisEvidence["relatedArtifact"][0]["type"] = "citation";
+						thisEvidence["relatedArtifact"][0]["label"] = studyName;
+						//thisEvidence["relatedArtifact"][0]["citation"] = //GENERATED CITATION FROM PMID
 						thisEvidence["relatedArtifact"][0]["url"] = studyURL;
 						thisEvidence["relatedArtifact"][0]["display"] = studyTitle;
-
+						//TO DO TODO, other fields missing, PMID, Journal Publication Date, Author, whether it's a synthesis or a single study, put these in Extension?
+						
+						thisEvidence["relatedArtifact"][0]["extenstion"] = [];
+						
+						if (studyDate) {
+							thisEvidence["relatedArtifact"][0]["extenstion"].push({"url": "publicationDate", "valueCoding": {"display": studyDate} });
+						}
+						if (studyPMID) {
+							thisEvidence["relatedArtifact"][0]["extenstion"].push({"url": "pmid", "valueCoding": {"display": studyPMID} });
+						}
+						if (singleStudyOrSynthesis) {
+							thisEvidence["relatedArtifact"][0]["extenstion"].push({"url": "singleStudyOrSynthesis", "valueCoding": {"display": singleStudyOrSynthesis} });
+						}
+						if (studyPages) {
+							thisEvidence["relatedArtifact"][0]["extenstion"].push({"url": "pages", "valueCoding": {"display": studyPages} });
+						}
+						
 						var authors = page1.getElementsByClassName("studyAuthors")[studyNumber].value;
 						if (authors.indexOf(";") != -1){
 							authors = authors.split(";");
