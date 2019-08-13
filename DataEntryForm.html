@@ -2431,8 +2431,20 @@ function jsonToForm(){
 					if ("singleStudyOrSynthesis" in extensionFields){
 						if (extensionFields["singleStudyOrSynthesis"] == "Synthesis Study"){
 							page1.getElementsByClassName("synthesisRadio")[studyNumber].checked = true;
+							document.getElementsByClassName("synthesisTypeDropDown")[studyNumber].style.display = 'block';
 						} else {
 							page1.getElementsByClassName("singleStudyRadio")[studyNumber].checked = true;
+							document.getElementsByClassName("synthesisTypeDropDown")[studyNumber].style.display = 'none';
+						}
+						document.getElementsByClassName("studyDetailsDropDown")[studyNumber].style.display = 'flex';
+						
+						if ("studyType" in resource){
+							document.getElementsByClassName("studyType")[studyNumber].value = resource["studyType"]["coding"][0]["code"];
+							document.getElementsByClassName("studyType")[studyNumber].style.color = '#000000';
+						}
+						if ("synthesisType" in resource){
+							document.getElementsByClassName("synthesisType")[studyNumber].value = resource["synthesisType"]["coding"][0]["code"];
+							document.getElementsByClassName("synthesisType")[studyNumber].style.color = '#000000';
 						}
 					}
 					if ("pages" in extensionFields){
