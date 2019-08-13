@@ -2486,21 +2486,20 @@ function formToJSON(){
 						//thisEvidence["relatedArtifact"][0]["citation"] = //GENERATED CITATION FROM PMID
 						thisEvidence["relatedArtifact"][0]["url"] = studyURL;
 						thisEvidence["relatedArtifact"][0]["display"] = studyTitle;
-						//TO DO TODO, other fields missing, PMID, Journal Publication Date, Author, whether it's a synthesis or a single study, put these in Extension?
-						
-						thisEvidence["relatedArtifact"][0]["extenstion"] = [];
+
+						thisEvidence["relatedArtifact"][0]["extension"] = [];
 						
 						if (studyDate) {
-							thisEvidence["relatedArtifact"][0]["extenstion"].push({"url": "publicationDate", "valueCoding": {"display": studyDate} });
+							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "publicationDate", "valueCoding": {"display": studyDate} });
 						}
 						if (studyPMID) {
-							thisEvidence["relatedArtifact"][0]["extenstion"].push({"url": "pmid", "valueCoding": {"display": studyPMID} });
+							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "pmid", "valueCoding": {"display": studyPMID} });
 						}
 						if (singleStudyOrSynthesis) {
-							thisEvidence["relatedArtifact"][0]["extenstion"].push({"url": "singleStudyOrSynthesis", "valueCoding": {"display": singleStudyOrSynthesis} });
+							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "singleStudyOrSynthesis", "valueCoding": {"display": singleStudyOrSynthesis} });
 						}
 						if (studyPages) {
-							thisEvidence["relatedArtifact"][0]["extenstion"].push({"url": "pages", "valueCoding": {"display": studyPages} });
+							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "pages", "valueCoding": {"display": studyPages} });
 						}
 						
 						var authors = page1.getElementsByClassName("studyAuthors")[studyNumber].value;
