@@ -2350,8 +2350,18 @@ function jsonToForm(){
 	}
 	var studyLabels = {};
 	var studyNumber = 0;
+	var populationNumber = 0;
+	
 	for (var r = 0; r < jsonresources.length; r++){
 		var resource = jsonresources[r];
+		
+		if (resource["resourceType"] == "Group"){
+			var groupID = resource["id"];
+			var groupName = resource["name"];
+			var groupActual = resource["actual"];
+			
+			//LOAD ONLY INTENDED GROUP AND EVIDENCE VARIABLE?
+		}
 		
 		if (resource["resourceType"] == "Evidence"){
 			if ("relatedArtifact" in resource && resource["relatedArtifact"][0]["label"] && !(resource["relatedArtifact"][0]["label"] in studyLabels)){
@@ -2440,9 +2450,10 @@ function formToJSON(){
 		thisGroup["id"] = pop.getElementsByClassName("populationIdentifier")[0].value
 		thisGroup["name"] = pop.getElementsByClassName("populationName")[0].value;
 		thisGroup["actual"] = pop.getElementsByClassName("populationActualRadio")[0].checked;
-		
-		//pop.getElementsByClassName("populationDescription")[0].value;
-		//pop.getElementsByClassName("populationNotes")[0].value;
+				
+		thisGroup["description"] = pop.getElementsByClassName("populationDescription")[0].value;
+		thisGroup["note"] = [{}];
+		thisGroup["note"][0]["text"] = pop.getElementsByClassName("populationNotes")[0].value;
 		
 		fhirGroupList.push(thisGroup);
 	}
@@ -2458,6 +2469,7 @@ function formToJSON(){
 		thisEvidenceVariable["actual"] = exp.getElementsByClassName("exposureActualRadio")[0].checked;
 		
 		thisEvidenceVariable["description"] = exp.getElementsByClassName("exposureDescription")[0].value;
+		thisEvidenceVariable["note"] = [{}];
 		thisEvidenceVariable["note"][0]["text"] = exp.getElementsByClassName("exposureNotes")[0].value;
 		
 		fhirEvidenceVariableList.push(thisEvidenceVariable);
@@ -2472,6 +2484,7 @@ function formToJSON(){
 		thisEvidenceVariable["actual"] = outcomeBox.getElementsByClassName("outcomeActualRadio")[0].checked;
 		
 		thisEvidenceVariable["description"] = outcomeBox.getElementsByClassName("outcomeDescription")[0].value;
+		thisEvidenceVariable["note"] = [{}];
 		thisEvidenceVariable["note"][0]["text"] = outcomeBox.getElementsByClassName("outcomeNotes")[0].value;
 		
 		fhirEvidenceVariableList.push(thisEvidenceVariable);
@@ -2555,7 +2568,7 @@ function formToJSON(){
 						var studyPMID = page1.getElementsByClassName("pmid")[studyNumber].value;
 						var studyDate = page1.getElementsByClassName("studyDate")[studyNumber].value;
 						var studyPages = page1.getElementsByClassName("studyPages")[studyNumber].value;
-						var studyJournal = page1.getElementsByClassName("studyPublisher")[studyNumber].value;
+						var studyPublisher = page1.getElementsByClassName("studyPublisher")[studyNumber].value;
 						var studyURL = page1.getElementsByClassName("studyURL")[studyNumber].value;
 						var studyTitle = page1.getElementsByClassName("studyTitle")[studyNumber].value;
 
@@ -2592,8 +2605,8 @@ function formToJSON(){
 						if (studyPages) {
 							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "pages", "valueCoding": {"display": studyPages} });
 						}
-						if (studyJournal) {
-							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "journal", "valueCoding": {"display": studyJournal} });
+						if (studyPublisher) {
+							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "journal", "valueCoding": {"display": studyPublisher} });
 						}
 						
 						var authors = page1.getElementsByClassName("studyAuthors")[studyNumber].value;
