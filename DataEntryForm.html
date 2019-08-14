@@ -845,6 +845,116 @@ var savedResults = {
 
 }
 
+var blankSavedResult = {
+  "study": "",
+  "intended population display": "",
+  "intended population identifier": "",
+  "actual population display": "",
+  "actual population identifier": "",
+  "population directness match": "",
+  "population description": "",
+  "population notes": "",
+  "intended intervention display": "",
+  "intended intervention identifier": "",
+  "actual intervention display": "",
+  "actual intervention identifier": "",
+  "intervention directness match": "",
+  "intervention description": "",
+  "intervention notes": "",
+  "intended comparator display": "",
+  "intended comparator identifier": "",
+  "actual comparator display": "",
+  "actual comparator identifier": "",
+  "comparator directness match": "",
+  "comparator description": "",
+  "comparator notes": "",
+  "outcomes": [
+	{
+	  "intended outcome display": "",
+	  "intended outcome identifier": "",
+	  "actual outcome display": "",
+	  "actual outcome identifier": "",
+	  "outcome directness match": "",
+	  "outcome description": "",
+	  "outcome notes": "",
+	  "evidence short display name": "",
+	  "evidence identifier": "",
+	  "evidence description": "",
+	  "evidence notes": "",
+	  "describe evidence source": "",
+	  "contributing studies": [],
+	  "contributing studies labels": [],
+	  "contributing studies short display names": [],
+	  "statistics": [
+		{
+		  "statistic description": "",
+		  "statistic notes": "",
+		  "number of studies": "",
+		  "number of participants": "",
+		  "known data count": "",
+		  "numerator count": "",
+		  "statistic type": "",
+		  "statistic value": "",
+		  "statistic inequality": "",
+		  "statistic unit": "",
+		  "attributes": [
+			{
+			  "attribute estimate type": "",
+			  "attribute quantity": "",
+			  "attribute from": "",
+			  "attribute to": "",
+			  "attribute level": "",
+			  "attribute inequality": ""
+			}
+		  ]
+		}
+	  ],
+	  "certainty checkbox": false,
+	  "certainty": [
+		{
+		  "certainty system": "",
+		  "GRADE certainty of evidence": "",
+		  "GRADE comments on certainty": "",
+		  "GRADE risk of bias": "",
+		  "GRADE comments on risk of bias": "",
+		  "GRADE inconsistency": "",
+		  "GRADE comments on inconsistency": "",
+		  "GRADE indirectness": "",
+		  "GRADE comments on indrectness": "",
+		  "GRADE imprecision": "",
+		  "GRADE comments on imprecision": "",
+		  "GRADE publication bias": "",
+		  "GRADE comments on publication bias": "",
+		  "DynaMed certainty of evidence": "",
+		  "DynaMed comments on certainty": "",
+		  "DynaMed clinical outcome": "",
+		  "DynaMed comments on clinical outcome": "",
+		  "DynaMed directness": "",
+		  "DynaMed comments on directness": "",
+		  "DynaMed randomization": "",
+		  "DynaMed comments on randomization": "",
+		  "DynaMed blinding": "",
+		  "DynaMed comments on blinding": "",
+		  "DynaMed follow up": "",
+		  "DynaMed comments on follow up": "",
+		  "DynaMed dropouts": "",
+		  "DynaMed comments on dropouts": "",
+		  "DynaMed precision": "",
+		  "DynaMed comments on precision": "",
+		  "DynaMed consistency": "",
+		  "DynaMed comments on consistency": "",
+		  "DynaMed allocation concealment": "",
+		  "DynaMed comments on allocation concealment": "",
+		  "DynaMed itt analysis": "",
+		  "DynaMed comments on itt analysis": "",
+		  "DynaMed other": "",
+		  "DynaMed comments on other": ""
+		}
+	  ]
+	}
+  ]
+};
+
 var page3Open = false;
   
 function toggleCheckboxDropDown(multiSelect) {
@@ -2348,6 +2458,8 @@ function jsonToForm(){
 			jsonresources.push(res);
 		}
 	}
+	
+	var convertResults = {};
 	var studyLabels = {};
 	var groupIDs = {};
 	var evidenceVariables = {};	
@@ -2437,6 +2549,13 @@ function jsonToForm(){
 		
 		} else if (resource["resourceType"] == "Evidence"){
 			
+			var evidencePopulation;
+			var evidenceActualPopulation;
+			var evidenceComboPopulation;
+			var evidenceIntervention;
+			var evidenceComparator = {"intended comparator display": "", "intended comparator identifier": "none"};
+			var evidenceOutcome;
+			
 			if ("referentGroup" in resource){
 				
 				//It doesn't create a population for the evidencesource(actual populations) because it could be a Group of studies.
@@ -2452,9 +2571,43 @@ function jsonToForm(){
 					if (groupID && (!(groupID in groupIDs))){
 						groupIDs[groupID] = resource["referentGroup"]["intendedGroup"]["display"];
 					}
+					evidencePopulation = {"display": resource["referentGroup"]["intendedGroup"]["display"], "identifier": groupID};
 				}
+				
+				if ("evidenceSource" in resource["referentGroup"]){
+					if (!("member" in resource["referentGroup"]["evidenceSource"] && resource["referentGroup"]["evidenceSource"]["member"].length && resource["referentGroup"]["evidenceSource"]["member"][0]["entity"]["type"] == "Evidence")){
+						if ("display" in resource["referentGroup"]["evidenceSource"]){
+							evidenceActualPopulation = {"display": resource["referentGroup"]["evidenceSource"]["display"]};
+						}
+						if ("identifier" in resource["referentGroup"]["evidenceSource"]){
+							evidenceActualPopulation["identifier"] = resource["referentGroup"]["evidenceSource"]["identifier"];
+						}
+						if ("type" in resource["referentGroup"]["evidenceSource"]){
+							evidenceActualPopulation["type"] = resource["referentGroup"]["evidenceSource"]["type"];
+						}
+					}
+				}
+				evidenceComboPopulation = {"description": ""};
+				if ("description" in resource["referentGroup"]){
+					evidenceComboPopulation["description"] = resource["referentGroup"]["description"];
+				}
+				var tempNote = "";
+				if ("note" in resource["referentGroup"]){
+					for (var n = 0; n < resource["referentGroup"]["note"].length; n++){
+						tempNote += resource["referentGroup"]["note"][n]["text"];
+						if (n != resource["referentGroup"]["note"].length - 1){
+							tempNote += "; ";
+						}
+					}
+				}
+				evidenceComboPopulation["note"] = tempNote;
+				evidenceComboPopulation["directness"] = "";
+				if ("directnessMatch" in resource["referentGroup"]){
+					evidenceComboPopulation["directness"] = resource["referentGroup"]["directnessMatch"]["coding"][0]["code"];
+				}
+				
 			}
-			
+						
 			if ("variableDefinition" in resource && resource["variableDefinition"].length){
 				for (var v = 0; v < resource["variableDefinition"].length; v++){
 					var definitionRole = resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"];
@@ -2484,17 +2637,27 @@ function jsonToForm(){
 						}
 						if (!("name" in evidenceVariables[definitionIdentifier])) { if (definitionDisplay) { evidenceVariables[definitionIdentifier]["name"] = definitionDisplay; } }
 						if (definitionRole) { evidenceVariables[definitionIdentifier]["role"] = definitionRole; }
+						
+						if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "exposure"){
+							evidenceIntervention = {"display": definitionDisplay, "identifier": definitionIdentifier};
+						} else if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "referenceExposure"){
+							evidenceComparator = {"display": definitionDisplay, "identifier": definitionIdentifier};
+						} else if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "measuredVariable"){
+							evidenceOutcome = {"display": definitionDisplay, "identifier": definitionIdentifier};
+						}
+						
 					}
 				}
 			}
 			
+			var label;
 			if ("relatedArtifact" in resource && resource["relatedArtifact"][0]["label"] && !(resource["relatedArtifact"][0]["label"] in studyLabels)){
 				
 				if (studyNumber >= page1.getElementsByClassName("studyBox").length){
 					addStudy();
 				}
 			
-				var label = resource["relatedArtifact"][0]["label"];
+				label = resource["relatedArtifact"][0]["label"];
 				page1.getElementsByClassName("studyName")[studyNumber].value = label;
 				studyLabels[label] = "";
 				
@@ -2564,6 +2727,57 @@ function jsonToForm(){
 				studyNumber += 1;
 				
 			}
+			
+			
+			
+			if (label){
+				if (!(label in convertResults)){
+					convertResults[label] = {};
+				}
+				if (!(evidencePopulation["identifier"] in convertResults[label])){
+					convertResults[label][evidencePopulation["identifier"]] = {};
+				}
+				
+				if (!(evidenceIntervention["identifier"] in convertResults[label][evidencePopulation["identifier"]])){
+					convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]] = {};
+				}
+				
+				if (!(evidenceComparator["identifier"] in convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]])){
+					convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]][evidenceComparator["identifier"]] = JSON.parse(JSON.stringify(blankSavedResult));
+				}
+			}
+			var evidenceResult = convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]][evidenceComparator["identifier"]];
+			evidenceResult["study"] = label;
+			
+			
+			evidenceResult["intended population display"] = evidencePopulation["display"];
+			evidenceResult["intended population identifier"] = evidencePopulation["identifier"];
+			if (evidenceActualPopulation){
+				if ("identifier" in evidenceActualPopulation){
+					evidenceResult["actual population identifier"] = evidenceActualPopulation["identifier"]
+				}
+				if ("display" in evidenceActualPopulation){
+					evidenceResult["actual population display"] = evidenceActualPopulation["display"]
+				}
+			}
+			evidenceResult["population description"] = evidenceComboPopulation["description"];
+			evidenceResult["population notes"] = evidenceComboPopulation["note"];
+			evidenceResult["population directness match"] = evidenceComboPopulation["directness"];
+			
+			//REPEAT THIS FOR THE INTERVENTION, COMPARATOR
+			
+			
+			
+			evidenceResult["intended intervention display"] = evidenceIntervention["display"];
+			evidenceResult["intended intervention identifier"] = evidenceIntervention["identifier"];
+			evidenceResult["intended comparator display"] = evidenceComparator["display"];
+			evidenceResult["intended comparator identifier"] = evidenceComparator["identifier"];
+			
+		
+			
+			//evidenceResult["intended outcome display"] = evidenceOutcome["display"];
+			//evidenceResult["intended outcome identifier"] = evidenceOutcome["identifier"];
+			
 		}
 	}
 	
@@ -2632,6 +2846,7 @@ function jsonToForm(){
 			outcomeNumber += 1;
 		}
 	}
+	savedResults = convertResults;
 }
 
 function formToJSON(){
