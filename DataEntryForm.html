@@ -2566,8 +2566,6 @@ function jsonToForm(){
 			}
 		}
 	}
-	console.log(evidenceVariables);
-	console.log(groupIDs);
 	
 	var groupKeys = Object.keys(groupIDs);
 	for (var g = 0; g < groupKeys.length; g++){
@@ -2634,7 +2632,6 @@ function jsonToForm(){
 			outcomeNumber += 1;
 		}
 	}
-	//Goes through the evidenceVariables
 }
 
 function formToJSON(){
@@ -2722,13 +2719,15 @@ function formToJSON(){
 							//thisGroup["name"] = ; //TO DO TODO
 							thisGroup["actual"] = true;	
 							
-							for (var j = 0; j < out["contributing studies"].length; j++){
-								if (j >= thisGroup["member"].length){
-									thisGroup["member"].push(JSON.parse(JSON.stringify(blankMember)));
+							if ("contributing studies" in out){
+								for (var j = 0; j < out["contributing studies"].length; j++){
+									if (j >= thisGroup["member"].length){
+										thisGroup["member"].push(JSON.parse(JSON.stringify(blankMember)));
+									}
+									thisGroup["member"][j]["entity"]["identifier"] = out["contributing studies"][j];
+									thisGroup["member"][j]["entity"]["display"] = out["contributing studies short display names"][j];
+									thisGroup["member"][j]["entity"]["type"] = "Evidence";
 								}
-								thisGroup["member"][j]["entity"]["identifier"] = out["contributing studies"][j];
-								thisGroup["member"][j]["entity"]["display"] = out["contributing studies short display names"][j];
-								thisGroup["member"][j]["entity"]["type"] = "Evidence";
 							}
 							out["evidence group unique id"] = fhirGroupList.length;
 							fhirGroupList.push(thisGroup);
@@ -3129,9 +3128,11 @@ function formToJSON(){
 							thisStatistic["description"] = stat["statistic description"];
 							thisStatistic["note"][0]["text"] = stat["statistic notes"];
 							
-							thisStatistic["statisticType"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/statistic-type";
-							thisStatistic["statisticType"]["coding"][0]["code"] = stat["statistic type"];
-							thisStatistic["statisticType"]["coding"][0]["display"] = statTypeSet[stat["statistic type"]];
+							if (stat["statistic type"]){
+								thisStatistic["statisticType"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/statistic-type";
+								thisStatistic["statisticType"]["coding"][0]["code"] = stat["statistic type"];
+								thisStatistic["statisticType"]["coding"][0]["display"] = statTypeSet[stat["statistic type"]];
+							}
 							
 							thisStatistic["quantity"]["value"] = parseFloat(stat["statistic value"]);
 							thisStatistic["quantity"]["comparator"] = stat["statistic inequality"];
@@ -3152,9 +3153,11 @@ function formToJSON(){
 								
 								var thisAttribute = thisStatistic["attributeEstimate"][c];
 								
-								thisAttribute["type"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/effect-estimate-type";
-								thisAttribute["type"]["coding"][0]["code"] = att["attribute estimate type"];
-								thisAttribute["type"]["coding"][0]["display"] = attributeEstimateSet[att["attribute estimate type"]];
+								if (att["attribute estimate type"]){
+									thisAttribute["type"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/effect-estimate-type";
+									thisAttribute["type"]["coding"][0]["code"] = att["attribute estimate type"];
+									thisAttribute["type"]["coding"][0]["display"] = attributeEstimateSet[att["attribute estimate type"]];
+								}
 								
 								thisAttribute["quantity"]["value"] = parseFloat(att["attribute quantity"]);
 								thisAttribute["quantity"]["comparator"] = att["attribute inequality"];
