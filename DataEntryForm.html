@@ -3196,7 +3196,7 @@ function loadPage4(){
 		"Resource Example ██████████████████████████████████": fhirGroupList.concat(fhirEvidenceVariableList).concat(fhirEvidenceList)
 	};
 	//json = allResources;
-	var stringJSON = JSON.stringify(allResources, null, 2).replace(/([^\r])\n/g, "$1\r\n");
+	var stringJSON = JSON.stringify(allResources, null, 2).replace(/([^\r])\n/g, "$1\r\n").replace(/": null/g, '": ""');
 	
 	console.log(stringJSON);
 	
