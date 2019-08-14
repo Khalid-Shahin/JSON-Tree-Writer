@@ -2845,9 +2845,11 @@ function formToJSON(){
 						}
 						thisEvidence["referentGroup"]["evidenceSource"]["display"] = result["actual population display"];
 						thisEvidence["referentGroup"]["evidenceSource"]["identifier"] = result["actual population identifier"];
-						thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
-						thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["display"] = result["population directness match"];
-						thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["code"]    = result["population directness match"];	//TO DO TODO get the proper codes for directness match
+						if (result["population directness match"]){
+							thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
+							thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["display"] = result["population directness match"];
+							thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["code"]    = result["population directness match"];	//TO DO TODO get the proper codes for directness match
+						}
 					
 						//MORE STUFF FOR THE STUDY GROUP IF SYNTHESIS
 						
@@ -2876,9 +2878,11 @@ function formToJSON(){
 						}
 						thisEvidence["variableDefinition"][0]["actualDefinition"]["display"] = out["actual outcome display"];
 						thisEvidence["variableDefinition"][0]["actualDefinition"]["identifier"] = out["actual outcome identifier"];
-						thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
-						thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["display"] = out["outcome directness match"];
-						thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["code"]    = out["outcome directness match"];	//TO DO TODO get the proper codes for directness match
+						if (out["outcome directness match"]){
+							thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
+							thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["display"] = out["outcome directness match"];
+							thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["code"]    = out["outcome directness match"];	//TO DO TODO get the proper codes for directness match
+						}
 
 						if (comps[z] != "" && comps[z] != "none" && comps[z] != inters[y]){
 							thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(thisEvidence["variableDefinition"][1])));
@@ -2899,9 +2903,11 @@ function formToJSON(){
 						}
 						thisEvidence["variableDefinition"][1]["actualDefinition"]["display"] = result["actual intervention display"];
 						thisEvidence["variableDefinition"][1]["actualDefinition"]["identifier"] = result["actual intervention identifier"];
-						thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
-						thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["display"] = result["intervention directness match"];
-						thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["code"]    = result["intervention directness match"];	//TO DO TODO get the proper codes for directness match
+						if (result["intervention directness match"]){
+							thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
+							thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["display"] = result["intervention directness match"];
+							thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["code"]    = result["intervention directness match"];	//TO DO TODO get the proper codes for directness match
+						}
 
 						
 						if (thisEvidence["variableDefinition"].length > 2){
