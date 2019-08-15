@@ -2553,8 +2553,14 @@ function jsonToForm(){
 			var evidenceActualPopulation;
 			var evidenceComboPopulation;
 			var evidenceIntervention;
+			var evidenceActualIntervention;  //TO DO todo with placing that info on the form
+			var evidenceComboIntervention;  //TO DO todo, everything
 			var evidenceComparator = {"intended comparator display": "", "intended comparator identifier": "none"};
+			var evidenceActualComparator;  //TO DO todo with placing that info on the form
+			var evidenceComboComparator;  //TO DO todo, everything
 			var evidenceOutcome;
+			var evidenceActualOutcome;  //TO DO todo with placing that info on the form
+			var evidenceComboOutcome;  //TO DO todo, everything
 			
 			if ("referentGroup" in resource){
 				
@@ -2574,8 +2580,10 @@ function jsonToForm(){
 					evidencePopulation = {"display": resource["referentGroup"]["intendedGroup"]["display"], "identifier": groupID};
 				}
 				
+				//FROM HERE
 				if ("evidenceSource" in resource["referentGroup"]){
 					if (!("member" in resource["referentGroup"]["evidenceSource"] && resource["referentGroup"]["evidenceSource"]["member"].length && resource["referentGroup"]["evidenceSource"]["member"][0]["entity"]["type"] == "Evidence")){
+						evidenceActualPopulation = {};
 						if ("display" in resource["referentGroup"]["evidenceSource"]){
 							evidenceActualPopulation = {"display": resource["referentGroup"]["evidenceSource"]["display"]};
 						}
@@ -2584,6 +2592,9 @@ function jsonToForm(){
 						}
 						if ("type" in resource["referentGroup"]["evidenceSource"]){
 							evidenceActualPopulation["type"] = resource["referentGroup"]["evidenceSource"]["type"];
+						}
+						if (Object.keys(evidenceActualPopulation).length == 0){
+							evidenceActualPopulation = null;
 						}
 					}
 				}
@@ -2605,6 +2616,7 @@ function jsonToForm(){
 				if ("directnessMatch" in resource["referentGroup"]){
 					evidenceComboPopulation["directness"] = resource["referentGroup"]["directnessMatch"]["coding"][0]["code"];
 				}
+				//TO HERE
 				
 			}
 						
@@ -2638,12 +2650,35 @@ function jsonToForm(){
 						if (!("name" in evidenceVariables[definitionIdentifier])) { if (definitionDisplay) { evidenceVariables[definitionIdentifier]["name"] = definitionDisplay; } }
 						if (definitionRole) { evidenceVariables[definitionIdentifier]["role"] = definitionRole; }
 						
+						var actualVariableDefinition;
+						
+						if ("actualDefinition" in resource["variableDefinition"][v]){
+							actualVariableDefinition = {};
+							
+							if ("display" in resource["variableDefinition"][v]["actualDefinition"]){
+								actualVariableDefinition = {"display": resource["variableDefinition"][v]["actualDefinition"]["display"]};
+							}
+							if ("identifier" in resource["variableDefinition"][v]["actualDefinition"]){
+								actualVariableDefinition["identifier"] = resource["variableDefinition"][v]["actualDefinition"]["identifier"];
+							}
+							if ("type" in resource["variableDefinition"][v]["actualDefinition"]){
+								actualVariableDefinition["type"] = resource["variableDefinition"][v]["actualDefinition"]["type"];
+							}
+							
+							if (Object.keys(actualVariableDefinition).length == 0){
+								actualVariableDefinition = null;
+							}
+						}
+						
 						if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "exposure"){
 							evidenceIntervention = {"display": definitionDisplay, "identifier": definitionIdentifier};
+							evidenceActualIntervention = actualVariableDefinition;
 						} else if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "referenceExposure"){
 							evidenceComparator = {"display": definitionDisplay, "identifier": definitionIdentifier};
+							evidenceActualComparator = actualVariableDefinition;
 						} else if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "measuredVariable"){
 							evidenceOutcome = {"display": definitionDisplay, "identifier": definitionIdentifier};
+							evidenceActualOutcome = actualVariableDefinition;
 						}
 						
 					}
@@ -2765,8 +2800,7 @@ function jsonToForm(){
 			evidenceResult["population directness match"] = evidenceComboPopulation["directness"];
 			
 			//REPEAT THIS FOR THE INTERVENTION, COMPARATOR
-			
-			
+
 			
 			evidenceResult["intended intervention display"] = evidenceIntervention["display"];
 			evidenceResult["intended intervention identifier"] = evidenceIntervention["identifier"];
@@ -3113,7 +3147,9 @@ function formToJSON(){
 						}
 						thisEvidence["variableDefinition"][1]["intendedDefinition"]["display"] = result["intended intervention display"];
 						thisEvidence["variableDefinition"][1]["intendedDefinition"]["identifier"] = result["intended intervention identifier"];
+						console.log(result["actual intervention identifier"]);
 						if (result["actual intervention identifier"]){
+							console.log("HERE");
 							thisEvidence["variableDefinition"][1]["actualDefinition"]["type"] = "EvidenceVariable";
 						}
 						thisEvidence["variableDefinition"][1]["actualDefinition"]["display"] = result["actual intervention display"];
@@ -3131,8 +3167,14 @@ function formToJSON(){
 							thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["display"] = "reference exposure";
 							thisEvidence["variableDefinition"][2]["description"] = result["comparator description"];
 							thisEvidence["variableDefinition"][2]["note"][0]["text"] = result["comparator notes"];
+							if (result["intended comparator identifier"]){
+								thisEvidence["variableDefinition"][2]["intendedDefinition"]["type"] = "EvidenceVariable";
+							}
 							thisEvidence["variableDefinition"][2]["intendedDefinition"]["display"] = result["intended comparator display"];
 							thisEvidence["variableDefinition"][2]["intendedDefinition"]["identifier"] = result["intended comparator identifier"];
+							if (result["actual comparator identifier"]){
+								thisEvidence["variableDefinition"][2]["actualDefinition"]["type"] = "EvidenceVariable";
+							}
 							thisEvidence["variableDefinition"][2]["actualDefinition"]["display"] = result["actual comparator display"];
 							thisEvidence["variableDefinition"][2]["actualDefinition"]["identifier"] = result["actual comparator identifier"];
 							if (result["comparator directness match"]){
