@@ -2474,42 +2474,64 @@ function jsonToForm(){
 		if (resource["resourceType"].toLowerCase() == "group"){
 			if (!("member" in resource) || ("type" in resource && resource["type"] == "person")){
 			
-				if (populationNumber >= page1.getElementsByClassName("populationBox").length){
-					addPopulation();
-				}
+
 				
 				console.log(resource);
 			
-				var groupID = resource["id"];
-				var groupName = resource["name"];
-				var groupDescription = resource["description"];
+				var groupID = "";
+				var groupName = "";
+				var groupDescription = "";
 				var groupNote = "";
 				
+				if ("id" in resource){
+					groupID = resource["id"];
+				}
+				
+				if ("name" in resource){
+					groupName = resource["name"];
+				}
+				
+				if ("description" in resource){
+					groupDescription = resource["description"];
+				}
+				
 				if ("note" in resource){
-					groupNote = resource["note"][0]["text"];
-				}
-				
-				page1.getElementsByClassName("populationName")[populationNumber].value = groupName;
-				page1.getElementsByClassName("populationIdentifier")[populationNumber].value = groupID;
-				if (groupID && (!(groupID in groupIDs))){
-					groupIDs[groupID] = null;
-				}
-				if (groupDescription){
-					page1.getElementsByClassName("populationDescription")[populationNumber].value = groupDescription;
-				}
-				if (groupNote){
-					page1.getElementsByClassName("populationNotes")[populationNumber].value = groupNote;
-				}
-				
-				if ("actual" in resource){
-					if (resource["actual"]) {
-						page1.getElementsByClassName("populationActualRadio")[populationNumber].checked = true;
-					} else {
-						page1.getElementsByClassName("populationIntendedRadio")[populationNumber].checked = true;
+					for (var groupN = 0; groupN < resource["note"].length; groupN++){
+						groupNote += resource["note"][groupN]["text"];
+						if (groupN != resource["note"].length - 1){
+							groupNote += "; ";
+						}
 					}
 				}
 				
-				populationNumber += 1;
+				if (groupID || groupName || groupDescription || groupNote){
+					if (populationNumber >= page1.getElementsByClassName("populationBox").length){
+						addPopulation();
+					}
+					
+					
+					page1.getElementsByClassName("populationName")[populationNumber].value = groupName;
+					page1.getElementsByClassName("populationIdentifier")[populationNumber].value = groupID;
+					if (groupID && (!(groupID in groupIDs))){
+						groupIDs[groupID] = null;
+					}
+					if (groupDescription){
+						page1.getElementsByClassName("populationDescription")[populationNumber].value = groupDescription;
+					}
+					if (groupNote){
+						page1.getElementsByClassName("populationNotes")[populationNumber].value = groupNote;
+					}
+					
+					if ("actual" in resource){
+						if (resource["actual"]) {
+							page1.getElementsByClassName("populationActualRadio")[populationNumber].checked = true;
+						} else {
+							page1.getElementsByClassName("populationIntendedRadio")[populationNumber].checked = true;
+						}
+					}
+					
+					populationNumber += 1;
+				}
 			} else if("type" in resource && (resource["type"].toLowerCase() == "evidence" || resource["type"].toLowerCase() == "report" || resource["type"].toLowerCase() == "information")) {
 				//TO DO todo: TAKE CARE OF THE SYNTHESIS GROUPS FOR CONTRIBUTING STUDIES, it should be stored in a temp way to be later used in this function
 				var groupID = resource["id"];
@@ -3091,7 +3113,7 @@ function jsonToForm(){
 					var loc = resource["study-pico-combo"];
 					var evidSrcConvert = convertResults[loc[0]][loc[1]][loc[2]][loc[3]];
 					for (var locOut = 0; locOut < evidSrcConvert["outcomes"].length; locOut++){
-						if (evidSrcConvert["outcomes"][locOut]["intended outcome identifier"] == loc[4]){
+						if (evidSrcConvert["outcomes"][locOut]["intended outcome identifier"] == loc[4] && evidSourceID in groupsOfEvidence){
 							evidSrcConvert["outcomes"][locOut]["contributing studies"] = groupsOfEvidence[evidSourceID][1];
 							evidSrcConvert["outcomes"][locOut]["contributing studies short display names"] = groupsOfEvidence[evidSourceID][2];
 							evidSrcConvert["outcomes"][locOut]["describe evidence source"] = evidSourceID;
