@@ -1495,7 +1495,7 @@ function loadResultData(resultData){
 			//console.log(storedOutcomes[x]["contributing studies"]);
 			//console.log(storedOutcomes[x]["contributing studies labels"]);
 			//console.log(dropDownEvidenceInputs[i].value);
-			if (dropDownEvidenceInputs[i].value && storedOutcomes[x]["contributing studies"].indexOf(dropDownEvidenceInputs[i].value) != -1){
+			if (dropDownEvidenceInputs[i].value && "contributing studies" in storedOutcomes[x] && storedOutcomes[x]["contributing studies"].indexOf(dropDownEvidenceInputs[i].value) != -1){
 				dropDownEvidenceInputs[i].checked = true;
 			} else {
 				if ((!dropDownEvidenceInputs[i].value || dropDownEvidenceInputs[i].value == "null") && storedOutcomes[x]["contributing studies labels"].indexOf(dropDownEvidenceLabels[i].innerText) != -1){
@@ -2651,6 +2651,7 @@ function jsonToForm(){
 						if (definitionRole) { evidenceVariables[definitionIdentifier]["role"] = definitionRole; }
 						
 						var actualVariableDefinition;
+						var actualVariableCombo;						
 						
 						if ("actualDefinition" in resource["variableDefinition"][v]){
 							actualVariableDefinition = {};
@@ -2670,15 +2671,37 @@ function jsonToForm(){
 							}
 						}
 						
+						actualVariableCombo = {"description": ""};
+						if ("description" in resource["variableDefinition"][v]){
+							actualVariableCombo["description"] = resource["variableDefinition"][v]["description"];
+						}
+						var tempNote = "";
+						if ("note" in resource["variableDefinition"][v]){
+							for (var n = 0; n < resource["variableDefinition"][v]["note"].length; n++){
+								tempNote += resource["variableDefinition"][v]["note"][n]["text"];
+								if (n != resource["variableDefinition"][v]["note"].length - 1){
+									tempNote += "; ";
+								}
+							}
+						}
+						actualVariableCombo["note"] = tempNote;
+						actualVariableCombo["directness"] = "";
+						if ("directnessMatch" in resource["variableDefinition"][v]){
+							actualVariableCombo["directness"] = resource["variableDefinition"][v]["directnessMatch"]["coding"][0]["code"];
+						}
+												
 						if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "exposure"){
 							evidenceIntervention = {"display": definitionDisplay, "identifier": definitionIdentifier};
 							evidenceActualIntervention = actualVariableDefinition;
+							evidenceComboIntervention = actualVariableCombo;
 						} else if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "referenceExposure"){
 							evidenceComparator = {"display": definitionDisplay, "identifier": definitionIdentifier};
 							evidenceActualComparator = actualVariableDefinition;
+							evidenceComboComparator = actualVariableCombo;
 						} else if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "measuredVariable"){
 							evidenceOutcome = {"display": definitionDisplay, "identifier": definitionIdentifier};
 							evidenceActualOutcome = actualVariableDefinition;
+							evidenceComboOutcome = actualVariableCombo;
 						}
 						
 					}
@@ -2779,39 +2802,190 @@ function jsonToForm(){
 				
 				if (!(evidenceComparator["identifier"] in convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]])){
 					convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]][evidenceComparator["identifier"]] = JSON.parse(JSON.stringify(blankSavedResult));
+					convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]][evidenceComparator["identifier"]]["outcomes"] = [];
 				}
-			}
-			var evidenceResult = convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]][evidenceComparator["identifier"]];
-			evidenceResult["study"] = label;
-			
-			
-			evidenceResult["intended population display"] = evidencePopulation["display"];
-			evidenceResult["intended population identifier"] = evidencePopulation["identifier"];
-			if (evidenceActualPopulation){
-				if ("identifier" in evidenceActualPopulation){
-					evidenceResult["actual population identifier"] = evidenceActualPopulation["identifier"]
-				}
-				if ("display" in evidenceActualPopulation){
-					evidenceResult["actual population display"] = evidenceActualPopulation["display"]
-				}
-			}
-			evidenceResult["population description"] = evidenceComboPopulation["description"];
-			evidenceResult["population notes"] = evidenceComboPopulation["note"];
-			evidenceResult["population directness match"] = evidenceComboPopulation["directness"];
-			
-			//REPEAT THIS FOR THE INTERVENTION, COMPARATOR
 
+				var evidenceResult = convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]][evidenceComparator["identifier"]];
+				evidenceResult["study"] = label;
+				
+				
+				evidenceResult["intended population display"] = evidencePopulation["display"];
+				evidenceResult["intended population identifier"] = evidencePopulation["identifier"];
+				if (evidenceActualPopulation){
+					if ("identifier" in evidenceActualPopulation){
+						evidenceResult["actual population identifier"] = evidenceActualPopulation["identifier"]
+					}
+					if ("display" in evidenceActualPopulation){
+						evidenceResult["actual population display"] = evidenceActualPopulation["display"]
+					}
+				}
+				if (evidenceComboPopulation){
+					evidenceResult["population description"] = evidenceComboPopulation["description"];
+					evidenceResult["population notes"] = evidenceComboPopulation["note"];
+					evidenceResult["population directness match"] = evidenceComboPopulation["directness"];
+				}
+				
+				//REPEAT THIS FOR THE INTERVENTION, COMPARATOR
+
+				
+				evidenceResult["intended intervention display"] = evidenceIntervention["display"];
+				evidenceResult["intended intervention identifier"] = evidenceIntervention["identifier"];
+				if (evidenceActualIntervention){
+					if ("identifier" in evidenceActualIntervention){
+						evidenceResult["actual intervention identifier"] = evidenceActualIntervention["identifier"]
+					}
+					if ("display" in evidenceActualIntervention){
+						evidenceResult["actual intervention display"] = evidenceActualIntervention["display"]
+					}
+				}
+				if (evidenceComboIntervention){
+					evidenceResult["intervention description"] = evidenceComboIntervention["description"];
+					evidenceResult["intervention notes"] = evidenceComboIntervention["note"];
+					evidenceResult["intervention directness match"] = evidenceComboIntervention["directness"];
+				}
+				
+				
+				evidenceResult["intended comparator display"] = evidenceComparator["display"];
+				evidenceResult["intended comparator identifier"] = evidenceComparator["identifier"];
+				if (evidenceActualComparator){
+					if ("identifier" in evidenceActualComparator){
+						evidenceResult["actual comparator identifier"] = evidenceActualComparator["identifier"]
+					}
+					if ("display" in evidenceActualComparator){
+						evidenceResult["actual comparator display"] = evidenceActualComparator["display"]
+					}
+				}
+				if (evidenceComboComparator){
+					evidenceResult["comparator description"] = evidenceComboComparator["description"];
+					evidenceResult["comparator notes"] = evidenceComboComparator["note"];
+					evidenceResult["comparator directness match"] = evidenceComboComparator["directness"];
+				}
 			
-			evidenceResult["intended intervention display"] = evidenceIntervention["display"];
-			evidenceResult["intended intervention identifier"] = evidenceIntervention["identifier"];
-			evidenceResult["intended comparator display"] = evidenceComparator["display"];
-			evidenceResult["intended comparator identifier"] = evidenceComparator["identifier"];
 			
-		
-			
-			//evidenceResult["intended outcome display"] = evidenceOutcome["display"];
-			//evidenceResult["intended outcome identifier"] = evidenceOutcome["identifier"];
-			
+				//LOADS REST OF THE OUTCOME, INCLUDING CONTRIBUTING STUDIES, CERTAINTY, AND THEN STATISTIC AND ATRIBUTES
+				if (evidenceOutcome || evidenceActualOutcome || evidenceComboOutcome){
+					var last = evidenceResult["outcomes"].length;
+					evidenceResult["outcomes"].push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0])));
+					var resultOutcome = evidenceResult["outcomes"][last];
+					resultOutcome["intended outcome display"] = evidenceOutcome["display"];
+					resultOutcome["intended outcome identifier"] = evidenceOutcome["identifier"];
+					if (evidenceActualOutcome){
+						if ("identifier" in evidenceActualOutcome){
+							resultOutcome["actual outcome identifier"] = evidenceActualOutcome["identifier"]
+						}
+						if ("display" in evidenceActualComparator){
+							resultOutcome["actual outcome display"] = evidenceActualOutcome["display"]
+						}
+					}
+					if (evidenceComboOutcome){
+						resultOutcome["outcome description"] = evidenceComboOutcome["description"];
+						resultOutcome["outcome notes"] = evidenceComboOutcome["note"];
+						resultOutcome["outcome directness match"] = evidenceComboOutcome["directness"];
+					}
+					
+					resultOutcome["certainty"] = [];
+					var resultCertainty = resultOutcome["certainty"];
+					if ("certainty" in resource){
+						for (var cert = 0; cert < resource["certainty"].length; cert++){
+							resultCertainty.push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0]["certainty"][0])));
+							//resultCertainty[cert]["GRADE comments on certainty"]
+							var certSystem = "http://terminology.hl7.org/CodeSystem/certainty-rating";
+							//var certSubType = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type";
+							//var certSubRating = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
+							if ("rating" in resource["certainty"][cert] && "coding" in resource["certainty"][cert]["rating"][0] && "system" in resource["certainty"][cert]["rating"][0]["coding"][0]){
+								certSystem = resource["certainty"][cert]["rating"][0]["coding"][0]["system"];
+							}
+							var formSubLookup;
+							if (certSystem == "http://terminology.hl7.org/CodeSystem/certainty-rating"){
+								resultOutcome["certainty checkbox"] = true;
+								resultCertainty[cert]["certainty system"] = "GRADE";
+								formSubLookup = formGradeSubMapping;
+							} else if(certSystem == "https://www.dynamed.com/home/editorial/editorial-process") {
+								resultOutcome["certainty checkbox"] = true;
+								resultCertainty[cert]["certainty system"] = "DynaMed";
+								formSubLookup = dynamedCertaintySubcomponentCriteriaTypeSet;
+								
+							} else {
+								resultOutcome["certainty checkbox"] = false;
+								resultCertainty[cert]["certainty system"] = "";
+							}
+							
+							if (resultOutcome["certainty checkbox"]){
+								var sysName = resultCertainty[cert]["certainty system"];
+								resultCertainty[cert][sysName + " certainty of evidence"] = resource["certainty"][cert]["rating"][0]["coding"][0]["code"];
+								var certNote = "";
+								if ("note" in resource["certainty"][cert]){
+									for (var cN = 0; cN < resource["certainty"][cert]["note"].length; cN++){
+										certNote += resource["certainty"][cert]["note"][cN]["text"];
+										if (cN != resource["certainty"][cert]["note"].length - 1){
+											certNote += "; ";
+										}
+									}
+								}
+								resultCertainty[cert][sysName + " comments on certainty"] = certNote;
+
+								if ("certaintySubcomponent" in resource["certainty"][cert]){
+									sysName = resultCertainty[cert]["certainty system"];
+									for (var t = 0; t < resource["certainty"][cert]["certaintySubcomponent"].length; t++){
+										var certSub = resource["certainty"][cert]["certaintySubcomponent"][t];
+
+										var subRatingComment = "";
+										if ("note" in certSub){
+											for (var subCom = 0; subCom < certSub["note"].length; subCom++){
+												subRatingComment += certSub["note"][subCom]["text"];
+												if (subCom != certSub["note"].length - 1){
+													subRatingComment += "; ";
+												}
+											}
+										}
+										var subRatingCode = "";
+										if ("rating" in certSub && "coding" in certSub["rating"] && "code" in certSub["rating"]["coding"][0]){
+											subRatingCode = certSub["rating"]["coding"][0]["code"];
+										}
+										if ("type" in certSub && "coding" in certSub["type"] && "code" in certSub["type"]["coding"][0]){
+											var subTypeCode = certSub["type"]["coding"][0]["code"];
+											if (subTypeCode){
+												resultCertainty[cert][sysName + " " + formSubLookup[subTypeCode]] = subRatingCode;
+												resultCertainty[cert][sysName + " comments on " + formSubLookup[subTypeCode]] = subRatingComment;
+											}
+										}
+									}
+								}
+							}
+						}
+					} else {
+						resultOutcome["certainty checkbox"] = false;
+						resultCertainty.push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0]["certainty"][0])));
+					}
+					resultOutcome["evidence identifier"] = "";
+					resultOutcome["evidence description"] = "";
+					resultOutcome["evidence short display name"] = "";
+					
+					if ("id" in resource){
+						resultOutcome["evidence identifier"] = resource["id"];
+					}
+					if ("description" in resource){
+						resultOutcome["evidence description"] = resource["description"];
+					}
+					if ("title" in resource){
+						resultOutcome["evidence short display name"] = resource["title"];
+					}
+					var evidenceNotes = "";
+					if ("note" in resource){
+						for (var eNote = 0; eNote < resource["note"].length; eNote++){
+							evidenceNotes += resource["note"][eNote]["text"];
+							if (eNote != resource["note"].length - 1){
+								evidenceNotes += "; ";
+							}
+						}
+					}
+					resultOutcome["evidence notes"] = evidenceNotes;
+					resultOutcome["contributing studies"] = [];
+					resultOutcome["contributing studies labels"] = [];
+					resultOutcome["contributing studies short display names"] = [];
+				}
+				
+			}
 		}
 	}
 	
@@ -2900,7 +3074,8 @@ function formToJSON(){
 		thisGroup["id"] = pop.getElementsByClassName("populationIdentifier")[0].value
 		thisGroup["name"] = pop.getElementsByClassName("populationName")[0].value;
 		thisGroup["actual"] = pop.getElementsByClassName("populationActualRadio")[0].checked;
-				
+		thisGroup["type"] = "person";
+		
 		thisGroup["description"] = pop.getElementsByClassName("populationDescription")[0].value;
 		thisGroup["note"] = [{}];
 		thisGroup["note"][0]["text"] = pop.getElementsByClassName("populationNotes")[0].value;
@@ -2976,6 +3151,9 @@ function formToJSON(){
 									thisGroup["member"][j]["entity"]["identifier"] = out["contributing studies"][j];
 									thisGroup["member"][j]["entity"]["display"] = out["contributing studies short display names"][j];
 									thisGroup["member"][j]["entity"]["type"] = "Evidence";
+									thisGroup["type"] = "information";
+									thisGroup["code"] = {};
+									thisGroup["code"]["text"] = "Evidence";
 								}
 							}
 							out["evidence group unique id"] = fhirGroupList.length;
@@ -3147,9 +3325,7 @@ function formToJSON(){
 						}
 						thisEvidence["variableDefinition"][1]["intendedDefinition"]["display"] = result["intended intervention display"];
 						thisEvidence["variableDefinition"][1]["intendedDefinition"]["identifier"] = result["intended intervention identifier"];
-						console.log(result["actual intervention identifier"]);
 						if (result["actual intervention identifier"]){
-							console.log("HERE");
 							thisEvidence["variableDefinition"][1]["actualDefinition"]["type"] = "EvidenceVariable";
 						}
 						thisEvidence["variableDefinition"][1]["actualDefinition"]["display"] = result["actual intervention display"];
@@ -3192,8 +3368,8 @@ function formToJSON(){
 								thisEvidence["certainty"][0]["note"][0]["text"] = out["certainty"][0]["GRADE comments on certainty"];
 								if (out["certainty"][0]["GRADE certainty of evidence"]){
 									thisEvidence["certainty"][0]["rating"][0]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-rating";
-									thisEvidence["certainty"][0]["rating"][0]["coding"][0]["code"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["GRADE certainty of evidence"]];
-									thisEvidence["certainty"][0]["rating"][0]["coding"][0]["display"] = out["certainty"][0]["GRADE certainty of evidence"];
+									thisEvidence["certainty"][0]["rating"][0]["coding"][0]["display"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["GRADE certainty of evidence"]];
+									thisEvidence["certainty"][0]["rating"][0]["coding"][0]["code"] = out["certainty"][0]["GRADE certainty of evidence"];
 								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
@@ -3208,8 +3384,8 @@ function formToJSON(){
 									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["code"] = "RiskOfBias";
 									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["display"] = "Risk of bias";
 									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
-									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE risk of bias"]];
-									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE risk of bias"];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["display"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE risk of bias"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["code"] = out["certainty"][0]["GRADE risk of bias"];
 								}
 								
 								if (out["certainty"][0]["GRADE inconsistency"]){
@@ -3219,8 +3395,8 @@ function formToJSON(){
 									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["code"] = "Inconsistency";
 									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["display"] = "Inconsistency";
 									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
-									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE inconsistency"]];
-									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE inconsistency"];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["display"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE inconsistency"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["code"] = out["certainty"][0]["GRADE inconsistency"];
 								}
 								
 								if (out["certainty"][0]["GRADE indrectness"]){
@@ -3230,8 +3406,8 @@ function formToJSON(){
 									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["code"] = "Indirectness";
 									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["display"] = "Indirectness";
 									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
-									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE indrectness"]];
-									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE indrectness"];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["display"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE indrectness"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["code"] = out["certainty"][0]["GRADE indrectness"];
 								}
 								
 								if (out["certainty"][0]["GRADE imprecision"]){
@@ -3241,8 +3417,8 @@ function formToJSON(){
 									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["code"] = "Imprecision";
 									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["display"] = "Imprecision";
 									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
-									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE imprecision"]];
-									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE imprecision"];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["display"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE imprecision"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["code"] = out["certainty"][0]["GRADE imprecision"];
 								}
 								
 								if (out["certainty"][0]["GRADE publication bias"]){
@@ -3252,16 +3428,16 @@ function formToJSON(){
 									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["code"] = "PublicationBias";
 									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["display"] = "Publication bias";
 									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
-									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["code"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE publication bias"]];
-									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["display"] = out["certainty"][0]["GRADE publication bias"];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["display"] = gradeCertaintySubcomponentCodeTypeSet[out["certainty"][0]["GRADE publication bias"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["code"] = out["certainty"][0]["GRADE publication bias"];
 								}
 								
 							} else if(out["certainty"][0]["certainty system"] == "DynaMed"){						
 								thisEvidence["certainty"][0]["description"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["DynaMed certainty of evidence"]];
 								thisEvidence["certainty"][0]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on certainty"];
-								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["system"] =  "http://www.dynamed.com/home/content/levels-of-evidencee";
-								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["code"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["DynaMed certainty of evidence"]];
-								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["display"] = out["certainty"][0]["DynaMed certainty of evidence"];
+								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["system"] =  "https://www.dynamed.com/home/editorial/editorial-process";
+								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["display"] = certaintyOfEvidenceTypeSet[out["certainty"][0]["DynaMed certainty of evidence"]];
+								thisEvidence["certainty"][0]["rating"][0]["coding"][0]["code"] = out["certainty"][0]["DynaMed certainty of evidence"];
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
 								thisEvidence["certainty"][0]["certaintySubcomponent"].push(JSON.parse(JSON.stringify(thisEvidence["certainty"][0]["certaintySubcomponent"][0])));
@@ -3276,102 +3452,124 @@ function formToJSON(){
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed clinical outcome"]];
 								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on clinical outcome"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["code"] = "clinical-outcome";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["display"] = "Clinical outcome";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed clinical outcome"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed clinical outcome"];
+								if (out["certainty"][0]["DynaMed clinical outcome"] != "" || out["certainty"][0]["DynaMed comments on clinical outcome"] != ""){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["system"] = "DynaMed-Subcomponent-Type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["code"] = "clinical-outcome";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["type"]["coding"][0]["display"] = "Clinical outcome";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["system"] = "DynaMed-Subcomponent-Rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed clinical outcome"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][0]["rating"]["coding"][0]["code"] = out["certainty"][0]["DynaMed clinical outcome"];
+								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed directness"]];
 								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on directness"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["code"] = "directness";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["display"] = "Directness";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed directness"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed directness"];
+								if (out["certainty"][0]["DynaMed directness"] != "" || out["certainty"][0]["DynaMed comments on directness"] != ""){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["system"] = "DynaMed-Subcomponent-Type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["code"] = "directness";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["type"]["coding"][0]["display"] = "Directness";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["system"] = "DynaMed-Subcomponent-Rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed directness"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][1]["rating"]["coding"][0]["code"] = out["certainty"][0]["DynaMed directness"];
+								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed randomization"]];
 								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on randomization"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["code"] = "randomization";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["display"] = "Randomization";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed randomization"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed randomization"];
+								if (out["certainty"][0]["DynaMed randomization"] != "" || out["certainty"][0]["DynaMed comments on randomization"] != ""){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["system"] = "DynaMed-Subcomponent-Type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["code"] = "randomization";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["type"]["coding"][0]["display"] = "Randomization";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["system"] = "DynaMed-Subcomponent-Rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed randomization"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][2]["rating"]["coding"][0]["code"] = out["certainty"][0]["DynaMed randomization"];
+								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed blinding"]];
 								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on blinding"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["code"] = "blinding";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["display"] = "Blinding";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed blinding"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed blinding"];
+								if (out["certainty"][0]["DynaMed blinding"] != "" || out["certainty"][0]["DynaMed comments on blinding"] != ""){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["system"] = "DynaMed-Subcomponent-Type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["code"] = "blinding";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["type"]["coding"][0]["display"] = "Blinding";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["system"] = "DynaMed-Subcomponent-Rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed blinding"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][3]["rating"]["coding"][0]["code"] = out["certainty"][0]["DynaMed blinding"];
+								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed follow up"]];
 								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on follow up"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["code"] = "follow-up";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["display"] = "Follow up";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed follow up"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed follow up"];
+								if (out["certainty"][0]["DynaMed follow up"] != "" || out["certainty"][0]["DynaMed comments on follow up"] != ""){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["system"] = "DynaMed-Subcomponent-Type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["code"] = "follow-up";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["type"]["coding"][0]["display"] = "Follow up";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["system"] = "DynaMed-Subcomponent-Rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed follow up"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][4]["rating"]["coding"][0]["code"] = out["certainty"][0]["DynaMed follow up"];
+								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed dropouts"]];
 								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on dropouts"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["type"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["type"]["coding"][0]["code"] = "dropouts";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["type"]["coding"][0]["display"] = "Dropouts";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["rating"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed dropouts"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][5]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed dropouts"];
+								if (out["certainty"][0]["DynaMed dropouts"] != "" || out["certainty"][0]["DynaMed comments on dropouts"] != ""){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][5]["type"]["coding"][0]["system"] = "DynaMed-Subcomponent-Type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][5]["type"]["coding"][0]["code"] = "dropouts";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][5]["type"]["coding"][0]["display"] = "Dropouts";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][5]["rating"]["coding"][0]["system"] = "DynaMed-Subcomponent-Rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][5]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed dropouts"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][5]["rating"]["coding"][0]["code"] = out["certainty"][0]["DynaMed dropouts"];
+								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed precision"]];
 								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on precision"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["type"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["type"]["coding"][0]["code"] = "precision";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["type"]["coding"][0]["display"] = "Precision";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["rating"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed precision"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][6]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed precision"];
+								if (out["certainty"][0]["DynaMed precision"] != "" || out["certainty"][0]["DynaMed comments on precision"] != ""){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][6]["type"]["coding"][0]["system"] = "DynaMed-Subcomponent-Type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][6]["type"]["coding"][0]["code"] = "precision";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][6]["type"]["coding"][0]["display"] = "Precision";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][6]["rating"]["coding"][0]["system"] = "DynaMed-Subcomponent-Rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][6]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed precision"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][6]["rating"]["coding"][0]["code"] = out["certainty"][0]["DynaMed precision"];
+								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed consistency"]];
 								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on consistency"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["type"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["type"]["coding"][0]["code"] = "consistency";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["type"]["coding"][0]["display"] = "Consistency";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["rating"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed consistency"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][7]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed consistency"];
+								if (out["certainty"][0]["DynaMed consistency"] != "" || out["certainty"][0]["DynaMed comments on consistency"] != ""){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][7]["type"]["coding"][0]["system"] = "DynaMed-Subcomponent-Type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][7]["type"]["coding"][0]["code"] = "consistency";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][7]["type"]["coding"][0]["display"] = "Consistency";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][7]["rating"]["coding"][0]["system"] = "DynaMed-Subcomponent-Rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][7]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed consistency"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][7]["rating"]["coding"][0]["code"] = out["certainty"][0]["DynaMed consistency"];
+								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed concealment"]];
 								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on concealment"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["type"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["type"]["coding"][0]["code"] = "concealment";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["type"]["coding"][0]["display"] = "Concealment";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["rating"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed concealment"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][8]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed concealment"];
+								if (out["certainty"][0]["DynaMed concealment"] != "" || out["certainty"][0]["DynaMed comments on concealment"] != ""){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][8]["type"]["coding"][0]["system"] = "DynaMed-Subcomponent-Type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][8]["type"]["coding"][0]["code"] = "concealment";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][8]["type"]["coding"][0]["display"] = "Concealment";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][8]["rating"]["coding"][0]["system"] = "DynaMed-Subcomponent-Rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][8]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed concealment"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][8]["rating"]["coding"][0]["code"] = out["certainty"][0]["DynaMed concealment"];
+								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed itt analysis"]];
 								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on itt analysis"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["type"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["type"]["coding"][0]["code"] = "itt-analysis";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["type"]["coding"][0]["display"] = "III analysis";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["rating"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed itt analysis"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][9]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed itt analysis"];
+								if (out["certainty"][0]["DynaMed itt analysis"] != "" || out["certainty"][0]["DynaMed comments on itt analysis"] != ""){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][9]["type"]["coding"][0]["system"] = "DynaMed-Subcomponent-Type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][9]["type"]["coding"][0]["code"] = "itt-analysis";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][9]["type"]["coding"][0]["display"] = "III analysis";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][9]["rating"]["coding"][0]["system"] = "DynaMed-Subcomponent-Rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][9]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed itt analysis"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][9]["rating"]["coding"][0]["code"] = out["certainty"][0]["DynaMed itt analysis"];
+								}
 								
 								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["description"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed other"]];
 								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["note"][0]["text"] = out["certainty"][0]["DynaMed comments on other"];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["type"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["type"]["coding"][0]["code"] = "other";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["type"]["coding"][0]["display"] = "Other";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["rating"]["coding"][0]["system"] = "";
-								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["rating"]["coding"][0]["code"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed other"]];
-								thisEvidence["certainty"][0]["certaintySubcomponent"][10]["rating"]["coding"][0]["display"] = out["certainty"][0]["DynaMed other"];
+								if (out["certainty"][0]["DynaMed other"] != "" || out["certainty"][0]["DynaMed comments on other"] != ""){
+									thisEvidence["certainty"][0]["certaintySubcomponent"][10]["type"]["coding"][0]["system"] = "DynaMed-Subcomponent-Type";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][10]["type"]["coding"][0]["code"] = "other";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][10]["type"]["coding"][0]["display"] = "Other";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][10]["rating"]["coding"][0]["system"] = "DynaMed-Subcomponent-Rating";
+									thisEvidence["certainty"][0]["certaintySubcomponent"][10]["rating"]["coding"][0]["display"] = dynamedCertaintySubcomponentCodeTypeSet[out["certainty"][0]["DynaMed other"]];
+									thisEvidence["certainty"][0]["certaintySubcomponent"][10]["rating"]["coding"][0]["code"] = out["certainty"][0]["DynaMed other"];
+								}
 							}
 						
 						}
@@ -3476,6 +3674,17 @@ function loadPage4(){
 
 
 }
+
+var formGradeSubMapping = { 
+	"RiskOfBias": "risk of bias",
+	"Inconsistency": "inconsistency",
+	"Indirectness": "indrectness",
+	"Imprecision": "imprecision",
+	"PublicationBias": "publication bias",
+	"DoseResponseGradient": "dose response gradient",
+	"PlausibleConfounding": "plausible confounding",
+	"LargeEffect": "large effect"
+};
 
 var gradeCertaintySubcomponentCodeTypeSet = {
 	"no-change": " no change to rating",
