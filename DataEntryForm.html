@@ -2459,6 +2459,8 @@ function jsonToForm(){
 		}
 	}
 	
+	var groupsOfEvidence = {};
+	
 	var convertResults = {};
 	var studyLabels = {};
 	var groupIDs = {};
@@ -2469,8 +2471,8 @@ function jsonToForm(){
 	for (var r = 0; r < jsonresources.length; r++){
 		var resource = jsonresources[r];
 		
-		if (resource["resourceType"] == "Group"){
-			if (!("member" in resource)){
+		if (resource["resourceType"].toLowerCase() == "group"){
+			if (!("member" in resource) || ("type" in resource && resource["type"] == "person")){
 			
 				if (populationNumber >= page1.getElementsByClassName("populationBox").length){
 					addPopulation();
@@ -2508,9 +2510,27 @@ function jsonToForm(){
 				}
 				
 				populationNumber += 1;
+			} else if("type" in resource && (resource["type"].toLowerCase() == "evidence" || resource["type"].toLowerCase() == "report" || resource["type"].toLowerCase() == "information")) {
+				//TO DO todo: TAKE CARE OF THE SYNTHESIS GROUPS FOR CONTRIBUTING STUDIES, it should be stored in a temp way to be later used in this function
+				var groupID = resource["id"];
+				groupsOfEvidence[groupID] = [[],[],[]];
+				//Loops through all members
+				for (var groupMem = 0; groupMem < resource["member"].length; groupMem++){
+					var groupMemID = "";
+					var groupMemDisplay = "";
+					if ("identifier" in resource["member"][groupMem]["entity"]){
+						groupMemID = resource["member"][groupMem]["entity"]["identifier"];
+					}
+					if ("display" in resource["member"][groupMem]["entity"]){
+						groupMemDisplay = resource["member"][groupMem]["entity"]["display"];
+					}
+					groupsOfEvidence[groupID][0] = [groupMemID, groupMemDisplay];
+					groupsOfEvidence[groupID][1].push(groupMemID);
+					groupsOfEvidence[groupID][2].push(groupMemDisplay);
+				}
 			}
 
-		} else if (resource["resourceType"] == "EvidenceVariable") {
+		} else if (resource["resourceType"].toLowerCase() == "evidencevariable") {
 			var resourceID = resource["id"];
 			var resourceName = resource["name"];
 			var resourceDescription = resource["description"];
@@ -2547,7 +2567,8 @@ function jsonToForm(){
 				}
 			}
 		
-		} else if (resource["resourceType"] == "Evidence"){
+		} else if (resource["resourceType"].toLowerCase() == "evidence"){
+			
 			
 			var evidencePopulation;
 			var evidenceActualPopulation;
@@ -2580,7 +2601,6 @@ function jsonToForm(){
 					evidencePopulation = {"display": resource["referentGroup"]["intendedGroup"]["display"], "identifier": groupID};
 				}
 				
-				//FROM HERE
 				if ("evidenceSource" in resource["referentGroup"]){
 					if (!("member" in resource["referentGroup"]["evidenceSource"] && resource["referentGroup"]["evidenceSource"]["member"].length && resource["referentGroup"]["evidenceSource"]["member"][0]["entity"]["type"] == "Evidence")){
 						evidenceActualPopulation = {};
@@ -2616,7 +2636,6 @@ function jsonToForm(){
 				if ("directnessMatch" in resource["referentGroup"]){
 					evidenceComboPopulation["directness"] = resource["referentGroup"]["directnessMatch"]["coding"][0]["code"];
 				}
-				//TO HERE
 				
 			}
 						
@@ -2869,6 +2888,8 @@ function jsonToForm(){
 					var resultOutcome = evidenceResult["outcomes"][last];
 					resultOutcome["intended outcome display"] = evidenceOutcome["display"];
 					resultOutcome["intended outcome identifier"] = evidenceOutcome["identifier"];
+					resource["study-pico-combo"] = [label, evidencePopulation["identifier"], evidenceIntervention["identifier"], evidenceComparator["identifier"], evidenceOutcome["identifier"]];
+					
 					if (evidenceActualOutcome){
 						if ("identifier" in evidenceActualOutcome){
 							resultOutcome["actual outcome identifier"] = evidenceActualOutcome["identifier"]
@@ -2983,6 +3004,8 @@ function jsonToForm(){
 					resultOutcome["contributing studies"] = [];
 					resultOutcome["contributing studies labels"] = [];
 					resultOutcome["contributing studies short display names"] = [];
+					resultOutcome["describe evidence source"] = "";
+
 				}
 				
 			}
@@ -3054,6 +3077,34 @@ function jsonToForm(){
 			outcomeNumber += 1;
 		}
 	}
+	
+	for (var r = 0; r < jsonresources.length; r++){
+		var resource = jsonresources[r];
+		if (resource["resourceType"] == "Evidence" && "referentGroup" in resource && "evidenceSource" in resource["referentGroup"] && "type" in resource["referentGroup"]["evidenceSource"]){
+			console.log(groupsOfEvidence);
+			if (resource["referentGroup"]["evidenceSource"]["type"].toLowerCase() == "group") {
+				//TODO to do: Has to loop through all the Evidence resources again, and apply the correct "contributing studies"
+				var evidSourceID = resource["referentGroup"]["evidenceSource"]["identifier"];
+				
+				console.log(groupsOfEvidence[evidSourceID]);
+				if ("study-pico-combo" in resource){
+					var loc = resource["study-pico-combo"];
+					var evidSrcConvert = convertResults[loc[0]][loc[1]][loc[2]][loc[3]];
+					for (var locOut = 0; locOut < evidSrcConvert["outcomes"].length; locOut++){
+						if (evidSrcConvert["outcomes"][locOut]["intended outcome identifier"] == loc[4]){
+							evidSrcConvert["outcomes"][locOut]["contributing studies"] = groupsOfEvidence[evidSourceID][1];
+							evidSrcConvert["outcomes"][locOut]["contributing studies short display names"] = groupsOfEvidence[evidSourceID][2];
+							evidSrcConvert["outcomes"][locOut]["describe evidence source"] = evidSourceID;
+						}
+					}
+					//Goes through the outcomes, and finds the right one using [loc[4]
+				}
+				//groupsOfEvidence
+			}
+		}
+	}
+	
+	
 	savedResults = convertResults;
 }
 
@@ -3282,6 +3333,7 @@ function formToJSON(){
 						
 						if (synthesisList.indexOf(studysInSavedResults[s]) != -1){
 							//thisEvidence["referentGroup"]["evidenceSource"]["reference"] = "";		//TO DO TODO ?
+							thisEvidence["referentGroup"]["evidenceSource"]["type"] = "Group";
 							thisEvidence["referentGroup"]["evidenceSource"]["identifier"] = out["describe evidence source"];
 							//thisEvidence["referentGroup"]["evidenceSource"]["display"] = "";		//TO DO TODO
 						}
