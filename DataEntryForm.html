@@ -2557,7 +2557,7 @@ function jsonToForm(){
 			var resourceName = resource["name"];
 			var resourceDescription = resource["description"];
 			
-			var evidenceVariableKey;
+			var evidenceVariableKey = null;
 			if (resourceID) {
 				evidenceVariableKey = resourceID;
 			} else if(resourceName) {
@@ -2749,14 +2749,18 @@ function jsonToForm(){
 				}
 			}
 			
-			var label;
-			if ("relatedArtifact" in resource && resource["relatedArtifact"][0]["label"] && !(resource["relatedArtifact"][0]["label"] in studyLabels)){
+			var label = null;
+			
+			if("relatedArtifact" in resource && resource["relatedArtifact"][0] && resource["relatedArtifact"][0]["label"]){
+				label = resource["relatedArtifact"][0]["label"];
+			}
+			
+			if (label && !(resource["relatedArtifact"][0]["label"] in studyLabels)){
 				
 				if (studyNumber >= page1.getElementsByClassName("studyBox").length){
 					addStudy();
 				}
-			
-				label = resource["relatedArtifact"][0]["label"];
+				
 				page1.getElementsByClassName("studyName")[studyNumber].value = label;
 				studyLabels[label] = "";
 				
@@ -2935,7 +2939,7 @@ function jsonToForm(){
 							if ("rating" in resource["certainty"][cert] && "coding" in resource["certainty"][cert]["rating"][0] && "system" in resource["certainty"][cert]["rating"][0]["coding"][0]){
 								certSystem = resource["certainty"][cert]["rating"][0]["coding"][0]["system"];
 							}
-							var formSubLookup;
+							var formSubLookup = null;
 							if (certSystem == "http://terminology.hl7.org/CodeSystem/certainty-rating"){
 								resultOutcome["certainty checkbox"] = true;
 								resultCertainty[cert]["certainty system"] = "GRADE";
@@ -3240,7 +3244,6 @@ function jsonToForm(){
 			}
 		}
 	}
-	
 	
 	savedResults = convertResults;
 }
