@@ -1,0 +1,77 @@
+<html>
+ <head>
+  <title>PHP Test</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ </head>
+ <body>
+
+    <span>Database: <select value="ebm.health" disabled><option value="ebm.health">ebm.Health</option></select></span>
+    <br><br>
+    <select id="collectionSelectDropDown" name="collectionID"></select>
+    <input type="button" value="Load" onclick="loadCollection();">
+    <br>
+    <br>
+    <input type="text" id="collectionID-Box" >
+    <br>
+    <br>
+    <input type="text" id="collectionName">
+    <br>
+    <br>
+    <textarea id="jsonInput" style="width: 800px; height: 160px;"></textarea>
+
+    <script>
+    function loadCollection(){
+       var cID = document.getElementById("collectionSelectDropDown").value;
+       if (cID){
+           xmlhttp = new XMLHttpRequest();
+           xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("----------------");
+                    console.log(this.responseText);
+                    document.getElementById("jsonInput").value = this.responseText;
+                } else {
+                    console.log(this.status);
+                }
+           };
+           xmlhttp.open("GET","http://gps.health/JSON-Tree-Writer/retrieve.php?rowid="+cID,true);
+           xmlhttp.send();
+       }
+    }
+    </script>
+
+    <script>
+    function populateList(){
+        
+       xmlhttp = new XMLHttpRequest();
+       xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                var listOfCollections = JSON.parse(this.responseText);
+                console.log(listOfCollections);
+                console.log(typeof(listOfCollections));
+                var opt = document.createElement("option");
+                document.getElementById('collectionSelectDropDown').options.add(opt);
+                for(var c = 0; c < listOfCollections.length; c++){
+                    var opt = document.createElement("option");   
+                    opt.value = listOfCollections[c][0];
+                    opt.text = listOfCollections[c][1];
+                    document.getElementById('collectionSelectDropDown').options.add(opt);
+                }
+            } else {
+                console.log(this.status);
+            }
+       };
+       xmlhttp.open("GET","http://gps.health/JSON-Tree-Writer/populatelist.php",true);
+       xmlhttp.send();
+        
+
+    }
+    populateList();
+    </script>
+    <script>
+
+    
+    </script>
+
+ </body>
+</html>
