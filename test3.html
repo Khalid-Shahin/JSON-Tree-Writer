@@ -1,11 +1,10 @@
 <html>
  <head>
   <title>PHP Test</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  </head>
  <body>
 
-    <span>Database: <select value="ebm.health" disabled><option value="ebm.health">ebm.Health</option></select></span>
+    <span>Database: <select id="databaseDropdown" value="ebm.health" disabled><option value="ebm.health">ebm.Health</option></select></span> <!-- Doesn't do anything at the moment -->
     <br><br>
     <select id="collectionSelectDropDown" name="collectionID"></select>
     <input type="button" value="Load" onclick="loadCollection();">
@@ -26,11 +25,9 @@
            xmlhttp = new XMLHttpRequest();
            xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log("----------------");
-                    console.log(this.responseText);
                     document.getElementById("jsonInput").value = this.responseText;
                 } else {
-                    console.log(this.status);
+                    //console.log(this.status);
                 }
            };
            xmlhttp.open("GET","http://gps.health/JSON-Tree-Writer/retrieve.php?rowid="+cID,true);
@@ -41,14 +38,10 @@
 
     <script>
     function populateList(){
-        
        xmlhttp = new XMLHttpRequest();
        xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
                 var listOfCollections = JSON.parse(this.responseText);
-                console.log(listOfCollections);
-                console.log(typeof(listOfCollections));
                 var opt = document.createElement("option");
                 document.getElementById('collectionSelectDropDown').options.add(opt);
                 for(var c = 0; c < listOfCollections.length; c++){
@@ -58,7 +51,7 @@
                     document.getElementById('collectionSelectDropDown').options.add(opt);
                 }
             } else {
-                console.log(this.status);
+                //console.log(this.status);
             }
        };
        xmlhttp.open("GET","http://gps.health/JSON-Tree-Writer/populatelist.php",true);
