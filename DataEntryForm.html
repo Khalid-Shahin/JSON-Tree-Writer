@@ -414,7 +414,8 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			<div class="group" style="margin-left: 8px;"> <input class="textInput resultOutcomeNotes" type="text" id="outcomeNotes" style="width: 475px;" required=""> <span class="highlight"></span> <span class="bar"></span>
 			<label class="textLabel unselectable">Outcome Notes</label></div>
 		</div>
-		<div style="margin-top: 16px; display: flex; flex-flow: row wrap; font-weight: normal; font-size: 15px;">Name the Evidence (Study + PICO) to be represented here:</div>
+		<div class="nameOfEvidenceExplanation-PICO" style="margin-top: 16px; display: flex; flex-flow: row wrap; font-weight: normal; font-size: 15px;">Name the Evidence (Study + PICO) to be represented here:</div>
+		<div class="nameOfEvidenceExplanation-PIO" style="margin-top: 16px; display: flex; flex-flow: row wrap; font-weight: normal; font-size: 15px; display: none;">Name the Evidence (Study + Population + Intervention + Outcome) to be represented here:</div>
 		<div style="margin-top: 8px; display: flex; flex-flow: row wrap;">
 			<div class="group" style=""> <input class="textInput resultEvidenceName" type="text" id="resultEvidenceName" style="width: 210px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Short Display Name</label></div>
 			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceIdentifier" type="text" id="resultEvidenceIdentifier" style="width: 274px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Identifier</label></div>
@@ -1387,7 +1388,7 @@ function loadPage3(resultID){
    page3.getElementsByClassName("resultIntendedIntervention")[0].value = identifierMapping[currentIntendedIntervention];
    currentIntendedComparator = document.getElementById("resultComparatorDropDown-"+resultID).value;
    var comparatorSelection = identifierMapping[currentIntendedComparator];
-   if (comparatorSelection != "none" && document.getElementById("resultComparatorDropDown-"+resultID).value in identifierMapping){
+   if (comparatorSelection != "none" && comparatorSelection != "" && document.getElementById("resultComparatorDropDown-"+resultID).value in identifierMapping){
 		page3.getElementsByClassName("resultIntendedComparator")[0].value = comparatorSelection;
 		page3.getElementsByClassName("interventionLabel")[0].style.display = "block";
 		page3.getElementsByClassName("exposureLabel")[0].style.display = "none";
@@ -2150,6 +2151,11 @@ function addResultOutcome(){
 		cln.getElementsByClassName("resultActualOutcomeGroup")[0].style.display = "none";
 		cln.getElementsByClassName("resultOutcomeMatchGroup")[0].style.display = "none";
 		cln.getElementsByClassName("evidenceSourceRow")[0].style.display = "flex";
+   }
+   
+   if (page3.getElementsByClassName("resultComparatorBox")[0].style.display == "none"){
+		cln.getElementsByClassName("nameOfEvidenceExplanation-PICO")[0].style.display = "none";
+		cln.getElementsByClassName("nameOfEvidenceExplanation-PIO")[0].style.display = "";
    }
    
    document.getElementById("ResultOutcomes").appendChild(cln);
