@@ -2913,249 +2913,250 @@ function jsonToForm(){
 			
 			
 				//LOADS REST OF THE OUTCOME, INCLUDING CONTRIBUTING STUDIES, CERTAINTY, AND THEN STATISTIC AND ATRIBUTES
-				if (evidenceOutcome || evidenceActualOutcome || evidenceComboOutcome){
-					var last = evidenceResult["outcomes"].length;
-					evidenceResult["outcomes"].push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0])));
-					var resultOutcome = evidenceResult["outcomes"][last];
-					resultOutcome["intended outcome display"] = evidenceOutcome["display"];
-					resultOutcome["intended outcome identifier"] = evidenceOutcome["identifier"];
-					resource["study-pico-combo"] = [label, evidencePopulation["identifier"], evidenceIntervention["identifier"], evidenceComparator["identifier"], evidenceOutcome["identifier"]];
-					
-					if (evidenceActualOutcome){
-						if ("identifier" in evidenceActualOutcome){
-							resultOutcome["actual outcome identifier"] = evidenceActualOutcome["identifier"]
-						}
-						if ("display" in evidenceActualComparator){
-							resultOutcome["actual outcome display"] = evidenceActualOutcome["display"]
-						}
+				var last = evidenceResult["outcomes"].length;
+				evidenceResult["outcomes"].push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0])));
+				var resultOutcome = evidenceResult["outcomes"][last];
+				if (evidenceOutcome && "display" in evidenceOutcome){ resultOutcome["intended outcome display"] = evidenceOutcome["display"]; }
+				if (evidenceOutcome && "identifier" in evidenceOutcome){ resultOutcome["intended outcome identifier"] = evidenceOutcome["identifier"]; }
+				var tempOutcomeIdentifier = null;
+				if (evidenceOutcome && "identifier" in evidenceOutcome) { tempOutcomeIdentifier = evidenceOutcome["identifier"]; }
+				resource["study-pico-combo"] = [label, evidencePopulation["identifier"], evidenceIntervention["identifier"], evidenceComparator["identifier"], tempOutcomeIdentifier];
+				
+				if (evidenceActualOutcome){
+					if ("identifier" in evidenceActualOutcome){
+						resultOutcome["actual outcome identifier"] = evidenceActualOutcome["identifier"]
 					}
-					if (evidenceComboOutcome){
-						resultOutcome["outcome description"] = evidenceComboOutcome["description"];
-						resultOutcome["outcome notes"] = evidenceComboOutcome["note"];
-						resultOutcome["outcome directness match"] = evidenceComboOutcome["directness"];
+					if ("display" in evidenceActualComparator){
+						resultOutcome["actual outcome display"] = evidenceActualOutcome["display"]
 					}
-					
-					resultOutcome["certainty"] = [];
-					var resultCertainty = resultOutcome["certainty"];
-					if ("certainty" in resource){
-						for (var cert = 0; cert < resource["certainty"].length; cert++){
-							resultCertainty.push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0]["certainty"][0])));
-							//resultCertainty[cert]["GRADE comments on certainty"]
-							var certSystem = "http://terminology.hl7.org/CodeSystem/certainty-rating";
-							//var certSubType = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type";
-							//var certSubRating = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
-							if ("rating" in resource["certainty"][cert] && "coding" in resource["certainty"][cert]["rating"][0] && "system" in resource["certainty"][cert]["rating"][0]["coding"][0]){
-								certSystem = resource["certainty"][cert]["rating"][0]["coding"][0]["system"];
-							}
-							var formSubLookup = null;
-							if (certSystem == "http://terminology.hl7.org/CodeSystem/certainty-rating"){
-								resultOutcome["certainty checkbox"] = true;
-								resultCertainty[cert]["certainty system"] = "GRADE";
-								formSubLookup = formGradeSubMapping;
-							} else if(certSystem == "https://www.dynamed.com/home/editorial/editorial-process") {
-								resultOutcome["certainty checkbox"] = true;
-								resultCertainty[cert]["certainty system"] = "DynaMed";
-								formSubLookup = dynamedCertaintySubcomponentCriteriaTypeSet;
-								
-							} else {
-								resultOutcome["certainty checkbox"] = false;
-								resultCertainty[cert]["certainty system"] = "";
-							}
-							
-							if (resultOutcome["certainty checkbox"]){
-								var sysName = resultCertainty[cert]["certainty system"];
-								resultCertainty[cert][sysName + " certainty of evidence"] = resource["certainty"][cert]["rating"][0]["coding"][0]["code"];
-								var certNote = "";
-								if ("note" in resource["certainty"][cert]){
-									for (var cN = 0; cN < resource["certainty"][cert]["note"].length; cN++){
-										certNote += resource["certainty"][cert]["note"][cN]["text"];
-										if (cN != resource["certainty"][cert]["note"].length - 1){
-											certNote += "; ";
-										}
-									}
-								}
-								resultCertainty[cert][sysName + " comments on certainty"] = certNote;
-
-								if ("certaintySubcomponent" in resource["certainty"][cert]){
-									sysName = resultCertainty[cert]["certainty system"];
-									for (var t = 0; t < resource["certainty"][cert]["certaintySubcomponent"].length; t++){
-										var certSub = resource["certainty"][cert]["certaintySubcomponent"][t];
-
-										var subRatingComment = "";
-										if ("note" in certSub){
-											for (var subCom = 0; subCom < certSub["note"].length; subCom++){
-												subRatingComment += certSub["note"][subCom]["text"];
-												if (subCom != certSub["note"].length - 1){
-													subRatingComment += "; ";
-												}
-											}
-										}
-										var subRatingCode = "";
-										if ("rating" in certSub && "coding" in certSub["rating"] && "code" in certSub["rating"]["coding"][0]){
-											subRatingCode = certSub["rating"]["coding"][0]["code"];
-										}
-										if ("type" in certSub && "coding" in certSub["type"] && "code" in certSub["type"]["coding"][0]){
-											var subTypeCode = certSub["type"]["coding"][0]["code"];
-											if (subTypeCode){
-												resultCertainty[cert][sysName + " " + formSubLookup[subTypeCode]] = subRatingCode;
-												resultCertainty[cert][sysName + " comments on " + formSubLookup[subTypeCode]] = subRatingComment;
-											}
-										}
-									}
-								}
-							}
-						}
-					} else {
-						resultOutcome["certainty checkbox"] = false;
-						resultCertainty.push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0]["certainty"][0])));
-					}
-					resultOutcome["evidence identifier"] = "";
-					resultOutcome["evidence description"] = "";
-					resultOutcome["evidence short display name"] = "";
-					
-					if ("id" in resource){
-						resultOutcome["evidence identifier"] = resource["id"];
-					}
-					if ("description" in resource){
-						resultOutcome["evidence description"] = resource["description"];
-					}
-					if ("title" in resource){
-						resultOutcome["evidence short display name"] = resource["title"];
-					}
-					var evidenceNotes = "";
-					if ("note" in resource){
-						for (var eNote = 0; eNote < resource["note"].length; eNote++){
-							evidenceNotes += resource["note"][eNote]["text"];
-							if (eNote != resource["note"].length - 1){
-								evidenceNotes += "; ";
-							}
-						}
-					}
-					resultOutcome["evidence notes"] = evidenceNotes;
-					resultOutcome["contributing studies"] = [];
-					resultOutcome["contributing studies labels"] = [];
-					resultOutcome["contributing studies short display names"] = [];
-					resultOutcome["describe evidence source"] = "";
-
-					resultOutcome["statistics"] = [];
-					
-					if ("statistic" in resource){
-						for (var h = 0; h < resource["statistic"].length; h++){
-							resultOutcome["statistics"].push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0]["statistics"][0])));
-							var resultStat = resultOutcome["statistics"][h];
-							
-							var stat = resource["statistic"][h];
-							
-							var statDesc = "";
-							var statNote = "";
-							var statType = "";
-							var statValue = "";
-							var statInequality = "";
-							var statUnit = "";
-							var statNumberOfStudies = "";
-							var statNumberOfParticipants = "";
-							var statKnownDataCount = "";
-							var statNumeratorCount = "";
-							
-							if ("description" in stat){
-								statDesc = stat["description"];
-							}
-							
-							if ("note" in stat){
-								for (var statN = 0; statN < stat["note"].length; statN++){
-									statNote += stat["note"][statN]["text"];
-									if (statN != stat["note"].length - 1){
-										statNote += "; ";
-									}
-								}
-							}
-							
-							if ("statisticType" in stat && "coding" in stat["statisticType"] && "code" in stat["statisticType"]["coding"][0]){
-								statType = stat["statisticType"]["coding"][0]["code"];
-							}
-							if ("quantity" in stat && "value" in stat["quantity"]){
-								statValue = stat["quantity"]["value"];
-							}
-							if ("quantity" in stat && "comparator" in stat["quantity"]){
-								statInequality = stat["quantity"]["comparator"];
-							}
-							if ("quantity" in stat && "unit" in stat["quantity"]){
-								statUnit = stat["quantity"]["unit"];
-							}
-							
-							if ("sampleSize" in stat && "numberOfStudies" in stat["sampleSize"]){
-								statNumberOfStudies = stat["sampleSize"]["numberOfStudies"];
-							}
-							if ("sampleSize" in stat && "numberOfParticipants" in stat["sampleSize"]){
-								statNumberOfParticipants = stat["sampleSize"]["numberOfParticipants"];
-							}
-							if ("sampleSize" in stat && "knownDataCount" in stat["sampleSize"]){
-								statKnownDataCount = stat["sampleSize"]["knownDataCount"];
-							}
-							if ("sampleSize" in stat && "numeratorCount" in stat["sampleSize"]){
-								statNumeratorCount = stat["sampleSize"]["numeratorCount"];
-							}
-							
-							resultStat["statistic description"] = statDesc;
-							resultStat["statistic notes"] = statNote;
-							resultStat["number of studies"] = statNumberOfStudies;
-							resultStat["number of participants"] = statNumberOfParticipants;
-							resultStat["known data count"] = statKnownDataCount;
-							resultStat["numerator count"] = statNumeratorCount;
-							resultStat["statistic type"] = statType;
-							resultStat["statistic value"] = statValue;
-							resultStat["statistic inequality"] = statInequality;
-							resultStat["statistic unit"] = statUnit;
-							
-							resultStat["attributes"] = [];
-							
-							if ("attributeEstimate" in stat){
-								for (var f = 0; f < stat["attributeEstimate"].length; f++){
-									resultStat["attributes"].push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0]["statistics"][0]["attributes"][0])));
-									var resultAttribute = resultStat["attributes"][f];
-									
-									var att = stat["attributeEstimate"][f];
-																		
-									var attType = "";
-									var attQuantity = "";
-									var attFrom = "";
-									var attTo = "";
-									var attLevel = "";
-									var attInequality = "";
-									
-									if ("type" in att && "coding" in att["type"] && "code" in att["type"]["coding"][0]){
-										attType = att["type"]["coding"][0]["code"];
-									}
-									if ("quantity" in att && "value" in att["quantity"]){
-										attQuantity = att["quantity"]["value"];
-									}
-									if ("quantity" in att && "comparator" in att["quantity"]){
-										attInequality = att["quantity"]["comparator"];
-									}
-									if ("range" in att && "low" in att["range"]){
-										attFrom = att["range"]["low"]["value"];
-									}
-									if ("range" in att && "high" in att["range"]){
-										attTo = att["range"]["high"]["value"];
-									}
-									if ("level" in att){
-										attLevel = att["level"];
-									}
-									
-									resultAttribute["attribute estimate type"] = attType;
-									resultAttribute["attribute quantity"] = attQuantity;
-									resultAttribute["attribute from"] = attFrom;
-									resultAttribute["attribute to"] = attTo;
-									resultAttribute["attribute level"] = attLevel;
-									resultAttribute["attribute inequality"] = attInequality;
-									
-								}
-							}
-							
-						}
-					}
-
 				}
+				if (evidenceComboOutcome){
+					resultOutcome["outcome description"] = evidenceComboOutcome["description"];
+					resultOutcome["outcome notes"] = evidenceComboOutcome["note"];
+					resultOutcome["outcome directness match"] = evidenceComboOutcome["directness"];
+				}
+				
+				resultOutcome["certainty"] = [];
+				var resultCertainty = resultOutcome["certainty"];
+				if ("certainty" in resource){
+					for (var cert = 0; cert < resource["certainty"].length; cert++){
+						resultCertainty.push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0]["certainty"][0])));
+						//resultCertainty[cert]["GRADE comments on certainty"]
+						var certSystem = "http://terminology.hl7.org/CodeSystem/certainty-rating";
+						//var certSubType = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type";
+						//var certSubRating = "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating";
+						if ("rating" in resource["certainty"][cert] && "coding" in resource["certainty"][cert]["rating"][0] && "system" in resource["certainty"][cert]["rating"][0]["coding"][0]){
+							certSystem = resource["certainty"][cert]["rating"][0]["coding"][0]["system"];
+						}
+						var formSubLookup = null;
+						if (certSystem == "http://terminology.hl7.org/CodeSystem/certainty-rating"){
+							resultOutcome["certainty checkbox"] = true;
+							resultCertainty[cert]["certainty system"] = "GRADE";
+							formSubLookup = formGradeSubMapping;
+						} else if(certSystem == "https://www.dynamed.com/home/editorial/editorial-process") {
+							resultOutcome["certainty checkbox"] = true;
+							resultCertainty[cert]["certainty system"] = "DynaMed";
+							formSubLookup = dynamedCertaintySubcomponentCriteriaTypeSet;
+							
+						} else {
+							resultOutcome["certainty checkbox"] = false;
+							resultCertainty[cert]["certainty system"] = "";
+						}
+						
+						if (resultOutcome["certainty checkbox"]){
+							var sysName = resultCertainty[cert]["certainty system"];
+							resultCertainty[cert][sysName + " certainty of evidence"] = resource["certainty"][cert]["rating"][0]["coding"][0]["code"];
+							var certNote = "";
+							if ("note" in resource["certainty"][cert]){
+								for (var cN = 0; cN < resource["certainty"][cert]["note"].length; cN++){
+									certNote += resource["certainty"][cert]["note"][cN]["text"];
+									if (cN != resource["certainty"][cert]["note"].length - 1){
+										certNote += "; ";
+									}
+								}
+							}
+							resultCertainty[cert][sysName + " comments on certainty"] = certNote;
+
+							if ("certaintySubcomponent" in resource["certainty"][cert]){
+								sysName = resultCertainty[cert]["certainty system"];
+								for (var t = 0; t < resource["certainty"][cert]["certaintySubcomponent"].length; t++){
+									var certSub = resource["certainty"][cert]["certaintySubcomponent"][t];
+
+									var subRatingComment = "";
+									if ("note" in certSub){
+										for (var subCom = 0; subCom < certSub["note"].length; subCom++){
+											subRatingComment += certSub["note"][subCom]["text"];
+											if (subCom != certSub["note"].length - 1){
+												subRatingComment += "; ";
+											}
+										}
+									}
+									var subRatingCode = "";
+									if ("rating" in certSub && "coding" in certSub["rating"] && "code" in certSub["rating"]["coding"][0]){
+										subRatingCode = certSub["rating"]["coding"][0]["code"];
+									}
+									if ("type" in certSub && "coding" in certSub["type"] && "code" in certSub["type"]["coding"][0]){
+										var subTypeCode = certSub["type"]["coding"][0]["code"];
+										if (subTypeCode){
+											resultCertainty[cert][sysName + " " + formSubLookup[subTypeCode]] = subRatingCode;
+											resultCertainty[cert][sysName + " comments on " + formSubLookup[subTypeCode]] = subRatingComment;
+										}
+									}
+								}
+							}
+						}
+					}
+				} else {
+					resultOutcome["certainty checkbox"] = false;
+					resultCertainty.push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0]["certainty"][0])));
+				}
+				resultOutcome["evidence identifier"] = "";
+				resultOutcome["evidence description"] = "";
+				resultOutcome["evidence short display name"] = "";
+				
+				if ("id" in resource){
+					resultOutcome["evidence identifier"] = resource["id"];
+				}
+				if ("description" in resource){
+					resultOutcome["evidence description"] = resource["description"];
+				}
+				if ("title" in resource){
+					resultOutcome["evidence short display name"] = resource["title"];
+				}
+				var evidenceNotes = "";
+				if ("note" in resource){
+					for (var eNote = 0; eNote < resource["note"].length; eNote++){
+						evidenceNotes += resource["note"][eNote]["text"];
+						if (eNote != resource["note"].length - 1){
+							evidenceNotes += "; ";
+						}
+					}
+				}
+				resultOutcome["evidence notes"] = evidenceNotes;
+				resultOutcome["contributing studies"] = [];
+				resultOutcome["contributing studies labels"] = [];
+				resultOutcome["contributing studies short display names"] = [];
+				resultOutcome["describe evidence source"] = "";
+
+				resultOutcome["statistics"] = [];
+				
+				if ("statistic" in resource){
+					for (var h = 0; h < resource["statistic"].length; h++){
+						resultOutcome["statistics"].push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0]["statistics"][0])));
+						var resultStat = resultOutcome["statistics"][h];
+						
+						var stat = resource["statistic"][h];
+						
+						var statDesc = "";
+						var statNote = "";
+						var statType = "";
+						var statValue = "";
+						var statInequality = "";
+						var statUnit = "";
+						var statNumberOfStudies = "";
+						var statNumberOfParticipants = "";
+						var statKnownDataCount = "";
+						var statNumeratorCount = "";
+						
+						if ("description" in stat){
+							statDesc = stat["description"];
+						}
+						
+						if ("note" in stat){
+							for (var statN = 0; statN < stat["note"].length; statN++){
+								statNote += stat["note"][statN]["text"];
+								if (statN != stat["note"].length - 1){
+									statNote += "; ";
+								}
+							}
+						}
+						
+						if ("statisticType" in stat && "coding" in stat["statisticType"] && "code" in stat["statisticType"]["coding"][0]){
+							statType = stat["statisticType"]["coding"][0]["code"];
+						}
+						if ("quantity" in stat && "value" in stat["quantity"]){
+							statValue = stat["quantity"]["value"];
+						}
+						if ("quantity" in stat && "comparator" in stat["quantity"]){
+							statInequality = stat["quantity"]["comparator"];
+						}
+						if ("quantity" in stat && "unit" in stat["quantity"]){
+							statUnit = stat["quantity"]["unit"];
+						}
+						
+						if ("sampleSize" in stat && "numberOfStudies" in stat["sampleSize"]){
+							statNumberOfStudies = stat["sampleSize"]["numberOfStudies"];
+						}
+						if ("sampleSize" in stat && "numberOfParticipants" in stat["sampleSize"]){
+							statNumberOfParticipants = stat["sampleSize"]["numberOfParticipants"];
+						}
+						if ("sampleSize" in stat && "knownDataCount" in stat["sampleSize"]){
+							statKnownDataCount = stat["sampleSize"]["knownDataCount"];
+						}
+						if ("sampleSize" in stat && "numeratorCount" in stat["sampleSize"]){
+							statNumeratorCount = stat["sampleSize"]["numeratorCount"];
+						}
+						
+						resultStat["statistic description"] = statDesc;
+						resultStat["statistic notes"] = statNote;
+						resultStat["number of studies"] = statNumberOfStudies;
+						resultStat["number of participants"] = statNumberOfParticipants;
+						resultStat["known data count"] = statKnownDataCount;
+						resultStat["numerator count"] = statNumeratorCount;
+						resultStat["statistic type"] = statType;
+						resultStat["statistic value"] = statValue;
+						resultStat["statistic inequality"] = statInequality;
+						resultStat["statistic unit"] = statUnit;
+						
+						resultStat["attributes"] = [];
+						
+						if ("attributeEstimate" in stat){
+							for (var f = 0; f < stat["attributeEstimate"].length; f++){
+								resultStat["attributes"].push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0]["statistics"][0]["attributes"][0])));
+								var resultAttribute = resultStat["attributes"][f];
+								
+								var att = stat["attributeEstimate"][f];
+																	
+								var attType = "";
+								var attQuantity = "";
+								var attFrom = "";
+								var attTo = "";
+								var attLevel = "";
+								var attInequality = "";
+								
+								if ("type" in att && "coding" in att["type"] && "code" in att["type"]["coding"][0]){
+									attType = att["type"]["coding"][0]["code"];
+								}
+								if ("quantity" in att && "value" in att["quantity"]){
+									attQuantity = att["quantity"]["value"];
+								}
+								if ("quantity" in att && "comparator" in att["quantity"]){
+									attInequality = att["quantity"]["comparator"];
+								}
+								if ("range" in att && "low" in att["range"]){
+									attFrom = att["range"]["low"]["value"];
+								}
+								if ("range" in att && "high" in att["range"]){
+									attTo = att["range"]["high"]["value"];
+								}
+								if ("level" in att){
+									attLevel = att["level"];
+								}
+								
+								resultAttribute["attribute estimate type"] = attType;
+								resultAttribute["attribute quantity"] = attQuantity;
+								resultAttribute["attribute from"] = attFrom;
+								resultAttribute["attribute to"] = attTo;
+								resultAttribute["attribute level"] = attLevel;
+								resultAttribute["attribute inequality"] = attInequality;
+								
+							}
+						}
+						
+					}
+				}
+
+
 				
 			}
 		}
@@ -3230,12 +3231,10 @@ function jsonToForm(){
 	for (var r = 0; r < jsonresources.length; r++){
 		var resource = jsonresources[r];
 		if (resource["resourceType"] == "Evidence" && "referentGroup" in resource && "evidenceSource" in resource["referentGroup"] && "type" in resource["referentGroup"]["evidenceSource"]){
-			console.log(groupsOfEvidence);
 			if (resource["referentGroup"]["evidenceSource"]["type"].toLowerCase() == "group") {
 				//TODO to do: Has to loop through all the Evidence resources again, and apply the correct "contributing studies"
 				var evidSourceID = resource["referentGroup"]["evidenceSource"]["identifier"];
-				
-				console.log(groupsOfEvidence[evidSourceID]);
+
 				if ("study-pico-combo" in resource){
 					var loc = resource["study-pico-combo"];
 					var evidSrcConvert = convertResults[loc[0]][loc[1]][loc[2]][loc[3]];
