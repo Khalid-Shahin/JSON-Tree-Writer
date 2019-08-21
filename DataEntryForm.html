@@ -3861,7 +3861,7 @@ function loadPage4(){
 	allPageFooter.style.display = "none";
 
 	var allResources = {
-		"Resource Example ██████████████████████████████████": fhirGroupList.concat(fhirEvidenceVariableList).concat(fhirEvidenceList)
+		"Resource ███████████████████████████████████████": fhirGroupList.concat(fhirEvidenceVariableList).concat(fhirEvidenceList)
 	};
 	//json = allResources;
 	var stringJSON = JSON.stringify(allResources, null, 2).replace(/": null\n/g, '": ""\n').replace(/": null,\n/g, '": "",\n').replace(/([^\r])\n/g, "$1\r\n");
