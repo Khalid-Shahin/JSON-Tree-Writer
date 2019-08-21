@@ -2480,7 +2480,7 @@ function jsonToForm(){
 		var resource = jsonresources[r];
 		
 		if (resource["resourceType"].toLowerCase() == "group"){
-			if (!("member" in resource) || ("type" in resource && resource["type"] == "person")){
+			if ("type" in resource && resource["type"] == "person" && (resource["type"].toLowerCase() != "evidence" && resource["type"].toLowerCase() != "report" && resource["type"].toLowerCase() != "information")){
 			
 
 				
@@ -2545,18 +2545,20 @@ function jsonToForm(){
 				var groupID = resource["id"];
 				groupsOfEvidence[groupID] = [[],[],[]];
 				//Loops through all members
-				for (var groupMem = 0; groupMem < resource["member"].length; groupMem++){
-					var groupMemID = "";
-					var groupMemDisplay = "";
-					if ("identifier" in resource["member"][groupMem]["entity"]){
-						groupMemID = resource["member"][groupMem]["entity"]["identifier"];
+				if ("member" in resource){
+					for (var groupMem = 0; groupMem < resource["member"].length; groupMem++){
+						var groupMemID = "";
+						var groupMemDisplay = "";
+						if ("identifier" in resource["member"][groupMem]["entity"]){
+							groupMemID = resource["member"][groupMem]["entity"]["identifier"];
+						}
+						if ("display" in resource["member"][groupMem]["entity"]){
+							groupMemDisplay = resource["member"][groupMem]["entity"]["display"];
+						}
+						groupsOfEvidence[groupID][0] = [groupMemID, groupMemDisplay];
+						groupsOfEvidence[groupID][1].push(groupMemID);
+						groupsOfEvidence[groupID][2].push(groupMemDisplay);
 					}
-					if ("display" in resource["member"][groupMem]["entity"]){
-						groupMemDisplay = resource["member"][groupMem]["entity"]["display"];
-					}
-					groupsOfEvidence[groupID][0] = [groupMemID, groupMemDisplay];
-					groupsOfEvidence[groupID][1].push(groupMemID);
-					groupsOfEvidence[groupID][2].push(groupMemDisplay);
 				}
 			}
 
@@ -3340,7 +3342,10 @@ function formToJSON(){
 							thisGroup["id"] = out["describe evidence source"];
 							//thisGroup["name"] = ; //TO DO TODO
 							thisGroup["actual"] = true;	
-							
+							thisGroup["type"] = "information";
+							thisGroup["code"] = {};
+							thisGroup["code"]["text"] = "Evidence";
+									
 							if ("contributing studies" in out){
 								for (var j = 0; j < out["contributing studies"].length; j++){
 									if (j >= thisGroup["member"].length){
@@ -3349,9 +3354,6 @@ function formToJSON(){
 									thisGroup["member"][j]["entity"]["identifier"] = out["contributing studies"][j];
 									thisGroup["member"][j]["entity"]["display"] = out["contributing studies short display names"][j];
 									thisGroup["member"][j]["entity"]["type"] = "Evidence";
-									thisGroup["type"] = "information";
-									thisGroup["code"] = {};
-									thisGroup["code"]["text"] = "Evidence";
 								}
 							}
 							out["evidence group unique id"] = fhirGroupList.length;
