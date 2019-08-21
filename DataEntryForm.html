@@ -2326,7 +2326,7 @@ function addStatistic(element, resultOutcomeNumber){
    cln.id = "";
    cln.getElementsByClassName("outcomeStatisticNumberLabel")[0].innerHTML = outcomeStatistics[resultOutcomeNumber-1];
    if (synthesisList.indexOf(page3.getElementsByClassName("resultStudy")[0].value) != -1) {
-		cln.getElementsByClassName("numberOfStudiesGroup")[0].style.display = "flex";
+		cln.getElementsByClassName("numberOfStudiesGroup")[0].style.display = "";
    }
    if (page3.getElementsByClassName("resultComparatorBox")[0].style.display == "none"){
 		cln.getElementsByClassName("relative-RR")[0].style.display = "none";
