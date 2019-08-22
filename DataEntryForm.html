@@ -163,7 +163,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 	<br>
 	<div class="box studyBox" id="studyBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 960px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">
       <p style="margin: 0px; font-size:18px; font-weight: bold;">
-        Study <span style="color: #777777" class="studyNumberLabel">1</span>
+        Source <span style="color: #777777" class="studyNumberLabel">1</span>
       </p>
       <div class="group" style="margin-left: 8px">
         <input class="textInput studyName" type="text" id="studyName" style="width: 200px;" required=""> <label class="textLabel unselectable">Study Name</label>
@@ -175,7 +175,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
         <b><input class="pmidLoadButton" id="pmidLoadButton-1" type="button" style="font-weight: bold;" value="Load PMID Info"></b>
       </p>
       <div class="group" style="margin-left: 12px;">
-        <input class="textInput studyTitle" type="text" id="studyTitle-1" style="width: 250px;" required=""> <label class="textLabel unselectable">Title</label>
+        <input class="textInput studyTitle" type="text" id="studyTitle-1" style="width: 238px;" required=""> <label class="textLabel unselectable">Title</label>
       </div>
       <div class="group" style="margin-left: 8px">
         <input class="textInput studyURL" type="text" id="studyURL-1" style="width: 209px;" required=""> <label class="textLabel unselectable">Study URL</label>
@@ -316,7 +316,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 				<select class="dropdownInput resultStudyDropDown" id="resultStudyDropDown-1" style="width: 162px; height: 28px; color: #FFFFFF;" onchange="this.style.color = '#000000';" required="">
 					<option value="" disabled="" selected=""> -- select -- </option>
 				</select>
-				<label class="textLabel unselectable">Study</label><span class="bar"></span>
+				<label class="textLabel unselectable">Source</label><span class="bar"></span>
 				<p style="position: absolute; margin-top: -21px; margin-left: 143px; pointer-events: none;">▼</p>
 			</div>
 			<div class="restOfResultRow" id="restOfResultRow" style="display: none;">
@@ -1432,11 +1432,7 @@ function loadResultData(resultData){
 		
 		var dropDownEvidenceInputs = page3.getElementsByClassName("multiSelectDropDownOptions")[x].getElementsByClassName("evidenceInput");
 		var dropDownEvidenceLabels = page3.getElementsByClassName("multiSelectDropDownOptions")[x].getElementsByClassName("evidenceLabel");
-		//console.log("------------------");
 		for (var i = 0; i < dropDownEvidenceInputs.length; i++){
-			//console.log(storedOutcomes[x]["contributing studies"]);
-			//console.log(storedOutcomes[x]["contributing studies labels"]);
-			//console.log(dropDownEvidenceInputs[i].value);
 			if (dropDownEvidenceInputs[i].value && "contributing studies" in storedOutcomes[x] && storedOutcomes[x]["contributing studies"].indexOf(dropDownEvidenceInputs[i].value) != -1){
 				dropDownEvidenceInputs[i].checked = true;
 			} else {
@@ -2432,10 +2428,6 @@ function jsonToForm(){
 		
 		if (resource["resourceType"].toLowerCase() == "group"){
 			if ("type" in resource && resource["type"] == "person" && (resource["type"].toLowerCase() != "evidence" && resource["type"].toLowerCase() != "report" && resource["type"].toLowerCase() != "information")){
-			
-
-				
-				console.log(resource);
 			
 				var groupID = "";
 				var groupName = "";
