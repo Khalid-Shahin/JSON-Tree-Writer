@@ -351,7 +351,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 				</select><label class="textLabel unselectable">Intended Intervention</label><span class="bar"></span>
 				<p style="position: absolute; margin-top: -21px; margin-left: 143px; pointer-events: none;">▼</p>
 			</div>
-			<div class="group" style="margin-left: 8px;">
+			<div class="group resultComparatorDropDownGroup" style="margin-left: 8px;">
 				<select class="dropdownInput resultComparatorDropDown" id="resultComparatorDropDown-1" style="width: 162px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
 					<option value="" disabled="" selected=""> -- select -- </option>
 					<option value="std-MA" style="color: black;">Placebo</option>
@@ -388,7 +388,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 		</div>
 		
 		<div class="group resultActualOutcomeGroup" style="margin-left: 8px;">
-		  <input class="textInput resultActualOutcome" type="text" id="resultActualOutcome" list="resultActualOutcomeList" style="width: 380px;" value="" required="">
+		  <input class="textInput resultActualOutcome" type="text" id="resultActualOutcome" list="resultActualOutcomeList" style="width: 378px;" value="" required="">
 		  <span class="highlight"></span>
 		  <span class="bar"></span>
 		  <label class="textLabel unselectable">Actual Outcome</label>
@@ -409,9 +409,9 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			<p class="unselectable" style="position: absolute; margin-top: -21px; margin-left: 121; pointer-events: none;">▼</p>
 		</div>
 		<div style="margin-top: 8px; display: flex; flex-flow: row wrap;">
-			<div class="group" style=""> <input class="textInput resultOutcomeDescription" type="text" id="outcomeDescription" style="width: 475px;" required=""> <span class="highlight"></span> <span class="bar"></span>
+			<div class="group" style=""> <input class="textInput resultOutcomeDescription" type="text" id="outcomeDescription" style="width: 474px;" required=""> <span class="highlight"></span> <span class="bar"></span>
 			<label class="textLabel unselectable">Outcome Description</label></div>
-			<div class="group" style="margin-left: 8px;"> <input class="textInput resultOutcomeNotes" type="text" id="outcomeNotes" style="width: 475px;" required=""> <span class="highlight"></span> <span class="bar"></span>
+			<div class="group" style="margin-left: 8px;"> <input class="textInput resultOutcomeNotes" type="text" id="outcomeNotes" style="width: 474px;" required=""> <span class="highlight"></span> <span class="bar"></span>
 			<label class="textLabel unselectable">Outcome Notes</label></div>
 		</div>
 		<div class="nameOfEvidenceExplanation-PICO" style="margin-top: 16px; display: flex; flex-flow: row wrap; font-weight: normal; font-size: 15px;">Name the Evidence (Study + PICO) to be represented here:</div>
@@ -420,7 +420,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			<div class="group" style=""> <input class="textInput resultEvidenceName" type="text" id="resultEvidenceName" style="width: 210px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Short Display Name</label></div>
 			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceIdentifier" type="text" id="resultEvidenceIdentifier" style="width: 274px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Identifier</label></div>
 			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceDescription" type="text" id="resultEvidenceDescription" style="width: 240px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Description</label></div>
-			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceNotes" type="text" id="resultEvidenceNotes" style="width: 210px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Notes</label></div>
+			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceNotes" type="text" id="resultEvidenceNotes" style="width: 208px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Notes</label></div>
 		</div>
 		<div style="margin-top: 8px; display: none; flex-flow: row wrap;" class="evidenceSourceRow">
 			  <div class="group" style=""> <input class="textInput resultEvidenceSourceDescribe" type="text" id="resultEvidenceSourceDescribe" style="width: 422px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Describe Evidence Source</label></div>
@@ -687,7 +687,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			</div>
 				
 			<div class="group resultActualPopulationGroup" style="margin-left: 8px;">
-			  <input class="textInput resultActualPopulation" type="text" id="resultActualPopulation" list="resultActualPopulationList" style="width: 422px;" value="" required="">
+			  <input class="textInput resultActualPopulation" type="text" id="resultActualPopulation" list="resultActualPopulationList" style="width: 420px;" value="" required="">
 			  <span class="highlight"></span>
 			  <span class="bar"></span>
 			  <label class="textLabel unselectable">Actual Population</label>
@@ -711,13 +711,13 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			</div>
 			<div style="margin-top: 8px; display: flex; flex-flow: row wrap;">
 				<div class="group" style="">      
-						<input class="textInput resultPopulationDescription" type="text" id="resultPopulationDescription" style="width: 475px;" required="">
+						<input class="textInput resultPopulationDescription" type="text" id="resultPopulationDescription" style="width: 474px;" required="">
 						<span class="highlight"></span>
 						<span class="bar"></span>
 						<label class="textLabel unselectable">Population Description</label>
 				</div>
 				<div class="group" style="margin-left: 8px;">      
-						<input class="textInput resultPopulationNotes" type="text" id="resultPopulationNotes" style="width: 475px;" required="">
+						<input class="textInput resultPopulationNotes" type="text" id="resultPopulationNotes" style="width: 474px;" required="">
 						<span class="highlight"></span>
 						<span class="bar"></span>
 						<label class="textLabel unselectable">Population Notes</label>
@@ -735,7 +735,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			</div>
 				
 			<div class="group resultActualInterventionGroup" style="margin-left: 8px;">
-			  <input class="textInput resultActualIntervention" type="text" id="resultActualIntervention" list="resultActualInterventionList" style="width: 422px;" value="" required="">
+			  <input class="textInput resultActualIntervention" type="text" id="resultActualIntervention" list="resultActualInterventionList" style="width: 420px;" value="" required="">
 			  <span class="highlight"></span>
 			  <span class="bar"></span>
 			  <label class="textLabel unselectable">Actual Intervention</label>
@@ -759,13 +759,13 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			</div>
 			<div style="margin-top: 8px; display: flex; flex-flow: row wrap;">
 				<div class="group" style="">      
-						<input class="textInput resultInterventionDescription" type="text" id="resultInterventionDescription" style="width: 475px;" required="">
+						<input class="textInput resultInterventionDescription" type="text" id="resultInterventionDescription" style="width: 474px;" required="">
 						<span class="highlight"></span>
 						<span class="bar"></span>
 						<label class="textLabel unselectable">Intervention Description</label>
 				</div>
 				<div class="group" style="margin-left: 8px;">      
-						<input class="textInput resultInterventionNotes" type="text" id="resultInterventionNotes" style="width: 475px;" required="">
+						<input class="textInput resultInterventionNotes" type="text" id="resultInterventionNotes" style="width: 474px;" required="">
 						<span class="highlight"></span>
 						<span class="bar"></span>
 						<label class="textLabel unselectable">Intervention Notes</label>
@@ -783,7 +783,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			</div>
 				
 			<div class="group resultActualComparatorGroup" style="margin-left: 8px;">
-			  <input class="textInput resultActualComparator" type="text" id="resultActualComparator" list="resultActualComparatorList" style="width: 422px;" value="" required="">
+			  <input class="textInput resultActualComparator" type="text" id="resultActualComparator" list="resultActualComparatorList" style="width: 420px;" value="" required="">
 			  <span class="highlight"></span>
 			  <span class="bar"></span>
 			  <label class="textLabel unselectable">Actual Comparator</label>
@@ -805,13 +805,13 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			</div>
 			<div style="margin-top: 8px; display: flex; flex-flow: row wrap;">
 				<div class="group" style="">      
-						<input class="textInput resultComparatorDescription" type="text" id="resultComparatorDescription" style="width: 475px;" required="">
+						<input class="textInput resultComparatorDescription" type="text" id="resultComparatorDescription" style="width: 474px;" required="">
 						<span class="highlight"></span>
 						<span class="bar"></span>
 						<label class="textLabel unselectable">Comparator Description</label>
 				</div>
 				<div class="group" style="margin-left: 8px;">      
-						<input class="textInput resultComparatorNotes" type="text" id="resultComparatorNotes" style="width: 475px;" required="">
+						<input class="textInput resultComparatorNotes" type="text" id="resultComparatorNotes" style="width: 474px;" required="">
 						<span class="highlight"></span>
 						<span class="bar"></span>
 						<label class="textLabel unselectable">Comparator Notes</label>
@@ -2088,6 +2088,7 @@ function addResult(){
    cln.getElementsByClassName("resultStudyDropDown")[0].id = "resultStudyDropDown-"+num;
    cln.getElementsByClassName("resultPopulationDropDown")[0].id = "resultPopulationDropDown-"+num;
    cln.getElementsByClassName("resultInterventionDropDown")[0].id = "resultInterventionDropDown-"+num;
+   cln.getElementsByClassName("resultComparatorDropDownGroup")[0].id = "resultComparatorDropDownGroup-"+num;
    cln.getElementsByClassName("resultComparatorDropDown")[0].id = "resultComparatorDropDown-"+num;
    cln.getElementsByClassName("restOfResultRow")[0].id = "restOfResultRow-"+num;
    cln.getElementsByClassName("createStudyResultsButton")[0].id = "createStudyResultsButton-"+num;
@@ -2224,6 +2225,16 @@ function generateContributingStudies(num){
 }
 
 function enableCreateStudyResultsButton(num){
+	if (document.getElementById("resultInterventionDropDown-"+num).value == document.getElementById("resultComparatorDropDown-"+num).value){
+		//Maybe something happens where it doesn't allow that?
+		document.getElementById("resultComparatorDropDown-"+num).value = "none"; //For now it sets the Comparator to none
+	}
+	if (document.getElementById("resultInterventionDropDown-"+num).value == "none"){
+		document.getElementById("resultComparatorDropDown-"+num).value = "none";
+		document.getElementById("resultComparatorDropDownGroup-"+num).style.display = "none";
+	} else {
+		document.getElementById("resultComparatorDropDownGroup-"+num).style.display = "block";
+	}
 	if (resultCheckStudyPICcombo(num) && document.getElementById("resultPopulationDropDown-"+num).value != "" && document.getElementById("resultInterventionDropDown-"+num).value && document.getElementById("resultComparatorDropDown-"+num).value) {
 		document.getElementById("createStudyResultsButton-"+num).disabled = false;
 		document.getElementById("createStudyResultsButton-"+num).style.display = "block";
