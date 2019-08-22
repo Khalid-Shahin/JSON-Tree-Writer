@@ -1344,6 +1344,9 @@ function loadPage3(resultID){
 					for (var ta = 0; ta < allTextAreaOnPage.length; ta++){
 						allTextAreaOnPage[ta].style.height = '19px';
 						allTextAreaOnPage[ta].style.height = (allTextAreaOnPage[ta].scrollHeight + 2).toString() + 'px';
+						if (parseInt(allTextAreaOnPage[ta].style.height) < 19){
+							allTextAreaOnPage[ta].style.height = '19px';
+						}
 					}
 				} else {
 					savedResults[currentStudy][currentIntendedPopulation][currentIntendedIntervention][currentIntendedComparator] = {};
