@@ -39,7 +39,7 @@
 	
     <div>
       <p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;">
-        <b><input type="button" value="➕" onclick="addStudy();"> Add Study</b>
+        <b><input type="button" value="➕" onclick="addStudy();"> Add Source</b>
       </p>
     </div>
 	
@@ -166,7 +166,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
         Source <span style="color: #777777" class="studyNumberLabel">1</span>
       </p>
       <div class="group" style="margin-left: 8px">
-        <input class="textInput studyName" type="text" id="studyName" style="width: 200px;" required=""> <label class="textLabel unselectable">Study Name</label>
+        <input class="textInput studyName" type="text" id="studyName" style="width: 200px;" required=""> <label class="textLabel unselectable">Source Name</label>
       </div>
       <div class="group" style="margin-left: 12px">
         <input class="textInput pmid" type="number" id="pmid" style="width: 70px;" required=""> <label class="textLabel unselectable">PMID</label>
@@ -393,11 +393,11 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceNotes" type="text" id="resultEvidenceNotes" style="width: 208px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Notes</label></div>
 		</div>
 		<div style="margin-top: 8px; display: none; flex-flow: row wrap;" class="evidenceSourceRow">
-			  <div class="group" style=""> <input class="textInput resultEvidenceSourceDescribe" type="text" id="resultEvidenceSourceDescribe" style="width: 422px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Describe Evidence Source</label></div>
+			  <div class="group" style=""> <input class="textInput resultEvidenceSourceDescribe" type="text" id="resultEvidenceSourceDescribe" style="width: 422px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Describe Evidence Source (Evidence Identifier)</label></div>
 			  <div class="multiselect multiSelectComponent contributingStudiesMultiSelect" id="contributingStudiesMultiSelect" style="margin-left: 8px; z-index: 100;">
 				<div id="selectBox" class="group selectBox multiSelectComponent" style="width: 528px;">
 				  <select class="dropdownInput multiSelectComponent" style="height: 28px;" required>
-					<option class="resultsEvidenceLabel" id="resultsEvidenceLabel"  style="multiSelectComponent" selected hidden>Select the studies used for this synthesis</option>
+					<option class="resultsEvidenceLabel" id="resultsEvidenceLabel"  style="multiSelectComponent" selected hidden>Select the sources used for this synthesis</option>
 				  </select>
 				  <label class="textLabel unselectable">Contributing Studies</label>
 
