@@ -199,11 +199,9 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
       </div>
       <div id="StudyDetailsDropDown-1" class="studyDetailsDropDown" style="display: flex; flex-flow: row wrap; display: none; margin-top: 8px;">
         <div id="synthesisTypeDropDown-1" class="group synthesisTypeDropDown" style="margin-left: 0px; margin-right: 8px;">
-          <select class="dropdownInput synthesisType" id="synthesisType-1" style="width: 240px; height: 28px; color: rgb(255, 255, 255);" onchange="this.style.color = '#000000';" required="">
-            <option value="" disabled selected>
-              -- select --
-            </option>
-            <option value="std-MA" style="color: black;">
+          <select class="dropdownInput synthesisType" id="synthesisType-1" style="width: 240px; height: 28px; color: #FFFFFF;" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+            <option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
+            <option value="std-MA" style="color: black;" >
               summary data meta-analysis
             </option>
             <option value="IPD-MA" style="color: black;">
@@ -225,8 +223,8 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
           <p class="unselectable" style="position: absolute; margin-top: -21px; margin-left: 221; pointer-events: none;">▼</p>
         </div>
         <div id="studyTypeDropDown-1" class="group studyTypeDropDown" style="">
-          <select class="dropdownInput studyType" id="studyType-1" style="width: 204px; height: 28px; color: rgb(255, 255, 255);" onchange="this.style.color = '#000000';" required="">
-            <option value="" disabled selected>-- select --</option>
+          <select class="dropdownInput studyType" id="studyType-1" style="width: 204px; height: 28px; color: rgb(255, 255, 255);" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+            <option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
             <option value="RCT" style="color: black;">randomized trial</option>
             <option value="CCT" style="color: black;">controlled trial (non-randomized)</option>
             <option value="cohort" style="color: black;">comparative cohort study</option>
@@ -315,52 +313,31 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 		<div class="box resultBox" id="resultBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 960px; max-width: 99%; margin-bottom: 12px; position:relative; display: flex; flex-flow: row wrap; background-color: #F8F8F8; min-height:32px;">
 			<p style="margin: 0px; font-size:18px; font-weight: bold;">Result <span style="color: #777777" class="resultNumberLabel">1</span></p>
 			<div class="group" style="margin-left: 8px;">
-				<select class="dropdownInput resultStudyDropDown" id="resultStudyDropDown-1" style="width: 162px; height: 28px; color: rgb(255,255,255);" onchange="" required="">
+				<select class="dropdownInput resultStudyDropDown" id="resultStudyDropDown-1" style="width: 162px; height: 28px; color: #FFFFFF;" onchange="this.style.color = '#000000';" required="">
 					<option value="" disabled="" selected=""> -- select -- </option>
-					<option value="std-MA" style="color: black;">Adams 2014</option>
-					<option value="IPD-MA" style="color: black;">Engelhardt 1960</option>
-					<option value="indirect-NMA" style="color: black;">Hogarty 1973</option>
-					<option value="combined-NMA" style="color: black;">Nishikawa 1982</option>
-					
-					
-				</select><label class="textLabel unselectable">Study</label><span class="bar"></span>
+				</select>
+				<label class="textLabel unselectable">Study</label><span class="bar"></span>
 				<p style="position: absolute; margin-top: -21px; margin-left: 143px; pointer-events: none;">▼</p>
 			</div>
 			<div class="restOfResultRow" id="restOfResultRow" style="display: none;">
 			<div class="group" style="margin-left: 8px;">
-				<select class="dropdownInput resultPopulationDropDown" id="resultPopulationDropDown-1" style="width: 162px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+				<select class="dropdownInput resultPopulationDropDown" id="resultPopulationDropDown-1" style="width: 162px; height: 28px; color: #FFFFFF;" onchange="this.style.color = '#000000';" required="">
 					<option value="" disabled="" selected=""> -- select -- </option>
-					<option value="std-MA" style="color: black;">Patients with Schizophrenia</option>
-					<option value="IPD-MA" style="color: black;">individual patient data meta-analysis</option>
-					<option value="indirect-NMA" style="color: black;">indirect network meta-analysis</option>
-					<option value="combined-NMA" style="color: black;">combined direct plus indirect network meta-analysis</option>
-					<option value="range" style="color: black;">range of results</option>
-					<option value="classification" style="color: black;">classification of results</option>
-				</select><label class="textLabel unselectable">Intended Population</label><span class="bar"></span>
+				</select>
+				<label class="textLabel unselectable">Intended Population</label><span class="bar"></span>
 				<p class="unselectable" style="position: absolute; margin-top: -21px; margin-left: 143px; pointer-events: none;">▼</p>
 			</div>
 			<div class="group" style="margin-left: 8px;">
-				<select class="dropdownInput resultInterventionDropDown" id="resultInterventionDropDown-1" style="width: 162px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+				<select class="dropdownInput resultInterventionDropDown" id="resultInterventionDropDown-1" style="width: 162px; height: 28px; color: #FFFFFF;" onchange="this.style.color = '#000000';" required="">
 					<option value="" disabled="" selected=""> -- select -- </option>
-					<option value="std-MA" style="color: black;">Chlorpromazine</option>
-					<option value="IPD-MA" style="color: black;">individual patient data meta-analysis</option>
-					<option value="indirect-NMA" style="color: black;">indirect network meta-analysis</option>
-					<option value="combined-NMA" style="color: black;">combined direct plus indirect network meta-analysis</option>
-					<option value="range" style="color: black;">range of results</option>
-					<option value="classification" style="color: black;">classification of results</option>
 				</select><label class="textLabel unselectable">Intended Intervention</label><span class="bar"></span>
 				<p style="position: absolute; margin-top: -21px; margin-left: 143px; pointer-events: none;">▼</p>
 			</div>
 			<div class="group resultComparatorDropDownGroup" style="margin-left: 8px;">
-				<select class="dropdownInput resultComparatorDropDown" id="resultComparatorDropDown-1" style="width: 162px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
+				<select class="dropdownInput resultComparatorDropDown" id="resultComparatorDropDown-1" style="width: 162px; height: 28px; color: #FFFFFF;" onchange="this.style.color = '#000000';" required="">
 					<option value="" disabled="" selected=""> -- select -- </option>
-					<option value="std-MA" style="color: black;">Placebo</option>
-					<option value="IPD-MA" style="color: black;">individual patient data meta-analysis</option>
-					<option value="indirect-NMA" style="color: black;">indirect network meta-analysis</option>
-					<option value="combined-NMA" style="color: black;">combined direct plus indirect network meta-analysis</option>
-					<option value="range" style="color: black;">range of results</option>
-					<option value="classification" style="color: black;">classification of results</option>
-				</select><label class="textLabel unselectable">Intended Comparator</label><span class="bar"></span>
+				</select>
+				<label class="textLabel unselectable">Intended Comparator</label><span class="bar"></span>
 				<p class="unselectable" style="position: absolute; margin-top: -21px; margin-left: 143px; pointer-events: none;">▼</p>
 			</div>
 			
@@ -375,15 +352,9 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 		<p style="margin: 0px; font-size:18px; font-weight: bold;">Outcome <span style="color: #777777" class="resultOutcomeNumberLabel"></span></p>
 
 		<div class="group" style="margin-left: 8px;">
-			<select class="dropdownInput resultIntendedOutcome" id="resultIntendedOutcome" style="width: 321px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
-				<option value="" disabled="" selected=""> -- select -- </option>
-				<option value="std-MA" style="color: black;">Relapse long term (6 months - 2 years)</option>
-				<option value="IPD-MA" style="color: black;">individual patient data meta-analysis</option>
-				<option value="indirect-NMA" style="color: black;">indirect network meta-analysis</option>
-				<option value="combined-NMA" style="color: black;">combined direct plus indirect network meta-analysis</option>
-				<option value="range" style="color: black;">range of results</option>
-				<option value="classification" style="color: black;">classification of results</option>
-			</select><label class="textLabel unselectable">Intended Outcome</label><span class="bar"></span>
+			<select class="dropdownInput resultIntendedOutcome" id="resultIntendedOutcome" style="width: 321px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+			</select>
+			<label class="textLabel unselectable">Intended Outcome</label><span class="bar"></span>
 			<p class="unselectable" style="position: absolute; margin-top: -21px; margin-left: 302; pointer-events: none;">▼</p>
 		</div>
 		
@@ -393,13 +364,12 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 		  <span class="bar"></span>
 		  <label class="textLabel unselectable">Actual Outcome</label>
 		  <datalist id="resultActualOutcomeList">
-			<option value="Placebo">
 		  </datalist>
 		</div>
 		
 		<div class="group resultOutcomeMatchGroup" style="margin-left: 8px;">
-			<select class="dropdownInput resultOutcomeMatch" id="resultOutcomeMatch" style="width: 140px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
-				<option value="" disabled="" selected=""> -- select -- </option>
+			<select class="dropdownInput resultOutcomeMatch" id="resultOutcomeMatch" style="width: 140px; height: 28px; color: #FFFFFF;" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+				<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
 				<option value="Low" style="color: black;">Low</option>
 				<option value="Moderate" style="color: black;">Moderate</option>
 				<option value="High" style="color: black;">High</option>
@@ -533,8 +503,8 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 					
 		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
 			<div class="group statisticTypeGroup" style="margin-left: 0px;">
-				<select class="dropdownInput statisticType" name="statisticType" style="width: 208px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; statisticTypePick(this);" required="">
-					<option value="" disabled="" selected=""> -- select -- </option>
+				<select class="dropdownInput statisticType" name="statisticType" style="width: 208px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; statisticTypePick(this); if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+					<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
 					<option class="mean" value="mean" style="color: black;">mean</option>
 					<option class="median" value="median" style="color: black;">median</option>
 					<option class="count" value="count" style="color: black;">count</option>
@@ -552,8 +522,8 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			</div>
 			<div class="group statisticValueGroup" style="margin-left: 8px"><input class="textInput outcomeDetail statisticValue" type="text" name="statisticValue" style="width: 154px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Value</label></div>
 			<div class="group statisticInequalityGroup" style="margin-left: 8px;">
-				<select class="dropdownInput statisticInequality" name="statisticInequality" style="width: 112px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
-					<option value="" disabled="" selected=""> -- select -- </option>
+				<select class="dropdownInput statisticInequality" name="statisticInequality" style="width: 112px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+					<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
 					<option value="=" style="color: black;">=</option>
 					<option value="<" style="color: black;">&lt;</option>
 					<option value=">" style="color: black;">&gt;</option>
@@ -583,8 +553,8 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 	<div class="box statisticAttributeBox" id="statisticAttributeBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; position:relative; display: flex; flex-flow: row wrap; background-color: #FFFFFF;">
 		<p style="margin-top: 4px; margin-bottom: 4px; font-size:16px;"><span style="margin-left: 6px; color: #808080" class="outcomeStatisticAttributeNumberLabel">1</span></p>
 		<div class="group" style="margin-left: 16px;">
-			<select class="dropdownInput attributeEstimateType" name="attributeEstimateType" style="width: 212px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; attributeEstimatePick(this);" required="">
-				<option value="" disabled="" selected=""> -- select -- </option>
+			<select class="dropdownInput attributeEstimateType" name="attributeEstimateType" style="width: 212px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; attributeEstimatePick(this); if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+				<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
 				<option value="CI" style="color: black;">confidence interval</option>
 				<option value="CrI" style="color: black;">credible interval</option>
 				<option value="IQR" style="color: black;">interquartile range</option>
@@ -600,8 +570,8 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 		</div>
 		<div class="group peQuantityGroup" style="margin-left: 8px; display: none;"><input class="textInput outcomeDetail peQuantity" type="text" name="peQuantity" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Quantity</label></div>
 		<div class="group peInequalityGroup" style="margin-left: 8px; display: none;">
-			<select class="dropdownInput peInequality" name="peInequality" style="width: 112px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
-				<option value="" disabled="" selected=""> -- select -- </option>
+			<select class="dropdownInput peInequality" name="peInequality" style="width: 112px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+				<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
 				<option value="=" style="color: black;">=</option>
 				<option value="<" style="color: black;">&lt;</option>
 				<option value=">" style="color: black;">&gt;</option>
@@ -617,46 +587,6 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			<b><p align="left" text-align="left" style="padding-left: 24px; padding-right: 8px; margin-top:2px; margin-bottom: 2px;">
 				<input class="addAttributeButton" id="addAttributeButton" type="button" value="➕"></span> Add Attribute
 			</p><b>
-		</div>
-	</div>
-
-	<div class="certaintyBox" name="certaintyBox" id="certaintyBox" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 99%; margin-bottom: 10px; background-color: #F0F0FE;">
-	
-	
-		<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;">
-			<div>Certainty system: <select name="certaintySystem" class="certaintySystem" style="width: 210px;" onchange="this.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'none'; this.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'none'; if (this.value == 'GRADE') { this.parentElement.parentElement.parentElement.getElementsByClassName('GRADEcertainty')[0].style.display = 'block'; } else if(this.value == 'DynaMed') { this.parentElement.parentElement.parentElement.getElementsByClassName('DynaMedcertainty')[0].style.display = 'block'; }"> <option selected="" value=""> -- select -- </option> <option value="GRADE">GRADE</option> <option value="DynaMed">DynaMed Levels of Evidence</option> </select></div>
-		</div>
-		
-		<div class="GRADEcertainty" id="GRADEcertainty" style="display: none">
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;">
-				<div>Certainty of evidence: <select name="GRADEcertaintyOfEvidence" class="GRADEcertaintyOfEvidence"> <option selected="" value=""> -- select -- </option> <option value="high">High quality</option> <option value="moderate">Moderate quality</option> <option value="low">Low quality</option> <option value="very-low">Very Low</option> </select></div>
-					<div class="v3" style="margin-left: 10px; display: flex;"></div>
-						<div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments on certainty: </label> <textarea cols="47" rows="1" style="overflow: auto; resize: none;" id="" class="GRADEcertaintyComments" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div>
-			</div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Risk of bias: <select name="RiskOfBias" class="GRADEcertaintySub1" style="width: 172px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments1" class="GRADEcertaintySubComments1" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Inconsistency: <select name="Inconsistency" class="GRADEcertaintySub2" style="width: 163px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments2" class="GRADEcertaintySubComments2" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Indirectness: <select name="Indirectness" class="GRADEcertaintySub3" style="width: 173px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments3" class="GRADEcertaintySubComments3" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Imprecision: <select name="Imprecision" class="GRADEcertaintySub4" style="width: 173px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments4" class="GRADEcertaintySubComments4" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Publication bias: <select name="PublicationBias" class="GRADEcertaintySub5" style="width: 148px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no serious concern</option> <option value="serious-concern">serious concern</option> <option value="critical-concern">critical concern</option> <option value="no-change">no change to rating</option> <option value="downcode1">reduce rating: -1</option> <option value="downcode2">reduce rating: -2</option> <option value="downcode3">reduce rating: -3</option> <option value="upcode1">increase rating: +1</option> <option value="upcode2">increase rating: +2</option> <option value="present">present</option> <option value="absent">absent</option> </select></div><div class="vl" style="margin-left: 10px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="GRADEcertaintySubComments5" class="GRADEcertaintySubComments5" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-		</div>
-		<div class="DynaMedcertainty" id="DynaMedcertainty" style="display: none">
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;">
-				<div>Certainty of evidence: <select name="DynaMedcertaintyOfEvidence" class="DynaMedcertaintyOfEvidence"> <option selected="" value=""> -- select -- </option> <option value="level1">Level 1</option> <option value="level2">Level 2</option> <option value="level3">Level 3</option> </select></div>
-					<div class="v3" style="margin-left: 10px; display: flex;"></div>
-						<div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments on certainty: </label> <textarea cols="54" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintyComments" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div>
-			</div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Clinical outcome: <select name="clinical-outcome" class="DynaMedcertaintySub1" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="60" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments1" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Directness: <select name="directness" class="DynaMedcertaintySub2" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="66" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments2" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Randomization: <select name="randomization" class="DynaMedcertaintySub3" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="62" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments3" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Blinding: <select name="blinding" class="DynaMedcertaintySub4" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="68" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments4" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Follow up: <select name="follow-up" class="DynaMedcertaintySub5" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments5" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Dropouts: <select name="dropouts" class="DynaMedcertaintySub6" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments6" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Precision: <select name="precision" class="DynaMedcertaintySub7" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="67" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments7" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Consistency: <select name="consistency" class="DynaMedcertaintySub8" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="64" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments8" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Allocation concealment: <select name="allocation-concealment" class="DynaMedcertaintySub9" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="54" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments9" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>ITT analysis: <select name="itt-analysis" class="DynaMedcertaintySub10" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="65" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments10" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-			<div class="box" style="border:1px solid black; padding-left: 6px; padding-top: 6px; padding-bottom: 5px; padding-right: 6px; width: 1060px; max-width: 98%; margin-bottom: 10px; display: flex; background-color: #FFFFFF;"><div>Other: <select name="other" class="DynaMedcertaintySub11" style="width: 152px;"> <option selected="" value=""> -- select -- </option> <option value="no-concern">no concerns</option> <option value="some-concern">some concerns</option> <option value="invalidating-concerns">invalidating concerns</option> </select></div><div class="vl" style="margin-left: 15px;"></div> <div style="margin-left: 10px;"><label style="vertical-align:top; display:inline-block;">Comments: </label> <textarea cols="71" rows="1" style="overflow: auto; resize: none;" id="" class="DynaMedcertaintySubComments11" oninput="this.style.height = '19px'; this.style.height = (this.scrollHeight + 2).toString() + 'px';"></textarea></div> </div>
-
 		</div>
 	</div>
 	
@@ -699,8 +629,8 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			</div>
 			
 			<div class="group resultPopulationMatchGroup" style="margin-left: 8px;">
-				<select class="dropdownInput resultPopulationMatch" id="resultPopulationMatch" style="width: 140px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
-					<option value="" disabled="" selected=""> -- select -- </option>
+				<select class="dropdownInput resultPopulationMatch" id="resultPopulationMatch" style="width: 140px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+					<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
 					<option value="Low" style="color: black;">Low</option>
 					<option value="Moderate" style="color: black;">Moderate</option>
 					<option value="High" style="color: black;">High</option>
@@ -747,8 +677,8 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			</div>
 			
 			<div class="group resultInterventionMatchGroup" style="margin-left: 8px;">
-				<select class="dropdownInput resultInterventionMatch" id="resultInterventionMatch" style="width: 140px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
-					<option value="" disabled="" selected=""> -- select -- </option>
+				<select class="dropdownInput resultInterventionMatch" id="resultInterventionMatch" style="width: 140px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+					<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
 					<option value="Low" style="color: black;">Low</option>
 					<option value="Moderate" style="color: black;">Moderate</option>
 					<option value="High" style="color: black;">High</option>
@@ -788,13 +718,12 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			  <span class="bar"></span>
 			  <label class="textLabel unselectable">Actual Comparator</label>
 			  <datalist id="resultActualComparatorList">
-				<option value="Placebo">
 			  </datalist>
 			</div>
 			
 			<div class="group resultComparatorMatchGroup" style="margin-left: 8px;">
-				<select class="dropdownInput resultComparatorMatch" id="resultComparatorMatch" style="width: 140px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000';" required="">
-					<option value="" disabled="" selected=""> -- select -- </option>
+				<select class="dropdownInput resultComparatorMatch" id="resultComparatorMatch" style="width: 140px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+					<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
 					<option value="Low" style="color: black;">Low</option>
 					<option value="Moderate" style="color: black;">Moderate</option>
 					<option value="High" style="color: black;">High</option>
@@ -1362,7 +1291,7 @@ function loadPage3(resultID){
    }
    
    var iOutcome = document.getElementById("resultIntendedOutcome");
-   iOutcome.innerHTML = '<option value="" disabled="" selected=""> -- select -- </option>';
+   iOutcome.innerHTML = '<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>';
    for (var j = 0; j < intendedOutcomeList.length; j++){
 		var opt = intendedOutcomeList[j];
 		var el = document.createElement("option");
@@ -2092,10 +2021,10 @@ function addResult(){
    cln.getElementsByClassName("resultComparatorDropDown")[0].id = "resultComparatorDropDown-"+num;
    cln.getElementsByClassName("restOfResultRow")[0].id = "restOfResultRow-"+num;
    cln.getElementsByClassName("createStudyResultsButton")[0].id = "createStudyResultsButton-"+num;
-   cln.getElementsByClassName("resultStudyDropDown")[0].onchange = function(){this.style.color = '#000000'; document.getElementById("restOfResultRow-" + num).style.display = 'flex'; changeTextOnResultsButton(parseInt(num)-1); enableCreateStudyResultsButton(num); };
-   cln.getElementsByClassName("resultPopulationDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); };
-   cln.getElementsByClassName("resultInterventionDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); };
-   cln.getElementsByClassName("resultComparatorDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); };
+   cln.getElementsByClassName("resultStudyDropDown")[0].onchange = function(){this.style.color = '#000000'; document.getElementById("restOfResultRow-" + num).style.display = 'flex'; changeTextOnResultsButton(parseInt(num)-1); enableCreateStudyResultsButton(num); if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); } };
+   cln.getElementsByClassName("resultPopulationDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); } };
+   cln.getElementsByClassName("resultInterventionDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); } };
+   cln.getElementsByClassName("resultComparatorDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); } };
    cln.getElementsByClassName("createStudyResultsButton")[0].onclick = function(){ loadPage3(num); };
    document.getElementById("Results").appendChild(cln);
    resultsLoadDropDowns();
@@ -2135,7 +2064,7 @@ function addResultOutcome(){
    var temp = 'contributingStudiesMultiSelect-'+numberOfResultOutcomes.toString();
    cln.getElementsByClassName("contributingStudiesMultiSelect")[0].id = temp;
    
-   cln.getElementsByClassName("resultIntendedOutcome")[0].onchange = function(){ this.style.color = '#000000'; generateContributingStudies(num); };
+   cln.getElementsByClassName("resultIntendedOutcome")[0].onchange = function(){ this.style.color = '#000000'; generateContributingStudies(num); if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }};
    
    cln.getElementsByClassName("contributingStudiesMultiSelect")[0].onclick = function(){ toggleCheckboxDropDown(temp) };
    cln.setAttribute("resultOutcomeNumber", numberOfResultOutcomes.toString());
@@ -2373,6 +2302,7 @@ function addAttribute(element, resultOutcomeNumber){
    element.getElementsByClassName("attributes")[0].appendChild(cln);   
 }
 
+//This function is currently disabled and it won't work. The form currently doesn't allow multiple certainty systems.
 function addCertainty(element){
    var itm = document.getElementById("certaintyBox");
    var cln = itm.cloneNode(true);
