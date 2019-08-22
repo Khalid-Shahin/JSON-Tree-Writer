@@ -1339,6 +1339,12 @@ function loadPage3(resultID){
 				if (currentIntendedComparator in savedResults[currentStudy][currentIntendedPopulation][currentIntendedIntervention]) {
 					//Loads the previous data
 					loadResultData(savedResults[currentStudy][currentIntendedPopulation][currentIntendedIntervention][currentIntendedComparator]);
+					//Expands the text area height to fit the contents.
+					var allTextAreaOnPage = page3.getElementsByTagName("textarea");
+					for (var ta = 0; ta < allTextAreaOnPage.length; ta++){
+						allTextAreaOnPage[ta].style.height = '19px';
+						allTextAreaOnPage[ta].style.height = (allTextAreaOnPage[ta].scrollHeight + 2).toString() + 'px';
+					}
 				} else {
 					savedResults[currentStudy][currentIntendedPopulation][currentIntendedIntervention][currentIntendedComparator] = {};
 				}
