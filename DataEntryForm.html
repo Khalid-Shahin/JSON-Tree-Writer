@@ -2734,11 +2734,15 @@ function jsonToForm(){
 				}
 				
 				var extensionFields = {};
+				var authors = "";
 				
 				if ("relatedArtifact" in resource && resource["relatedArtifact"].length && "extension" in resource["relatedArtifact"][0]){
 					var extensions = resource["relatedArtifact"][0]["extension"];
 					for (var x = 0; x < extensions.length; x++){
-						extensionFields[extensions[x]["url"]] = extensions[x]["valueCoding"]["display"];
+						extensionFields[extensions[x]["url"]] = extensions[x]["valueString"];
+						if (extensions[x]["url"].toLowerCase() == "author"){
+							authors += extensions[x]["valueString"] += "; ";
+						}
 					}
 					if ("publicationDate" in extensionFields){
 						page1.getElementsByClassName("studyDate")[studyNumber].value = extensionFields["publicationDate"];
@@ -2773,18 +2777,13 @@ function jsonToForm(){
 					}
 				}
 				
-				var authors = "";
-				if ("contributor" in resource){
-					for (var c = 0; c < resource["contributor"].length; c++){
-						var contributor = resource["contributor"][c];
-						if (contributor["type"] == "author"){
-							authors += contributor["name"];
-							if (c != resource["contributor"].length - 1){
-								authors += "; ";
-							}
-						}
+				
+				if (authors){
+					if (authors.substring(authors.length - 2, authors.length) == "; "){
+						authors = authors.substring(0, authors.length - 2);
 					}
 				}
+				
 				page1.getElementsByClassName("studyAuthors")[studyNumber].value = authors;
 				
 				studyNumber += 1;
@@ -3315,7 +3314,6 @@ function formToJSON(){
 		}
 	}
 	
-	var blankContributor = JSON.parse(JSON.stringify(blankEvidence["contributor"][0]));
 	var blankStatistic = JSON.parse(JSON.stringify(blankEvidence["statistic"][0]));
 	var blankAttribute = JSON.parse(JSON.stringify(blankEvidence["statistic"][0]["attributeEstimate"][0]));
 	
@@ -3376,19 +3374,19 @@ function formToJSON(){
 						thisEvidence["relatedArtifact"][0]["extension"] = [];
 						
 						if (studyDate) {
-							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "publicationDate", "valueCoding": {"display": studyDate} });
+							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "publicationDate", "valueString": studyDate });
 						}
 						if (studyPMID) {
-							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "pmid", "valueCoding": {"display": studyPMID} });
+							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "pmid", "valueString": studyPMID });
 						}
 						if (singleStudyOrSynthesis) {
-							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "singleStudyOrSynthesis", "valueCoding": {"display": singleStudyOrSynthesis} });
+							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "singleStudyOrSynthesis", "valueString": singleStudyOrSynthesis });
 						}
 						if (studyPages) {
-							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "pages", "valueCoding": {"display": studyPages} });
+							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "pages", "valueString": studyPages });
 						}
 						if (studyPublisher) {
-							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "journal", "valueCoding": {"display": studyPublisher} });
+							thisEvidence["relatedArtifact"][0]["extension"].push({"url": "journal", "valueString": studyPublisher });
 						}
 						
 						var authors = page1.getElementsByClassName("studyAuthors")[studyNumber].value;
@@ -3396,17 +3394,13 @@ function formToJSON(){
 							authors = authors.split(";");
 						} else {
 							authors = [authors];
-						}
+						}					
 						for (var a = 0; a < authors.length; a++){
-							if (a >= thisEvidence["contributor"].length){
-								thisEvidence["contributor"].push(JSON.parse(JSON.stringify(blankContributor)));
-							}
-							thisEvidence["contributor"][a]["name"] = authors[a].trim();
-							if (thisEvidence["contributor"][a]["name"]){
-								thisEvidence["contributor"][a]["type"] = "author";
+							var aAuthor = authors[a].trim();
+							if (aAuthor){
+								thisEvidence["relatedArtifact"][0]["extension"].push({"url": "author", "valueString": aAuthor });
 							}
 						}
-						//thisEvidence["contributor"][0]["name"] =
 						
 						thisEvidence["status"] = "draft";
 
