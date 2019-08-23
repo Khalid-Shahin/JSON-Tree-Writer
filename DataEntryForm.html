@@ -1669,6 +1669,9 @@ function saveQuitPage3(){
 		thisOutcome["evidence notes"] = resultOutcomes[x].getElementsByClassName("resultEvidenceNotes")[0].value;
 		thisOutcome["describe evidence source"] = resultOutcomes[x].getElementsByClassName("resultEvidenceSourceDescribe")[0].value;
 		var contributingStudies = getCheckBoxSelection(resultOutcomes[x].getElementsByClassName("multiSelectDropDownOptions")[0]);
+		thisOutcome["contributing studies"] = [];
+		thisOutcome["contributing studies labels"] = [];
+		thisOutcome["contributing studies short display names"] = [];
 		if (contributingStudies[0].length){
 			thisOutcome["contributing studies"] = contributingStudies[0];
 			thisOutcome["contributing studies labels"] = contributingStudies[1];
@@ -3268,11 +3271,41 @@ function formToJSON(){
 		
 	var blankMember = JSON.parse(JSON.stringify(blankGroup["member"][0]));
 	
+	var resultsToExport = {};
+	var resultBoxes = page2.getElementsByClassName("resultBox");
+	for (var resu = 0; resu < resultBoxes.length; resu++){
+		if (resultBoxes[resu].style.display != "none" && resultBoxes[resu].getElementsByClassName("createStudyResultsButton")[0].style.display != "none"){
+			var resuStudy = resultBoxes[resu].getElementsByClassName("resultStudyDropDown")[0].value;
+			var resuPop = resultBoxes[resu].getElementsByClassName("resultPopulationDropDown")[0].value;
+			var resuInterv = resultBoxes[resu].getElementsByClassName("resultInterventionDropDown")[0].value;
+			var resuCompar = resultBoxes[resu].getElementsByClassName("resultComparatorDropDown")[0].value;
+			if (resuStudy in savedResults && resuPop in savedResults[resuStudy] && resuInterv in savedResults[resuStudy][resuPop] && resuCompar in savedResults[resuStudy][resuPop][resuInterv]) {
+				if (!(resuStudy in resultsToExport)){
+					resultsToExport[resuStudy] = {};
+				}
+				
+				if (!(resuPop in resultsToExport[resuStudy])){
+					resultsToExport[resuStudy][resuPop] = {};
+				}
+				
+				if (!(resuInterv in resultsToExport[resuStudy][resuPop])){
+					resultsToExport[resuStudy][resuPop][resuInterv] = {};
+				}
+				
+				if (!(resuCompar in resultsToExport[resuStudy][resuPop][resuInterv])){
+					resultsToExport[resuStudy][resuPop][resuInterv][resuCompar] = {};
+				}
+				resultsToExport[resuStudy][resuPop][resuInterv][resuCompar] = savedResults[resuStudy][resuPop][resuInterv][resuCompar];
+			}
+			
+		}
+	}
+	
 	//Incoroporate this into the Data Entry Form to Evidence resource JSON process, or keep it separate? I think keep it separate?
-	var studysInSavedResults = Object.keys(savedResults);
-	for (var s = 0; s < studysInSavedResults.length; s++){
-		if (synthesisList.indexOf(studysInSavedResults[s]) != -1){
-			var studyResults1 = savedResults[studysInSavedResults[s]];
+	var studysInResultsToExport = Object.keys(resultsToExport);
+	for (var s = 0; s < studysInResultsToExport.length; s++){
+		if (synthesisList.indexOf(studysInResultsToExport[s]) != -1){
+			var studyResults1 = resultsToExport[studysInResultsToExport[s]];
 			var pops = Object.keys(studyResults1);
 			for (var x = 0; x < pops.length; x++){
 				var studyResults2 = studyResults1[pops[x]];
@@ -3322,8 +3355,8 @@ function formToJSON(){
 	
 	//Goes through all the Study-P-I-C-O combinations and creates the Evidence resources for each of them
 	fhirEvidenceList = [];
-	for (var s = 0; s < studysInSavedResults.length; s++){
-		var studyResults1 = savedResults[studysInSavedResults[s]];
+	for (var s = 0; s < studysInResultsToExport.length; s++){
+		var studyResults1 = resultsToExport[studysInResultsToExport[s]];
 		var pops = Object.keys(studyResults1);
 		for (var x = 0; x < pops.length; x++){
 			var studyResults2 = studyResults1[pops[x]];
@@ -3345,7 +3378,7 @@ function formToJSON(){
 						thisEvidence["description"] = out["evidence description"];
 						thisEvidence["note"][0]["text"] = out["evidence notes"];
 						
-						var studyNumber = studyList.indexOf(studysInSavedResults[s]);
+						var studyNumber = studyList.indexOf(studysInResultsToExport[s]);
 												
 						var studyName = page1.getElementsByClassName("studyName")[studyNumber].value;
 						var studyPMID = page1.getElementsByClassName("pmid")[studyNumber].value;
@@ -3427,7 +3460,7 @@ function formToJSON(){
 					
 						//MORE STUFF FOR THE STUDY GROUP IF SYNTHESIS
 						
-						if (synthesisList.indexOf(studysInSavedResults[s]) != -1 &&
+						if (synthesisList.indexOf(studysInResultsToExport[s]) != -1 &&
 							(out["describe evidence source"] || out["contributing studies"].length ||
 							out["contributing studies labels"].length || out["contributing studies short display names"].length)){
 							//thisEvidence["referentGroup"]["evidenceSource"]["reference"] = "";		//TO DO TODO ?
