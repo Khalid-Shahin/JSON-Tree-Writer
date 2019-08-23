@@ -3177,7 +3177,14 @@ function jsonToForm(){
 		if (resource["resourceType"] == "Evidence" && "referentGroup" in resource && "evidenceSource" in resource["referentGroup"] && "type" in resource["referentGroup"]["evidenceSource"]){
 			if (resource["referentGroup"]["evidenceSource"]["type"].toLowerCase() == "group") {
 				//TODO to do: Has to loop through all the Evidence resources again, and apply the correct "contributing studies"
-				var evidSourceID = resource["referentGroup"]["evidenceSource"]["identifier"];
+				
+				//var evidSourceID = resource["referentGroup"]["evidenceSource"]["identifier"];
+				
+				var evidSourceID = "";
+				if ("identifier" in resource["referentGroup"]["evidenceSource"]){
+					var evidSourceID = resource["referentGroup"]["evidenceSource"]["identifier"];
+				}
+				//If there's no ID, then the contributing studies will be blank in the form.
 
 				if ("study-pico-combo" in resource){
 					var loc = resource["study-pico-combo"];
@@ -3287,7 +3294,8 @@ function formToJSON(){
 							thisGroup["type"] = "information";
 							thisGroup["code"] = {};
 							thisGroup["code"]["text"] = "Evidence";
-									
+							
+							thisGroup["member"] = [];
 							if ("contributing studies" in out){
 								for (var j = 0; j < out["contributing studies"].length; j++){
 									if (j >= thisGroup["member"].length){
@@ -3298,8 +3306,10 @@ function formToJSON(){
 									thisGroup["member"][j]["entity"]["type"] = "Evidence";
 								}
 							}
-							out["evidence group unique id"] = fhirGroupList.length;
-							fhirGroupList.push(thisGroup);
+							if (thisGroup["id"] || thisGroup["member"].length) {
+								out["evidence group unique id"] = fhirGroupList.length;
+								fhirGroupList.push(thisGroup);
+							}
 						}
 					}
 				}
@@ -3417,7 +3427,9 @@ function formToJSON(){
 					
 						//MORE STUFF FOR THE STUDY GROUP IF SYNTHESIS
 						
-						if (synthesisList.indexOf(studysInSavedResults[s]) != -1){
+						if (synthesisList.indexOf(studysInSavedResults[s]) != -1 &&
+							(out["describe evidence source"] || out["contributing studies"].length ||
+							out["contributing studies labels"].length || out["contributing studies short display names"].length)){
 							//thisEvidence["referentGroup"]["evidenceSource"]["reference"] = "";		//TO DO TODO ?
 							thisEvidence["referentGroup"]["evidenceSource"]["type"] = "Group";
 							thisEvidence["referentGroup"]["evidenceSource"]["identifier"] = out["describe evidence source"];
@@ -4569,6 +4581,8 @@ window.addEventListener("beforeunload", function (e) {
     (e || window.event).returnValue = confirmationMessage; //Gecko + IE
     return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
 });
+
+
 </script>
 
 <style>
