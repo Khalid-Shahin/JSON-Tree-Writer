@@ -4564,6 +4564,11 @@ var loadedJson;
 //Update to the newest one, and update the convert to JSON code.
 var blankJson = {};
 
+window.addEventListener("beforeunload", function (e) {
+    var confirmationMessage = 'Are you sure you want to leave? Any unsaved changes will be lost.';
+    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+    return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+});
 </script>
 
 <style>
