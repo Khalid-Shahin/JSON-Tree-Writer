@@ -23,7 +23,7 @@ window.addEventListener("beforeunload", function (e) {
 
 <div id="page0">
 	<br>
-	<input type="button" value="Use Form Without Reading/Saving from Database" onclick="page0.style.display = 'none'; jsonLoadPanel.style.display = ''; page1.style.display = ''; loadDemoSampleDataButton.style.display = ''; collectionSelectDropDown.value = ''; collectionPassword.value = ''; setResourceCollectionTitle.value = ''; setCollectionPassword.value = '';">
+	<input type="button" value="Use Form Without Reading/Saving from Database" onclick="page0.style.display = 'none'; jsonLoadPanel.style.display = ''; jsonInput.value = ''; page1.style.display = ''; resourceCollectionLabelDiv.style.display = 'none'; loadDemoSampleDataButton.style.display = ''; collectionSelectDropDown.value = ''; collectionPassword.value = ''; setResourceCollectionTitle.value = ''; setCollectionPassword.value = ''; readOnlyLabel.style.display = ''; formInReadOnly = true;">
 	<br>
 	<br>
 	<div id="loadFromDatabaseFields" style="margin-top: 8px; display: flex; flex-flow: row wrap;">	
@@ -37,7 +37,7 @@ window.addEventListener("beforeunload", function (e) {
         </div>
 		
 		<div id="" class="group" style="margin-left: 0px; margin-right: 8px;">
-          <select class="dropdownInput" id="collectionSelectDropDown" name="collectionID" style="width: 494px; height: 28px; color: #FFFFFF;" onchange="this.style.color = '#000000'; collectionPassword.value = ''; collectionPassword.disabled = false; loadCollectionButton.disabled = false; loadCollectionForReadButton.disabled = false; createCopyOfCollectionButton.disabled = false; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+          <select class="dropdownInput" id="collectionSelectDropDown" name="collectionID" style="width: 494px; height: 28px; color: #FFFFFF;" onchange="this.style.color = '#000000'; collectionPassword.value = ''; collectionPassword.disabled = false; loadCollectionButton.disabled = false; loadCollectionForReadButton.disabled = false; createCopyOfCollectionButton.disabled = false; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required>
             <option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
           </select><label class="textLabel unselectable">Existing Collection</label>
           <p class="unselectable" style="position: absolute; margin-top: -21px; margin-left: 475; pointer-events: none;">▼</p>
@@ -52,10 +52,10 @@ window.addEventListener("beforeunload", function (e) {
 	<div id="databaseButtons">
 		<br>
 		<div  style="margin-top: 0px; display: flex; flex-flow: row wrap;">	
-			<input style="" type="button" id="loadCollectionButton" value="Load Existing Collection for Updating" onclick="" disabled>
-			<input style="margin-left: 20px;" type="button" id="loadCollectionForReadButton" value="Load Existing Collection for Read-only" onclick="" disabled>
-			<input style="margin-left: 20px;" type="button" id="createCopyOfCollectionButton" value="Create Copy of Existing Collection" onclick="newCollectionFields.style.display = 'flex'; newCollectionFields.style.display = 'flex';" disabled>
-			<input style="margin-left: 90px;" type="button" id="creatNewCollectionButton" value="Create New Collection" onclick="newCollectionFields.style.display = 'flex'; newCollectionFields.style.display = 'flex'; collectionSelectDropDown.value = ''; collectionPassword.value = ''; loadCollectionButton.disabled = true; loadCollectionForReadButton.disabled = true; createCopyOfCollectionButton.disabled = true; creatNewCollectionButton.disabled = true; loadFromDatabaseFields.style.display = 'none'; databaseButtons.style.display = 'none';">
+			<input style="" type="button" id="loadCollectionButton" value="Load Existing Collection for Updating" onclick="passwordCheckWithFunction(loadCollection);" disabled>
+			<input style="margin-left: 20px;" type="button" id="loadCollectionForReadButton" value="Load Existing Collection for Read-only" onclick="loadCollection(true); readOnlyLabel.style.display = ''; formInReadOnly = true;" disabled>
+			<input style="margin-left: 20px;" type="button" id="createCopyOfCollectionButton" value="Create a Copy of Existing Collection" onclick="loadCollection(false); collectionDatabaseDropDown.disabled = true; collectionSelectDropDown.classList.add('textInputAlways'); collectionSelectDropDown.style.color = ''; collectionSelectDropDown.disabled = true; collectionPassword.value = ''; collectionPassword.disabled = true; loadCollectionButton.disabled = true; createCopyOfCollectionButton.disabled = true; creatNewCollectionButton.disabled = true; newCollectionFields.style.display = 'flex'; newCollectionFields.style.display = 'flex';" disabled>
+			<input style="margin-left: 90px;" type="button" id="creatNewCollectionButton" value="Create New Collection" onclick="newCollectionFields.style.display = 'flex'; newCollectionFields.style.display = 'flex'; collectionSelectDropDown.value = ''; collectionPassword.value = ''; jsonLoadPanel.style.display = ''; loadCollectionButton.disabled = true; loadCollectionForReadButton.disabled = true; createCopyOfCollectionButton.disabled = true; creatNewCollectionButton.disabled = true; loadFromDatabaseFields.style.display = 'none'; databaseButtons.style.display = 'none';">
 		</div>
 	</div>
 	
@@ -69,10 +69,14 @@ window.addEventListener("beforeunload", function (e) {
 			<input class="textInput setCollectionPassword" type="text" id="setCollectionPassword" style="width: 280px;" required=""> <label class="textLabel unselectable">New Collection Password</label>
 		</div>
 		
-		<input style="margin-right: 0px;" type="button" value="Create and Go To Next Page" onclick="">
+		<input style="margin-right: 0px;" type="button" value="Create and Go To Next Page" onclick="createNewCollection();">
 		
 		<span style="max-width: 976px;"><p>(The Collection Password is for Write Protections only, and the password is stored in plain text. DON'T USE A SENSITIVE PASSWORD. Any Collection that's saved is publicly viewable. Leave the password blank if you want anyone to modify it.)</p></span>
 	</div>
+</div>
+
+<div id="readOnlyLabel" style="display: none;">
+	<h3 style="color: #AA0000; margin-top: 8px; margin-bottom: 0px;"> READ-ONLY</h3>
 </div>
 
 <div id="jsonLoadPanel" style="display: none;">
@@ -83,16 +87,25 @@ window.addEventListener("beforeunload", function (e) {
 </div>
 
     <script>
-    function loadCollection(){
+    function loadCollection(goToNextPage){
        var cID = document.getElementById("collectionSelectDropDown").value;
        if (cID){
            xmlhttp = new XMLHttpRequest();
            xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     //console.log("----------------");
-                    //console.log(this.responseText);
-                    document.getElementById("jsonInput").value = this.responseText;
-                    passwordCheck();
+					jsonInput.value = this.responseText;
+					resourceCollectionLabel.value = collectionSelectDropDown.options[collectionSelectDropDown.selectedIndex].text;
+					resourceCollectionLabelDiv.style.display = '';
+					jsonToForm();
+					if (goToNextPage) {
+						collectionSelectDropDown.disabled = true;
+						collectionPassword.disabled = true;
+						collectionDatabaseDropDown.disabled = true;
+						page0.style.display = 'none';
+						page1.style.display = '';
+					}
+
                 } else {
                     //console.log(this.status);
                 }
@@ -103,12 +116,11 @@ window.addEventListener("beforeunload", function (e) {
     }
     </script>
 
-
     <script>
     function createNewCollection(){
         //In the PHP. It checks to make sure that it doesn't already exist.
-       var cTitle = document.getElementById("setResourceCollectionTitle").value.replace(/\//g,'').replace(/\\/g, '').replace(/'/g, "").replace(/['"]+/g, '');
-       var cPass = document.getElementById("setCollectionPassword").value;
+       var cTitle = document.getElementById("collectionSelectDropDown").value.replace(/\//g,'').replace(/\\/g, '').replace(/'/g, "").replace(/['"]+/g, '');
+       var cPass = document.getElementById("collectionPassword").value;
        var cJSON = document.getElementById("jsonInput").value;
        
        var temp = JSON.stringify({"cTitle": cTitle, "cPass": cPass, "cUser": "", "cJson": cJSON});
@@ -121,6 +133,19 @@ window.addEventListener("beforeunload", function (e) {
                     var response = this.responseText;
                     if (response){
                         //Disables the dropdown and "password for update privileges" and hides it
+						collectionSelectDropDown.value = cTitle;
+						collectionPassword.value = cPass;
+						collectionDatabaseDropDown.disabled = true;
+						collectionSelectDropDown.disabled = true;
+						collectionPassword.disabled = true;
+						page0.style.display = 'none';
+						page1.style.display = '';
+						if (cJSON == ""){
+							jsonLoadPanel.style.display = "";
+						} else {
+							jsonLoadPanel.style.display = "none";
+							jsonToForm();
+						}
                     } else {
                         alert("Collection Title currently exists in database. Please use another name.");
                     }
@@ -132,7 +157,7 @@ window.addEventListener("beforeunload", function (e) {
            xmlhttp.setRequestHeader("Content-type", "application/json");
            xmlhttp.send(temp);
            
-           //xmlhttp.open("GET","http://gps.health/JSON-Tree-Writer/savecollection.php?title=" + cTitle + "&password="+cPass"&json="+cJSON,true);
+           //xmlhttp.open("GET",'http://gps.health/JSON-Tree-Writer/savecollection.php?title=' + cTitle + '&password=' + cPass + '&json=' + cJSON ,true);
            //xmlhttp.send();
        }
     }
@@ -172,8 +197,33 @@ window.addEventListener("beforeunload", function (e) {
        }
     }
     </script>
-
+		
     <script>
+    function passwordCheckWithFunction(functionName){
+       var cID = document.getElementById("collectionSelectDropDown").value;
+       var cPass = document.getElementById("collectionPassword").value;
+       if (cID){
+           xmlhttp = new XMLHttpRequest();
+           xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText){
+                        //document.getElementById("collectionPassword").disabled = true;
+                        //document.getElementById("loadCollectionButton").disabled = true;
+                        //document.getElementById("newCollectionFields").style.display = 'none';
+						functionName(true);
+                    } else {
+                        alert("Incorrect password for the collection.\n\nYou won't be able to update it, but you can load it as \"read-only,\" or \"create a copy\" to save it as a new collection.");
+                    }
+                } else {
+                    //console.log(this.status);
+                }
+           };
+           xmlhttp.open("GET","http://gps.health/JSON-Tree-Writer/passwordcheck.php?rowid="+cID+"&password="+cPass,true);
+           xmlhttp.send();
+       }
+    }
+	
+	
     function passwordCheck(){
        var cID = document.getElementById("collectionSelectDropDown").value;
        var cPass = document.getElementById("collectionPassword").value;
@@ -182,11 +232,11 @@ window.addEventListener("beforeunload", function (e) {
            xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     if(this.responseText){
-                        document.getElementById("collectionPassword").disabled = true;
-                        document.getElementById("loadCollectionButton").disabled = true;
-                        document.getElementById("newCollectionFields").style.display = 'none';
+                        //document.getElementById("collectionPassword").disabled = true;
+                        //document.getElementById("loadCollectionButton").disabled = true;
+                        //document.getElementById("newCollectionFields").style.display = 'none';
                     } else {
-                        alert("Incorrect password for the collection. You won't be able to update it, but you can read the data or make a copy to save it as a new collection.");
+                        alert("Incorrect password for the collection.\n\nYou won't be able to update it, but you can load it as \"read-only,\" or \"create a copy\" to save it as a new collection.");
                     }
                 } else {
                     //console.log(this.status);
@@ -228,19 +278,19 @@ window.addEventListener("beforeunload", function (e) {
 
 	
 <div id="page1" style="display: none;">
-    <br>
+	<br>
     <h3 style="vertical-align: top; display: inline; font-family: Arial; font-weight: normal">Study Component Page</h3>
 	<input style="margin-left: 606px; display: none;" type="button" value="Load Demo Sample Data" id="loadDemoSampleDataButton" onclick="loadDemoData();">
 	<br>
     <br>
-    <div style="margin-bottom: 6px; margin-top: 8px; display: flex; flex-flow: row wrap;">
+    <div id="resourceCollectionLabelDiv" style="margin-bottom: 6px; margin-top: 8px; display: none; flex-flow: row wrap;">
       <div class="group" style="">
         <input class="textInput textInputAlways" type="text" id="resourceCollectionLabel" style="width: 976px;" required="" disabled> <label class="textLabel unselectable">Collection Name</label>
       </div>
+	  <br>
+	  <br>
     </div>
-	<br>
-    <br>
-	
+
     <div id="Studies">
 
 	</div>
@@ -981,6 +1031,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 
 <script>
 
+var formInReadOnly = false;
 
 var savedResults = {
 
@@ -1292,6 +1343,7 @@ function loadResultList(dict){
 
 function loadPage2(){
 	page1.style.display = 'none';
+	jsonLoadPanel.style.display = 'none';
 	page2.style.display = 'block';
 	componentListCreate();
 	resultsLoadDropDowns();
@@ -1307,6 +1359,10 @@ function loadPage2(){
 function backToPage2(){
 	page4.style.display = 'none';
 	page2.style.display = 'block';
+	allPageHeader.style.display = '';
+	if (formInReadOnly){
+		readOnlyLabel.style.display = '';
+	}
 }
 
 function componentListCreate(){
@@ -4045,6 +4101,7 @@ function formToJSON(){
 }
 
 function loadPage4(){
+	readOnlyLabel.style.display = 'none';
 	formToJSON();
 	page2.style.display = "none";
 	allPageHeader.style.display = "none";
@@ -4958,11 +5015,11 @@ input::-webkit-calendar-picker-indicator {
 }
 */
 .textInputAlways 				{
-  font-size:12px;
+  font-size:14px;
   display:block;
   /* border: solid; */
   border:1px solid #757575;
-  padding:8px 2px 4px 4px;
+  padding:4px 2px 2px 2px;
 }
 .textInputAlways:focus ~ .textLabelSign, .textInputAlways:valid ~ .textLabelSign		 {
   position: absolute;
@@ -4986,7 +5043,7 @@ input::-webkit-calendar-picker-indicator {
   padding-left: 1px;
   padding-right: 2px;
   background: #FFFFFF;
-  font-size:10px;
+  font-size:11px;
   color:#5264ae;
 }
 .textInputAlways:focus ~ .textLabel, .textInputAlways:focus ~ .textLabelTop {
