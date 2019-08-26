@@ -23,7 +23,7 @@ window.addEventListener("beforeunload", function (e) {
 
 <div id="page0">
 	<br>
-	<input type="button" value="Use Form Without Reading/Saving from Database" onclick="page0.style.display = 'none'; jsonLoadPanel.style.display = ''; jsonInput.value = ''; page1.style.display = ''; resourceCollectionLabelDiv.style.display = 'none'; loadDemoSampleDataButton.style.display = ''; collectionSelectDropDown.value = ''; collectionPassword.value = ''; setResourceCollectionTitle.value = ''; setCollectionPassword.value = ''; readOnlyLabel.style.display = ''; formInReadOnly = true;">
+	<input type="button" value="Use Form Without Reading/Saving from Database" onclick="formInReadOnly = true; page0.style.display = 'none'; jsonLoadPanel.style.display = ''; jsonInput.value = ''; page1.style.display = ''; resourceCollectionLabelDiv.style.display = 'none'; loadDemoSampleDataButton.style.display = ''; collectionSelectDropDown.value = ''; collectionPassword.value = ''; setResourceCollectionTitle.value = ''; setCollectionPassword.value = ''; readOnlyLabel.style.display = ''; currentCollectionTitle = ''; currentCollectionPassword = '';">
 	<br>
 	<br>
 	<div id="loadFromDatabaseFields" style="margin-top: 8px; display: flex; flex-flow: row wrap;">	
@@ -44,7 +44,7 @@ window.addEventListener("beforeunload", function (e) {
         </div>
 		
 		<div class="group" style="margin-top: 0px;">
-			<input class="textInput collectionPassword" type="text" id="collectionPassword" style="width: 280px;" required="" disabled> <label class="textLabel unselectable">Password for Update Priviliges</label>
+			<input class="textInput collectionPassword" type="password" id="collectionPassword" style="width: 280px;" required="" disabled> <label class="textLabel unselectable">Password for Update Priviliges</label>
 		</div>
 	</div>
 	
@@ -53,7 +53,7 @@ window.addEventListener("beforeunload", function (e) {
 		<br>
 		<div  style="margin-top: 0px; display: flex; flex-flow: row wrap;">	
 			<input style="" type="button" id="loadCollectionButton" value="Load Existing Collection for Updating" onclick="passwordCheckWithFunction(loadCollection);" disabled>
-			<input style="margin-left: 20px;" type="button" id="loadCollectionForReadButton" value="Load Existing Collection for Read-only" onclick="loadCollection(true); readOnlyLabel.style.display = ''; formInReadOnly = true;" disabled>
+			<input style="margin-left: 20px;" type="button" id="loadCollectionForReadButton" value="Load Existing Collection for Read-only" onclick="formInReadOnly = true; loadCollection(true); readOnlyLabel.style.display = ''; currentCollectionTitle = ''; currentCollectionPassword = '';" disabled>
 			<input style="margin-left: 20px;" type="button" id="createCopyOfCollectionButton" value="Create a Copy of Existing Collection" onclick="loadCollection(false); collectionDatabaseDropDown.disabled = true; collectionSelectDropDown.classList.add('textInputAlways'); collectionSelectDropDown.style.color = ''; collectionSelectDropDown.disabled = true; collectionPassword.value = ''; collectionPassword.disabled = true; loadCollectionButton.disabled = true; createCopyOfCollectionButton.disabled = true; creatNewCollectionButton.disabled = true; newCollectionFields.style.display = 'flex'; newCollectionFields.style.display = 'flex';" disabled>
 			<input style="margin-left: 90px;" type="button" id="creatNewCollectionButton" value="Create New Collection" onclick="newCollectionFields.style.display = 'flex'; newCollectionFields.style.display = 'flex'; collectionSelectDropDown.value = ''; collectionPassword.value = ''; jsonLoadPanel.style.display = ''; loadCollectionButton.disabled = true; loadCollectionForReadButton.disabled = true; createCopyOfCollectionButton.disabled = true; creatNewCollectionButton.disabled = true; loadFromDatabaseFields.style.display = 'none'; databaseButtons.style.display = 'none';">
 		</div>
@@ -82,9 +82,15 @@ window.addEventListener("beforeunload", function (e) {
 <div id="jsonLoadPanel" style="display: none;">
 	<br>
 	<span style="display: flex-flow; vertical-align: center; font-weight: bold;">EBMonFHIR JSON Input</span>
-	<span style="font-weight: bold; display: flex-flow;"> <textarea id="jsonInput" style="width: 31%;" spellcheck="false"></textarea> <input style="margin: 0px;" type="button" value="Load JSON Data" onclick="jsonToForm();"></span>
+	<span style="font-weight: bold; display: flex-flow;"> <textarea id="jsonInput" style="width: 31%;" spellcheck="false"></textarea> <input style="margin: 0px;" type="button" value="Load JSON Data" onclick="jsonToForm(); updateCollection(jsonInput.value);"></span>
 	<br>
 </div>
+
+	<script>
+		var currentCollectionTitle = "";
+		var currentCollectionPassword = "";
+		var formInReadOnly = false;
+	</script>
 
     <script>
     function loadCollection(goToNextPage){
@@ -94,7 +100,11 @@ window.addEventListener("beforeunload", function (e) {
            xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     //console.log("----------------");
-					jsonInput.value = this.responseText;
+					if (this.responseText) {
+						document.getElementById("jsonInput").value = JSON.stringify(JSON.parse(this.responseText));
+					} else {
+						document.getElementById("jsonInput").value = "";
+					}
 					resourceCollectionLabel.value = collectionSelectDropDown.options[collectionSelectDropDown.selectedIndex].text;
 					resourceCollectionLabelDiv.style.display = '';
 					jsonToForm();
@@ -104,6 +114,7 @@ window.addEventListener("beforeunload", function (e) {
 						collectionDatabaseDropDown.disabled = true;
 						page0.style.display = 'none';
 						page1.style.display = '';
+						currentCollectionTitle = collectionSelectDropDown.options[collectionSelectDropDown.selectedIndex].text;
 					}
 
                 } else {
@@ -119,22 +130,30 @@ window.addEventListener("beforeunload", function (e) {
     <script>
     function createNewCollection(){
         //In the PHP. It checks to make sure that it doesn't already exist.
-       var cTitle = document.getElementById("collectionSelectDropDown").value.replace(/\//g,'').replace(/\\/g, '').replace(/'/g, "").replace(/['"]+/g, '');
-       var cPass = document.getElementById("collectionPassword").value;
-       var cJSON = document.getElementById("jsonInput").value;
-       
+       //var cTitle = document.getElementById("collectionSelectDropDown").options[document.getElementById("collectionSelectDropDown").selectedIndex].text.trim().replace(/\//g,'').replace(/\\/g, '').replace(/'/g, "").replace(/['"]+/g, '');
+	   var cTitle = document.getElementById("setResourceCollectionTitle").value;
+       var cPass = document.getElementById("setCollectionPassword").value;
+       var cJSON;
+	   if (document.getElementById("jsonInput").value){
+			cJSON = JSON.stringify(JSON.parse(document.getElementById("jsonInput").value));    //.replace(/'/g,'&#39;')
+	   } else {
+			cJSON =	"";
+	   }
+	   
        var temp = JSON.stringify({"cTitle": cTitle, "cPass": cPass, "cUser": "", "cJson": cJSON});
-       
+	   
        if (cTitle){
            xmlhttp = new XMLHttpRequest();
            xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log();
                     var response = this.responseText;
                     if (response){
                         //Disables the dropdown and "password for update privileges" and hides it
-						collectionSelectDropDown.value = cTitle;
-						collectionPassword.value = cPass;
+						//collectionSelectDropDown.value = cTitle;
+						resourceCollectionLabel.value = cTitle;
+						//collectionPassword.value = cPass;
+						currentCollectionTitle = cTitle;
+						currentCollectionPassword = cPass;
 						collectionDatabaseDropDown.disabled = true;
 						collectionSelectDropDown.disabled = true;
 						collectionPassword.disabled = true;
@@ -159,42 +178,49 @@ window.addEventListener("beforeunload", function (e) {
            
            //xmlhttp.open("GET",'http://gps.health/JSON-Tree-Writer/savecollection.php?title=' + cTitle + '&password=' + cPass + '&json=' + cJSON ,true);
            //xmlhttp.send();
-       }
+       } else {
+			alert("Please enter a title for the new collection.");
+	   }
     }
     </script>
 
     <script>
-    function updateCollection(){
+    function updateCollection(updatedJSON){
         //In the PHP. It checks to make sure that it doesn't already exist.
-       var cTitle = document.getElementById("setResourceCollectionTitle").value.replace(/\//g,'').replace(/\\/g, '').replace(/'/g, "").replace(/['"]+/g, '');
-       var cPass = document.getElementById("setCollectionPassword").value;
-       var cJSON = document.getElementById("jsonInput").value;
-       
-       var temp = JSON.stringify({"cTitle": cTitle, "cPass": cPass, "cUser": "", "cJson": cJSON});
-       
-       if (cTitle){
-           xmlhttp = new XMLHttpRequest();
-           xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log();
-                    var response = this.responseText;
-                    if (response){
-                        //Disables the dropdown and "password for update privileges" and hides it
-                        alert("JSON has been updated.")
-                    } else {
-                        alert("Wrong password for collection " + cTitle + "." );
-                    }
-                } else {
-                    //console.log(this.status);
-                }
-           };
-           xmlhttp.open("POST", "updatecollection.php", true);
-           xmlhttp.setRequestHeader("Content-type", "application/json");
-           xmlhttp.send(temp);
-           
-           //xmlhttp.open("GET","http://gps.health/JSON-Tree-Writer/updatecollection.php?title=" + cTitle + "&password="+cPass"&json="+cJSON,true);
-           //xmlhttp.send();
-       }
+       var cTitle = currentCollectionTitle;
+       var cPass = currentCollectionPassword;
+	   
+	   if (cTitle && !formInReadOnly) {
+		   
+		   var cJSON = JSON.stringify(JSON.parse(updatedJSON)); //.replace(/'/g,'&#39;')
+		   
+		   var temp = JSON.stringify({"cTitle": cTitle, "cPass": cPass, "cUser": "", "cJson": cJSON});
+		   
+		   if (cTitle){
+			   xmlhttp = new XMLHttpRequest();
+			   xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var response = this.responseText;
+						if (response){
+							//Disables the dropdown and "password for update privileges" and hides it
+							//alert("JSON has been updated.")
+							//Have toast instead?
+						} else {
+							alert("Wrong password for collection " + cTitle + "." );
+						}
+					} else {
+						//console.log(this.status);
+					}
+			   };
+			   xmlhttp.open("POST", "updatecollection.php", true);
+			   xmlhttp.setRequestHeader("Content-type", "application/json");
+			   xmlhttp.send(temp);
+			   
+			   //xmlhttp.open("GET","http://gps.health/JSON-Tree-Writer/updatecollection.php?title=" + cTitle + "&password="+cPass"&json="+cJSON,true);
+			   //xmlhttp.send();
+		   }
+		   
+		}
     }
     </script>
 		
@@ -211,8 +237,10 @@ window.addEventListener("beforeunload", function (e) {
                         //document.getElementById("loadCollectionButton").disabled = true;
                         //document.getElementById("newCollectionFields").style.display = 'none';
 						functionName(true);
+						currentCollectionPassword = collectionPassword.value;
                     } else {
                         alert("Incorrect password for the collection.\n\nYou won't be able to update it, but you can load it as \"read-only,\" or \"create a copy\" to save it as a new collection.");
+						currentCollectionPassword = "";
                     }
                 } else {
                     //console.log(this.status);
@@ -255,7 +283,11 @@ window.addEventListener("beforeunload", function (e) {
        xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 //console.log(this.responseText);
-                var listOfCollections = JSON.parse(this.responseText);
+				try {
+					var listOfCollections = JSON.parse(this.responseText);
+				} catch (err) {
+					return false;
+				}
 				document.getElementById('collectionSelectDropDown').innerHTML = '<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>';
                 for(var c = 0; c < listOfCollections.length; c++){
                     var opt = document.createElement("option");   
@@ -361,7 +393,7 @@ window.addEventListener("beforeunload", function (e) {
 	
 	<br>
 	<div>
-		<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" value="Next Page to Create Report (Just JSON for now)" onclick="loadPage4();"></p></b>
+		<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input id="generateReportButton" type="button" value="Next Page to Create Report (Just JSON for now and saves it to the database)" onclick="loadPage4();"></p></b>
 		<br>
 		<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" value="< Back" onclick="page1.style.display = 'block'; page2.style.display = 'none';"></p></b>
 	</div>
@@ -1031,7 +1063,6 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 
 <script>
 
-var formInReadOnly = false;
 
 var savedResults = {
 
@@ -1353,6 +1384,13 @@ function loadPage2(){
 	if (savedResults){
 			loadResultList(savedResults);
 	}
+	
+	if (formInReadOnly){
+		generateReportButton.value = 'Next Page to Create Report (Just JSON for now)';
+	} else {
+		generateReportButton.value = 'Next Page to Create Report (Just JSON for now and saves it to the database)';
+	}
+	
 	updateAllResultsButtons();
 }
 
@@ -2666,14 +2704,14 @@ function loadPMIDinfo(num) {
 
 function jsonToForm(){
 	try {
-		jsoninput = JSON.parse(document.getElementById("jsonInput").value);
+		var jsoninputtext = JSON.parse(document.getElementById("jsonInput").value);
 	} catch (err){
 		return;
 	}
-	jsonKeys = Object.keys(jsoninput);
+	jsonKeys = Object.keys(jsoninputtext);
 	jsonresources = [];
 	for (var key in jsonKeys){
-		var res = jsoninput[jsonKeys[key]];
+		var res = jsoninputtext[jsonKeys[key]];
 		if (Array.isArray(res)){
 			jsonresources = jsonresources.concat(res);
 		} else {
@@ -4113,7 +4151,9 @@ function loadPage4(){
 	//json = allResources;
 	var stringJSON = JSON.stringify(allResources, null, 2).replace(/": null\n/g, '": ""\n').replace(/": null,\n/g, '": "",\n').replace(/([^\r])\n/g, "$1\r\n");
 	
-	console.log(stringJSON);
+	//console.log(stringJSON);
+	
+	//updateCollection(stringJSON);
 	
 	document.getElementById("]....}?|?|?{....[jsonTextArea").value = stringJSON;
 
@@ -4125,13 +4165,13 @@ function loadPage4(){
 	loopDictionary(hovertext_json, 1, "", 0, 0); //For the hover text
 	buildTree(false);
 	hashDict = hashCode(JSON.stringify(convertTreeToJSON()));
+	
+	updateCollection(document.getElementById(']....}?|?|?{....[jsonTextArea').value);
+	
 	//TODO TO DO DOESN'T WORK YET
 	
 	//deleteEmptyFields();
 	//convertTreeToJSON();
-	
-	fhirGroupList, fhirEvidenceVariableList, fhirEvidenceList
-
 
 }
 
