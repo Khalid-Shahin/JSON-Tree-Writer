@@ -173,7 +173,7 @@ window.addEventListener("beforeunload", function (e) {
                     //console.log(this.status);
                 }
            };
-           xmlhttp.open("POST", "savecollection.php", true);
+           xmlhttp.open("POST", "http://gps.health/JSON-Tree-Writer/savecollection.php", true);
            xmlhttp.setRequestHeader("Content-type", "application/json");
            xmlhttp.send(temp);
            
@@ -213,7 +213,7 @@ window.addEventListener("beforeunload", function (e) {
 						//console.log(this.status);
 					}
 			   };
-			   xmlhttp.open("POST", "updatecollection.php", true);
+			   xmlhttp.open("POST", "http://gps.health/JSON-Tree-Writer/updatecollection.php", true);
 			   xmlhttp.setRequestHeader("Content-type", "application/json");
 			   xmlhttp.send(temp);
 			   
