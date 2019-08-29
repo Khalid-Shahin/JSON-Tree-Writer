@@ -1809,7 +1809,11 @@ function loadResultData(resultData){
 			thisOutcome.getElementsByClassName("numeratorCount")[y].value = storedStatistics[y]["numerator count"];
 			thisOutcome.getElementsByClassName("statisticType")[y].value = storedStatistics[y]["statistic type"];
 			thisOutcome.getElementsByClassName("statisticValue")[y].value = storedStatistics[y]["statistic value"];
-			thisOutcome.getElementsByClassName("statisticInequality")[y].value = storedStatistics[y]["statistic inequality"];
+			if (storedStatistics[y]["statistic inequality"] == "") {
+				thisOutcome.getElementsByClassName("statisticInequality")[y].value = "=";
+			} else {
+				thisOutcome.getElementsByClassName("statisticInequality")[y].value = storedStatistics[y]["statistic inequality"];
+			}
 			thisOutcome.getElementsByClassName("statisticUnit")[y].value = storedStatistics[y]["statistic unit"];
 			
 			if (thisOutcome.getElementsByClassName("statisticType")[y].value != ""){
