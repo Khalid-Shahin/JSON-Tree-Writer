@@ -813,7 +813,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			</div>
 			<div class="group statisticValueGroup" style="margin-left: 8px"><input class="textInput outcomeDetail statisticValue" type="text" name="statisticValue" style="width: 154px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Value</label></div>
 			<div class="group statisticUnitGroup" style="margin-left: 8px;">
-			  <input class="textInput outcomeDetail statisticUnit" type="text" id="statisticUnit" list="statisticUnitList" style="width: 160px;" required="">
+			  <input class="textInput outcomeDetail statisticUnit" type="text" id="statisticUnit" oninput="statisticUnitPick(this.parentElement.parentElement.parentElement);" list="statisticUnitList" style="width: 160px;" required="">
 			  <span class="highlight"></span>
 			  <span class="bar"></span>
 			  <label class="textLabel unselectable">Unit</label>
@@ -874,6 +874,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 		</div>
 		<div class="group peFromGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peFrom" type="text" name="peFrom" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">From</label></div>
 		<div class="group peToGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peTo" type="text" name="peTo" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">To</label></div>
+		<div class="group peUnitGroup" style="margin-left: 8px; display: block;"><input class="textInputAlways outcomeDetail peUnit" type="text" name="peUnit" style="width: 100px;" value="" required="" disabled><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Unit</label></div>
 		<div class="group peLevelGroup" style="margin-left: 8px; display: block;"><input class="textInput outcomeDetail peLevel" type="text" name="peLevel" value="0.95" style="width: 100px;" required=""><span class="highlight"></span><span class="bar"></span><label class="textLabel unselectable">Level</label></div>
 		<div style="margin-left: auto;">
 			<b><p align="left" text-align="left" style="padding-left: 24px; padding-right: 8px; margin-top:2px; margin-bottom: 2px;">
@@ -2143,9 +2144,47 @@ function updateAllInterventions(){
 	}
 }
 
+function statisticUnitPick(baseStatistic){
+	var unitBoxVisible = baseStatistic.getElementsByClassName("statisticUnitGroup")[0].style.display;
+	var statUnit = baseStatistic.getElementsByClassName("statisticUnit")[0];
+	
+	var attestUnitBox = baseStatistic.getElementsByClassName("peUnitGroup");
+	var attestUnit = baseStatistic.getElementsByClassName("peUnit");
+	var attestType = baseStatistic.getElementsByClassName("attributeEstimateType");
+	
+	for (var x = 0; x < attestUnitBox.length; x++){
+		
+		if (attestType[x].value != "iSq" && (attestType[x].value == "CI" || attestType[x].value == "CrI"
+					|| attestType[x].value == "IQR" || attestType[x].value == "SD" || attestType[x].value == "SE")) {
+			attestUnit[x].value = statUnit.value;
+			attestUnitBox[x].style.display = "block";
+		} else {
+			attestUnitBox[x].style.display = "none";
+		}
+		
+		if (unitBoxVisible == "none" || attestUnitBox[x].style.display == "none"){
+			attestUnit[x].value = "";
+			attestUnitBox[x].style.display = "none";
+		}
+		
+		if (attestType[x].value == "iSq") {
+			attestUnit[x].value = "%";
+			attestUnitBox[x].style.display = "block";
+		}
+		
+		if (attestType[x].value != "iSq" && (unitBoxVisible == "none" || attestUnitBox[x].style.display == "none")){
+			attestUnit[x].value = "";
+			attestUnitBox[x].style.display = "none";
+		}
+		
+		
+	}
+}
+
 function statisticTypePick(element){
 	var p = element.value;
 	var parent = element.parentElement.parentElement;
+
 	if (p == "mean" ||  p == "median" || p == "count"  || p == "relative-RR" || p == "relative-OR" || p == "relative-HR"
 	|| p == "absolute-ARD" || p == "absolute-SMD" || p == "meanDifference" || p == "absolute-MedianDiff") {
 		parent.getElementsByClassName('statisticInequalityGroup')[0].style.display = "none";
@@ -2187,12 +2226,13 @@ function statisticTypePick(element){
 	} else {
 		parent.getElementsByClassName('statisticUnitGroup')[0].style.display = "none";
 	}
+	statisticUnitPick(parent.parentElement);
 }
 
 function attributeEstimatePick(element){
    var p = element.value;
    var parent = element.parentElement.parentElement;
-   
+   console.log(parent);
    if (p == "CI" || p == "CrI"){
       parent.getElementsByClassName('peQuantityGroup')[0].style.display = "none";
 	  parent.getElementsByClassName('peFromGroup')[0].style.display = "block";
@@ -2225,6 +2265,8 @@ function attributeEstimatePick(element){
 	  parent.getElementsByClassName('peInequalityGroup')[0].style.display = "none";
    }
    
+   
+   statisticUnitPick(element.parentElement.parentElement.parentElement.parentElement);
 }
 
 function addStudy(){
@@ -2612,6 +2654,7 @@ function addAttribute(element, resultOutcomeNumber){
    cln.getElementsByClassName("outcomeStatisticAttributeNumberLabel")[0].innerHTML = resultStatisticNumber;
    cln.getElementsByClassName("addAttributeButton")[0].onclick = function(){
 				addAttribute(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, resultOutcomeNumber);
+				statisticUnitPick(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
 				this.parentElement.style.display = 'none';
 			};
 
