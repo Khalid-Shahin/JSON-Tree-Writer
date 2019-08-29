@@ -820,9 +820,9 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			  <datalist class="statisticUnitList" id="statisticUnitList"><option value="%" style="color: black;">percent</option><option value="per 1,000" style="color: black;">per one-thousand</option></datalist>
 			</div>
 			<div class="group statisticInequalityGroup" style="margin-left: 8px;">
-				<select class="dropdownInput statisticInequality" name="statisticInequality" style="width: 112px; height: 28px; color: rgb(255,255,255);" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
+				<select class="dropdownInput statisticInequality" name="statisticInequality" style="width: 112px; height: 28px; color: #000000;" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
 					<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>
-					<option value="=" style="color: black;">=</option>
+					<option value="=" style="color: black;" selected>=</option>
 					<option value="<" style="color: black;">&lt;</option>
 					<option value=">" style="color: black;">&gt;</option>
 					<option value="<=" style="color: black;">&lt;=</option>
@@ -1056,7 +1056,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 		<br>
 
 		<div>
-			<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" style="font-weight: bold;" value="Save and Go Back" onclick="saveQuitPage3()"></p></b>
+			<b><p align="left" text-align="left" style="padding-left: 0px; margin-top:-2px;"><input type="button" style="font-weight: bold;" value="Apply and Go Back" onclick="saveQuitPage3()"></p></b>
 		</div>
 	</div>
 </div>
