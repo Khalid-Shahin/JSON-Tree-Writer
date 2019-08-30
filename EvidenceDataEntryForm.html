@@ -2236,7 +2236,6 @@ function statisticTypePick(element){
 function attributeEstimatePick(element){
    var p = element.value;
    var parent = element.parentElement.parentElement;
-   console.log(parent);
    if (p == "CI" || p == "CrI"){
       parent.getElementsByClassName('peQuantityGroup')[0].style.display = "none";
 	  parent.getElementsByClassName('peFromGroup')[0].style.display = "block";
