@@ -125,6 +125,10 @@ function objectClean(object, entry, result){
 		return;
 	  }
   } else {
+	  /* THIS IF STATEMENT WAS ADDED ON Augsut 30, 2019. 08/30/19 I haven't fully tested it.  */
+	  if (!Array.isArray(object) && ((typeof object == "string" && (object == "" || object == "{[{NeGaTiVe!_!0}]}" || object == "{[{NeGaTiVe!_!0pointZERO}]}")) || object == null)){
+		  return;
+	  }
 	  cleanedObj = object;
   }
   if (Array.isArray(result)){
@@ -584,7 +588,7 @@ function SaveTreeToJSON(){
 function TreeToJSON(){
 		var dict = json;
 		if (!document.getElementById("]....}?|?|?{....[keepFields").checked) {;
-			dict = JSON.parse(JSON.stringify(json));			//THIS CODE MIGHT NOT BE NEEDED
+			dict = JSON.parse(JSON.stringify(json));			//THIS CODE MIGHT NOT BE NEEDED, but it COULD BE if you want the json variable to be left unharmed.
 		}
 		
 		var allInputs = document.querySelectorAll('.inputField');
@@ -616,11 +620,14 @@ function TreeToJSON(){
 		  
 		  if (!document.getElementById("]....}?|?|?{....[keepFields").checked && inputValue == "") {
             //DON'T SAVE THE INPUT IF IT IS BLANK and the checkbox is unchecked
+			/* THIS WAS COMMENTED OUT ON Augsut 30, 2019. 08/30/19. Because the code to handle this was inside a function. */
+			/*
 			  if (pathIndex) {
 				  delete jsonPath[paths2[paths2.length - 1][0]][pathIndex];
 			  } else {
 				  delete jsonPath[paths2[paths2.length - 1][0]];
 			  }
+			 */
 		  } else if (inputValue == "}}}_?][?][?_{{{") {
 			  jsonPath[paths2[paths2.length - 1][0]] = [];
           } else {
