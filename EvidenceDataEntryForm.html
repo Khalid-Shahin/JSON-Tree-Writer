@@ -160,6 +160,7 @@ window.addEventListener("beforeunload", function (e) {
 						collectionPassword.disabled = true;
 						page0.style.display = 'none';
 						page1.style.display = '';
+						toastCollectionAddedToDatabase();
 						if (cJSON == ""){
 							jsonLoadPanel.style.display = "";
 						} else {
@@ -381,6 +382,10 @@ window.addEventListener("beforeunload", function (e) {
 </div>
 
 <div id="page2" style="display: none;">
+	<div id="saveCollectionToDatabaseButton" style="display: none;">
+		<br>
+		<input  type="button" value="Save Collection to Database" onclick="saveFormJSONtoCollection();" style="font-weight: bold;">
+	</div>
 	<br>
 	<h3 style="vertical-align: top; display: inline; font-family: Arial; font-weight: normal">Result List Page</h3>
 	<br>
@@ -438,6 +443,9 @@ window.addEventListener("beforeunload", function (e) {
     <div id="ElementAddedToast">A new element has been added to the end of the list.</div>
     <div id="NothingToDeleteToast">No blank elements to delete.</div>
 </div>
+
+<div id="AddedCollectionToDatabaseToast">Collection added to database.</div>
+<div id="SavedToDatabaseToast">Collection saved to database.</div>
 
 
 <br>
@@ -2386,7 +2394,8 @@ function addResult(){
    cln.getElementsByClassName("resultPopulationDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); } };
    cln.getElementsByClassName("resultInterventionDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); } };
    cln.getElementsByClassName("resultComparatorDropDown")[0].onchange = function(){ this.style.color = '#000000'; enableCreateStudyResultsButton(num); changeTextOnResultsButton(parseInt(num)-1); if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); } };
-   cln.getElementsByClassName("createStudyResultsButton")[0].onclick = function(){ loadPage3(num); document.getElementById("loadPage2Button").value = "Next Page to Edit Evidence Results"; };
+   cln.getElementsByClassName("createStudyResultsButton")[0].onclick = function(){ loadPage3(num); document.getElementById("loadPage2Button").value = "Next Page to Edit Evidence Results"; if (!formInReadOnly){ document.getElementById("saveCollectionToDatabaseButton").style.display = ""; } };
+   
    document.getElementById("Results").appendChild(cln);
    resultsLoadDropDowns();
    var autoCount = 0;
@@ -4209,35 +4218,62 @@ function formToJSON(){
 	}
 }
 
-function loadPage4(){
-	readOnlyLabel.style.display = 'none';
+
+function toastSavedToDatabase() {
+  var x = document.getElementById("SavedToDatabaseToast");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2990);
+}
+
+function toastCollectionAddedToDatabase() {
+  var x = document.getElementById("AddedCollectionToDatabaseToast");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2990);
+}
+
+function formToStringJSON(){
 	formToJSON();
-	page2.style.display = "none";
-	allPageHeader.style.display = "none";
-	allPageFooter.style.display = "none";
 
 	var allResources = {
 		"Resource ███████████████████████████████████████": fhirGroupList.concat(fhirEvidenceVariableList).concat(fhirEvidenceList)
 	};
-	//json = allResources;
+
+	allResources = removeBlankFields(allResources);
+
 	var stringJSON = JSON.stringify(allResources, null, 2).replace(/": null\n/g, '": ""\n').replace(/": null,\n/g, '": "",\n').replace(/([^\r])\n/g, "$1\r\n");
+
+	return stringJSON;
+}
+
+function saveFormJSONtoCollection(){
+	var stringJSON = formToStringJSON();
+	updateCollection(stringJSON);
+	toastSavedToDatabase();
+}
+
+function loadPage4(){
+	readOnlyLabel.style.display = 'none';
+	page2.style.display = "none";
+	allPageHeader.style.display = "none";
+	allPageFooter.style.display = "none";
 	
-	//console.log(stringJSON);
+	var stringJSON = formToStringJSON();
 	
 	//updateCollection(stringJSON);
 	
 	document.getElementById("]....}?|?|?{....[jsonTextArea").value = stringJSON;
 
 	convertJSONToTree();
-	deleteEmptyFieldsAndConvertNoWarning();
+	//deleteEmptyFieldsAndConvertNoWarning();
 	
 	page4.style.display = "block";
 	
-	loopDictionary(hovertext_json, 1, "", 0, 0); //For the hover text
+	//loopDictionary(hovertext_json, 1, "", 0, 0); //For the hover text
 	buildTree(false);
 	hashDict = hashCode(JSON.stringify(convertTreeToJSON()));
 	
-	updateCollection(document.getElementById(']....}?|?|?{....[jsonTextArea').value);
+	updateCollection(stringJSON);
+	toastSavedToDatabase();
 	
 	//TODO TO DO DOESN'T WORK YET
 	
@@ -5595,7 +5631,7 @@ input[type=number] {
 }
 
 
-#ElementAddedToast {
+#ElementAddedToast, #SavedToDatabaseToast, #AddedCollectionToDatabaseToast {
   visibility: hidden;
   min-width: 460px;
   margin-left: -230px;
@@ -5673,7 +5709,7 @@ input[type=number] {
                                   supported by Chrome and Opera */
 }
 
-#ElementAddedToast.show, #NothingToDeleteToast.show, #URLCopiedToast.show {
+#ElementAddedToast.show, #SavedToDatabaseToast.show, #AddedCollectionToDatabaseToast.show, #NothingToDeleteToast.show, #URLCopiedToast.show {
   visibility: visible;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
