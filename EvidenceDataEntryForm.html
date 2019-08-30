@@ -204,9 +204,7 @@ window.addEventListener("beforeunload", function (e) {
 					if (this.readyState == 4 && this.status == 200) {
 						var response = this.responseText;
 						if (response){
-							//Disables the dropdown and "password for update privileges" and hides it
-							//alert("JSON has been updated.")
-							//Have toast instead?
+							toastSavedToDatabase();
 						} else {
 							alert("Wrong password for collection " + cTitle + "." );
 						}
@@ -4248,7 +4246,6 @@ function formToStringJSON(){
 function saveFormJSONtoCollection(){
 	var stringJSON = formToStringJSON();
 	updateCollection(stringJSON);
-	toastSavedToDatabase();
 }
 
 function loadPage4(){
@@ -4273,8 +4270,6 @@ function loadPage4(){
 	hashDict = hashCode(JSON.stringify(convertTreeToJSON()));
 	
 	updateCollection(stringJSON);
-	toastSavedToDatabase();
-	
 	//TODO TO DO DOESN'T WORK YET
 	
 	//deleteEmptyFields();
