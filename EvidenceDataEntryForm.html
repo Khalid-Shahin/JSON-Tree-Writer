@@ -1129,7 +1129,8 @@ var blankSavedResult = {
 			  "attribute from": "",
 			  "attribute to": "",
 			  "attribute level": "",
-			  "attribute inequality": ""
+			  "attribute inequality": "",
+			  "attribute unit": ""
 			}
 		  ]
 		}
@@ -1840,6 +1841,7 @@ function loadResultData(resultData){
 				thisStatistic.getElementsByClassName("peTo")[z].value = storedAttributes[z]["attribute to"];
 				thisStatistic.getElementsByClassName("peLevel")[z].value = storedAttributes[z]["attribute level"];
 				thisStatistic.getElementsByClassName("peInequality")[z].value = storedAttributes[z]["attribute inequality"];
+				thisStatistic.getElementsByClassName("peUnit")[z].value = storedAttributes[z]["attribute unit"];
 
 				if (thisStatistic.getElementsByClassName("attributeEstimateType")[z].value != ""){
 					thisStatistic.getElementsByClassName("attributeEstimateType")[z].style.color = '#000000';
@@ -2075,12 +2077,14 @@ function saveQuitPage3(){
 				thisAtrribute["attribute to"] = thisAttributes[z].getElementsByClassName("peTo")[0].value;
 				thisAtrribute["attribute level"] = thisAttributes[z].getElementsByClassName("peLevel")[0].value;
 				thisAtrribute["attribute inequality"] = thisAttributes[z].getElementsByClassName("peInequality")[0].value;
+				thisAtrribute["attribute unit"] = thisAttributes[z].getElementsByClassName("peUnit")[0].value;
 				
 				if (thisAttributes[z].getElementsByClassName("peQuantityGroup")[0].style.display == "none") { thisAtrribute["attribute quantity"] = ""; }
 				if (thisAttributes[z].getElementsByClassName("peInequalityGroup")[0].style.display == "none") { thisAtrribute["attribute inequality"] = ""; }
 				if (thisAttributes[z].getElementsByClassName("peFromGroup")[0].style.display == "none") { thisAtrribute["attribute from"] = ""; }
 				if (thisAttributes[z].getElementsByClassName("peToGroup")[0].style.display == "none") { thisAtrribute["attribute to"] = ""; }
 				if (thisAttributes[z].getElementsByClassName("peLevelGroup")[0].style.display == "none") { thisAtrribute["attribute level"] = ""; }
+				if (thisAttributes[z].getElementsByClassName("peUnit")[0].style.display == "none") { thisAtrribute["attribute unit"] = ""; }
 
 				thisStatistic["attributes"].push(thisAtrribute);
 			}
@@ -3420,6 +3424,7 @@ function jsonToForm(){
 								var attTo = "";
 								var attLevel = "";
 								var attInequality = "";
+								var attUnit = "";
 								
 								if ("type" in att && "coding" in att["type"] && "code" in att["type"]["coding"][0]){
 									attType = att["type"]["coding"][0]["code"];
@@ -3439,6 +3444,9 @@ function jsonToForm(){
 								if ("level" in att){
 									attLevel = att["level"];
 								}
+								if ("quantity" in att && "unit" in att["quantity"]){
+									attUnit = att["quantity"]["unit"];
+								}
 								
 								resultAttribute["attribute estimate type"] = attType;
 								resultAttribute["attribute quantity"] = attQuantity;
@@ -3446,6 +3454,7 @@ function jsonToForm(){
 								resultAttribute["attribute to"] = attTo;
 								resultAttribute["attribute level"] = attLevel;
 								resultAttribute["attribute inequality"] = attInequality;
+								resultAttribute["attribute unit"] = attUnit;
 								
 							}
 						}
@@ -4167,14 +4176,25 @@ function formToJSON(){
 								thisAttribute["quantity"]["value"] = parseFloat(att["attribute quantity"]);
 								
 								if ("attribute inequality" in att && att["attribute inequality"] != "="){ thisAttribute["quantity"]["comparator"] = att["attribute inequality"]; }
-								if (att["attribute level"] == "0.95" && att["attribute estimate type"] == "" && att["attribute from"] == "" && att["attribute to"] == "" && att["attribute quantity"] == "" && att["attribute inequality"] == ""){
+								if (att["attribute level"] == "0.95" && att["attribute estimate type"] == "" && att["attribute from"] == "" && att["attribute to"] == "" && att["attribute quantity"] == ""){
 								
 								} else {
 									thisAttribute["level"] = parseFloat(att["attribute level"]);
 								}
-								
+																
 								thisAttribute["range"]["low"]["value"] = parseFloat(att["attribute from"]);
 								thisAttribute["range"]["high"]["value"] = parseFloat(att["attribute to"]);
+								
+
+								thisAttribute["quantity"]["unit"] = att["attribute unit"];
+								if ("attribute unit" in att && att["attribute unit"].replace(/ /g,'').replace(/,/g, '').toLowerCase() == "per1000"){
+									thisAttribute["quantity"]["unit"] = "";
+									thisAttribute["quantity"]["value"] = thisAttribute["quantity"]["value"] / 1000.0;
+									thisAttribute["range"]["low"]["value"] = thisAttribute["range"]["low"]["value"] / 1000.0;
+									thisAttribute["range"]["high"]["value"] = thisAttribute["range"]["high"]["value"] / 1000.0;
+								} else if ("attribute unit" in att) {
+									thisAttribute["quantity"]["unit"] = att["attribute unit"];
+								}
 								
 							}
 						}
