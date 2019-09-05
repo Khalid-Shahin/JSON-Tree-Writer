@@ -3592,6 +3592,7 @@ function formToJSON(){
 		
 		if (pop.getElementsByClassName("populationIdentifier")[0].value || pop.getElementsByClassName("populationName")[0].value
 				|| pop.getElementsByClassName("populationDescription")[0].value || pop.getElementsByClassName("populationNotes")[0].value) {
+			
 			var thisGroup = JSON.parse(JSON.stringify(blankGroup));
 			
 			thisGroup["id"] = pop.getElementsByClassName("populationIdentifier")[0].value;
@@ -3614,6 +3615,7 @@ function formToJSON(){
 
 		if (exp.getElementsByClassName("exposureIdentifier")[0].value || exp.getElementsByClassName("exposureName")[0].value
 				|| exp.getElementsByClassName("exposureDescription")[0].value || exp.getElementsByClassName("exposureNotes")[0].value) {
+			
 			var thisEvidenceVariable = JSON.parse(JSON.stringify(blankEvidenceVariable));
 			
 			thisEvidenceVariable["id"] = exp.getElementsByClassName("exposureIdentifier")[0].value;
@@ -3631,18 +3633,22 @@ function formToJSON(){
 	for (var m = 0; m < outcomeBoxes.length; m++){
 		var outcomeBox = outcomeBoxes[m];
 		
-		var thisEvidenceVariable = JSON.parse(JSON.stringify(blankEvidenceVariable));
-				
-		thisEvidenceVariable["id"] = outcomeBox.getElementsByClassName("outcomeIdentifier")[0].value;
-		thisEvidenceVariable["name"] = outcomeBox.getElementsByClassName("outcomeName")[0].value;
-		thisEvidenceVariable["actual"] = outcomeBox.getElementsByClassName("outcomeActualRadio")[0].checked;
+		if (outcomeBox.getElementsByClassName("outcomeIdentifier")[0].value || outcomeBox.getElementsByClassName("outcomeName")[0].value
+				|| outcomeBox.getElementsByClassName("outcomeDescription")[0].value || outcomeBox.getElementsByClassName("outcomeNotes")[0].value) {
 		
-		thisEvidenceVariable["description"] = outcomeBox.getElementsByClassName("outcomeDescription")[0].value;
-		thisEvidenceVariable["note"] = [{}];
-		thisEvidenceVariable["note"][0]["text"] = outcomeBox.getElementsByClassName("outcomeNotes")[0].value;
-		thisEvidenceVariable["note"].push({"text": "This is an Outcome."});
-		
-		fhirEvidenceVariableList.push(thisEvidenceVariable);
+			var thisEvidenceVariable = JSON.parse(JSON.stringify(blankEvidenceVariable));
+					
+			thisEvidenceVariable["id"] = outcomeBox.getElementsByClassName("outcomeIdentifier")[0].value;
+			thisEvidenceVariable["name"] = outcomeBox.getElementsByClassName("outcomeName")[0].value;
+			thisEvidenceVariable["actual"] = outcomeBox.getElementsByClassName("outcomeActualRadio")[0].checked;
+			
+			thisEvidenceVariable["description"] = outcomeBox.getElementsByClassName("outcomeDescription")[0].value;
+			thisEvidenceVariable["note"] = [{}];
+			thisEvidenceVariable["note"][0]["text"] = outcomeBox.getElementsByClassName("outcomeNotes")[0].value;
+			thisEvidenceVariable["note"].push({"text": "This is an Outcome."});
+			
+			fhirEvidenceVariableList.push(thisEvidenceVariable);
+		}
 	}
 		
 	var blankMember = JSON.parse(JSON.stringify(blankGroup["member"][0]));
