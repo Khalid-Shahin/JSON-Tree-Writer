@@ -15,16 +15,18 @@
 
 <script>
 
-window.addEventListener("beforeunload", function (e) {
-    var confirmationMessage = 'Are you sure you want to leave? Any unsaved changes will be lost.';
-    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-    return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-});
+function displayExitWarning(){
+	window.addEventListener("beforeunload", function (e) {
+		var confirmationMessage = 'Are you sure you want to leave? Any unsaved changes will be lost.';
+		(e || window.event).returnValue = confirmationMessage; //Gecko + IE
+		return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+	});
+}
 </script>
 
 <div id="page0">
 	<br>
-	<input type="button" value="Use Form Without Reading/Saving from Database" onclick="formInReadOnly = true; page0.style.display = 'none'; jsonLoadPanel.style.display = ''; jsonInput.value = ''; page1.style.display = ''; resourceCollectionLabelDiv.style.display = 'none'; loadDemoSampleDataButton.style.display = ''; collectionSelectDropDown.value = ''; collectionPassword.value = ''; setResourceCollectionTitle.value = ''; setCollectionPassword.value = ''; readOnlyLabel.style.display = ''; currentCollectionTitle = ''; currentCollectionPassword = '';">
+	<input type="button" value="Use Form Without Reading/Saving from Database" onclick="formInReadOnly = true; page0.style.display = 'none'; jsonLoadPanel.style.display = ''; jsonInput.value = ''; page1.style.display = ''; resourceCollectionLabelDiv.style.display = 'none'; loadDemoSampleDataButton.style.display = ''; collectionSelectDropDown.value = ''; collectionPassword.value = ''; setResourceCollectionTitle.value = ''; setCollectionPassword.value = ''; readOnlyLabel.style.display = ''; currentCollectionTitle = ''; currentCollectionPassword = ''; displayExitWarning();">
 	<br>
 	<br>
 	<div id="loadFromDatabaseFields" style="margin-top: 8px; display: flex; flex-flow: row wrap;">	
@@ -115,6 +117,7 @@ window.addEventListener("beforeunload", function (e) {
 						collectionDatabaseDropDown.disabled = true;
 						page0.style.display = 'none';
 						page1.style.display = '';
+						displayExitWarning();
 						currentCollectionTitle = collectionSelectDropDown.options[collectionSelectDropDown.selectedIndex].text;
 					}
 
@@ -160,6 +163,7 @@ window.addEventListener("beforeunload", function (e) {
 						collectionPassword.disabled = true;
 						page0.style.display = 'none';
 						page1.style.display = '';
+						displayExitWarning();
 						toastCollectionAddedToDatabase();
 						if (cJSON == ""){
 							jsonLoadPanel.style.display = "";
