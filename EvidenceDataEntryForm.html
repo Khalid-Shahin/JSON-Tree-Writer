@@ -4236,10 +4236,12 @@ function formToStringJSON(){
 		"Resource ███████████████████████████████████████": fhirGroupList.concat(fhirEvidenceVariableList).concat(fhirEvidenceList)
 	};
 
-	allResources = removeBlankFields(allResources);
+	//allResources = removeBlankFields(allResources);
 
 	var stringJSON = JSON.stringify(allResources, null, 2).replace(/": null\n/g, '": ""\n').replace(/": null,\n/g, '": "",\n').replace(/([^\r])\n/g, "$1\r\n");
-
+	
+	stringJSON = JSON.stringify(removeBlankFields(JSON.parse(stringJSON)), null, 2);
+	
 	return stringJSON;
 }
 
