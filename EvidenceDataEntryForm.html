@@ -3590,36 +3590,43 @@ function formToJSON(){
 	for (var p = 0; p < populationBoxes.length; p++){
 		var pop = populationBoxes[p];
 		
-		var thisGroup = JSON.parse(JSON.stringify(blankGroup));
-				
-		thisGroup["id"] = pop.getElementsByClassName("populationIdentifier")[0].value
-		thisGroup["name"] = pop.getElementsByClassName("populationName")[0].value;
-		thisGroup["actual"] = pop.getElementsByClassName("populationActualRadio")[0].checked;
-		thisGroup["type"] = "person";
+		if (pop.getElementsByClassName("populationIdentifier")[0].value || pop.getElementsByClassName("populationName")[0].value
+				|| pop.getElementsByClassName("populationDescription")[0].value || pop.getElementsByClassName("populationNotes")[0].value) {
+			var thisGroup = JSON.parse(JSON.stringify(blankGroup));
+			
+			thisGroup["id"] = pop.getElementsByClassName("populationIdentifier")[0].value;
+			thisGroup["name"] = pop.getElementsByClassName("populationName")[0].value;
+			thisGroup["actual"] = pop.getElementsByClassName("populationActualRadio")[0].checked;
+			thisGroup["type"] = "person";
+			
+			thisGroup["description"] = pop.getElementsByClassName("populationDescription")[0].value;
+			thisGroup["note"] = [{}];
+			thisGroup["note"][0]["text"] = pop.getElementsByClassName("populationNotes")[0].value;
+			
+			fhirGroupList.push(thisGroup);
+		}
 		
-		thisGroup["description"] = pop.getElementsByClassName("populationDescription")[0].value;
-		thisGroup["note"] = [{}];
-		thisGroup["note"][0]["text"] = pop.getElementsByClassName("populationNotes")[0].value;
-		
-		fhirGroupList.push(thisGroup);
 	}
 	
 	fhirEvidenceVariableList = [];
 	for (var e = 0; e < exposureBoxes.length; e++){
 		var exp = exposureBoxes[e];
-		
-		var thisEvidenceVariable = JSON.parse(JSON.stringify(blankEvidenceVariable));
-				
-		thisEvidenceVariable["id"] = exp.getElementsByClassName("exposureIdentifier")[0].value;
-		thisEvidenceVariable["name"] = exp.getElementsByClassName("exposureName")[0].value;
-		thisEvidenceVariable["actual"] = exp.getElementsByClassName("exposureActualRadio")[0].checked;
-		
-		thisEvidenceVariable["description"] = exp.getElementsByClassName("exposureDescription")[0].value;
-		thisEvidenceVariable["note"] = [{}];
-		thisEvidenceVariable["note"][0]["text"] = exp.getElementsByClassName("exposureNotes")[0].value;
-		thisEvidenceVariable["note"].push({"text": "This is an Exposure."});
-		
-		fhirEvidenceVariableList.push(thisEvidenceVariable);
+
+		if (exp.getElementsByClassName("exposureIdentifier")[0].value || exp.getElementsByClassName("exposureName")[0].value
+				|| exp.getElementsByClassName("exposureDescription")[0].value || exp.getElementsByClassName("exposureNotes")[0].value) {
+			var thisEvidenceVariable = JSON.parse(JSON.stringify(blankEvidenceVariable));
+			
+			thisEvidenceVariable["id"] = exp.getElementsByClassName("exposureIdentifier")[0].value;
+			thisEvidenceVariable["name"] = exp.getElementsByClassName("exposureName")[0].value;
+			thisEvidenceVariable["actual"] = exp.getElementsByClassName("exposureActualRadio")[0].checked;
+			
+			thisEvidenceVariable["description"] = exp.getElementsByClassName("exposureDescription")[0].value;
+			thisEvidenceVariable["note"] = [{}];
+			thisEvidenceVariable["note"][0]["text"] = exp.getElementsByClassName("exposureNotes")[0].value;
+			thisEvidenceVariable["note"].push({"text": "This is an Exposure."});
+			
+			fhirEvidenceVariableList.push(thisEvidenceVariable);
+		}
 	}
 	for (var m = 0; m < outcomeBoxes.length; m++){
 		var outcomeBox = outcomeBoxes[m];
