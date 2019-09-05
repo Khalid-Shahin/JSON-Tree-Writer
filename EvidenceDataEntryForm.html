@@ -823,7 +823,7 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			  <span class="highlight"></span>
 			  <span class="bar"></span>
 			  <label class="textLabel unselectable">Unit</label>
-			  <datalist class="statisticUnitList" id="statisticUnitList"><option value="%" style="color: black;">percent</option><option value="per 1,000" style="color: black;">per one-thousand</option></datalist>
+			  <datalist class="statisticUnitList" id="statisticUnitList"><option value="[no units]" style="color: black;">[no units]</option><option value="%" style="color: black;">percent</option><option value="per 1,000" style="color: black;">per one-thousand</option></datalist>
 			</div>
 			<div class="group statisticInequalityGroup" style="margin-left: 8px;">
 				<select class="dropdownInput statisticInequality" name="statisticInequality" style="width: 112px; height: 28px; color: #000000;" onchange="this.style.color = '#000000'; if (!this.value) { this.style.color = '#FFFFFF'; this.blur(); }" required="">
@@ -2219,6 +2219,11 @@ function statisticTypePick(element){
 			el.style = "color: black";
 			unitList.appendChild(el);
 		} else {
+			var el = document.createElement("option");
+			el.textContent = "[no units]";
+			el.value = "[no units]";
+			el.style = "color: black";
+			unitList.appendChild(el);
 
 			var el = document.createElement("option");
 			el.textContent = "%";
@@ -2231,7 +2236,6 @@ function statisticTypePick(element){
 			el.value = "per 1,000";
 			el.style = "color: black";
 			unitList.appendChild(el);
-   
 		}
 	} else {
 		parent.getElementsByClassName('statisticUnitGroup')[0].style.display = "none";
@@ -4167,6 +4171,9 @@ function formToJSON(){
 							if ("statistic unit" in stat && stat["statistic unit"].replace(/ /g,'').replace(/,/g, '').toLowerCase() == "per1000"){
 								thisStatistic["quantity"]["unit"] = "";
 								thisStatistic["quantity"]["value"] = thisStatistic["quantity"]["value"] / 1000.0;
+							} else if ("statistic unit" in stat &&
+								stat["statistic unit"].toLowerCase().replace(/ /g,'').replace(/,/g, '').replace(/s/g, '').replace(/\[/g, '').replace(/\]/g, '') == "nounit") {
+								thisStatistic["quantity"]["unit"] = "";
 							} else if ("statistic unit" in stat) {
 								thisStatistic["quantity"]["unit"] = stat["statistic unit"];
 							}
@@ -4211,6 +4218,9 @@ function formToJSON(){
 									thisAttribute["quantity"]["value"] = thisAttribute["quantity"]["value"] / 1000.0;
 									thisAttribute["range"]["low"]["value"] = thisAttribute["range"]["low"]["value"] / 1000.0;
 									thisAttribute["range"]["high"]["value"] = thisAttribute["range"]["high"]["value"] / 1000.0;
+								} else if ("attribute unit" in att &&
+									att["attribute unit"].toLowerCase().replace(/ /g,'').replace(/,/g, '').replace(/s/g, '').replace(/\[/g, '').replace(/\]/g, '') == "nounit") {
+									thisAttribute["quantity"]["unit"] = "";
 								} else if ("attribute unit" in att) {
 									thisAttribute["quantity"]["unit"] = att["attribute unit"];
 								}
