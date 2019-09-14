@@ -54,10 +54,12 @@ json = {
       "id": "AllergicRhinitisNOTasthmaWithinAdults",
       "name": "allergic rhinitis in adults without concomitant asthma",
       "booleanOperator": {
-        "coding": {
-          "system": "AND_or_OR",
-          "code": "AND"
-        }
+        "coding": [
+          {
+            "system": "AND_or_OR",
+            "code": "AND"
+          }
+        ]
       },
       "characteristic": [
         {
@@ -71,21 +73,25 @@ json = {
         {
           "exclude": true,
           "valueCodeableConcept": {
-            "coding": {
-              "system": "http://hl7.org/fhir/sid/icd-10",
-              "code": "J45.909",
-              "display": "Unspecified asthma, uncomplicated"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "J45.909",
+                "display": "Unspecified asthma, uncomplicated"
+              }
+            ]
           }
         },
         {
           "exclude": false,
           "valueCodeableConcept": {
-            "coding": {
-              "system": "http://snomed.info/sct",
-              "code": "133936004",
-              "display": "Adult (person)"
-            }
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "133936004",
+                "display": "Adult (person)"
+              }
+            ]
           }
         }
       ]
@@ -95,50 +101,60 @@ json = {
       "id": "Group-AllergicRhinitis",
       "name": "allergic rhinitis",
       "booleanOperator": {
-        "coding": {
-          "system": "AND_or_OR",
-          "code": "OR"
-        }
+        "coding": [
+          {
+            "system": "AND_or_OR",
+            "code": "OR"
+          }
+        ]
       },
       "characteristic": [
         {
           "exclude": false,
           "valueCodeableConcept": {
-            "coding": {
-              "system": "http://hl7.org/fhir/sid/icd-10",
-              "code": "J30.1",
-              "display": "Allergic rhinitis due to pollen"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "J30.1",
+                "display": "Allergic rhinitis due to pollen"
+              }
+            ]
           }
         },
         {
           "exclude": false,
           "valueCodeableConcept": {
-            "coding": {
-              "system": "http://hl7.org/fhir/sid/icd-10",
-              "code": "J30.2",
-              "display": "Other seasonal allergic rhinitis"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "J30.2",
+                "display": "Other seasonal allergic rhinitis"
+              }
+            ]
           }
         },
         {
           "exclude": false,
           "valueCodeableConcept": {
-            "coding": {
-              "system": "http://hl7.org/fhir/sid/icd-10",
-              "code": "J30.5",
-              "display": "Allergic rhinitis due to food"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "J30.5",
+                "display": "Allergic rhinitis due to food"
+              }
+            ]
           }
         },
         {
           "exclude": false,
           "valueCodeableConcept": {
-            "coding": {
-              "system": "http://hl7.org/fhir/sid/icd-10",
-              "code": "J30.8",
-              "display": "Other allergic rhinitis"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "J30.8",
+                "display": "Other allergic rhinitis"
+              }
+            ]
           }
         },
         {
@@ -154,31 +170,37 @@ json = {
         {
           "exclude": false,
           "valueCodeableConcept": {
-            "coding": {
-              "system": "http://hl7.org/fhir/sid/icd-10",
-              "code": "J30.89",
-              "display": "Other allergic rhinitis"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "J30.89",
+                "display": "Other allergic rhinitis"
+              }
+            ]
           }
         },
         {
           "exclude": false,
           "valueCodeableConcept": {
-            "coding": {
-              "system": "http://hl7.org/fhir/sid/icd-10",
-              "code": "J30.9",
-              "display": "Allergic rhinitis, unspecified"
-            }
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "J30.9",
+                "display": "Allergic rhinitis, unspecified"
+              }
+            ]
           }
         },
         {
           "exclude": false,
           "valueCodeableConcept": {
-            "coding": {
-              "system": "http://snomed.info/sct",
-              "code": "61582004",
-              "display": "Allergic rhinitis (disorder)"
-            }
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "61582004",
+                "display": "Allergic rhinitis (disorder)"
+              }
+            ]
           }
         }
       ]
