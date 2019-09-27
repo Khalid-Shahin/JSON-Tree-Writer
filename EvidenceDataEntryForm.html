@@ -3798,13 +3798,20 @@ function formToJSON(){
 						if (page1.getElementsByClassName("synthesisRadio")[studyNumber].checked){
 							thisEvidence["synthesisType"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/synthesis-type";
 							thisEvidence["synthesisType"]["coding"][0]["code"] = page1.getElementsByClassName("synthesisType")[studyNumber].value;
-							thisEvidence["synthesisType"]["coding"][0]["display"] = page1.getElementsByClassName("synthesisType")[studyNumber].options[page1.getElementsByClassName("synthesisType")[studyNumber].selectedIndex].text;
+							thisEvidence["synthesisType"]["coding"][0]["display"] = "";
+							if (page1.getElementsByClassName("synthesisType")[studyNumber].selectedIndex != -1){
+								thisEvidence["synthesisType"]["coding"][0]["display"] = page1.getElementsByClassName("synthesisType")[studyNumber].options[page1.getElementsByClassName("synthesisType")[studyNumber].selectedIndex].text;
+							}
 							singleStudyOrSynthesis = "Synthesis Study";
 						}
 						
 						thisEvidence["studyType"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/study-type";
 						thisEvidence["studyType"]["coding"][0]["code"] = page1.getElementsByClassName("studyType")[studyNumber].value;
-						thisEvidence["studyType"]["coding"][0]["display"] = page1.getElementsByClassName("studyType")[studyNumber].options[page1.getElementsByClassName("studyType")[studyNumber].selectedIndex].text;
+						
+						thisEvidence["studyType"]["coding"][0]["display"] = "";
+						if (page1.getElementsByClassName("studyType")[studyNumber].selectedIndex != -1){
+							thisEvidence["studyType"]["coding"][0]["display"] = page1.getElementsByClassName("studyType")[studyNumber].options[page1.getElementsByClassName("studyType")[studyNumber].selectedIndex].text;
+						}
 						
 						thisEvidence["relatedArtifact"][0]["type"] = "citation";
 						thisEvidence["relatedArtifact"][0]["label"] = studyName;
