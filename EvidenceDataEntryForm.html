@@ -4220,7 +4220,7 @@ function formToJSON(){
 								var thisAttribute = thisStatistic["attributeEstimate"][c];
 								
 								if (att["attribute estimate type"]){
-									thisAttribute["type"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/effect-estimate-type";
+									thisAttribute["type"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/attribute-estimate-type";
 									thisAttribute["type"]["coding"][0]["code"] = att["attribute estimate type"];
 									thisAttribute["type"]["coding"][0]["display"] = attributeEstimateSet[att["attribute estimate type"]];
 								}
