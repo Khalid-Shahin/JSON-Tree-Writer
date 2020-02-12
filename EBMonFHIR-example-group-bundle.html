@@ -1,0 +1,6427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="JSON_Tree_Writer.css">
+	<title>JSON Tree Writer - EBMonFHIR - example - Group bundle</title>
+</head>
+<body>
+<div class="container">
+     <div class="topArea">
+     <h2 style="margin: 4px;">JSON Tree Writer - EBMonFHIR - example - Group bundle</h2>
+	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. A field value of &quot;null&quot;, all lowercase, in the tree view will be converted to just null in the JSON.\n2. A field value of &quot;true&quot; or &quot;false&quot;, all lowercase, will be converted to just true or false respectively as booleans in the JSON.\n3. 1D arrays work perfectly fine to and from JSON, and interpreting 2D, 3D, and beyond arrays from JSON to Tree View can work well most of the time, but bugs may occur when adding elements in the Tree View for arrays more complex than 1D.')" style="position: absolute; right: 6px; top: 4px;">Limitations</button>
+	 <p style="position: absolute; right: 94px; top: 7px; margin: 0px; color: #AEAEAE; font-size: 13px; font-family: sans-serif"><b>EBSCO Health Innovations</b></p>
+	 <p style="position: absolute; right: 2px; top: 10px;">Convert Tree View to JSON in real time? <input onchange="TreeToJSONsetting();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_RealTime" name="JSONrealtime" value="JSONrealtime" title="If this is checked then the JSON side will be updated automatically as you type and add elements on the Tree View side."></p>
+	 <p style="position: absolute; right: 2px; top: 32px;">Tree onto JSON Sync-Scroll <input onchange="if (this.checked == true) { 	document.cookie = 'treeOntoJsonSync=true;'; document.cookie = 'TreeToJSONrealtime=true;'; document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked= true; } else { document.cookie = 'treeOntoJsonSync=false;'; }" type="checkbox" id="]....}?|?|?{....[TreeOntoJsonSyncScroll" name="TreeOntoJsonSyncScroll" value="TreeOntoJsonSyncScroll" title="When you scroll in the chart view it will approximately scroll the same spot in the JSON view. Only works if Convert Tree to JSON in real time is enabled."></p>
+	 <p style="position: absolute; right: 2px; top: 54px;">Show delete element buttons? <input onchange="ShowDeleteElementButtons();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_ShowDeleteElements" name="ShowDeleteElements" value="ShowDeleteElements" title="Displays the &quot;-&quot; button for each element."></p>
+	 <p style="position: absolute; right: 2px; top: 76px;">Use single-line textboxes? <input onchange="if (this.checked == true) { document.cookie = 'singlelineText=true;'; singlelineText = true; } else { document.cookie = 'singlelineText=false;'; singlelineText = false; } updateTree();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_ShowSingleLineTextBoxes" name="ShowDeleteElements" value="ShowDeleteElements" title="Displays the &quot;-&quot; button for each element."></p>
+     <p style="margin-top: 8px;"><input type="file" id="]....}?|?|?{....[jsonFile" style="width: 500px; border: 1px solid #555555;" accept=".txt, .json, .js, .ts, .tex, .rtf, .odt, .wpd, .text"></p>
+	 <button onclick="SaveTreeToJSON()">Save Tree to JSON</button> <button onclick="SaveTreeToXML(true)" title="Save the Tree View as a FHIR XML file.">Save Tree to XML</button> <button onclick="deleteEmptyFields();">Delete Empty Fields</button> <input onchange="BlankCheckBoxReadWrite();" type="checkbox" id="]....}?|?|?{....[keepFields" name="keepFields" value="keepBlankFields" title="Having this unchecked removes the empty fields from the saved JSON or XML. It also removes empty objects." checked> Keep blank fields when converted to JSON?
+	 <br><br>
+     <span style="display: inline">
+	 <input id="]....}?|?|?{....[treeWriteChecked" type="radio" name="readWriteMode" value="write" onchange="switchReadWrite();" checked="checked"> Write 
+	 <input id="]....}?|?|?{....[treeReadChecked" type="radio" name="readWriteMode" value="read" onchange="switchReadWrite();"> Read
+     <span class="middleButtons">
+     <button class="convertToJSONButton" onclick="convertTreeToJSON()" id="]....}?|?|?{....[convertToJSONButton"><b>Convert Tree to JSON &#8594;</b></button>
+     <button class="convertToTreeButton" onclick="convertJSONToTree()" id="]....}?|?|?{....[convertToTreeButton"><b>&#8592; Convert JSON to Tree</b></button>
+     <button class="swapButton" onclick="swapSides()" style="" title="Swap the sides of the tree and JSON."><b>&#8646;</b></button>
+     </span>
+     </span>
+          <button class="hideJSONButton" id="]....}?|?|?{....[hideJSONButton" onclick="hideShowJSON()" style=""><b>Hide JSON View</b></button>
+     </div>
+     <div class="bottomSection" id="]....}?|?|?{....[bottomSection">
+       <div class="chart" id="]....}?|?|?{....[treeChart" oninput="if (document.getElementById(']....}?|?|?{....[TreeToJSON_RealTime').checked) { convertTreeToJSON(); } if (document.getElementById(']....}?|?|?{....[TreeOntoJsonSyncScroll').checked) { scrollToActiveElement(); }">
+       </div>
+       <div class="jsonArea" id="]....}?|?|?{....[jsonArea">
+       <textarea class="jsonTextArea" id="]....}?|?|?{....[jsonTextArea" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+       </div>
+     </div>
+    <div id="ElementAddedToast">A new element has been added to the end of the list.</div>
+    <div id="NothingToDeleteToast">No blank elements to delete.</div>
+</div>
+
+<script src="JSON_Tree_Writer.js"></script>
+
+<script>
+if(window.addEventListener) {
+    window.addEventListener('load', initiatePage, false); //W3C
+} else {
+    window.attachEvent('onload', initiatePage); //Older IE
+}
+
+json = {
+  "resourceType": "Bundle",
+  "id": "example-group-bundle",
+  "type": "collection",
+  "total": 65,
+  "entry": [
+    {
+      "resourceType": "Group",
+      "id": "AcuteIschemicStroke",
+      "url": "Group/AcuteIschemicStroke",
+      "type": "person",
+      "actual": true,
+      "name": "adults with acute ischemic stroke",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "AcuteIschemicStroke0-3Hours",
+      "url": "Group/AcuteIschemicStroke0-3Hours",
+      "type": "person",
+      "actual": false,
+      "name": "adults with acute ischemic stroke and symptom onset 0-3 hours prior",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 3,
+            "comparator": "<",
+            "unit": "hour",
+            "system": "http://unitsofmeasure.org",
+            "code": "h"
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "AcuteIschemicStroke3-4halfHours",
+      "url": "Group/AcuteIschemicStroke3-4halfHours",
+      "type": "person",
+      "actual": false,
+      "name": "adults with acute ischemic stroke and symptom onset 3-4.5 hours prior",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 3,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-Cooray-validation-cohort",
+      "url": "Group/ASTRAL-Cooray-validation-cohort",
+      "type": "person",
+      "actual": true,
+      "name": "adults with acute ischemic stroke",
+      "quantity": 36131,
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "exposure"
+              }
+            ]
+          },
+          "valueReference": {
+            "reference": "EvidenceVariable/example-alteplase-for-stroke",
+            "display": "Alteplase for Stroke"
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-5",
+      "url": "Group/ASTRAL-5",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 5",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 5
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-6",
+      "url": "Group/ASTRAL-6",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 6",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 6
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-7",
+      "url": "Group/ASTRAL-7",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 7",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 7
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-8",
+      "url": "Group/ASTRAL-8",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 8",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 8
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-9",
+      "url": "Group/ASTRAL-9",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 9",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 9
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-10",
+      "url": "Group/ASTRAL-10",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 10",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 10
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-11",
+      "url": "Group/ASTRAL-11",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 11",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 11
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-12",
+      "url": "Group/ASTRAL-12",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 12",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 12
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-13",
+      "url": "Group/ASTRAL-13",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 13",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 13
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-14",
+      "url": "Group/ASTRAL-14",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 14",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 14
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-15",
+      "url": "Group/ASTRAL-15",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 15",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 15
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-16",
+      "url": "Group/ASTRAL-16",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 16",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 16
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-17",
+      "url": "Group/ASTRAL-17",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 17",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 17
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-18",
+      "url": "Group/ASTRAL-18",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 18",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 18
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-19",
+      "url": "Group/ASTRAL-19",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 19",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 19
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-20",
+      "url": "Group/ASTRAL-20",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 20",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 20
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-21",
+      "url": "Group/ASTRAL-21",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 21",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 21
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-22",
+      "url": "Group/ASTRAL-22",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 22",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 22
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-23",
+      "url": "Group/ASTRAL-23",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 23",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 23
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-24",
+      "url": "Group/ASTRAL-24",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 24",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 24
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-25",
+      "url": "Group/ASTRAL-25",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 25",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 25
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-26",
+      "url": "Group/ASTRAL-26",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 26",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 26
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-27",
+      "url": "Group/ASTRAL-27",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 27",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 27
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-28",
+      "url": "Group/ASTRAL-28",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 28",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 28
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-29",
+      "url": "Group/ASTRAL-29",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 29",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 29
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-30",
+      "url": "Group/ASTRAL-30",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 30",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 30
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-31",
+      "url": "Group/ASTRAL-31",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 31",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 31
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-32",
+      "url": "Group/ASTRAL-32",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 32",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 32
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-33",
+      "url": "Group/ASTRAL-33",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 33",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 33
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-34",
+      "url": "Group/ASTRAL-34",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 34",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 34
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-35",
+      "url": "Group/ASTRAL-35",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 35",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 35
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-36",
+      "url": "Group/ASTRAL-36",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 36",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 36
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-37",
+      "url": "Group/ASTRAL-37",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 37",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 37
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-38",
+      "url": "Group/ASTRAL-38",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 38",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 38
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-39",
+      "url": "Group/ASTRAL-39",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 39",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 39
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-40",
+      "url": "Group/ASTRAL-40",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 40",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 40
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-41",
+      "url": "Group/ASTRAL-41",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 41",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 41
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-42",
+      "url": "Group/ASTRAL-42",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 42",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 42
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-43",
+      "url": "Group/ASTRAL-43",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 43",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 43
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-44",
+      "url": "Group/ASTRAL-44",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 44",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 44
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-45",
+      "url": "Group/ASTRAL-45",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 45",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 45
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-46",
+      "url": "Group/ASTRAL-46",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 46",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 46
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-47",
+      "url": "Group/ASTRAL-47",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 47",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 47
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-48",
+      "url": "Group/ASTRAL-48",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 48",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 48
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-49",
+      "url": "Group/ASTRAL-49",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 49",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 49
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-50",
+      "url": "Group/ASTRAL-50",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 50",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 50
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-51",
+      "url": "Group/ASTRAL-51",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 51",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 51
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-52",
+      "url": "Group/ASTRAL-52",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 52",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 52
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-53",
+      "url": "Group/ASTRAL-53",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 53",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 53
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-54",
+      "url": "Group/ASTRAL-54",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 54",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 54
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-55",
+      "url": "Group/ASTRAL-55",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 55",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 55
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-56",
+      "url": "Group/ASTRAL-56",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 56",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 56
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-57",
+      "url": "Group/ASTRAL-57",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 57",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 57
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-58",
+      "url": "Group/ASTRAL-58",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 58",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 58
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-59",
+      "url": "Group/ASTRAL-59",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 59",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 59
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-60",
+      "url": "Group/ASTRAL-60",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 60",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 60
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-61",
+      "url": "Group/ASTRAL-61",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 61",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 61
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-62",
+      "url": "Group/ASTRAL-62",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 62",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 62
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-63",
+      "url": "Group/ASTRAL-63",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 63",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 63
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-64",
+      "url": "Group/ASTRAL-64",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 64",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 64
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Group",
+      "id": "ASTRAL-65",
+      "url": "Group/ASTRAL-65",
+      "type": "person",
+      "actual": false,
+      "name": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 65",
+      "characteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "397669002",
+                "display": "Age"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 18,
+            "comparator": ">=",
+            "unit": "year",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "457551000124104",
+                "display": "Acute cerebrovascular accident (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "64572001",
+                "display": "Disease (disorder)"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "422504002",
+                "display": "Ischemic stroke (disorder)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "display": "time from symptom onset"
+              }
+            ]
+          },
+          "valueRange": {
+            "low": {
+              "value": 0,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            },
+            "high": {
+              "value": 4.5,
+              "unit": "hour",
+              "system": "http://unitsofmeasure.org",
+              "code": "h"
+            }
+          }
+        },
+        {
+          "code": {
+            "text": "ASTRAL score"
+          },
+          "valueQuantity": {
+            "value": 65
+          }
+        }
+      ]
+    }
+  ]
+};
+
+</script>
+
+</body>
+</html>
