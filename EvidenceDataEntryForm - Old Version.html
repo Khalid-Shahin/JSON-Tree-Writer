@@ -690,8 +690,8 @@ Copyright DynaMed LLC, 2019. All rights reserved. Redistribution or reproduction
 			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceDescription" type="text" id="resultEvidenceDescription" style="width: 240px;" title="" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Description</label></div>
 			<div class="group" style="margin-left: 8px;"> <input class="textInput resultEvidenceNotes" type="text" id="resultEvidenceNotes" style="width: 208px;" title="" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Evidence Notes</label></div>
 		</div>
-		<div style="margin-top: 8px; display: none; flex-flow: row wrap;" class="observedRow">
-			  <div class="group" style=""> <input class="textInput resultobservedDescribe" type="text" id="resultobservedDescribe" style="width: 422px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Identifier for Group of Studies (Optional if no studies selected)</label></div>
+		<div style="margin-top: 8px; display: none; flex-flow: row wrap;" class="evidenceSourceRow">
+			  <div class="group" style=""> <input class="textInput resultEvidenceSourceDescribe" type="text" id="resultEvidenceSourceDescribe" style="width: 422px;" required=""> <span class="highlight"></span> <span class="bar"></span><label class="textLabel unselectable">Identifier for Group of Studies (Optional if no studies selected)</label></div>
 			  <div class="multiselect multiSelectComponent contributingStudiesMultiSelect" id="contributingStudiesMultiSelect" style="margin-left: 8px; z-index: 100;">
 				<div id="selectBox" class="group selectBox multiSelectComponent" style="width: 528px;">
 				  <select class="dropdownInput multiSelectComponent" style="height: 28px;" required>
@@ -1758,7 +1758,7 @@ function loadResultData(resultData){
 		page3.getElementsByClassName("resultEvidenceIdentifier")[x].value = storedOutcomes[x]["evidence identifier"];
 		page3.getElementsByClassName("resultEvidenceDescription")[x].value = storedOutcomes[x]["evidence description"];
 		page3.getElementsByClassName("resultEvidenceNotes")[x].value = storedOutcomes[x]["evidence notes"];
-		page3.getElementsByClassName("resultobservedDescribe")[x].value = storedOutcomes[x]["describe evidence source"];
+		page3.getElementsByClassName("resultEvidenceSourceDescribe")[x].value = storedOutcomes[x]["describe evidence source"];
 		
 		var dropDownEvidenceInputs = page3.getElementsByClassName("multiSelectDropDownOptions")[x].getElementsByClassName("evidenceInput");
 		var dropDownEvidenceLabels = page3.getElementsByClassName("multiSelectDropDownOptions")[x].getElementsByClassName("evidenceLabel");
@@ -2003,7 +2003,7 @@ function saveQuitPage3(){
 		thisOutcome["evidence identifier"] = resultOutcomes[x].getElementsByClassName("resultEvidenceIdentifier")[0].value;
 		thisOutcome["evidence description"] = resultOutcomes[x].getElementsByClassName("resultEvidenceDescription")[0].value;
 		thisOutcome["evidence notes"] = resultOutcomes[x].getElementsByClassName("resultEvidenceNotes")[0].value;
-		thisOutcome["describe evidence source"] = resultOutcomes[x].getElementsByClassName("resultobservedDescribe")[0].value;
+		thisOutcome["describe evidence source"] = resultOutcomes[x].getElementsByClassName("resultEvidenceSourceDescribe")[0].value;
 		var contributingStudies = getCheckBoxSelection(resultOutcomes[x].getElementsByClassName("multiSelectDropDownOptions")[0]);
 		thisOutcome["contributing studies"] = [];
 		thisOutcome["contributing studies labels"] = [];
@@ -2472,7 +2472,7 @@ function addResultOutcome(){
 		page3.getElementsByClassName("resultComparatorMatchGroup")[0].style.display = "none";
 		cln.getElementsByClassName("resultActualOutcomeGroup")[0].style.display = "none";
 		cln.getElementsByClassName("resultOutcomeMatchGroup")[0].style.display = "none";
-		cln.getElementsByClassName("observedRow")[0].style.display = "flex";
+		cln.getElementsByClassName("evidenceSourceRow")[0].style.display = "flex";
    }
    
    if (page3.getElementsByClassName("resultComparatorBox")[0].style.display == "none"){
@@ -2879,8 +2879,8 @@ function jsonToForm(){
 					for (var groupMem = 0; groupMem < resource["member"].length; groupMem++){
 						var groupMemID = "";
 						var groupMemDisplay = "";
-						if ("reference" in resource["member"][groupMem]["entity"]){
-							groupMemID = resource["member"][groupMem]["entity"]["reference"];
+						if ("identifier" in resource["member"][groupMem]["entity"]){
+							groupMemID = resource["member"][groupMem]["entity"]["identifier"];
 						}
 						if ("display" in resource["member"][groupMem]["entity"]){
 							groupMemDisplay = resource["member"][groupMem]["entity"]["display"];
@@ -2910,7 +2910,7 @@ function jsonToForm(){
 				if (resourceName){ evidenceVariables[evidenceVariableKey]["name"] = resourceName; }
 				if (resourceDescription){ evidenceVariables[evidenceVariableKey]["description"] = resourceDescription; }
 				if ("actual" in resource){ evidenceVariables[evidenceVariableKey]["actual"] = resource["actual"]; }
-				if ("note" in resource && resource["note"].length){
+				if (resource["note"].length){
 					for (var n = 0; n < resource["note"].length; n++){
 						if (resource["note"][n]["text"] == "This is an Exposure." || resource["note"][n]["text"] == "This is an Outcome."){
 							if (resource["note"][n]["text"] == "This is an Exposure.") {
@@ -2938,13 +2938,69 @@ function jsonToForm(){
 			var evidenceIntervention = null;
 			var evidenceActualIntervention = null;
 			var evidenceComboIntervention = null;
-			var evidenceComparator = {"display": "none", "reference": "none"};
+			var evidenceComparator = {"display": "none", "identifier": "none"};
 			var evidenceActualComparator = null;
 			var evidenceComboComparator = null;
 			var evidenceOutcome = null;
 			var evidenceActualOutcome = null;
 			var evidenceComboOutcome = null; 
-									
+			
+			if ("referentGroup" in resource){
+				
+				//It doesn't create a population for the evidencesource(actual populations) because it could be a Group of studies.
+				/*
+				if ("evidenceSource" in resource["referentGroup"] && "identifier" in resource["referentGroup"]["evidenceSource"]){
+					var groupID = resource["referentGroup"]["evidenceSource"]["identifier"];
+					if (groupID && (!(groupID in groupIDs))){
+						groupIDs[groupID] = resource["referentGroup"]["evidenceSource"]["display"];
+					}
+				} */
+				if ("intendedGroup" in resource["referentGroup"] && "identifier" in resource["referentGroup"]["intendedGroup"]){
+					var groupID = resource["referentGroup"]["intendedGroup"]["identifier"];
+					if (groupID && (!(groupID in groupIDs))){
+						groupIDs[groupID] = resource["referentGroup"]["intendedGroup"]["display"];
+					}
+					evidencePopulation = {"display": resource["referentGroup"]["intendedGroup"]["display"], "identifier": groupID};
+				}
+				
+				if ("evidenceSource" in resource["referentGroup"]){
+					if (!("member" in resource["referentGroup"]["evidenceSource"] && resource["referentGroup"]["evidenceSource"]["member"].length && resource["referentGroup"]["evidenceSource"]["member"][0]["entity"]["type"] == "Evidence")){
+						evidenceActualPopulation = {};
+						if ("display" in resource["referentGroup"]["evidenceSource"]){
+							evidenceActualPopulation = {"display": resource["referentGroup"]["evidenceSource"]["display"]};
+						}
+						if ("identifier" in resource["referentGroup"]["evidenceSource"]){
+							evidenceActualPopulation["identifier"] = resource["referentGroup"]["evidenceSource"]["identifier"];
+						}
+						if ("type" in resource["referentGroup"]["evidenceSource"]){
+							evidenceActualPopulation["type"] = resource["referentGroup"]["evidenceSource"]["type"];
+						}
+						if (Object.keys(evidenceActualPopulation).length == 0){
+							evidenceActualPopulation = null;
+						}
+					}
+				}
+				evidenceComboPopulation = {"description": ""};
+				if ("description" in resource["referentGroup"]){
+					evidenceComboPopulation["description"] = resource["referentGroup"]["description"];
+				}
+				var tempNote = "";
+				if ("note" in resource["referentGroup"]){
+					for (var n = 0; n < resource["referentGroup"]["note"].length; n++){
+						tempNote += resource["referentGroup"]["note"][n]["text"];
+						if (n != resource["referentGroup"]["note"].length - 1){
+							tempNote += "; ";
+						}
+					}
+				}
+				evidenceComboPopulation["note"] = tempNote;
+				evidenceComboPopulation["directness"] = "";
+				if ("directnessMatch" in resource["referentGroup"]){
+					evidenceComboPopulation["directness"] = resource["referentGroup"]["directnessMatch"]["coding"][0]["code"];
+				}
+				
+			}
+						
 			if ("variableDefinition" in resource && resource["variableDefinition"].length){
 				for (var v = 0; v < resource["variableDefinition"].length; v++){
 					var definitionRole = resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"];
@@ -2953,76 +3009,22 @@ function jsonToForm(){
 					}
 					if (definitionRole.toLowerCase().replace(/ /g,'').indexOf("exposure") != -1) {
 						definitionRole = "Exposure";
-					} else if (definitionRole.toLowerCase().replace(/ /g,'').indexOf("population") != -1) {
-						definitionRole = "Population";
-						//It doesn't create a population for the observed(actual populations) because it could be a Group of studies.
-						/*
-						if ("observed" in resource["variableDefinition"][v] && "reference" in resource["variableDefinition"][v]["observed"]){
-							var groupID = resource["variableDefinition"][v]["observed"]["reference"];
-							if (groupID && (!(groupID in groupIDs))){
-								groupIDs[groupID] = resource["variableDefinition"][v]["observed"]["display"];
-							}
-						} */
-						if ("intended" in resource["variableDefinition"][v] && "reference" in resource["variableDefinition"][v]["intended"]){
-							var groupID = resource["variableDefinition"][v]["intended"]["reference"];
-							if (groupID && (!(groupID in groupIDs))){
-								groupIDs[groupID] = resource["variableDefinition"][v]["intended"]["display"];
-							}
-							evidencePopulation = {"display": resource["variableDefinition"][v]["intended"]["display"], "reference": groupID};
-						}
-						
-						if ("observed" in resource["variableDefinition"][v]){
-							if (!("member" in resource["variableDefinition"][v]["observed"] && resource["variableDefinition"][v]["observed"]["member"].length && resource["variableDefinition"][v]["observed"]["member"][0]["entity"]["type"] == "Evidence")){
-								evidenceActualPopulation = {};
-								if ("display" in resource["variableDefinition"][v]["observed"]){
-									evidenceActualPopulation = {"display": resource["variableDefinition"][v]["observed"]["display"]};
-								}
-								if ("reference" in resource["variableDefinition"][v]["observed"]){
-									evidenceActualPopulation["reference"] = resource["variableDefinition"][v]["observed"]["reference"];
-								}
-								if ("type" in resource["variableDefinition"][v]["observed"]){
-									evidenceActualPopulation["type"] = resource["variableDefinition"][v]["observed"]["type"];
-								}
-								if (Object.keys(evidenceActualPopulation).length == 0){
-									evidenceActualPopulation = null;
-								}
-							}
-						}
-						evidenceComboPopulation = {"description": ""};
-						if ("description" in resource["variableDefinition"][v]){
-							evidenceComboPopulation["description"] = resource["variableDefinition"][v]["description"];
-						}
-						var tempNote = "";
-						if ("note" in resource["variableDefinition"][v]){
-							for (var n = 0; n < resource["variableDefinition"][v]["note"].length; n++){
-								tempNote += resource["variableDefinition"][v]["note"][n]["text"];
-								if (n != resource["variableDefinition"][v]["note"].length - 1){
-									tempNote += "; ";
-								}
-							}
-						}
-						evidenceComboPopulation["note"] = tempNote;
-						evidenceComboPopulation["directness"] = "";
-						if ("directnessMatch" in resource["variableDefinition"][v]){
-							evidenceComboPopulation["directness"] = resource["variableDefinition"][v]["directnessMatch"]["coding"][0]["code"];
-						}
-						continue;
 					} else if (definitionRole.toLowerCase().replace(/ /g,'').indexOf("measuredvariable") != -1 || definitionRole.toLowerCase().replace(/ /g,'').indexOf("outcome") != -1){
 						definitionRole = "Outcome";
 					}
 					
-					if ("observed" in resource["variableDefinition"][v] && "reference" in resource["variableDefinition"][v]["observed"]){
-						var definitionIdentifier = resource["variableDefinition"][v]["observed"]["reference"];
-						var definitionDisplay = resource["variableDefinition"][v]["observed"]["display"];
+					if ("actualDefinition" in resource["variableDefinition"][v] && "identifier" in resource["variableDefinition"][v]["actualDefinition"]){
+						var definitionIdentifier = resource["variableDefinition"][v]["actualDefinition"]["identifier"];
+						var definitionDisplay = resource["variableDefinition"][v]["actualDefinition"]["display"];
 						if (!(definitionIdentifier in evidenceVariables)){
 							evidenceVariables[definitionIdentifier] = {};
 						}
 						if (!("name" in evidenceVariables[definitionIdentifier])) { if (definitionDisplay) { evidenceVariables[definitionIdentifier]["name"] = definitionDisplay; } }
 						if (definitionRole) { evidenceVariables[definitionIdentifier]["role"] = definitionRole; }
 					}
-					if ("intended" in resource["variableDefinition"][v] && "reference" in resource["variableDefinition"][v]["intended"]){
-						var definitionIdentifier = resource["variableDefinition"][v]["intended"]["reference"];
-						var definitionDisplay = resource["variableDefinition"][v]["intended"]["display"];
+					if ("intendedDefinition" in resource["variableDefinition"][v] && "identifier" in resource["variableDefinition"][v]["intendedDefinition"]){
+						var definitionIdentifier = resource["variableDefinition"][v]["intendedDefinition"]["identifier"];
+						var definitionDisplay = resource["variableDefinition"][v]["intendedDefinition"]["display"];
 						if (!(definitionIdentifier in evidenceVariables)){
 							evidenceVariables[definitionIdentifier] = {};
 						}
@@ -3032,17 +3034,17 @@ function jsonToForm(){
 						var actualVariableDefinition = null;
 						var actualVariableCombo = null;						
 						
-						if ("observed" in resource["variableDefinition"][v]){
+						if ("actualDefinition" in resource["variableDefinition"][v]){
 							actualVariableDefinition = {};
 							
-							if ("display" in resource["variableDefinition"][v]["observed"]){
-								actualVariableDefinition = {"display": resource["variableDefinition"][v]["observed"]["display"]};
+							if ("display" in resource["variableDefinition"][v]["actualDefinition"]){
+								actualVariableDefinition = {"display": resource["variableDefinition"][v]["actualDefinition"]["display"]};
 							}
-							if ("reference" in resource["variableDefinition"][v]["observed"]){
-								actualVariableDefinition["reference"] = resource["variableDefinition"][v]["observed"]["reference"];
+							if ("identifier" in resource["variableDefinition"][v]["actualDefinition"]){
+								actualVariableDefinition["identifier"] = resource["variableDefinition"][v]["actualDefinition"]["identifier"];
 							}
-							if ("type" in resource["variableDefinition"][v]["observed"]){
-								actualVariableDefinition["type"] = resource["variableDefinition"][v]["observed"]["type"];
+							if ("type" in resource["variableDefinition"][v]["actualDefinition"]){
+								actualVariableDefinition["type"] = resource["variableDefinition"][v]["actualDefinition"]["type"];
 							}
 							
 							if (Object.keys(actualVariableDefinition).length == 0){
@@ -3070,15 +3072,15 @@ function jsonToForm(){
 						}
 												
 						if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "exposure"){
-							evidenceIntervention = {"display": definitionDisplay, "reference": definitionIdentifier};
+							evidenceIntervention = {"display": definitionDisplay, "identifier": definitionIdentifier};
 							evidenceActualIntervention = actualVariableDefinition;
 							evidenceComboIntervention = actualVariableCombo;
 						} else if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "referenceExposure"){
-							evidenceComparator = {"display": definitionDisplay, "reference": definitionIdentifier};
+							evidenceComparator = {"display": definitionDisplay, "identifier": definitionIdentifier};
 							evidenceActualComparator = actualVariableDefinition;
 							evidenceComboComparator = actualVariableCombo;
 						} else if (resource["variableDefinition"][v]["variableRole"]["coding"][0]["code"] == "measuredVariable"){
-							evidenceOutcome = {"display": definitionDisplay, "reference": definitionIdentifier};
+							evidenceOutcome = {"display": definitionDisplay, "identifier": definitionIdentifier};
 							evidenceActualOutcome = actualVariableDefinition;
 							evidenceComboOutcome = actualVariableCombo;
 						}
@@ -3174,28 +3176,28 @@ function jsonToForm(){
 				if (!(label in convertResults)){
 					convertResults[label] = {};
 				}
-				if (!(evidencePopulation["reference"] in convertResults[label])){
-					convertResults[label][evidencePopulation["reference"]] = {};
+				if (!(evidencePopulation["identifier"] in convertResults[label])){
+					convertResults[label][evidencePopulation["identifier"]] = {};
 				}
 				
-				if (!(evidenceIntervention["reference"] in convertResults[label][evidencePopulation["reference"]])){
-					convertResults[label][evidencePopulation["reference"]][evidenceIntervention["reference"]] = {};
+				if (!(evidenceIntervention["identifier"] in convertResults[label][evidencePopulation["identifier"]])){
+					convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]] = {};
 				}
 				
-				if (!(evidenceComparator["reference"] in convertResults[label][evidencePopulation["reference"]][evidenceIntervention["reference"]])){
-					convertResults[label][evidencePopulation["reference"]][evidenceIntervention["reference"]][evidenceComparator["reference"]] = JSON.parse(JSON.stringify(blankSavedResult));
-					convertResults[label][evidencePopulation["reference"]][evidenceIntervention["reference"]][evidenceComparator["reference"]]["outcomes"] = [];
+				if (!(evidenceComparator["identifier"] in convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]])){
+					convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]][evidenceComparator["identifier"]] = JSON.parse(JSON.stringify(blankSavedResult));
+					convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]][evidenceComparator["identifier"]]["outcomes"] = [];
 				}
 
-				var evidenceResult = convertResults[label][evidencePopulation["reference"]][evidenceIntervention["reference"]][evidenceComparator["reference"]];
+				var evidenceResult = convertResults[label][evidencePopulation["identifier"]][evidenceIntervention["identifier"]][evidenceComparator["identifier"]];
 				evidenceResult["study"] = label;
 				
 				
 				evidenceResult["intended population display"] = evidencePopulation["display"];
-				evidenceResult["intended population identifier"] = evidencePopulation["reference"];
+				evidenceResult["intended population identifier"] = evidencePopulation["identifier"];
 				if (evidenceActualPopulation){
-					if ("reference" in evidenceActualPopulation){
-						evidenceResult["actual population identifier"] = evidenceActualPopulation["reference"]
+					if ("identifier" in evidenceActualPopulation){
+						evidenceResult["actual population identifier"] = evidenceActualPopulation["identifier"]
 					}
 					if ("display" in evidenceActualPopulation){
 						evidenceResult["actual population display"] = evidenceActualPopulation["display"]
@@ -3208,10 +3210,10 @@ function jsonToForm(){
 				}
 				
 				evidenceResult["intended intervention display"] = evidenceIntervention["display"];
-				evidenceResult["intended intervention identifier"] = evidenceIntervention["reference"];
+				evidenceResult["intended intervention identifier"] = evidenceIntervention["identifier"];
 				if (evidenceActualIntervention){
-					if ("reference" in evidenceActualIntervention){
-						evidenceResult["actual intervention identifier"] = evidenceActualIntervention["reference"]
+					if ("identifier" in evidenceActualIntervention){
+						evidenceResult["actual intervention identifier"] = evidenceActualIntervention["identifier"]
 					}
 					if ("display" in evidenceActualIntervention){
 						evidenceResult["actual intervention display"] = evidenceActualIntervention["display"]
@@ -3225,10 +3227,10 @@ function jsonToForm(){
 				
 				
 				evidenceResult["intended comparator display"] = evidenceComparator["display"];
-				evidenceResult["intended comparator identifier"] = evidenceComparator["reference"];
+				evidenceResult["intended comparator identifier"] = evidenceComparator["identifier"];
 				if (evidenceActualComparator){
-					if ("reference" in evidenceActualComparator){
-						evidenceResult["actual comparator identifier"] = evidenceActualComparator["reference"]
+					if ("identifier" in evidenceActualComparator){
+						evidenceResult["actual comparator identifier"] = evidenceActualComparator["identifier"]
 					}
 					if ("display" in evidenceActualComparator){
 						evidenceResult["actual comparator display"] = evidenceActualComparator["display"]
@@ -3246,14 +3248,14 @@ function jsonToForm(){
 				evidenceResult["outcomes"].push(JSON.parse(JSON.stringify(blankSavedResult["outcomes"][0])));
 				var resultOutcome = evidenceResult["outcomes"][last];
 				if (evidenceOutcome && "display" in evidenceOutcome){ resultOutcome["intended outcome display"] = evidenceOutcome["display"]; }
-				if (evidenceOutcome && "reference" in evidenceOutcome){ resultOutcome["intended outcome identifier"] = evidenceOutcome["reference"]; }
+				if (evidenceOutcome && "identifier" in evidenceOutcome){ resultOutcome["intended outcome identifier"] = evidenceOutcome["identifier"]; }
 				var tempOutcomeIdentifier = null;
-				if (evidenceOutcome && "reference" in evidenceOutcome) { tempOutcomeIdentifier = evidenceOutcome["reference"]; }
-				resource["study-pico-combo"] = [label, evidencePopulation["reference"], evidenceIntervention["reference"], evidenceComparator["reference"], tempOutcomeIdentifier];
+				if (evidenceOutcome && "identifier" in evidenceOutcome) { tempOutcomeIdentifier = evidenceOutcome["identifier"]; }
+				resource["study-pico-combo"] = [label, evidencePopulation["identifier"], evidenceIntervention["identifier"], evidenceComparator["identifier"], tempOutcomeIdentifier];
 				
 				if (evidenceActualOutcome){
-					if ("reference" in evidenceActualOutcome){
-						resultOutcome["actual outcome identifier"] = evidenceActualOutcome["reference"]
+					if ("identifier" in evidenceActualOutcome){
+						resultOutcome["actual outcome identifier"] = evidenceActualOutcome["identifier"]
 					}
 					if ("display" in evidenceActualOutcome){
 						resultOutcome["actual outcome display"] = evidenceActualOutcome["display"]
@@ -3563,35 +3565,31 @@ function jsonToForm(){
 	
 	for (var r = 0; r < jsonresources.length; r++){
 		var resource = jsonresources[r];
-		if (resource["resourceType"] == "Evidence" && "variableDefinition" in resource) {
-			for (var evVar = 0; evVar < resource["variableDefinition"].length; evVar++){
-				if (resource["variableDefinition"][evVar]["variableRole"]["coding"][0]["code"] == "population" && "observed" in resource["variableDefinition"][evVar] && "type" in resource["variableDefinition"][evVar]["observed"]){
-					if (resource["variableDefinition"][evVar]["observed"]["type"].toLowerCase() == "group") {
-						//TODO to do: Has to loop through all the Evidence resources again, and apply the correct "contributing studies"
-						
-						//var evidSourceID = resource["variableDefinition"][evVar]["observed"]["reference"];
-						
-						var evidSourceID = "";
-						if ("reference" in resource["variableDefinition"][evVar]["observed"]){
-							evidSourceID = resource["variableDefinition"][evVar]["observed"]["reference"];
-						}
-						//If there's no ID, then the contributing studies will be blank in the form.
-
-						if ("study-pico-combo" in resource){
-							var loc = resource["study-pico-combo"];
-							var evidSrcConvert = convertResults[loc[0]][loc[1]][loc[2]][loc[3]];
-							for (var locOut = 0; locOut < evidSrcConvert["outcomes"].length; locOut++){
-								if (evidSrcConvert["outcomes"][locOut]["intended outcome identifier"] == loc[4] && evidSourceID in groupsOfEvidence){
-									evidSrcConvert["outcomes"][locOut]["contributing studies"] = groupsOfEvidence[evidSourceID][1];
-									evidSrcConvert["outcomes"][locOut]["contributing studies short display names"] = groupsOfEvidence[evidSourceID][2];
-									evidSrcConvert["outcomes"][locOut]["describe evidence source"] = evidSourceID;
-								}
-							}
-							//Goes through the outcomes, and finds the right one using [loc[4]
-						}
-						//groupsOfEvidence
-					}
+		if (resource["resourceType"] == "Evidence" && "referentGroup" in resource && "evidenceSource" in resource["referentGroup"] && "type" in resource["referentGroup"]["evidenceSource"]){
+			if (resource["referentGroup"]["evidenceSource"]["type"].toLowerCase() == "group") {
+				//TODO to do: Has to loop through all the Evidence resources again, and apply the correct "contributing studies"
+				
+				//var evidSourceID = resource["referentGroup"]["evidenceSource"]["identifier"];
+				
+				var evidSourceID = "";
+				if ("identifier" in resource["referentGroup"]["evidenceSource"]){
+					var evidSourceID = resource["referentGroup"]["evidenceSource"]["identifier"];
 				}
+				//If there's no ID, then the contributing studies will be blank in the form.
+
+				if ("study-pico-combo" in resource){
+					var loc = resource["study-pico-combo"];
+					var evidSrcConvert = convertResults[loc[0]][loc[1]][loc[2]][loc[3]];
+					for (var locOut = 0; locOut < evidSrcConvert["outcomes"].length; locOut++){
+						if (evidSrcConvert["outcomes"][locOut]["intended outcome identifier"] == loc[4] && evidSourceID in groupsOfEvidence){
+							evidSrcConvert["outcomes"][locOut]["contributing studies"] = groupsOfEvidence[evidSourceID][1];
+							evidSrcConvert["outcomes"][locOut]["contributing studies short display names"] = groupsOfEvidence[evidSourceID][2];
+							evidSrcConvert["outcomes"][locOut]["describe evidence source"] = evidSourceID;
+						}
+					}
+					//Goes through the outcomes, and finds the right one using [loc[4]
+				}
+				//groupsOfEvidence
 			}
 		}
 	}
@@ -3741,7 +3739,7 @@ function formToJSON(){
 									if (j >= thisGroup["member"].length){
 										thisGroup["member"].push(JSON.parse(JSON.stringify(blankMember)));
 									}
-									thisGroup["member"][j]["entity"]["reference"] = out["contributing studies"][j];
+									thisGroup["member"][j]["entity"]["identifier"] = out["contributing studies"][j];
 									thisGroup["member"][j]["entity"]["display"] = out["contributing studies short display names"][j];
 									thisGroup["member"][j]["entity"]["type"] = "Evidence";
 								}
@@ -3854,25 +3852,22 @@ function formToJSON(){
 						
 						thisEvidence["status"] = "draft";
 
-						thisEvidence["variableDefinition"][0]["description"] = result["population description"];
-						thisEvidence["variableDefinition"][0]["note"][0]["text"] = result["population notes"];
-						thisEvidence["variableDefinition"][0]["variableRole"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/variable-role";
-						thisEvidence["variableDefinition"][0]["variableRole"]["coding"][0]["code"] = "population";
-						thisEvidence["variableDefinition"][0]["variableRole"]["coding"][0]["display"] = "population";
+						thisEvidence["referentGroup"]["description"] = result["population description"];
+						thisEvidence["referentGroup"]["note"][0]["text"] = result["population notes"];
 						if (result["intended population identifier"]){
-							thisEvidence["variableDefinition"][0]["intended"]["type"] = "Group";
+							thisEvidence["referentGroup"]["intendedGroup"]["type"] = "Group";
 						}
-						thisEvidence["variableDefinition"][0]["intended"]["display"] = result["intended population display"];
-						thisEvidence["variableDefinition"][0]["intended"]["reference"] = result["intended population identifier"];
+						thisEvidence["referentGroup"]["intendedGroup"]["display"] = result["intended population display"];
+						thisEvidence["referentGroup"]["intendedGroup"]["identifier"] = result["intended population identifier"];
 						if (result["actual population identifier"]){
-							thisEvidence["variableDefinition"][0]["observed"]["type"] = "Group";
+							thisEvidence["referentGroup"]["evidenceSource"]["type"] = "Group";
 						}
-						thisEvidence["variableDefinition"][0]["observed"]["display"] = result["actual population display"];
-						thisEvidence["variableDefinition"][0]["observed"]["reference"] = result["actual population identifier"];
+						thisEvidence["referentGroup"]["evidenceSource"]["display"] = result["actual population display"];
+						thisEvidence["referentGroup"]["evidenceSource"]["identifier"] = result["actual population identifier"];
 						if (result["population directness match"]){
-							thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
-							thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["display"] = result["population directness match"];
-							thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["code"]    = result["population directness match"];	//TO DO TODO get the proper codes for directness match
+							thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
+							thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["display"] = result["population directness match"];
+							thisEvidence["referentGroup"]["directnessMatch"]["coding"][0]["code"]    = result["population directness match"];	//TO DO TODO get the proper codes for directness match
 						}
 					
 						//MORE STUFF FOR THE STUDY GROUP IF SYNTHESIS
@@ -3880,87 +3875,83 @@ function formToJSON(){
 						if (synthesisList.indexOf(studysInResultsToExport[s]) != -1 &&
 							(out["describe evidence source"] || out["contributing studies"].length ||
 							out["contributing studies labels"].length || out["contributing studies short display names"].length)){
-							//thisEvidence["variableDefinition"][0]["observed"]["reference"] = "";		//TO DO TODO ?
-							thisEvidence["variableDefinition"][0]["observed"]["type"] = "Group";
-							thisEvidence["variableDefinition"][0]["observed"]["reference"] = out["describe evidence source"];
-							//thisEvidence["variableDefinition"][0]["observed"]["display"] = "";		//TO DO TODO
+							//thisEvidence["referentGroup"]["evidenceSource"]["reference"] = "";		//TO DO TODO ?
+							thisEvidence["referentGroup"]["evidenceSource"]["type"] = "Group";
+							thisEvidence["referentGroup"]["evidenceSource"]["identifier"] = out["describe evidence source"];
+							//thisEvidence["referentGroup"]["evidenceSource"]["display"] = "";		//TO DO TODO
 						}
 						
 						//MAKE SURE IT DOESN'T USE INVISIBLE FIELDS, HOW DO I CHECK THIS? SHOULD I MAKE ANOTHER FIELD IN THE JSON THAT KEEPS TRACK?
 					
-						thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(blankEvidence["variableDefinition"][0])));
+						thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(thisEvidence["variableDefinition"][0])));
 						
-
-						thisEvidence["variableDefinition"][1]["variableRole"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/variable-role";
-						thisEvidence["variableDefinition"][1]["variableRole"]["coding"][0]["code"] = "measuredVariable";
-						thisEvidence["variableDefinition"][1]["variableRole"]["coding"][0]["display"] = "measured variable";
-						thisEvidence["variableDefinition"][1]["description"] = out["outcome description"];
-						thisEvidence["variableDefinition"][1]["note"][0]["text"] = out["outcome notes"];
+						thisEvidence["variableDefinition"][0]["variableRole"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/variable-role";
+						thisEvidence["variableDefinition"][0]["variableRole"]["coding"][0]["code"] = "measuredVariable";
+						thisEvidence["variableDefinition"][0]["variableRole"]["coding"][0]["display"] = "measured variable";
+						thisEvidence["variableDefinition"][0]["description"] = out["outcome description"];
+						thisEvidence["variableDefinition"][0]["note"][0]["text"] = out["outcome notes"];
 						if (out["intended outcome identifier"]){
-							thisEvidence["variableDefinition"][1]["intended"]["type"] = "EvidenceVariable";
+							thisEvidence["variableDefinition"][0]["intendedDefinition"]["type"] = "EvidenceVariable";
 						}
-						thisEvidence["variableDefinition"][1]["intended"]["display"] = out["intended outcome display"];
-						thisEvidence["variableDefinition"][1]["intended"]["reference"] = out["intended outcome identifier"];
+						thisEvidence["variableDefinition"][0]["intendedDefinition"]["display"] = out["intended outcome display"];
+						thisEvidence["variableDefinition"][0]["intendedDefinition"]["identifier"] = out["intended outcome identifier"];
 						if (out["actual outcome identifier"]){
-							thisEvidence["variableDefinition"][1]["observed"]["type"] = "EvidenceVariable";
+							thisEvidence["variableDefinition"][0]["actualDefinition"]["type"] = "EvidenceVariable";
 						}
-						thisEvidence["variableDefinition"][1]["observed"]["display"] = out["actual outcome display"];
-						thisEvidence["variableDefinition"][1]["observed"]["reference"] = out["actual outcome identifier"];
+						thisEvidence["variableDefinition"][0]["actualDefinition"]["display"] = out["actual outcome display"];
+						thisEvidence["variableDefinition"][0]["actualDefinition"]["identifier"] = out["actual outcome identifier"];
 						if (out["outcome directness match"]){
-							thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
-							thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["display"] = out["outcome directness match"];
-							thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["code"]    = out["outcome directness match"];	//TO DO TODO get the proper codes for directness match
+							thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
+							thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["display"] = out["outcome directness match"];
+							thisEvidence["variableDefinition"][0]["directnessMatch"]["coding"][0]["code"]    = out["outcome directness match"];	//TO DO TODO get the proper codes for directness match
 						}
 
 						if (comps[z] != "" && comps[z] != "none" && comps[z] != inters[y]){
-							//thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(thisEvidence["variableDefinition"][2])));
-							//thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(blankEvidence["variableDefinition"][0])));
+							thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(thisEvidence["variableDefinition"][1])));
 						}
 						
-						thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(blankEvidence["variableDefinition"][0])));
-						thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/variable-role";
-						thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["code"] = "exposure";
-						thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["display"] = "exposure";
-						thisEvidence["variableDefinition"][2]["description"] = result["intervention description"];
-						thisEvidence["variableDefinition"][2]["note"][0]["text"] = result["intervention notes"];
+						thisEvidence["variableDefinition"][1]["variableRole"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/variable-role";
+						thisEvidence["variableDefinition"][1]["variableRole"]["coding"][0]["code"] = "exposure";
+						thisEvidence["variableDefinition"][1]["variableRole"]["coding"][0]["display"] = "exposure";
+						thisEvidence["variableDefinition"][1]["description"] = result["intervention description"];
+						thisEvidence["variableDefinition"][1]["note"][0]["text"] = result["intervention notes"];
 						if (result["intended intervention identifier"]){
-							thisEvidence["variableDefinition"][2]["intended"]["type"] = "EvidenceVariable";
+							thisEvidence["variableDefinition"][1]["intendedDefinition"]["type"] = "EvidenceVariable";
 						}
-						thisEvidence["variableDefinition"][2]["intended"]["display"] = result["intended intervention display"];
-						thisEvidence["variableDefinition"][2]["intended"]["reference"] = result["intended intervention identifier"];
+						thisEvidence["variableDefinition"][1]["intendedDefinition"]["display"] = result["intended intervention display"];
+						thisEvidence["variableDefinition"][1]["intendedDefinition"]["identifier"] = result["intended intervention identifier"];
 						if (result["actual intervention identifier"]){
-							thisEvidence["variableDefinition"][2]["observed"]["type"] = "EvidenceVariable";
+							thisEvidence["variableDefinition"][1]["actualDefinition"]["type"] = "EvidenceVariable";
 						}
-						thisEvidence["variableDefinition"][2]["observed"]["display"] = result["actual intervention display"];
-						thisEvidence["variableDefinition"][2]["observed"]["reference"] = result["actual intervention identifier"];
+						thisEvidence["variableDefinition"][1]["actualDefinition"]["display"] = result["actual intervention display"];
+						thisEvidence["variableDefinition"][1]["actualDefinition"]["identifier"] = result["actual intervention identifier"];
 						if (result["intervention directness match"]){
-							thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
-							thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["display"] = result["intervention directness match"];
-							thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["code"]    = result["intervention directness match"];	//TO DO TODO get the proper codes for directness match
+							thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
+							thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["display"] = result["intervention directness match"];
+							thisEvidence["variableDefinition"][1]["directnessMatch"]["coding"][0]["code"]    = result["intervention directness match"];	//TO DO TODO get the proper codes for directness match
 						}
 
 						
-						if (thisEvidence["variableDefinition"].length > 3){
-							thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(blankEvidence["variableDefinition"][0])));
-							thisEvidence["variableDefinition"][3]["variableRole"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/variable-role";
-							thisEvidence["variableDefinition"][3]["variableRole"]["coding"][0]["code"] = "referenceExposure";
-							thisEvidence["variableDefinition"][3]["variableRole"]["coding"][0]["display"] = "reference exposure";
-							thisEvidence["variableDefinition"][3]["description"] = result["comparator description"];
-							thisEvidence["variableDefinition"][3]["note"][0]["text"] = result["comparator notes"];
+						if (thisEvidence["variableDefinition"].length > 2){
+							thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/variable-role";
+							thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["code"] = "referenceExposure";
+							thisEvidence["variableDefinition"][2]["variableRole"]["coding"][0]["display"] = "reference exposure";
+							thisEvidence["variableDefinition"][2]["description"] = result["comparator description"];
+							thisEvidence["variableDefinition"][2]["note"][0]["text"] = result["comparator notes"];
 							if (result["intended comparator identifier"]){
-								thisEvidence["variableDefinition"][3]["intended"]["type"] = "EvidenceVariable";
+								thisEvidence["variableDefinition"][2]["intendedDefinition"]["type"] = "EvidenceVariable";
 							}
-							thisEvidence["variableDefinition"][3]["intended"]["display"] = result["intended comparator display"];
-							thisEvidence["variableDefinition"][3]["intended"]["reference"] = result["intended comparator identifier"];
+							thisEvidence["variableDefinition"][2]["intendedDefinition"]["display"] = result["intended comparator display"];
+							thisEvidence["variableDefinition"][2]["intendedDefinition"]["identifier"] = result["intended comparator identifier"];
 							if (result["actual comparator identifier"]){
-								thisEvidence["variableDefinition"][3]["observed"]["type"] = "EvidenceVariable";
+								thisEvidence["variableDefinition"][2]["actualDefinition"]["type"] = "EvidenceVariable";
 							}
-							thisEvidence["variableDefinition"][3]["observed"]["display"] = result["actual comparator display"];
-							thisEvidence["variableDefinition"][3]["observed"]["reference"] = result["actual comparator identifier"];
+							thisEvidence["variableDefinition"][2]["actualDefinition"]["display"] = result["actual comparator display"];
+							thisEvidence["variableDefinition"][2]["actualDefinition"]["identifier"] = result["actual comparator identifier"];
 							if (result["comparator directness match"]){
-								thisEvidence["variableDefinition"][3]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
-								thisEvidence["variableDefinition"][3]["directnessMatch"]["coding"][0]["display"] = result["comparator directness match"];
-								thisEvidence["variableDefinition"][3]["directnessMatch"]["coding"][0]["code"]    = result["comparator directness match"];	//TO DO TODO get the proper codes for directness match
+								thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/directness";
+								thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["display"] = result["comparator directness match"];
+								thisEvidence["variableDefinition"][2]["directnessMatch"]["coding"][0]["code"]    = result["comparator directness match"];	//TO DO TODO get the proper codes for directness match
 							}
 						}
 																								
@@ -4450,7 +4441,7 @@ var fhirEvidenceList = [];
 var blankGroup = {
   "resourceType": "Group",
   "id": "",
-  "reference": [
+  "identifier": [
     {
       "use": "",
       "type": {
@@ -4513,7 +4504,7 @@ var blankGroup = {
       "valueReference": {
         "reference": "",
         "type": "",
-        "reference": "",
+        "identifier": "",
         "display": ""
       }
     }
@@ -4523,7 +4514,7 @@ var blankGroup = {
       "entity": {
         "reference": "",
         "type": "",
-        "reference": "",
+        "identifier": "",
         "display": ""
       },
       "period": "",
@@ -4589,7 +4580,7 @@ var blankEvidenceVariable = {
       "device": {
         "reference": "",
         "type": "",
-        "reference": "",
+        "identifier": "",
         "display": ""
       },
       "usageContext": [
@@ -4612,7 +4603,7 @@ var blankEvidence = {
   "resourceType": "Evidence",
   "id": "",
   "url": "",
-  "reference": [
+  "identifier": [
     {
       "use": "",
       "type": {
@@ -4665,7 +4656,6 @@ var blankEvidence = {
         "text": ""
       },
       "valueQuantity": {
-        "value": "",
         "comparator": "",
         "unit": "",
         "system": "",
@@ -4673,13 +4663,11 @@ var blankEvidence = {
       },
       "valueRange": {
         "low": {
-          "value": "",
           "unit": "",
           "system": "",
           "code": ""
         },
         "high": {
-          "value": "",
           "unit": "",
           "system": "",
           "code": ""
@@ -4688,7 +4676,7 @@ var blankEvidence = {
       "valueReference": {
         "reference": "",
         "type": "",
-        "reference": "",
+        "identifier": "",
         "display": ""
       }
     }
@@ -4741,12 +4729,43 @@ var blankEvidence = {
     }
   ],
   "description": "",
-  "assertion": "",
   "note": [
     {
       "text": ""
     }
   ],
+  "assertion": "",
+  "referentGroup": {
+    "description": "",
+    "note": [
+      {
+        "text": ""
+      }
+    ],
+    "evidenceSource": {
+      "reference": "",
+      "type": "",
+      "identifier": "",
+      "display": ""
+    },
+    "intendedGroup": {
+      "reference": "",
+      "type": "",
+      "identifier": "",
+      "display": ""
+    },
+    "directnessMatch": {
+      "coding": [
+        {
+          "version": "",
+          "code": "",
+          "display": "",
+          "userSelected": ""
+        }
+      ],
+      "text": ""
+    }
+  },
   "variableDefinition": [
     {
       "description": "",
@@ -4758,7 +4777,6 @@ var blankEvidence = {
       "variableRole": {
         "coding": [
           {
-            "system": "",
             "version": "",
             "code": "",
             "display": "",
@@ -4767,22 +4785,21 @@ var blankEvidence = {
         ],
         "text": ""
       },
-      "observed": {
+      "actualDefinition": {
         "reference": "",
         "type": "",
-        "reference": "",
+        "identifier": "",
         "display": ""
       },
-      "intended": {
+      "intendedDefinition": {
         "reference": "",
         "type": "",
-        "reference": "",
+        "identifier": "",
         "display": ""
       },
       "directnessMatch": {
         "coding": [
           {
-            "system": "",
             "version": "",
             "code": "",
             "display": "",
@@ -4796,7 +4813,6 @@ var blankEvidence = {
   "synthesisType": {
     "coding": [
       {
-        "system": "",
         "version": "",
         "code": "",
         "display": "",
@@ -4808,7 +4824,6 @@ var blankEvidence = {
   "studyType": {
     "coding": [
       {
-        "system": "",
         "version": "",
         "code": "",
         "display": "",
@@ -4828,7 +4843,6 @@ var blankEvidence = {
       "statisticType": {
         "coding": [
           {
-            "system": "",
             "version": "",
             "code": "",
             "display": "",
@@ -4838,7 +4852,6 @@ var blankEvidence = {
         "text": ""
       },
       "quantity": {
-        "value": "",
         "comparator": "",
         "unit": "",
         "system": "",
@@ -4850,11 +4863,7 @@ var blankEvidence = {
           {
             "text": ""
           }
-        ],
-        "numberOfStudies": "",
-        "numberOfParticipants": "",
-        "knownDataCount": "",
-        "numeratorCount": ""
+        ]
       },
       "attributeEstimate": [
         {
@@ -4867,7 +4876,6 @@ var blankEvidence = {
           "type": {
             "coding": [
               {
-                "system": "",
                 "version": "",
                 "code": "",
                 "display": "",
@@ -4877,22 +4885,18 @@ var blankEvidence = {
             "text": ""
           },
           "quantity": {
-            "value": "",
             "comparator": "",
             "unit": "",
             "system": "",
             "code": ""
           },
-          "level": "",
           "range": {
             "low": {
-              "value": "",
               "unit": "",
               "system": "",
               "code": ""
             },
             "high": {
-              "value": "",
               "unit": "",
               "system": "",
               "code": ""
@@ -4910,9 +4914,7 @@ var blankEvidence = {
           "text": ""
         }
       ],
-      "numberOfIntervals": "",
       "bottomOfFirstInterval": {
-        "value": "",
         "comparator": "",
         "unit": "",
         "system": "",
@@ -4920,9 +4922,7 @@ var blankEvidence = {
       },
       "interval": [
         {
-          "rankOrder": "",
           "topOfInterval": {
-            "value": "",
             "comparator": "",
             "unit": "",
             "system": "",
@@ -4939,7 +4939,6 @@ var blankEvidence = {
               "statisticType": {
                 "coding": [
                   {
-                    "system": "",
                     "version": "",
                     "code": "",
                     "display": "",
@@ -4949,7 +4948,6 @@ var blankEvidence = {
                 "text": ""
               },
               "quantity": {
-                "value": "",
                 "comparator": "",
                 "unit": "",
                 "system": "",
@@ -4962,10 +4960,6 @@ var blankEvidence = {
                     "text": ""
                   }
                 ],
-                "numberOfStudies": "",
-                "numberOfParticipants": "",
-                "knownDataCount": "",
-                "numeratorCount": ""
               },
               "attributeEstimate": [
                 {
@@ -4978,7 +4972,6 @@ var blankEvidence = {
                   "type": {
                     "coding": [
                       {
-                        "system": "",
                         "version": "",
                         "code": "",
                         "display": "",
@@ -4988,22 +4981,18 @@ var blankEvidence = {
                     "text": ""
                   },
                   "quantity": {
-                    "value": "",
                     "comparator": "",
                     "unit": "",
                     "system": "",
                     "code": ""
                   },
-                  "level": "",
                   "range": {
                     "low": {
-                      "value": "",
                       "unit": "",
                       "system": "",
                       "code": ""
                     },
                     "high": {
-                      "value": "",
                       "unit": "",
                       "system": "",
                       "code": ""
@@ -5029,7 +5018,6 @@ var blankEvidence = {
         {
           "coding": [
             {
-              "system": "",
               "version": "",
               "code": "",
               "display": "",
@@ -5050,7 +5038,6 @@ var blankEvidence = {
           "type": {
             "coding": [
               {
-                "system": "",
                 "version": "",
                 "code": "",
                 "display": "",
@@ -5062,7 +5049,6 @@ var blankEvidence = {
           "rating": {
             "coding": [
               {
-                "system": "",
                 "version": "",
                 "code": "",
                 "display": "",
