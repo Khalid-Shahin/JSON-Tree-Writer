@@ -3940,7 +3940,7 @@ function formToJSON(){
 						}
 
 						
-						if (thisEvidence["variableDefinition"].length > 3){
+						if (result["intended comparator identifier"] != "none" && result["intended comparator identifier"] != ""){
 							thisEvidence["variableDefinition"].push(JSON.parse(JSON.stringify(blankEvidence["variableDefinition"][0])));
 							thisEvidence["variableDefinition"][3]["variableRole"]["coding"][0]["system"] = "http://terminology.hl7.org/CodeSystem/variable-role";
 							thisEvidence["variableDefinition"][3]["variableRole"]["coding"][0]["code"] = "referenceExposure";
