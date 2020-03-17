@@ -57,6 +57,10 @@ json = {
     {
       "resourceType": "Evidence",
       "id": "example-stroke-alteplase-fatalICH",
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n      <p>\n        \"Risk of fatal ICH with alteplase for stroke\" is a univariate risk estimate.\n      </p>\n\t</div>"
+      },
       "url": "Evidence/example-stroke-alteplase-fatalICH",
       "title": "Risk of fatal ICH with alteplase for stroke",
       "status": "draft",
@@ -70,17 +74,28 @@ json = {
         }
       ],
       "description": "2.7% incidence of fatal intracranial hemorrhage within 7 days with alteplase in patients with acute ischemic stroke",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/AcuteIschemicStroke",
-          "display": "adults with acute ischemic stroke"
-        },
-        "intendedGroup": {
-          "reference": "Group/AcuteIschemicStroke",
-          "display": "adults with acute ischemic stroke"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/AcuteIschemicStroke",
+            "type": "Group",
+            "display": "adults with acute ischemic stroke"
+          },
+          "intended": {
+            "reference": "Group/AcuteIschemicStroke",
+            "type": "Group",
+            "display": "adults with acute ischemic stroke"
+          }
+        },
         {
           "variableRole": {
             "coding": [
@@ -91,12 +106,14 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-fatal-ICH-in-7-days",
+            "type": "EvidenceVariable",
             "display": "fatal ICH"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-fatal-ICH-in-7-days",
+            "type": "EvidenceVariable",
             "display": "fatal ICH"
           }
         },
@@ -110,12 +127,14 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
+            "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
+            "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           }
         }
@@ -163,6 +182,10 @@ json = {
     {
       "resourceType": "Evidence",
       "id": "example-stroke-no-alteplase-fatalICH",
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n      <p>\n        \"Risk of fatal ICH without alteplase for stroke\" is a univariate risk estimate.\n      </p>\n\t</div>"
+      },
       "url": "Evidence/example-stroke-no-alteplase-fatalICH",
       "title": "Risk of fatal ICH without alteplase for stroke",
       "status": "draft",
@@ -176,17 +199,28 @@ json = {
         }
       ],
       "description": "0.4% incidence of fatal intracranial hemorrhage within 7 days without alteplase in patients with acute ischemic stroke",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/AcuteIschemicStroke",
-          "display": "adults with acute ischemic stroke"
-        },
-        "intendedGroup": {
-          "reference": "Group/AcuteIschemicStroke",
-          "display": "adults with acute ischemic stroke"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/AcuteIschemicStroke",
+            "type": "Group",
+            "display": "adults with acute ischemic stroke"
+          },
+          "intended": {
+            "reference": "Group/AcuteIschemicStroke",
+            "type": "Group",
+            "display": "adults with acute ischemic stroke"
+          }
+        },
         {
           "variableRole": {
             "coding": [
@@ -197,12 +231,14 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-fatal-ICH-in-7-days",
+            "type": "EvidenceVariable",
             "display": "fatal ICH"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-fatal-ICH-in-7-days",
+            "type": "EvidenceVariable",
             "display": "fatal ICH"
           }
         },
@@ -216,12 +252,14 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-no-alteplase",
+            "type": "EvidenceVariable",
             "display": "no alteplase"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-no-alteplase",
+            "type": "EvidenceVariable",
             "display": "no alteplase"
           }
         }
@@ -286,17 +324,28 @@ json = {
         }
       ],
       "description": "mRS 3-6 at 90 days Odds Ratio 0.65 for Alteplase vs. No Alteplase in patients with acute ischemic stroke 0-3 hours prior",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/AcuteIschemicStroke0-3Hours",
-          "display": "stroke at 0-3 hours"
-        },
-        "intendedGroup": {
-          "reference": "Group/AcuteIschemicStroke0-3Hours",
-          "display": "stroke at 0-3 hours"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/AcuteIschemicStroke0-3Hours",
+            "type": "Group",
+            "display": "stroke at 0-3 hours"
+          },
+          "intended": {
+            "reference": "Group/AcuteIschemicStroke0-3Hours",
+            "type": "Group",
+            "display": "stroke at 0-3 hours"
+          }
+        },
         {
           "variableRole": {
             "coding": [
@@ -307,12 +356,14 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
+            "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
+            "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
           }
         },
@@ -326,12 +377,14 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
+            "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
+            "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           }
         },
@@ -345,12 +398,14 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-no-alteplase",
+            "type": "EvidenceVariable",
             "display": "no alteplase"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-no-alteplase",
+            "type": "EvidenceVariable",
             "display": "no alteplase"
           }
         }
@@ -595,6 +650,10 @@ json = {
     {
       "resourceType": "Evidence",
       "id": "example-stroke-3-4half-alteplase-vs-no-alteplase-mRS0-2",
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n      <p>\n        \"Effect of Alteplase vs No alteplase on mRS 0-2 at 90 days in Stroke 3-4.5 hours prior\" is a comparative effect estimate.\n      </p>\n\t</div>"
+      },
       "url": "Evidence/example-stroke-3-4half-alteplase-vs-no-alteplase-mRS0-2",
       "title": "Effect of Alteplase vs No alteplase on mRS 0-2 at 90 days in Stroke 3-4.5 hours prior",
       "status": "draft",
@@ -608,26 +667,37 @@ json = {
         }
       ],
       "description": "mRS 0-2 at 90 days Odds Ratio 1.2 for Alteplase vs. No Alteplase in patients with acute ischemic stroke 3-4.5 hours prior",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/AcuteIschemicStroke",
-          "display": "acute ischemic stroke"
-        },
-        "intendedGroup": {
-          "reference": "Group/AcuteIschemicStroke3-4halfHours",
-          "display": "stroke at 3-4.5 hours"
-        },
-        "directnessMatch": {
-          "coding": [
-            {
-              "system": "http://terminology.hl7.org/CodeSystem/directness",
-              "code": "moderate",
-              "display": "Moderate quality match"
-            }
-          ]
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/AcuteIschemicStroke",
+            "type": "Group",
+            "display": "acute ischemic stroke"
+          },
+          "intended": {
+            "reference": "Group/AcuteIschemicStroke3-4halfHours",
+            "type": "Group",
+            "display": "stroke at 3-4.5 hours"
+          },
+          "directnessMatch": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/directness",
+                "code": "moderate",
+                "display": "Moderate quality match"
+              }
+            ]
+          }
+        },
         {
           "variableRole": {
             "coding": [
@@ -638,12 +708,14 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS0-2-at-90days",
+            "type": "EvidenceVariable",
             "display": "mRS 0-2 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alive-independent-90day",
+            "type": "EvidenceVariable",
             "display": "Alive and not functionally dependent at 90 days"
           }
         },
@@ -657,12 +729,14 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
+            "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
+            "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           }
         },
@@ -676,12 +750,14 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-no-alteplase",
+            "type": "EvidenceVariable",
             "display": "no alteplase"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-no-alteplase",
+            "type": "EvidenceVariable",
             "display": "no alteplase"
           }
         }
@@ -915,19 +991,28 @@ json = {
         }
       ],
       "description": "1.5% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-5",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 5"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-5",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 5"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -939,12 +1024,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -969,12 +1054,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -1044,19 +1129,28 @@ json = {
         }
       ],
       "description": "2.0% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-6",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 6"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-6",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 6"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -1068,12 +1162,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -1098,12 +1192,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -1173,19 +1267,28 @@ json = {
         }
       ],
       "description": "2.3% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-7",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 7"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-7",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 7"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -1197,12 +1300,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -1227,12 +1330,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -1302,19 +1405,28 @@ json = {
         }
       ],
       "description": "2.8% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-8",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 8"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-8",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 8"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -1326,12 +1438,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -1356,12 +1468,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -1431,19 +1543,28 @@ json = {
         }
       ],
       "description": "3.3% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-9",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 9"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-9",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 9"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -1455,12 +1576,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -1485,12 +1606,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -1560,19 +1681,28 @@ json = {
         }
       ],
       "description": "3.8% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-10",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 10"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-10",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 10"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -1584,12 +1714,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -1614,12 +1744,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -1689,19 +1819,28 @@ json = {
         }
       ],
       "description": "4.5% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-11",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 11"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-11",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 11"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -1713,12 +1852,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -1743,12 +1882,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -1802,13 +1941,11 @@ json = {
     },
     {
       "resourceType": "Evidence",
-      "id": "example-ASTRAL-12-alteplase-mRS3-6",
-      "text": {
-        "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n      <p>\n        \"Risk of mRS3-6 at 90 days after Alteplase for Stroke if ASTRAL score 12\" is a univariate risk estimate.\n      </p>\n\t</div>"
-      },
+      "id": "ASTRAL-12-alteplase-mRS3-6",
       "url": "Evidence/example-ASTRAL-12-alteplase-mRS3-6",
-      "title": "Risk of mRS3-6 at 90 days after Alteplase for Stroke if ASTRAL score 12",
+      "title": [
+        "Risk of mRS3-6 at 90 days after Alteplase for Stroke if ASTRAL score 12"
+      ],
       "status": "draft",
       "relatedArtifact": [
         {
@@ -1820,19 +1957,28 @@ json = {
         }
       ],
       "description": "5.3% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-12",
-          "type": "Group",
-          "display": "Stroke with ASTRAL Score = 12"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-12",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 12"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -1844,12 +1990,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -1874,12 +2020,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -1929,145 +2075,6 @@ json = {
             "numberOfParticipants": 36131
           }
         }
-      ],
-      "certainty": [
-        {
-          "rating": [
-            {
-              "coding": [
-                {
-                  "system": "http://terminology.hl7.org/CodeSystem/certainty-rating",
-                  "code": "high",
-                  "display": "High quality"
-                }
-              ]
-            }
-          ],
-          "certaintySubcomponent": [
-            {
-              "type": [
-                {
-                  "coding": [
-                    {
-                      "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type",
-                      "code": "RiskOfBias",
-                      "display": "Risk of bias"
-                    }
-                  ]
-                }
-              ],
-              "rating": [
-                {
-                  "coding": [
-                    {
-                      "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating",
-                      "code": "no-concern",
-                      "display": "no serious concern"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "description": "Estimated risk from validation calibration plot consistent with predicted risk; observed risk in subgroup with ASTRAL score = 12 consistent with validation calibration plot",
-              "type": [
-                {
-                  "coding": [
-                    {
-                      "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type",
-                      "code": "Inconsistency",
-                      "display": "Inconsistency"
-                    }
-                  ]
-                }
-              ],
-              "rating": [
-                {
-                  "coding": [
-                    {
-                      "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating",
-                      "code": "no-concern",
-                      "display": "no serious concern"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": [
-                {
-                  "coding": [
-                    {
-                      "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type",
-                      "code": "Indirectness",
-                      "display": "Indirectness"
-                    }
-                  ]
-                }
-              ],
-              "rating": [
-                {
-                  "coding": [
-                    {
-                      "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating",
-                      "code": "no-concern",
-                      "display": "no serious concern"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "description": "Narrow confidence interval",
-              "type": [
-                {
-                  "coding": [
-                    {
-                      "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type",
-                      "code": "Imprecision",
-                      "display": "Imprecision"
-                    }
-                  ]
-                }
-              ],
-              "rating": [
-                {
-                  "coding": [
-                    {
-                      "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating",
-                      "code": "no-concern",
-                      "display": "no serious concern"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": [
-                {
-                  "coding": [
-                    {
-                      "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-type",
-                      "code": "PublicationBias",
-                      "display": "Publication bias"
-                    }
-                  ]
-                }
-              ],
-              "rating": [
-                {
-                  "coding": [
-                    {
-                      "system": "http://terminology.hl7.org/CodeSystem/certainty-subcomponent-rating",
-                      "code": "no-concern",
-                      "display": "no serious concern"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
       ]
     },
     {
@@ -2088,19 +2095,28 @@ json = {
         }
       ],
       "description": "6.2% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-13",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 13"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-13",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 13"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -2112,12 +2128,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -2142,12 +2158,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -2217,19 +2233,28 @@ json = {
         }
       ],
       "description": "7.3% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-14",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 14"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-14",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 14"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -2241,12 +2266,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -2271,12 +2296,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -2346,19 +2371,28 @@ json = {
         }
       ],
       "description": "8.6% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-15",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 15"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-15",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 15"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -2370,12 +2404,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -2400,12 +2434,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -2475,19 +2509,28 @@ json = {
         }
       ],
       "description": "10.2% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-16",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 16"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-16",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 16"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -2499,12 +2542,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -2529,12 +2572,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -2604,19 +2647,28 @@ json = {
         }
       ],
       "description": "11.9% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-17",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 17"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-17",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 17"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -2628,12 +2680,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -2658,12 +2710,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -2733,19 +2785,28 @@ json = {
         }
       ],
       "description": "13.6% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-18",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 18"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-18",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 18"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -2757,12 +2818,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -2787,12 +2848,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -2862,19 +2923,28 @@ json = {
         }
       ],
       "description": "16.0% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-19",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 19"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-19",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 19"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -2886,12 +2956,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -2916,12 +2986,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -2991,19 +3061,28 @@ json = {
         }
       ],
       "description": "18.4% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-20",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 20"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-20",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 20"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -3015,12 +3094,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -3045,12 +3124,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -3120,19 +3199,28 @@ json = {
         }
       ],
       "description": "21.2% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-21",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 21"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-21",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 21"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -3144,12 +3232,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -3174,12 +3262,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -3249,19 +3337,28 @@ json = {
         }
       ],
       "description": "24.1% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-22",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 22"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-22",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 22"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -3273,12 +3370,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -3303,12 +3400,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -3378,19 +3475,28 @@ json = {
         }
       ],
       "description": "27.5% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-23",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 23"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-23",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 23"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -3402,12 +3508,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -3432,12 +3538,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -3507,19 +3613,28 @@ json = {
         }
       ],
       "description": "30.7% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-24",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 24"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-24",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 24"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -3531,12 +3646,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -3561,12 +3676,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -3636,19 +3751,28 @@ json = {
         }
       ],
       "description": "34.6% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-25",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 25"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-25",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 25"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -3660,12 +3784,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -3690,12 +3814,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -3765,19 +3889,28 @@ json = {
         }
       ],
       "description": "38.3% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-26",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 26"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-26",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 26"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -3789,12 +3922,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -3819,12 +3952,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -3894,19 +4027,28 @@ json = {
         }
       ],
       "description": "42.4% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-27",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 27"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-27",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 27"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -3918,12 +4060,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -3948,12 +4090,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -4023,19 +4165,28 @@ json = {
         }
       ],
       "description": "46.6% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-28",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 28"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-28",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 28"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -4047,12 +4198,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -4077,12 +4228,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -4152,19 +4303,28 @@ json = {
         }
       ],
       "description": "50.5% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-29",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 29"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-29",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 29"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -4176,12 +4336,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -4206,12 +4366,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -4281,19 +4441,28 @@ json = {
         }
       ],
       "description": "54.0% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-30",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 30"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-30",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 30"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -4305,12 +4474,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -4335,12 +4504,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -4410,19 +4579,28 @@ json = {
         }
       ],
       "description": "58.1% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-31",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 31"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-31",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 31"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -4434,12 +4612,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -4464,12 +4642,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -4539,19 +4717,28 @@ json = {
         }
       ],
       "description": "61.6% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-32",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 32"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-32",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 32"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -4563,12 +4750,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -4593,12 +4780,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -4668,19 +4855,28 @@ json = {
         }
       ],
       "description": "64.8% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-33",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 33"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-33",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 33"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -4692,12 +4888,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -4722,12 +4918,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -4797,19 +4993,28 @@ json = {
         }
       ],
       "description": "67.6% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-34",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 34"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-34",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 34"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -4821,12 +5026,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -4851,12 +5056,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -4926,19 +5131,28 @@ json = {
         }
       ],
       "description": "70.3% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-35",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 35"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-35",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 35"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -4950,12 +5164,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -4980,12 +5194,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -5055,19 +5269,28 @@ json = {
         }
       ],
       "description": "73.1% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-36",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 36"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-36",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 36"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -5079,12 +5302,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -5109,12 +5332,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -5184,19 +5407,28 @@ json = {
         }
       ],
       "description": "75.3% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-37",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 37"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-37",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 37"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -5208,12 +5440,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -5238,12 +5470,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -5313,19 +5545,28 @@ json = {
         }
       ],
       "description": "77.2% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-38",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 38"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-38",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 38"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -5337,12 +5578,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -5367,12 +5608,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -5442,19 +5683,28 @@ json = {
         }
       ],
       "description": "78.9% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-39",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 39"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-39",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 39"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -5466,12 +5716,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -5496,12 +5746,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -5571,19 +5821,28 @@ json = {
         }
       ],
       "description": "80.4% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-40",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 40"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-40",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 40"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -5595,12 +5854,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -5625,12 +5884,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -5700,19 +5959,28 @@ json = {
         }
       ],
       "description": "81.7% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-41",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 41"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-41",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 41"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -5724,12 +5992,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -5754,12 +6022,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -5829,19 +6097,28 @@ json = {
         }
       ],
       "description": "82.9% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-42",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 42"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-42",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 42"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -5853,12 +6130,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -5883,12 +6160,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -5958,19 +6235,28 @@ json = {
         }
       ],
       "description": "84.0% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-43",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 43"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-43",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 43"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -5982,12 +6268,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -6012,12 +6298,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -6087,19 +6373,28 @@ json = {
         }
       ],
       "description": "84.7% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-44",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 44"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-44",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 44"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -6111,12 +6406,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -6141,12 +6436,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -6216,19 +6511,28 @@ json = {
         }
       ],
       "description": "85.5% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-45",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 45"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-45",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 45"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -6240,12 +6544,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -6270,12 +6574,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -6345,19 +6649,28 @@ json = {
         }
       ],
       "description": "86.2% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-46",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 46"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-46",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 46"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -6369,12 +6682,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -6399,12 +6712,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -6474,19 +6787,28 @@ json = {
         }
       ],
       "description": "86.6% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-47",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 47"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-47",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 47"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -6498,12 +6820,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -6528,12 +6850,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -6603,19 +6925,28 @@ json = {
         }
       ],
       "description": "87.0% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-48",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 48"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-48",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 48"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -6627,12 +6958,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -6657,12 +6988,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -6732,19 +7063,28 @@ json = {
         }
       ],
       "description": "87.4% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-49",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 49"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-49",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 49"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -6756,12 +7096,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -6786,12 +7126,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -6861,19 +7201,28 @@ json = {
         }
       ],
       "description": "87.6% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-50",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 50"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-50",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 50"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -6885,12 +7234,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -6915,12 +7264,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -6990,19 +7339,28 @@ json = {
         }
       ],
       "description": "87.9% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-51",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 51"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-51",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 51"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -7014,12 +7372,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -7044,12 +7402,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -7119,19 +7477,28 @@ json = {
         }
       ],
       "description": "88.1% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-52",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 52"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-52",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 52"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -7143,12 +7510,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -7173,12 +7540,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -7248,19 +7615,28 @@ json = {
         }
       ],
       "description": "88.2% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-53",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 53"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-53",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 53"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -7272,12 +7648,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -7302,12 +7678,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -7377,19 +7753,28 @@ json = {
         }
       ],
       "description": "88.4% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-54",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 54"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-54",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 54"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -7401,12 +7786,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -7431,12 +7816,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -7506,19 +7891,28 @@ json = {
         }
       ],
       "description": "88.7% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-55",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 55"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-55",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 55"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -7530,12 +7924,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -7560,12 +7954,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -7635,19 +8029,28 @@ json = {
         }
       ],
       "description": "88.8% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-56",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 56"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-56",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 56"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -7659,12 +8062,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -7689,12 +8092,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -7764,19 +8167,28 @@ json = {
         }
       ],
       "description": "88.9% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-57",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 57"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-57",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 57"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -7788,12 +8200,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -7818,12 +8230,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -7893,19 +8305,28 @@ json = {
         }
       ],
       "description": "89.0% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-58",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 58"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-58",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 58"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -7917,12 +8338,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -7947,12 +8368,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -8022,19 +8443,28 @@ json = {
         }
       ],
       "description": "89.0% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-59",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 59"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-59",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 59"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -8046,12 +8476,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -8076,12 +8506,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -8151,19 +8581,28 @@ json = {
         }
       ],
       "description": "89.0% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-60",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 60"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-60",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 60"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -8175,12 +8614,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -8205,12 +8644,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -8280,19 +8719,28 @@ json = {
         }
       ],
       "description": "89.1% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-61",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 61"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-61",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 61"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -8304,12 +8752,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -8334,12 +8782,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -8409,19 +8857,28 @@ json = {
         }
       ],
       "description": "89.2% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-62",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 62"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-62",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 62"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -8433,12 +8890,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -8463,12 +8920,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -8538,19 +8995,28 @@ json = {
         }
       ],
       "description": "89.2% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-63",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 63"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-63",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 63"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -8562,12 +9028,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -8592,12 +9058,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -8667,19 +9133,28 @@ json = {
         }
       ],
       "description": "89.2% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-64",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 64"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-64",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 64"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -8691,12 +9166,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -8721,12 +9196,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
@@ -8796,19 +9271,28 @@ json = {
         }
       ],
       "description": "89.3% risk of mRS 3-6 at 90 days",
-      "referentGroup": {
-        "evidenceSource": {
-          "reference": "Group/ASTRAL-Cooray-validation-cohort",
-          "type": "Group",
-          "display": "ASTRAL validation cohort"
-        },
-        "intendedGroup": {
-          "reference": "Group/ASTRAL-65",
-          "type": "Group",
-          "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 65"
-        }
-      },
       "variableDefinition": [
+        {
+          "variableRole": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/variable-role",
+                "code": "population",
+                "display": "population"
+              }
+            ]
+          },
+          "observed": {
+            "reference": "Group/ASTRAL-Cooray-validation-cohort",
+            "type": "Group",
+            "display": "ASTRAL validation cohort"
+          },
+          "intended": {
+            "reference": "Group/ASTRAL-65",
+            "type": "Group",
+            "display": "patients 0-4.5 hours after acute ischemic stroke onset with ASTRAL score = 65"
+          }
+        },
         {
           "description": "functionally dependent or dead at 3 months",
           "variableRole": {
@@ -8820,12 +9304,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-mRS3-6-at-90days",
             "type": "EvidenceVariable",
             "display": "mRS 3-6 at 90 days"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-dead-or-dependent-90day",
             "type": "EvidenceVariable",
             "display": "Dead or functionally dependent at 90 days"
@@ -8850,12 +9334,12 @@ json = {
               }
             ]
           },
-          "actualDefinition": {
+          "observed": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
           },
-          "intendedDefinition": {
+          "intended": {
             "reference": "EvidenceVariable/example-alteplase-for-stroke",
             "type": "EvidenceVariable",
             "display": "Alteplase for Stroke"
