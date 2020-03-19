@@ -1534,16 +1534,16 @@ function resultsLoadDropDowns(){
 			el.style = "color: black";
 			studyDropDowns[i].appendChild(el);
 		}
-		for (var j = 0; j < populationList.length; j++){
-			var opt = populationList[j];
+		for (var j = 0; j < intendedPopulationList.length; j++){
+			var opt = intendedPopulationList[j];
 			var el = document.createElement("option");
 			el.textContent = identifierMapping[opt][0];
 			el.value = opt;
 			el.style = "color: black";
 			populationDropDowns[i].appendChild(el);
 		}
-		for (var j = 0; j < exposureList.length; j++){
-			var opt = exposureList[j];
+		for (var j = 0; j < intendedExposureList.length; j++){
+			var opt = intendedExposureList[j];
 			var el = document.createElement("option");
 			el.textContent = identifierMapping[opt][0];
 			el.value = opt;
@@ -1623,8 +1623,8 @@ function loadPage3(resultID){
    
    var iOutcome = document.getElementById("resultIntendedOutcome");
    iOutcome.innerHTML = '<option value="" style="color: #444444; background-color: #B6B6B6;" selected> -- select -- </option>';
-   for (var j = 0; j < outcomeList.length; j++){
-		var opt = outcomeList[j];
+   for (var j = 0; j < intendedOutcomeList.length; j++){
+		var opt = intendedOutcomeList[j];
 		var el = document.createElement("option");
 		el.textContent = identifierMapping[opt][0];
 		el.value = opt;
@@ -1659,7 +1659,7 @@ function loadPage3(resultID){
    }
    addResultOutcome();
 
-   if (outcomeList.length == 1){
+   if (intendedOutcomeList.length == 1){
      page3.getElementsByClassName("resultIntendedOutcome")[0].style.color = '#000000';
 	 page3.getElementsByClassName("resultIntendedOutcome")[0].selectedIndex = 1;
    }
@@ -2426,13 +2426,12 @@ function addResult(){
 		page2.getElementsByClassName("resultStudyDropDown")[numberOfResults-1].style.color = "black";
 		page2.getElementsByClassName("restOfResultRow")[numberOfResults-1].style.display = "flex";
    }
-   if (populationList.length == 1){
+   if (intendedPopulationList.length == 1){
 		page2.getElementsByClassName("resultPopulationDropDown")[numberOfResults-1].selectedIndex = 1;
 		page2.getElementsByClassName("resultPopulationDropDown")[numberOfResults-1].style.color = "black";
 		autoCount += 1;
    }
-   //if (intendedExposureList.length == 1 || intendedExposureList.length == 2){
-   if (exposureList.length == 1 || exposureList.length == 2){
+   if (intendedExposureList.length == 1 || intendedExposureList.length == 2){
 		page2.getElementsByClassName("resultInterventionDropDown")[numberOfResults-1].selectedIndex = 1;
 		page2.getElementsByClassName("resultInterventionDropDown")[numberOfResults-1].style.color = "black";
 		page2.getElementsByClassName("resultComparatorDropDown")[numberOfResults-1].selectedIndex = 2;
