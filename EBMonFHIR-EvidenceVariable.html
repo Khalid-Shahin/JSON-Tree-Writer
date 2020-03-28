@@ -53,29 +53,200 @@ json = {
   "id": "",
   "url": "",
   "url---HoVeR": "An absolute URI that is used to identify this evidence variable when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this evidence variable is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the evidence variable is stored on different servers. [0..1]",
-  "title": "",
-  "title---HoVeR": "A short, descriptive, user-friendly title for the evidence variable. [0..1]",
+  "identifier": [
+    {
+      "use": "",
+      "type": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "system": "",
+      "value": "",
+      "period": {
+        "start": "",
+        "end": ""
+      },
+      "assigner": {
+        "reference": "",
+        "type": "",
+        "display": ""
+      }
+    }
+  ],
+  "identifier---HoVeR": "Additional identifier for the evidence variable",
+  "version": "",
+  "version---HoVeR": "Business version of the evidence variable",
   "name": "",
   "name---HoVeR": "A natural language name identifying the evidence variable. This name should be usable as an identifier for the module by machine processing applications such as code generation. [0..1]",
+  "title": "",
+  "title---HoVeR": "A short, descriptive, user-friendly title for the evidence variable. [0..1]",
+  "shortTitle": "",
+  "shortTitle---HoVeR": "Title for use in informal contexts",
+  "subtitle": "",
+  "subtitle---HoVeR": "Subordinate title of the EvidenceVariable",
+  "status": "",
+  "status---HoVeR": "draft | active | retired | unknown PublicationStatus (Required)",
   "date": "",
   "date---HoVeR": "The date (and optionally time) when the evidence variable was published. The date must change when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the evidence variable changes. [0..1]",
   "publisher": "",
   "publisher---HoVeR": "The name of the organization or individual that published the evidence variable. [0..1]",
-  "author": [""],
-  "author---HoVeR": "An individiual or organization primarily involved in the creation and maintenance of the content. [0..*]",
+  "contact": [
+    {
+      "name": "",
+      "telecom": [
+        {
+          "system": "",
+          "value": "",
+          "use": "",
+          "rank": "",
+          "period": {
+            "start": "",
+            "end": ""
+          }
+        }
+      ]
+    }
+  ],
   "description": "",
-  "description---HoVeR": "",
+  "description---HoVeR": "Natural language description of the evidence variable",
   "note": [
       {
         "text": ""
       }
   ],
+  "useContext": [
+    {
+      "code": {
+        "system": "",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      },
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "valueQuantity": {
+        "value": -0,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "valueRange": {
+        "low": {
+          "value": -0,
+          "unit": "",
+          "system": "",
+          "code": ""
+        },
+        "high": {
+          "value": -0,
+          "unit": "",
+          "system": "",
+          "code": ""
+        }
+      },
+      "valueReference": {
+        "reference": "",
+        "type": "",
+        "identifier": "",
+        "display": ""
+      }
+    }
+  ],
+  "useContext---HoVeR": "The context that the content is intended to support",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "http://hl7.org/fhir/ValueSet/jurisdiction",
+          "version": "",
+          "code": "",
+          "display": "",
+          "userSelected": ""
+        }
+      ],
+      "text": ""
+    }
+  ],
+  "jurisdiction---HoVeR": "Intended jurisdiction for evidence variable (if applicable) Jurisdiction (Extensible)",
+  "copyright": "",
+  "copyright---HoVeR": "Use and/or publishing restrictions",
+  "approvalDate": "",
+  "approvalDate---HoVeR": "When the evidence variable was approved by publisher",
+  "lastReviewDate": "",
+  "lastReviewDate---HoVeR": "When the evidence variable was last reviewed",
+  "effectivePeriod": {
+    "start": "",
+    "end": "",
+  },
+  "effectivePeriod---HoVeR": "When the evidence variable is expected to be used",
+  "topic": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/ValueSet/definition-topic",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
+  "topic---HoVeR": "The category of the EvidenceVariable, such as Education, Treatment, Assessment, etc. DefinitionTopic (Example)",
+  "author": [""],
+  "author---HoVeR": "Who authored the content. [0..*]",
+  "editor": [""],
+  "editor---HoVeR": "Who edited the content. [0..*]",
+  "reviewer": [""],
+  "reviewer---HoVeR": "Who reviewed the content. [0..*]",
+  "endorser": [""],
+  "endorser---HoVeR": "Who endorsed the content. [0..*]",
+  "relatedArtifact": [
+    {
+      "type": "",
+      "label": "",
+      "display": "",
+      "citation": "",
+      "url": "",
+      "document": {
+        "contentType": "",
+        "language": "",
+        "data": "",
+        "url": "",
+        "size": "",
+        "hash": "",
+        "title": "",
+        "creation": ""
+      },
+      "resource": ""
+    }
+  ],
+  "relatedArtifact---HoVeR": "Additional documentation, citations, etc.",
   "type": "",
   "type---HoVeR": "",
   "actual": "",
   "actual---HoVeR": "boolean: true if the actual variable measured, false if a conceptual representation of the intended variable",
   "characteristicCombination": "",
-  "characteristicCombination---HoVeR": "Can be either intersection (for AND) or union (for OR).",
+  "characteristicCombination---HoVeR": "intersection | union CharacteristicCombination (Required)",
   "characteristic": [{
       "description": "",
       "description---HoVeR": "A short, natural language description of the characteristic that could be used to communicate the criteria to an end-user. [0..1]",
@@ -160,7 +331,7 @@ json = {
       "groupMeasure": "",
       "groupMeasure---HoVeR": "Indicates how elements are aggregated within the study effective period. [0..1]"
   }],
-  "characteristic---HoVeR": "A characteristic that defines the members of the evidence element. Multiple characteristics are applied with &quot;and&quot; semantics. [1..*]"
+  "characteristic---HoVeR": "	What defines the members of the evidence element. [0..*]"
 };
 
 </script>
