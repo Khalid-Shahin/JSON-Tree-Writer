@@ -46,13 +46,8 @@ if(window.addEventListener) {
 } else {
     window.attachEvent('onload', initiatePage); //Older IE
 }
-
-json = {
-  "resourceType": "Metadata-Concept",
-  "id": "",
-  "url": "",
-  "identifier": [
-    {
+/* 
+//Taken out of the "identifier" data element
       "use": "",
       "type": {
         "coding": [
@@ -66,6 +61,14 @@ json = {
         ],
         "text": ""
       },
+*/
+
+json = {
+  "resourceType": "Metadata-Concept",
+  "id": "",
+  "url": "",
+  "identifier": [
+    {
       "system": "",
       "value": "",
       "period": {
