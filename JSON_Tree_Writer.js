@@ -98,7 +98,38 @@ window.addEventListener("beforeunload", function (e) {
 		return confirmMessage; //Gecko, Safari, Webkit, and Chrome
 	}
 	document.getElementById("]....}?|?|?{....[keepFields").checked = previousCheck;
-}); 
+});
+
+
+var raw_inputs = decodeURIComponent(location.search.substring(1)).split("&");
+
+var inputs = {};
+for (var i = 0; i < raw_inputs.length; i++) {
+		   var entry = raw_inputs[i].split("=");
+		   inputs[entry[0]] = entry[1];
+}
+var sqlEntryNumber = null;
+
+function load_sql_entry(){
+	if ("sqlentry" in inputs){
+		sqlEntryNumber = inputs["sqlentry"];
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				//console.log("----------------");
+				if (this.responseText) {
+					json = JSON.parse(this.responseText);
+					initiatePage();
+				}
+			} else {
+				//console.log(this.status);
+			}
+		};
+		xmlhttp.open("GET","https://gps.health/coka/retrieve.php?sqlentry="+sqlEntryNumber,true);
+		xmlhttp.send();
+	}
+}
+load_sql_entry();
 
 function objectClean(object, entry, result){
   var cleanedObj;
