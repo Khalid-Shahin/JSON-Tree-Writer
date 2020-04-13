@@ -110,9 +110,14 @@ for (var i = 0; i < raw_inputs.length; i++) {
 }
 var sqlEntryNumber = null;
 
+var sqlRetrieve = encodeURIComponent("https://gps.health/coka/retrieve.php", "UTF-8");
+var sqlParameter = "sqlentry";
+
 function load_sql_entry(){
 	if ("sqlentry" in inputs){
 		sqlEntryNumber = inputs["sqlentry"];
+		if (inputs["sqlretrieve"]) { sqlRetrieve = inputs["sqlretrieve"]; }
+		if (inputs["sqlparameter"]) { sqlParameter = inputs["sqlparameter"]; }
 		xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
@@ -125,7 +130,7 @@ function load_sql_entry(){
 				//console.log(this.status);
 			}
 		};
-		xmlhttp.open("GET","https://gps.health/coka/retrieve.php?sqlentry="+sqlEntryNumber,true);
+		xmlhttp.open("GET", decodeURIComponent(sqlRetrieve) + "?" + sqlParameter + "="+sqlEntryNumber,true);
 		xmlhttp.send();
 	}
 }
