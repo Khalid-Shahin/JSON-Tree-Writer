@@ -76,14 +76,9 @@ json = {
       "system": "https://gps.health/coka",
       "value": "",
       "assigner": {
+        "reference": "",
+        "type": "",
         "display": "COVID-19 Knowledge Accelerator"
-      }
-    },
-    {
-      "system": "",
-      "value": "",
-      "assigner": {
-        "display": ""
       }
     }
   ],
@@ -92,13 +87,15 @@ json = {
       "system": "",
       "value": "",
       "assigner": {
+        "reference": "",
+        "type": "",
         "display": ""
       }
     }
   ],
   "version": "",
   "name": "",
-  "status": "",
+  "status": "active",
   "date": "",
   "note": [
     {
@@ -132,8 +129,8 @@ json = {
     {
       "coding": [
         {
-          "system": "",
-          "version": "",
+          "system": "http://build.fhir.org/codesystem-synthesis-type.html",
+          "version": "4.2.0",
           "code": "",
           "display": "",
           "userSelected": ""
@@ -165,7 +162,7 @@ json = {
   "history": {
     "selection": [
       {
-        "reason": "",
+        "reason": "COVID-19 clinical outcomes research",
         "status": "unstarted",
         "disposition": "",
         "rating": [
@@ -175,6 +172,9 @@ json = {
           }
         ],
         "decider": [
+          ""
+        ],
+        "userSelected": [
           ""
         ]
       }
@@ -188,6 +188,9 @@ json = {
         }
       ],
       "decider": [
+        ""
+      ],
+      "userSelected": [
         ""
       ]
     },
@@ -261,6 +264,50 @@ json = {
           {
             "system": "http://build.fhir.org/codesystem-variable-role.html",
             "version": "4.2.0",
+            "code": "population",
+            "display": "population",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "observed": {
+        "reference": "",
+        "type": "Group",
+        "identifier": "",
+        "display": ""
+      },
+      "intended": {
+        "reference": "",
+        "type": "Group",
+        "identifier": "",
+        "display": ""
+      },
+      "directnessMatch": {
+        "coding": [
+          {
+            "system": "http://build.fhir.org/codesystem-directness.html",
+            "version": "4.2.0",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      }
+    },
+    {
+      "description": "",
+      "note": [
+        {
+          "text": ""
+        }
+      ],
+      "variableRole": {
+        "coding": [
+          {
+            "system": "http://build.fhir.org/codesystem-variable-role.html",
+            "version": "4.2.0",
             "code": "",
             "display": "",
             "userSelected": ""
@@ -270,13 +317,13 @@ json = {
       },
       "observed": {
         "reference": "",
-        "type": "",
+        "type": "EvidenceVariable",
         "identifier": "",
         "display": ""
       },
       "intended": {
         "reference": "",
-        "type": "",
+        "type": "EvidenceVariable",
         "identifier": "",
         "display": ""
       },
