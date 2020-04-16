@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 	<link rel="stylesheet" type="text/css" href="JSON_Tree_Writer.css">
-	<title>JSON Tree Writer - COKA - Metadata Resource</title>
+	<title>JSON Tree Writer - COKA - EvidenceCoordinator Resource</title>
 </head>
 <body>
 <div class="container">
      <div class="topArea">
-     <h2 style="margin: 4px;">JSON Tree Writer - COKA - Metadata Resource</h2>
+     <h2 style="margin: 4px;">JSON Tree Writer - COKA - EvidenceCoordinator Resource</h2>
 	 <button id="]....}?|?|?{....[limitations" onclick="alert('Limitations:\n1. A field value of &quot;null&quot;, all lowercase, in the tree view will be converted to just null in the JSON.\n2. A field value of &quot;true&quot; or &quot;false&quot;, all lowercase, will be converted to just true or false respectively as booleans in the JSON.\n3. 1D arrays work perfectly fine to and from JSON, and interpreting 2D, 3D, and beyond arrays from JSON to Tree View can work well most of the time, but bugs may occur when adding elements in the Tree View for arrays more complex than 1D.')" style="position: absolute; right: 6px; top: 4px;">Limitations</button>
 	 <p style="position: absolute; right: 94px; top: 7px; margin: 0px; color: #AEAEAE; font-size: 13px; font-family: sans-serif"><b>EBSCO Health Innovations</b></p>
 	 <p style="position: absolute; right: 2px; top: 10px;">Convert Tree View to JSON in real time? <input onchange="TreeToJSONsetting();" type="checkbox" id="]....}?|?|?{....[TreeToJSON_RealTime" name="JSONrealtime" value="JSONrealtime" title="If this is checked then the JSON side will be updated automatically as you type and add elements on the Tree View side."></p>
@@ -76,15 +76,29 @@ json = {
       "system": "https://gps.health/coka",
       "value": "",
       "assigner": {
-        "reference": "",
-        "type": "",
+        "display": "COVID-19 Knowledge Accelerator"
+      }
+    },
+    {
+      "system": "",
+      "value": "",
+      "assigner": {
+        "display": ""
+      }
+    }
+  ],
+  "relatedIdentifier": [
+    {
+      "system": "",
+      "value": "",
+      "assigner": {
         "display": ""
       }
     }
   ],
   "version": "",
   "name": "",
-  "status": "active",
+  "status": "",
   "date": "",
   "note": [
     {
@@ -94,18 +108,6 @@ json = {
   "copyright": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
   "approvalDate": "",
   "lastReviewDate": "",
-  "topic": {
-    "coding": [
-      {
-        "system": "http://build.fhir.org/valueset-definition-topic.html",
-        "version": "4.2.0",
-        "code": "",
-        "display": "",
-        "userSelected": ""
-      }
-    ],
-    "text": ""
-  },
   "author": [
     ""
   ],
@@ -117,6 +119,28 @@ json = {
   ],
   "endorser": [
     ""
+  ],
+  "focusReference": [
+    {
+      "reference": "",
+      "type": "Citation",
+      "identifier": "",
+      "display": ""
+    }
+  ],
+  "focusCodeableConcept": [
+    {
+      "coding": [
+        {
+          "system": "",
+          "version": "",
+          "code": "",
+          "display": "",
+          "userSelected": ""
+        }
+      ],
+      "text": ""
+    }
   ],
   "relatedArtifact": [
     {
@@ -141,7 +165,7 @@ json = {
   "history": {
     "selection": [
       {
-        "reason": "COVID-19 clinical outcomes research",
+        "reason": "",
         "status": "unstarted",
         "disposition": "",
         "rating": [
@@ -151,9 +175,6 @@ json = {
           }
         ],
         "decider": [
-          ""
-        ],
-        "userSelected": [
           ""
         ]
       }
@@ -167,9 +188,6 @@ json = {
         }
       ],
       "decider": [
-        ""
-      ],
-      "userSelected": [
         ""
       ]
     },
@@ -204,20 +222,18 @@ json = {
       ]
     }
   },
-  "synthesisType": [
-    {
-      "coding": [
-        {
-          "system": "http://build.fhir.org/codesystem-synthesis-type.html",
-          "version": "4.2.0",
-          "code": "",
-          "display": "",
-          "userSelected": ""
-        }
-      ],
-      "text": ""
-    }
-  ],
+  "classifier": {
+    "coding": [
+      {
+        "system": "",
+        "version": "",
+        "code": "",
+        "display": "",
+        "userSelected": ""
+      }
+    ],
+    "text": ""
+  },
   "studyType": [
     {
       "coding": [
@@ -245,50 +261,6 @@ json = {
           {
             "system": "http://build.fhir.org/codesystem-variable-role.html",
             "version": "4.2.0",
-            "code": "population",
-            "display": "population",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "observed": {
-        "reference": "",
-        "type": "Grouo",
-        "identifier": "",
-        "display": ""
-      },
-      "intended": {
-        "reference": "",
-        "type": "Group",
-        "identifier": "",
-        "display": ""
-      },
-      "directnessMatch": {
-        "coding": [
-          {
-            "system": "http://build.fhir.org/codesystem-directness.html",
-            "version": "4.2.0",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      }
-    },
-    {
-      "description": "",
-      "note": [
-        {
-          "text": ""
-        }
-      ],
-      "variableRole": {
-        "coding": [
-          {
-            "system": "http://build.fhir.org/codesystem-variable-role.html",
-            "version": "4.2.0",
             "code": "",
             "display": "",
             "userSelected": ""
@@ -298,13 +270,13 @@ json = {
       },
       "observed": {
         "reference": "",
-        "type": "EvidenceVariable",
+        "type": "",
         "identifier": "",
         "display": ""
       },
       "intended": {
         "reference": "",
-        "type": "EvidenceVariable",
+        "type": "",
         "identifier": "",
         "display": ""
       },
