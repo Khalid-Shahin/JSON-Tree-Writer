@@ -294,30 +294,12 @@ json = {
       }
     ]
   },
-  "authorString": [
-    {
-      "source": {
-        "coding": [
-          {
-            "system": "http://build.fhir.org/valueset-author-string-source.html",
-            "version": "4.4.0",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "value": ""
-    }
-  ],
-  "contributorList": {
-    "complete": "",
-    "contributor": [
+
+  "contributorship": {
+    "complete": null,
+    "entry": [
       {
-        "lastName": "",
-        "foreName": "",
-        "suffix": "",
+        "name": "",
         "initials": "",
         "collectiveName": "",
         "identifier": [
@@ -327,20 +309,6 @@ json = {
             "assigner": {
               "display": ""
             }
-          }
-        ],
-        "contribution": [
-          {
-            "coding": [
-              {
-                "system": "http://build.fhir.org/valueset-citation-contribution.html",
-                "version": "4.4.0",
-                "code": "",
-                "display": "",
-                "userSelected": ""
-              }
-            ],
-            "text": ""
           }
         ],
         "affiliationInfo": [
@@ -358,21 +326,77 @@ json = {
             ]
           }
         ],
-        "listOrder": -0
+        "address": [],
+        "telecom": [
+          {
+            "system": "",
+            "value": "",
+            "use": "",
+            "rank": "",
+            "period": {
+              "start": "",
+              "end": ""
+            }
+          }
+        ],
+        "contribution": [
+          {
+            "coding": [
+              {
+                "system": "http://build.fhir.org/valueset-citation-contribution.html",
+                "version": "4.4.0",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          }
+        ],
+        "notAnAuthor": null,
+        "correspondingAuthor": null,
+        "listOrder": null
       }
     ]
   },
+  "summary": [
+    {
+      "type": {
+        "coding": [
+          {
+            "system": "http://build.fhir.org/valueset-contributor-summary-type.html",
+            "version": "4.4.0",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "source": {
+        "coding": [
+          {
+            "system": "http://build.fhir.org/valueset-contributor-summary-source.html",
+            "version": "4.4.0",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "value": ""
+    }
+  ],
   "articleLanguage": {
     "coding": [
       {
-        "system": "http://hl7.org/fhir/ValueSet/languages",
+        "system": "http://build.fhir.org/valueset-languages.html",
         "version": "4.4.0",
         "code": "",
-        "display": "",
-        "userSelected": ""
+        "display": ""
       }
-    ],
-    "text": ""
+    ]
   },
   "alternativeForm": [
     {
