@@ -71,38 +71,16 @@ json = {
   "resourceType": "EvidenceReport",
   "id": "",
   "meta": {
-	"versionId": "1"
+    "versionId": "1"
   },
   "url": "",
   "text": {
     "status": "",
     "div": ""
   },
-  "extension": [
-    {
-      "copyright": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-      "citeAs": {
-        "reference": "",
-        "type": "Citation",
-        "identifier": "",
-        "display": ""
-      },
-      "classifier": [
-        {
-          "coding": [
-            {
-              "system": "",
-              "version": "",
-              "code": "",
-              "display": "",
-              "userSelected": ""
-            }
-          ],
-          "text": ""
-        }
-      ]
-    }
-  ],
+  "status": "preliminary | final",
+  "date": "",
+  "title": "",
   "identifier": [
     {
       "system": "https://gps.health/coka",
@@ -114,10 +92,31 @@ json = {
       }
     }
   ],
-  "status": "preliminary | final",
+  "relatedIdentifier": [
+    {
+      "system": "",
+      "value": "",
+      "assigner": {
+        "reference": "",
+        "type": "",
+        "display": ""
+      }
+    }
+  ],
+  "citeAs": {
+    "reference": "",
+    "type": "Organization|Person|Group",
+    "identifier": "",
+    "display": ""
+  },
   "type": {
     "text": "EvidenceReport"
   },
+  "note": [
+    {
+      "text": ""
+    }
+  ],
   "category": [
     {
       "coding": [
@@ -132,13 +131,81 @@ json = {
       "text": ""
     }
   ],
+  "relatedArtifact": [
+    {
+      "type": "",
+      "label": "",
+      "display": "",
+      "citation": "",
+      "url": "",
+      "document": {
+        "contentType": "",
+        "language": "",
+        "data": "",
+        "url": "",
+        "title": ""
+      },
+      "resource": ""
+    }
+  ],
   "subject": {
-    "reference": "",
-    "type": "",
-    "identifier": "",
-    "display": ""
+    "characteristic": [
+      {
+        "code": {
+          "coding": [
+            {
+              "system": "",
+              "version": "",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        },
+        "valueReference": {
+          "reference": "",
+          "type": "",
+          "identifier": "",
+          "display": ""
+        },
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "",
+              "version": "",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        },
+        "valueBoolean": "",
+        "valueQuantity": {
+          "value": -0,
+          "comparator": "",
+          "unit": "",
+          "system": "",
+          "code": ""
+        },
+        "valueRange": {
+          "low": -0,
+          "high": -0
+        },
+        "exclude": "",
+        "period": {
+          "start": -0,
+          "end": -0
+        }
+      }
+    ],
+    "note": [
+      {
+        "text": ""
+      }
+    ]
   },
-  "date": "",
   "author": [
     {
       "reference": "",
@@ -147,15 +214,13 @@ json = {
       "display": ""
     }
   ],
-  "title": "",
-  "confidentiality": "",
   "attester": [
     {
-      "mode": "reviewer|editor|legal|official",
+      "mode": "review|edit|legal|official|logical",
       "time": "",
       "party": {
         "reference": "",
-        "type": "Organization|Person|Group",
+        "type": "Device|Organization|Person|Group",
         "identifier": "",
         "display": ""
       }
@@ -169,7 +234,7 @@ json = {
   },
   "relatesTo": [
     {
-      "code": "replaces | transforms | signs | appends",
+      "code": "replaces | amends | appends | transforms",
       "targetIdentifier": {
         "system": "https://gps.health/coka",
         "value": "",
@@ -190,17 +255,11 @@ json = {
   "section": [
     {
       "title": "",
-      "code": {
-        "coding": [
-          {
-            "system": "http://build.fhir.org/valueset-evidence-report-section.html",
-            "version": "4.4.0",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
+      "focus": {
+        "reference": "",
+        "type": "Any",
+        "identifier": "",
+        "display": ""
       },
       "author": [
         {
@@ -210,12 +269,6 @@ json = {
           "display": ""
         }
       ],
-      "focus": {
-        "reference": "",
-        "type": "Any",
-        "identifier": "",
-        "display": ""
-      },
       "text": {
         "status": "",
         "div": ""
@@ -233,14 +286,26 @@ json = {
         ],
         "text": ""
       },
-      "entry": [
+      "entryClassifier": [
         {
-          "reference": "",
-          "type": "Any",
-          "identifier": "",
-          "display": ""
+          "coding": [
+            {
+              "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+              "version": "4.4.0",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
         }
       ],
+      "entryReference": {
+        "reference": "",
+        "type": "Device|Organization|Person|Group",
+        "identifier": "",
+        "display": ""
+      },
       "emptyReason": {
         "coding": [
           {
@@ -259,1361 +324,1772 @@ json = {
     },
     {
       "title": "Evidence Classifier Ratings",
-      "code": {
-        "coding": [
-          {
-            "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-            "code": "Evidence-Classifier",
-            "display": "Evidence Classifier section"
-          }
-        ]
-      },
+      "author": [
+        {
+          "reference": "",
+          "type": "Person|Group|Organization|Device",
+          "identifier": "",
+          "display": ""
+        }
+      ],
+      "entryClassifier": [
+        {
+          "coding": [
+            {
+              "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+              "version": "4.4.0",
+              "code": "Evidence-Classifier",
+              "display": "Evidence Classifier section"
+            }
+          ],
+          "text": ""
+        }
+      ],
       "section": [
         {
           "title": "COVID-19 specific article",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "COVID19Specific",
-                "display": "COVID-19 specific article"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "COVID19Specific",
+                  "display": "COVID-19 specific article"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
           "title": "COVID-19 relevant (but not specific) article",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "COVID19Relevant",
-                "display": "COVID-19 relevant (but not specific) article"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "COVID19Relevant",
+                  "display": "COVID-19 relevant (but not specific) article"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
           "title": "Article includes original research",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "OriginalResearch",
-                "display": "Article includes original research"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "OriginalResearch",
+                  "display": "Article includes original research"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
           "title": "Article includes synthesis of research",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "ResearchSynthesis",
-                "display": "Article includes synthesis of research"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "ResearchSynthesis",
+                  "display": "Article includes synthesis of research"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
           "title": "Article includes guideline",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "Guideline",
-                "display": "Article includes guideline"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "Guideline",
+                  "display": "Article includes guideline"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
           "title": "Article provides protocol without results",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "ResearchProtocol",
-                "display": "Article provides protocol without results"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "ResearchProtocol",
+                  "display": "Article provides protocol without results"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
           "title": "Article is neither research nor guideline",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "NotResearchNotGuideline",
-                "display": "Article is neither research nor guideline"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "NotResearchNotGuideline",
+                  "display": "Article is neither research nor guideline"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
           "title": "COVID-19 human data in population, exposure, or outcome",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "COVID19HumanResearch",
-                "display": "COVID-19 human data in population, exposure, or outcome"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "COVID19HumanResearch",
+                  "display": "COVID-19 human data in population, exposure, or outcome"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
           "title": "Article about treatment",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "Treatment",
-                "display": "Article about treatment"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "Treatment",
+                  "display": "Article about treatment"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
           "title": "Article about prevention and control",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "PreventionAndControl",
-                "display": "Article about prevention and control"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "PreventionAndControl",
+                  "display": "Article about prevention and control"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
           "title": "Article about diagnosis",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "Diagnosis",
-                "display": "Article about diagnosis"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "Diagnosis",
+                  "display": "Article about diagnosis"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
           "title": "Article about prognosis or prediction",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "PrognosisPrediction",
-                "display": "Article about prognosis or prediction"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "PrognosisPrediction",
+                  "display": "Article about prognosis or prediction"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
-          "title": "classified as randomized controlled trial",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "RatedAsRCT",
-                "display": "classified as randomized controlled trial"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "title": "Classified as randomized controlled trial",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "RatedAsRCT",
+                  "display": "Classified as randomized controlled trial"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
-          "title": "classified as nonrandomized controlled trial (experimental)",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "RatedAsControlledTrial",
-                "display": "classified as nonrandomized controlled trial (experimental)"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "title": "Classified as nonrandomized controlled trial (experimental)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "RatedAsControlledTrial",
+                  "display": "Classified as nonrandomized controlled trial (experimental)"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
-          "title": "classified as comparative cohort study (observational)",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "RatedAsComparativeCohort",
-                "display": "classified as comparative cohort study (observational)"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "title": "Classified as comparative cohort study (observational)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "RatedAsComparativeCohort",
+                  "display": "Classified as comparative cohort study (observational)"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
-          "title": "classified as case-control study",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "RatedAsCaseControl",
-                "display": "classified as case-control study"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "title": "Classified as case-control study",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "RatedAsCaseControl",
+                  "display": "Classified as case-control study"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
-          "title": "classified as uncontrolled cohort (case series)",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "RatedAsUncontrolledSeries",
-                "display": "classified as uncontrolled cohort (case series)"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "title": "Classified as uncontrolled cohort (case series)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "RatedAsUncontrolledSeries",
+                  "display": "Classified as uncontrolled cohort (case series)"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
-          "title": "classified as mixed-methods study",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "RatedAsMixedMethods",
-                "display": "classified as mixed-methods study"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "title": "Classified as mixed-methods study",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "RatedAsMixedMethods",
+                  "display": "Classified as mixed-methods study"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
         },
         {
-          "title": "classified as other concept (not elsewhere classified)",
-          "code": {
-            "coding": [
-              {
-                "system": "http://gps.health/coka/codesystem/evidence-classifier.html",
-                "code": "RatedAsOther",
-                "display": "classified as other concept (not elsewhere classified)"
-              }
-            ]
-          },
-          "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)",
+          "title": "Classified as other concept (not elsewhere classified)",
+          "entryClassifier": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                  "version": "4.4.0",
+                  "code": "RatedAsOther",
+                  "display": "Classified as other concept (not elsewhere classified)"
+                }
+              ],
+              "text": "# rated Yes, # rated No, classified as Yes/No/Pending (use Narrative datatype)"
+            }
+          ],
           "section": [
             {
               "title": "RatedAsYes",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsYes"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated Yes (use Narrative datatype)"
               },
-              "text": "# rated Yes (use Narrative datatype), add the text the rater noted when rating as Other",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsYes",
+                      "display": "Rated as yes, affirmative, positive, present, or include"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             },
             {
               "title": "RatedAsNo",
-              "code": {
-                "coding": [
-                  {
-                    "system": "https://gps.health/coka/codesystem/evidence-classifier.html",
-                    "code": "RatedAsNo"
-                  }
-                ]
+              "text": {
+                "status": "generated",
+                "div": "# rated No (use Narrative datatype)"
               },
-              "text": "# rated No (use Narrative datatype)",
-              "entry": [
+              "mode": "working | snapshot | changes",
+              "entryClassifier": [
                 {
-                  "type": "Person",
-                  "display": "rater display name"
+                  "coding": [
+                    {
+                      "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+                      "version": "4.4.0",
+                      "code": "RatedAsNo",
+                      "display": "Rated as no, negative, absent, or exclude"
+                    }
+                  ]
                 }
               ],
+              "entryReference": {
+                "reference": "",
+                "type": "Person",
+                "identifier": "",
+                "display": "rater display name"
+              },
               "emptyReason": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/list-empty-reason",
-                    "version": "4.0.1",
+                    "system": "http://build.fhir.org/valueset-list-empty-reason.html",
+                    "version": "4.4.0",
                     "code": "",
                     "display": ""
                   }
-                ]
+                ],
+                "text": ""
               }
             }
           ]
@@ -1622,25 +2098,39 @@ json = {
     },
     {
       "title": "Evidence Variables used",
-      "code": {
+      "focus": {
         "coding": [
           {
-            "system": "hhttp://build.fhir.org/valueset-evidence-report-section.html",
-            "code": "EvidenceVariable",
-            "display": "Evidence Variables used"
+            "system": "http://build.fhir.org/valueset-evidence-report-section.html",
+            "version": "4.4.0",
+            "code": "EvidenceVariable-observed",
+            "display": "Evidence Variables actually observed"
           }
         ]
       },
       "orderedBy": {
         "coding": [
           {
-            "system": "http://build.fhir.org/codesystem-list-order.html",
+            "system": "http://build.fhir.org/valueset-list-order.html",
             "version": "4.4.0",
             "code": "category",
             "display": "Sorted by Category"
           }
         ]
       },
+      "entryClassifier": [
+        {
+          "coding": [
+            {
+              "system": "http://build.fhir.org/valueset-evidence-classifier-code.html",
+              "version": "4.4.0",
+              "code": "EvidenceVariable",
+              "display": "Evidence Variables used"
+            }
+          ],
+          "text": ""
+        }
+      ],
       "section": [
         {
           "title": "observed",
@@ -1686,7 +2176,7 @@ json = {
                   }
                 ]
               },
-              "entry": [
+              "entryReference": [
                 {
                   "reference": "",
                   "type": "Group",
@@ -1717,7 +2207,7 @@ json = {
                   }
                 ]
               },
-              "entry": [
+              "entryReference": [
                 {
                   "reference": "",
                   "type": "EvidenceVariable",
@@ -1753,7 +2243,7 @@ json = {
                   }
                 ]
               },
-              "entry": [
+              "entryReference": [
                 {
                   "reference": "",
                   "type": "EvidenceVariable",
@@ -1822,7 +2312,7 @@ json = {
                   }
                 ]
               },
-              "entry": [
+              "entryReference": [
                 {
                   "reference": "",
                   "type": "Group",
@@ -1853,7 +2343,7 @@ json = {
                   }
                 ]
               },
-              "entry": [
+              "entryReference": [
                 {
                   "reference": "",
                   "type": "EvidenceVariable",
@@ -1874,7 +2364,7 @@ json = {
     },
     {
       "title": "Evidence Results",
-      "code": {
+      "focus": {
         "coding": [
           {
             "system": "http://build.fhir.org/valueset-evidence-report-section.html",
@@ -1917,7 +2407,7 @@ json = {
               }
             ]
           },
-          "entry": [
+          "entryReference": [
             {
               "reference": "",
               "type": "Evidence",
@@ -1940,7 +2430,7 @@ json = {
         },
         {
           "title": "Control Group",
-          "code": {
+          "focus": {
             "coding": [
               {
                 "system": "http://build.fhir.org/valueset-evidence-report-section.html",
@@ -1960,7 +2450,7 @@ json = {
               }
             ]
           },
-          "entry": [
+          "entryReference": [
             {
               "reference": "",
               "type": "Evidence",
@@ -1983,7 +2473,7 @@ json = {
         },
         {
           "title": "Intervention-vs-Control",
-          "code": {
+          "focus": {
             "coding": [
               {
                 "system": "http://build.fhir.org/valueset-evidence-report-section.html",
@@ -2003,7 +2493,7 @@ json = {
               }
             ]
           },
-          "entry": [
+          "entryReference": [
             {
               "reference": "",
               "type": "Evidence",
@@ -2028,7 +2518,7 @@ json = {
     },
     {
       "title": "Risk of Bias Assessment",
-      "code": {
+      "focus": {
         "coding": [
           {
             "system": "http://build.fhir.org/valueset-evidence-report-section.html",
@@ -2050,7 +2540,7 @@ json = {
       "section": [
         {
           "title": "No blinding",
-          "code": {
+          "focus": {
             "coding": [
               {
                 "system": "http://build.fhir.org/valueset-evidence-report-section.html",
@@ -2060,7 +2550,7 @@ json = {
               }
             ]
           },
-          "entry": [
+          "entryReference": [
             {
               "reference": "",
               "type": "Evidence",
@@ -2083,7 +2573,7 @@ json = {
         },
         {
           "title": "Allocation concealment not stated",
-          "code": {
+          "focus": {
             "coding": [
               {
                 "system": "http://build.fhir.org/valueset-evidence-report-section.html",
@@ -2103,7 +2593,7 @@ json = {
               }
             ]
           },
-          "entry": [
+          "entryReference": [
             {
               "reference": "",
               "type": "Evidence",
@@ -2126,7 +2616,7 @@ json = {
         },
         {
           "title": "Early trial termination",
-          "code": {
+          "focus": {
             "coding": [
               {
                 "system": "http://build.fhir.org/valueset-evidence-report-section.html",
@@ -2146,7 +2636,7 @@ json = {
               }
             ]
           },
-          "entry": [
+          "entryReference": [
             {
               "reference": "",
               "type": "Evidence",
@@ -2169,7 +2659,7 @@ json = {
         },
         {
           "title": "No intention-to-treat analysis",
-          "code": {
+          "focus": {
             "coding": [
               {
                 "system": "http://build.fhir.org/valueset-evidence-report-section.html",
