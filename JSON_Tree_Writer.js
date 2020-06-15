@@ -1073,7 +1073,7 @@ function loopDictionary(json, indent, current_path, current_path_ID, entry_numbe
            if (typeKeyValue == "number"){
               inputType = 'number' 
 		   } else if (keyValue != null) {
-		      keyValue = keyValue.toString().replace(/"/g, '&quot;'); //TO DO todo Comment this line out? Is this line needed?
+		      //keyValue = keyValue.toString().replace(/"/g, '&quot;'); //TO DO todo Comment this line out? Is this line needed?
 		   }
            //For the "hidden" input type used for the arrays.
            if (keyValue != null && keyValue === 0 && (1/keyValue) === -Infinity) {
