@@ -420,7 +420,7 @@ hovertext_json = {
         }
       ],
 	  "rating---HoVeR": "A rating of the certainty of the effect estimate.",
-      "certaintySubcomponent": [
+      "subcomponent": [
         {
           "type": {
             "coding": [
@@ -467,7 +467,7 @@ hovertext_json = {
           ]
         }
       ],
-      "certaintySubcomponent---HoVeR": "A description of a component of the overall certainty.",
+      "subcomponent---HoVeR": "A description of a component of the overall certainty.",
       "note": [
         {
           "text": ""
@@ -489,7 +489,7 @@ json = {
   "resourceType": "Evidence",
   "id": "",
   "meta": {
-	"versionId": ""
+    "versionId": ""
   },
   "url": "",
   "identifier": [
@@ -778,6 +778,67 @@ json = {
             }
           }
         }
+      ],
+      "modelCharacteristic": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://build.fhir.org/valueset-statistic-model-code.html",
+                "version": "",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "value": {
+            "value": -0,
+            "unit": "",
+            "system": "",
+            "code": ""
+          },
+          "variable": [
+            {
+              "variableDefinition": {},
+              "handling": "",
+              "valueCategory": {
+                "coding": [
+                  {
+                    "system": "http://build.fhir.org/valueset-statistic-model-code.html",
+                    "version": "",
+                    "code": "",
+                    "display": "",
+                    "userSelected": ""
+                  }
+                ],
+                "text": ""
+              },
+              "valueQuantity": {
+                "value": -0,
+                "comparator": "",
+                "unit": "",
+                "system": "",
+                "code": ""
+              },
+              "valueRange": {
+                "low": {
+                  "value": -0,
+                  "unit": "",
+                  "system": "",
+                  "code": ""
+                },
+                "high": {
+                  "value": -0,
+                  "unit": "",
+                  "system": "",
+                  "code": ""
+                }
+              }
+            }
+          ]
+        }
       ]
     }
   ],
@@ -904,6 +965,20 @@ json = {
           "text": ""
         }
       ],
+      "type": [
+        {
+          "coding": [
+            {
+              "system": "http://build.fhir.org/valueset-certainty-type.html",
+              "version": "",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        }
+      ],
       "rating": [
         {
           "coding": [
@@ -918,7 +993,8 @@ json = {
           "text": ""
         }
       ],
-      "certaintySubcomponent": [
+      "rater": "",
+      "subcomponent": [
         {
           "description": "",
           "note": [
@@ -949,7 +1025,8 @@ json = {
               }
             ],
             "text": ""
-          }
+          },
+          "rater": ""
         }
       ]
     }
