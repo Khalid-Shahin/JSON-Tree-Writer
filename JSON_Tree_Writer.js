@@ -118,11 +118,13 @@ function load_sql_entry(){
 		sqlEntryNumber = inputs["sqlentry"];
 		if (inputs["sqlretrieve"]) { sqlRetrieve = inputs["sqlretrieve"]; }
 		if (inputs["sqlparameter"]) { sqlParameter = inputs["sqlparameter"]; }
-		xmlhttp = new XMLHttpRequest();
+		
+		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				//console.log("----------------");
 				if (this.responseText) {
+					console.log(this.responsetext);
 					json = JSON.parse(this.responseText);
 					initiatePage();
 				}
@@ -132,6 +134,29 @@ function load_sql_entry(){
 		};
 		xmlhttp.open("GET", decodeURIComponent(sqlRetrieve) + "?" + sqlParameter + "="+sqlEntryNumber,true);
 		xmlhttp.send();
+	} else if ("server" in inputs && "port" in inputs && "resourcetype" in inputs && "resourceid" in inputs && "responseobjectname" in inputs) {
+		
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open('POST', inputs["server"] + ":" + inputs["port"], true);
+		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		
+		xmlhttp.onreadystatechange = function() {//Call a function when the state changes.
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				if (this.responseText) {						
+					console.log(JSON.parse(this.responseText)[inputs["responseobjectname"]]);
+					var resposne;
+					if ("string" in inputs && inputs["string"] == "true") {
+						json = JSON.parse(JSON.parse(this.responseText)[inputs["responseobjectname"]]);
+					} else {
+						json = JSON.parse(this.responseText)[inputs["responseobjectname"]];
+					}
+					initiatePage();
+				}
+			}
+		}
+		
+		xmlhttp.send(JSON.stringify( { 'resourceid': inputs["resourceid"], 'resourcetype': inputs["resourcetype"] } ));
+	
 	}
 }
 load_sql_entry();
