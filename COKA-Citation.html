@@ -70,25 +70,7 @@ if(window.addEventListener) {
 json = {
   "resourceType": "Citation",
   "title": "",
-  "status": "active",
-  "identifier": [
-    {
-      "system": "",
-      "value": "",
-      "assigner": {
-        "display": ""
-      }
-    }
-  ],
-  "relatedIdentifier": [
-    {
-      "system": "",
-      "value": "",
-      "assigner": {
-        "display": ""
-      }
-    }
-  ],
+  "description": "",
   "summary": [
     {
       "style": {
@@ -106,12 +88,41 @@ json = {
       "text": ""
     }
   ],
-  "dateCited": "",
-  "variantCitation": {
-    "type": {
+  "classification": [
+    {
+      "type": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/citation-classification-type",
+            "version": "4.5.0",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "classifier": [
+        {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/citation-classifier",
+              "version": "4.5.0",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        }
+      ]
+    }
+  ],
+  "currentState": [
+    {
       "coding": [
         {
-          "system": "http://build.fhir.org/valueset-citation-variant-type.html",
+          "system": "http://hl7.org/fhir/ValueSet/citation-status-type",
           "version": "4.5.0",
           "code": "",
           "display": "",
@@ -119,50 +130,14 @@ json = {
         }
       ],
       "text": ""
-    },
-    "value": "",
-    "baseCitation": {
-      "reference": "",
-      "type": "Citation",
-      "identifier": "",
-      "display": ""
-    }
-  },
-  "articleTitle": [
-    {
-      "type": {
-        "coding": [
-          {
-            "system": "http://build.fhir.org/valueset-alternative-title-type.html",
-            "version": "4.5.0",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "language": {
-        "coding": [
-          {
-            "system": "http://build.fhir.org/valueset-languages.html",
-            "version": "4.5.0",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
-      },
-      "text": ""
     }
   ],
-  "webLocation": [
+  "statusDate": [
     {
-      "type": {
+      "activity": {
         "coding": [
           {
-            "system": "http://build.fhir.org/valueset-article-url-type.html",
+            "system": "http://hl7.org/fhir/ValueSet/citation-status-type",
             "version": "4.5.0",
             "code": "",
             "display": "",
@@ -171,15 +146,20 @@ json = {
         ],
         "text": ""
       },
-      "url": ""
+      "actual": null,
+      "period": {
+        "start": "",
+        "end": ""
+      }
     }
   ],
-  "abstract": [
+  "relatesTo": [
     {
-      "type": {
+      "code": "",
+      "classifier": {
         "coding": [
           {
-            "system": "http://build.fhir.org/valueset-alternative-title-type.html",
+            "system": "http://build.fhir.org/valueset-citation-variant-type.html",
             "version": "4.5.0",
             "code": "",
             "display": "",
@@ -188,82 +168,189 @@ json = {
         ],
         "text": ""
       },
-      "language": {
-        "coding": [
-          {
-            "system": "http://hl7.org/fhir/ValueSet/languages",
-            "version": "4.5.0",
-            "code": "",
-            "display": "",
-            "userSelected": ""
-          }
-        ],
-        "text": ""
+      "targetUri": "",
+      "targetIdentifier": {
+        "system": "",
+        "value": "",
+        "assigner": {
+          "display": ""
+        }
       },
-      "text": "",
-      "copyright": ""
+      "targetReference": {
+        "reference": "",
+        "type": "",
+        "identifier": "",
+        "display": ""
+      }
     }
   ],
-  "contributorship": {
-    "complete": "",
-    "entry": [
+  "citedArtifact": {
+    "identifier": [
       {
-        "name": {
-          "use": "",
-          "text": "",
-          "family": "",
-          "given": "",
-          "prefix": "",
-          "suffix": "",
-          "period": {
-            "start": "",
-            "end": ""
-          }
+        "type": {
+          "coding": [
+            {
+              "system": "https://www.nlm.nih.gov/bsd/licensee/elements_descriptions.html#issn",
+              "version": "4.4.0",
+              "code": "Electronic",
+              "display": "Electronic"
+            }
+          ]
         },
-        "initials": "",
-        "collectiveName": "",
-        "identifier": [
-          {
-            "system": "",
-            "value": "",
-            "assigner": {
-              "display": ""
+        "system": "https://portal.issn.org",
+        "value": ""
+      }
+    ],
+    "relatedIdentifier": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "https://www.nlm.nih.gov/bsd/licensee/elements_descriptions.html#issn",
+              "version": "4.4.0",
+              "code": "Electronic",
+              "display": "Electronic"
             }
+          ]
+        },
+        "system": "https://portal.issn.org",
+        "value": ""
+      }
+    ],
+    "dateAccessed": "",
+    "version": {
+      "value": "",
+      "baseCitation": {
+        "reference": "",
+        "type": "",
+        "identifier": "",
+        "display": ""
+      }
+    },
+    "currentState": [
+      {
+        "coding": [
+          {
+            "system": "http://build.fhir.org/valueset-citation-variant-type.html",
+            "version": "4.5.0",
+            "code": "",
+            "display": "",
+            "userSelected": ""
           }
         ],
-        "affiliationInfo": [
-          {
-            "affiliation": "",
-            "role": "",
-            "identifier": [
-              {
-                "system": "",
-                "value": "",
-                "assigner": {
-                  "display": ""
-                }
-              }
-            ]
-          }
-        ],
-        "address": [],
-        "telecom": [
-          {
-            "system": "",
-            "value": "",
-            "use": "",
-            "rank": "",
-            "period": {
-              "start": "",
-              "end": ""
+        "text": ""
+      }
+    ],
+    "statusDate": [
+      {
+        "activity": {
+          "coding": [
+            {
+              "system": "http://build.fhir.org/valueset-citation-variant-type.html",
+              "version": "4.5.0",
+              "code": "",
+              "display": "",
+              "userSelected": ""
             }
+          ],
+          "text": ""
+        },
+        "actual": null,
+        "period": {
+          "start": "",
+          "end": ""
+        }
+      }
+    ],
+    "title": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/title-type",
+              "version": "4.5.0",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        },
+        "language": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/languages",
+              "version": "4.5.0",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        },
+        "text": ""
+      }
+    ],
+    "abstract": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/abstract-type",
+              "version": "4.5.0",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        },
+        "language": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/languages",
+              "version": "4.5.0",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        },
+        "text": "",
+        "copyright": ""
+      }
+    ],
+    "copyright": "",
+    "part": {
+      "type": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/ValueSet/cited-artifact-part-type",
+            "version": "4.5.0",
+            "code": "",
+            "display": "",
+            "userSelected": ""
           }
         ],
-        "contribution": [
+        "text": ""
+      },
+      "value": "",
+      "baseCitation": {
+        "reference": "",
+        "type": "",
+        "identifier": "",
+        "display": ""
+      }
+    },
+    "relatesTo": [
+      {
+        "code": "",
+        "classifier": [
           {
             "coding": [
               {
-                "system": "http://build.fhir.org/valueset-citation-contribution.html",
+                "system": "http://hl7.org/fhir/ValueSet/title-type",
                 "version": "4.5.0",
                 "code": "",
                 "display": "",
@@ -273,112 +360,61 @@ json = {
             "text": ""
           }
         ],
-        "notAnAuthor": "",
-        "correspondingAuthor": "",
-        "listOrder": ""
-      }
-    ],
-    "summary": [
-      {
-        "type": {
-          "coding": [
-            {
-              "system": "http://build.fhir.org/valueset-contributor-summary-type.html",
-              "version": "4.5.0",
-              "code": "",
-              "display": "",
-              "userSelected": ""
-            }
-          ],
-          "text": ""
-        },
-        "style": {
-          "coding": [
-            {
-              "system": "http://build.fhir.org/valueset-contributor-summary-style.html",
-              "version": "4.5.0",
-              "code": "",
-              "display": "",
-              "userSelected": ""
-            }
-          ],
-          "text": ""
-        },
-        "source": {
-          "coding": [
-            {
-              "system": "http://build.fhir.org/valueset-contributor-summary-source.html",
-              "version": "4.5.0",
-              "code": "",
-              "display": "",
-              "userSelected": ""
-            }
-          ],
-          "text": ""
-        },
-        "value": ""
-      }
-    ]
-  },
-  "publicationForm": [
-    {
-      "publishingModel": {
-        "coding": [
-          {
-            "system": "http://build.fhir.org/valueset-publishing-model-type.html",
-            "version": "4.5.0",
-            "code": "",
-            "display": "",
-            "userSelected": ""
+        "targetUri": "",
+        "targetIdentifier": {
+          "system": "",
+          "value": "",
+          "assigner": {
+            "display": ""
           }
-        ],
-        "text": ""
-      },
-      "publishedIn": {
-        "type": {
-          "coding": [
-            {
-              "system": "http://build.fhir.org/valueset-published-in-type.html",
-              "version": "4.5.0",
-              "code": "",
-              "display": "",
-              "userSelected": ""
-            }
-          ],
-          "text": ""
         },
-        "identifier": [
-          {
-            "type": {
-              "coding": [
-                {
-                  "system": "https://www.nlm.nih.gov/bsd/licensee/elements_descriptions.html#issn",
-                  "version": "4.4.0",
-                  "code": "Electronic",
-                  "display": "Electronic"
-                }
-              ]
-            },
-            "system": "https://portal.issn.org",
-            "value": ""
-          }
-        ],
-        "title": "",
-        "publisher": {
+        "targetReference": {
           "reference": "",
-          "type": "Organization",
+          "type": "",
           "identifier": "",
           "display": ""
+        }
+      }
+    ],
+    "publicationForm": [
+      {
+        "publishedIn": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/title-type",
+                "version": "4.5.0",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "identifier": [
+            {
+              "system": "",
+              "value": "",
+              "assigner": {
+                "display": ""
+              }
+            }
+          ],
+          "title": "",
+          "publisher": {
+            "reference": "",
+            "type": "",
+            "identifier": "",
+            "display": ""
+          },
+          "publisherLocation": "",
+          "startDate": ""
         },
-        "publisherLocation": "",
-        "startDate": ""
-      },
-      "periodicRelease": [
-        {
+        "periodicRelease": {
           "citedMedium": {
             "coding": [
               {
-                "system": "http://build.fhir.org/valueset-journal-issue-medium.html",
+                "system": "http://hl7.org/fhir/ValueSet/title-type",
                 "version": "4.5.0",
                 "code": "",
                 "display": "",
@@ -396,113 +432,227 @@ json = {
             "day": "",
             "season": "",
             "text": ""
-          }
+          },
+          "articleDate": "",
+          "lastRevisionDate": "",
+          "language": [
+            {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/ValueSet/languages",
+                  "version": "4.5.0",
+                  "code": "",
+                  "display": "",
+                  "userSelected": ""
+                }
+              ],
+              "text": ""
+            }
+          ],
+          "pageString": "",
+          "firstPage": "",
+          "lastPage": "",
+          "pageCount": ""
         }
-      ],
-      "articleDate": "",
-      "revisionDate": "",
-      "language": {
-        "coding": [
+      }
+    ],
+    "webLocation": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/title-type",
+              "version": "4.5.0",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        },
+        "url": ""
+      }
+    ],
+    "classification": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/title-type",
+              "version": "4.5.0",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        },
+        "classifier": [
           {
-            "system": "http://hl7.org/fhir/ValueSet/languages",
-            "version": "4.5.0",
-            "code": "",
-            "display": "",
-            "userSelected": ""
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/title-type",
+                "version": "4.5.0",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
           }
-        ],
-        "text": ""
-      },
-      "pageString": "",
-      "firstPage": "",
-      "lastPage": "",
-      "pageCount": ""
-    }
-  ],
-  "classifier": [
-    {
-      "coding": [
+        ]
+      }
+    ],
+    "contributorship": {
+      "complete": "",
+      "entry": [
         {
-          "system": "http://build.fhir.org/valueset-citation-classifier.html",
-          "version": "4.5.0",
-          "code": "",
-          "display": "",
-          "userSelected": ""
+          "name": {
+            "use": "",
+            "text": "",
+            "family": "",
+            "given": "",
+            "prefix": "",
+            "suffix": "",
+            "period": {
+              "start": "",
+              "end": ""
+            }
+          },
+          "initials": "",
+          "collectiveName": "",
+          "identifier": [
+            {
+              "system": "",
+              "value": "",
+              "assigner": {
+                "display": ""
+              }
+            }
+          ],
+          "affiliationInfo": [
+            {
+              "affiliation": "",
+              "role": "",
+              "identifier": [
+                {
+                  "system": "",
+                  "value": "",
+                  "assigner": {
+                    "display": ""
+                  }
+                }
+              ]
+            }
+          ],
+          "address": [],
+          "telecom": [
+            {
+              "system": "",
+              "value": "",
+              "use": "",
+              "rank": "",
+              "period": {
+                "start": "",
+                "end": ""
+              }
+            }
+          ],
+          "contributionType": [
+            {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/valueset-citation-contribution.html",
+                  "version": "4.5.0",
+                  "code": "",
+                  "display": "",
+                  "userSelected": ""
+                }
+              ],
+              "text": ""
+            }
+          ],
+          "role": {
+            "coding": [
+              {
+                "system": "http://build.fhir.org/valueset-citation-contribution.html",
+                "version": "4.5.0",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "contributionInstance": [
+            {
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://build.fhir.org/valueset-citation-contribution.html",
+                    "version": "4.5.0",
+                    "code": "",
+                    "display": "",
+                    "userSelected": ""
+                  }
+                ],
+                "text": ""
+              },
+              "time": ""
+            }
+          ],
+          "correspondingContact": null,
+          "listOrder": -0
         }
       ],
-      "text": ""
-    }
-  ],
-  "keywordList": [
-    {
-      "owner": "",
-      "keyword": [
+      "summary": [
         {
-          "majorTopic": "",
+          "type": {
+            "coding": [
+              {
+                "system": "http://build.fhir.org/valueset-citation-contribution.html",
+                "version": "4.5.0",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "style": {
+            "coding": [
+              {
+                "system": "http://build.fhir.org/valueset-citation-contribution.html",
+                "version": "4.5.0",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
+          "source": {
+            "coding": [
+              {
+                "system": "http://build.fhir.org/valueset-citation-contribution.html",
+                "version": "4.5.0",
+                "code": "",
+                "display": "",
+                "userSelected": ""
+              }
+            ],
+            "text": ""
+          },
           "value": ""
         }
       ]
     }
-  ],
-  "relatedArtifact": [
-    {
-      "type": "",
-      "label": "",
-      "display": "",
-      "citation": "",
-      "url": "",
-      "document": {
-        "contentType": "",
-        "language": "",
-        "data": "",
-        "url": "",
-        "size": "",
-        "hash": "",
-        "title": "",
-        "creation": ""
-      },
-      "resource": ""
-    }
-  ],
+  },
   "note": [
     {
       "text": ""
     }
-  ],
-  "medline": {
-    "state": "",
-    "owner": "",
-    "dateCreated": "",
-    "dateCompleted": "",
-    "dateRevised": "",
-    "dateOnPubMed": [
-      {
-        "publicationState": "",
-        "date": ""
-      }
-    ],
-    "publicationState": "",
-    "relatedArticle": [
-      {
-        "citationReference": {
-          "reference": "",
-          "type": "Citation",
-          "identifier": "",
-          "display": ""
-        },
-        "citationMarkdown": "",
-        "identifier": [
-          {
-            "system": "",
-            "value": "",
-            "assigner": {
-              "display": ""
-            }
-          }
-        ]
-      }
-    ]
-  }
+  ]
 };
 
 </script>
