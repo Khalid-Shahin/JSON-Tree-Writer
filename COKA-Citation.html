@@ -76,7 +76,7 @@ json = {
       "style": {
         "coding": [
           {
-            "system": "http://hl7.org/fhir/ValueSet/citation-summary-style",
+            "system": "http://terminology.hl7.org/ValueSet/citation-summary-style",
             "version": "4.5.0",
             "code": "",
             "display": "",
@@ -93,7 +93,7 @@ json = {
       "type": {
         "coding": [
           {
-            "system": "http://hl7.org/fhir/ValueSet/citation-classification-type",
+            "system": "http://terminology.hl7.org/ValueSet/citation-classification-type",
             "version": "4.5.0",
             "code": "",
             "display": "",
@@ -106,7 +106,7 @@ json = {
         {
           "coding": [
             {
-              "system": "http://hl7.org/fhir/ValueSet/citation-classifier",
+              "system": "http://terminology.hl7.org/ValueSet/citation-classifier",
               "version": "4.5.0",
               "code": "",
               "display": "",
@@ -122,7 +122,7 @@ json = {
     {
       "coding": [
         {
-          "system": "http://hl7.org/fhir/ValueSet/citation-status-type",
+          "system": "http://terminology.hl7.org/ValueSet/citation-status-type",
           "version": "4.5.0",
           "code": "",
           "display": "",
@@ -137,7 +137,7 @@ json = {
       "activity": {
         "coding": [
           {
-            "system": "http://hl7.org/fhir/ValueSet/citation-activity-type",
+            "system": "http://terminology.hl7.org/ValueSet/citation-activity-type",
             "version": "4.5.0",
             "code": "",
             "display": "",
@@ -155,11 +155,10 @@ json = {
   ],
   "relatesTo": [
     {
-      "code": "",
-      "classifier": {
+      "code": {
         "coding": [
           {
-            "system": "http://hl7.org/fhir/ValueSet/artifact-relates-to-classifier",
+            "system": "http://terminology.hl7.org/CodeSystem/artifact-relationship-type",
             "version": "4.5.0",
             "code": "",
             "display": "",
@@ -168,6 +167,20 @@ json = {
         ],
         "text": ""
       },
+      "classifier": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/ValueSet/artifact-relates-to-classifier",
+              "version": "4.5.0",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        }
+      ],
       "targetUri": "",
       "targetIdentifier": {
         "system": "",
@@ -187,34 +200,20 @@ json = {
   "citedArtifact": {
     "identifier": [
       {
-        "type": {
-          "coding": [
-            {
-              "system": "https://www.nlm.nih.gov/bsd/licensee/elements_descriptions.html#issn",
-              "version": "4.4.0",
-              "code": "Electronic",
-              "display": "Electronic"
-            }
-          ]
-        },
         "system": "",
-        "value": ""
+        "value": "",
+        "assigner": {
+          "display": ""
+        }
       }
     ],
     "relatedIdentifier": [
       {
-        "type": {
-          "coding": [
-            {
-              "system": "https://www.nlm.nih.gov/bsd/licensee/elements_descriptions.html#issn",
-              "version": "4.4.0",
-              "code": "Electronic",
-              "display": "Electronic"
-            }
-          ]
-        },
         "system": "",
-        "value": ""
+        "value": "",
+        "assigner": {
+          "display": ""
+        }
       }
     ],
     "dateAccessed": "",
@@ -231,7 +230,7 @@ json = {
       {
         "coding": [
           {
-            "system": "http://hl7.org/fhir/ValueSet/cited-artifact-status-type",
+            "system": "http://terminology.hl7.org/ValueSet/cited-artifact-status-type",
             "version": "4.5.0",
             "code": "",
             "display": "",
@@ -246,7 +245,7 @@ json = {
         "activity": {
           "coding": [
             {
-              "system": "http://hl7.org/fhir/ValueSet/cited-artifact-activity-type",
+              "system": "http://terminology.hl7.org/ValueSet/cited-artifact-activity-type",
               "version": "4.5.0",
               "code": "",
               "display": "",
@@ -267,7 +266,7 @@ json = {
         "type": {
           "coding": [
             {
-              "system": "http://hl7.org/fhir/ValueSet/title-type",
+              "system": "http://terminology.hl7.org/ValueSet/title-type",
               "version": "4.5.0",
               "code": "",
               "display": "",
@@ -296,7 +295,7 @@ json = {
         "type": {
           "coding": [
             {
-              "system": "http://hl7.org/fhir/ValueSet/abstract-type",
+              "system": "http://terminology.hl7.org/ValueSet/abstract-type",
               "version": "4.5.0",
               "code": "",
               "display": "",
@@ -326,7 +325,7 @@ json = {
       "type": {
         "coding": [
           {
-            "system": "http://hl7.org/fhir/ValueSet/cited-artifact-part-type",
+            "system": "http://terminology.hl7.org/ValueSet/cited-artifact-part-type",
             "version": "4.5.0",
             "code": "",
             "display": "",
@@ -345,12 +344,23 @@ json = {
     },
     "relatesTo": [
       {
-        "code": "",
+        "code": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/artifact-relationship-type",
+              "version": "4.5.0",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        },
         "classifier": [
           {
             "coding": [
               {
-                "system": "http://hl7.org/fhir/ValueSet/artifact-relates-to-classifier",
+                "system": "http://terminology.hl7.org/ValueSet/artifact-relates-to-classifier",
                 "version": "4.5.0",
                 "code": "",
                 "display": "",
@@ -382,7 +392,7 @@ json = {
           "type": {
             "coding": [
               {
-                "system": "http://hl7.org/fhir/ValueSet/published-in-type",
+                "system": "http://terminology.hl7.org/ValueSet/published-in-type",
                 "version": "4.5.0",
                 "code": "",
                 "display": "",
@@ -414,7 +424,7 @@ json = {
           "citedMedium": {
             "coding": [
               {
-                "system": "http://hl7.org/fhir/ValueSet/journal-issue-medium",
+                "system": "http://terminology.hl7.org/ValueSet/journal-issue-medium",
                 "version": "4.5.0",
                 "code": "",
                 "display": "",
@@ -461,7 +471,7 @@ json = {
         "type": {
           "coding": [
             {
-              "system": "http://hl7.org/fhir/ValueSet/article-url-type",
+              "system": "http://terminology.hl7.org/ValueSet/article-url-type",
               "version": "4.5.0",
               "code": "",
               "display": "",
@@ -478,7 +488,7 @@ json = {
         "type": {
           "coding": [
             {
-              "system": "http://hl7.org/fhir/ValueSet/cited-artifact-classification-type",
+              "system": "http://terminology.hl7.org/ValueSet/cited-artifact-classification-type",
               "version": "4.5.0",
               "code": "",
               "display": "",
@@ -491,7 +501,7 @@ json = {
           {
             "coding": [
               {
-                "system": "http://hl7.org/fhir/ValueSet/citation-classifier",
+                "system": "http://terminology.hl7.org/ValueSet/citation-classifier",
                 "version": "4.5.0",
                 "code": "",
                 "display": "",
@@ -562,7 +572,7 @@ json = {
             {
               "coding": [
                 {
-                  "system": "http://hl7.org/fhir/ValueSet/artifact-contribution-type",
+                  "system": "http://terminology.hl7.org/ValueSet/artifact-contribution-type",
                   "version": "4.5.0",
                   "code": "",
                   "display": "",
@@ -575,7 +585,7 @@ json = {
           "role": {
             "coding": [
               {
-                "system": "http://hl7.org/fhir/ValueSet/contributor-role",
+                "system": "http://terminology.hl7.org/ValueSet/contributor-role",
                 "version": "4.5.0",
                 "code": "",
                 "display": "",
@@ -589,7 +599,7 @@ json = {
               "type": {
                 "coding": [
                   {
-                    "system": "http://hl7.org/fhir/ValueSet/artifact-contribution-instance-type",
+                    "system": "http://terminology.hl7.org/ValueSet/artifact-contribution-instance-type",
                     "version": "4.5.0",
                     "code": "",
                     "display": "",
@@ -610,7 +620,7 @@ json = {
           "type": {
             "coding": [
               {
-                "system": "http://hl7.org/fhir/ValueSet/contributor-summary-type",
+                "system": "http://terminology.hl7.org/ValueSet/contributor-summary-type",
                 "version": "4.5.0",
                 "code": "",
                 "display": "",
@@ -622,7 +632,7 @@ json = {
           "style": {
             "coding": [
               {
-                "system": "http://hl7.org/fhir/ValueSet/contributor-summary-style",
+                "system": "http://terminology.hl7.org/ValueSet/contributor-summary-style",
                 "version": "4.5.0",
                 "code": "",
                 "display": "",
@@ -634,7 +644,7 @@ json = {
           "source": {
             "coding": [
               {
-                "system": "http://hl7.org/fhir/ValueSet/contributor-summary-source",
+                "system": "http://terminology.hl7.org/ValueSet/contributor-summary-source",
                 "version": "4.5.0",
                 "code": "",
                 "display": "",
