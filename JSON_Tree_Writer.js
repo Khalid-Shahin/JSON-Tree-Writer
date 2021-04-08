@@ -154,9 +154,11 @@ function load_sql_entry(){
 				}
 			}
 		}
-		
-		xmlhttp.send(JSON.stringify( { 'resourceid': inputs["resourceid"], 'resourcetype': inputs["resourcetype"] } ));
-	
+		var body = { 'resourceid': inputs["resourceid"], 'resourcetype': inputs["resourcetype"] };
+		if ("extrarequestheader" in inputs && "extrarequestinfo" in inputs) {
+			body[inputs["extrarequestheader"]] = inputs["extrarequestinfo"];
+		}
+		xmlhttp.send(JSON.stringify( body ));
 	}
 }
 load_sql_entry();
