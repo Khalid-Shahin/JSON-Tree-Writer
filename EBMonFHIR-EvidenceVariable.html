@@ -52,10 +52,9 @@ json = {
   "resourceType": "EvidenceVariable",
   "id": "",
   "meta": {
-	"versionId": ""
+    "versionId": ""
   },
   "url": "",
-  "url---HoVeR": "An absolute URI that is used to identify this evidence variable when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this evidence variable is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the evidence variable is stored on different servers. [0..1]",
   "identifier": [
     {
       "use": "",
@@ -84,21 +83,15 @@ json = {
       }
     }
   ],
-  "identifier---HoVeR": "Additional identifier for the evidence variable",
+  "version": "",
   "name": "",
-  "name---HoVeR": "A natural language name identifying the evidence variable. This name should be usable as an identifier for the module by machine processing applications such as code generation. [0..1]",
   "title": "",
-  "title---HoVeR": "A short, descriptive, user-friendly title for the evidence variable. [0..1]",
   "shortTitle": "",
-  "shortTitle---HoVeR": "Title for use in informal contexts",
   "subtitle": "",
-  "subtitle---HoVeR": "Subordinate title of the EvidenceVariable",
   "status": "",
-  "status---HoVeR": "draft | active | retired | unknown PublicationStatus (Required)",
+  "experimental": "",
   "date": "",
-  "date---HoVeR": "The date (and optionally time) when the evidence variable was published. The date must change when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the evidence variable changes. [0..1]",
   "publisher": "",
-  "publisher---HoVeR": "The name of the organization or individual that published the evidence variable. [0..1]",
   "contact": [
     {
       "name": "",
@@ -117,11 +110,10 @@ json = {
     }
   ],
   "description": "",
-  "description---HoVeR": "Natural language description of the evidence variable",
   "note": [
-      {
-        "text": ""
-      }
+    {
+      "text": ""
+    }
   ],
   "useContext": [
     {
@@ -168,66 +160,105 @@ json = {
       "valueReference": {
         "reference": "",
         "type": "",
-        "identifier": "",
         "display": ""
       }
     }
   ],
-  "useContext---HoVeR": "The context that the content is intended to support",
-  "jurisdiction": [
-    {
-      "coding": [
-        {
-          "system": "http://hl7.org/fhir/ValueSet/jurisdiction",
-          "version": "",
-          "code": "",
-          "display": "",
-          "userSelected": ""
-        }
-      ],
-      "text": ""
-    }
-  ],
-  "jurisdiction---HoVeR": "Intended jurisdiction for evidence variable (if applicable) Jurisdiction (Extensible)",
   "copyright": "",
-  "copyright---HoVeR": "Use and/or publishing restrictions",
   "approvalDate": "",
-  "approvalDate---HoVeR": "When the evidence variable was approved by publisher",
   "lastReviewDate": "",
-  "lastReviewDate---HoVeR": "When the evidence variable was last reviewed",
   "effectivePeriod": {
     "start": "",
-    "end": "",
+    "end": ""
   },
-  "effectivePeriod---HoVeR": "When the evidence variable is expected to be used",
-  "topic": {
-    "coding": [
-      {
-        "system": "http://hl7.org/fhir/ValueSet/definition-topic",
-        "version": "",
-        "code": "",
-        "display": "",
-        "userSelected": ""
-      }
-    ],
-    "text": ""
-  },
-  "topic---HoVeR": "The category of the EvidenceVariable, such as Education, Treatment, Assessment, etc. DefinitionTopic (Example)",
-  "author": [""],
-  "author---HoVeR": "Who authored the content. [0..*]",
-  "editor": [""],
-  "editor---HoVeR": "Who edited the content. [0..*]",
-  "reviewer": [""],
-  "reviewer---HoVeR": "Who reviewed the content. [0..*]",
-  "endorser": [""],
-  "endorser---HoVeR": "Who endorsed the content. [0..*]",
+  "author": [
+    {
+      "name": "",
+      "telecom": [
+        {
+          "system": "",
+          "value": "",
+          "use": "",
+          "rank": "",
+          "period": {
+            "start": "",
+            "end": ""
+          }
+        }
+      ]
+    }
+  ],
+  "editor": [
+    {
+      "name": "",
+      "telecom": [
+        {
+          "system": "",
+          "value": "",
+          "use": "",
+          "rank": "",
+          "period": {
+            "start": "",
+            "end": ""
+          }
+        }
+      ]
+    }
+  ],
+  "reviewer": [
+    {
+      "name": "",
+      "telecom": [
+        {
+          "system": "",
+          "value": "",
+          "use": "",
+          "rank": "",
+          "period": {
+            "start": "",
+            "end": ""
+          }
+        }
+      ]
+    }
+  ],
+  "endorser": [
+    {
+      "name": "",
+      "telecom": [
+        {
+          "system": "",
+          "value": "",
+          "use": "",
+          "rank": "",
+          "period": {
+            "start": "",
+            "end": ""
+          }
+        }
+      ]
+    }
+  ],
   "relatedArtifact": [
     {
       "type": "",
+      "classifier": [
+        {
+          "coding": [
+            {
+              "system": "",
+              "version": "",
+              "code": "",
+              "display": "",
+              "userSelected": ""
+            }
+          ],
+          "text": ""
+        }
+      ],
       "label": "",
       "display": "",
       "citation": "",
-      "url": "",
       "document": {
         "contentType": "",
         "language": "",
@@ -238,101 +269,385 @@ json = {
         "title": "",
         "creation": ""
       },
-      "resource": ""
+      "resource": "",
+      "resourceReference": {
+        "reference": "",
+        "type": "",
+        "display": ""
+      }
     }
   ],
-  "relatedArtifact---HoVeR": "Additional documentation, citations, etc.",
-  "type": "",
-  "type---HoVeR": "",
   "actual": "",
-  "actual---HoVeR": "boolean: true if the actual variable measured, false if a conceptual representation of the intended variable",
-  "characteristicCombination": "",
-  "characteristicCombination---HoVeR": "intersection | union CharacteristicCombination (Required)",
-  "characteristic": [{
+  "characteristic": [
+    {
+      "linkId": "",
       "description": "",
-      "description---HoVeR": "A short, natural language description of the characteristic that could be used to communicate the criteria to an end-user. [0..1]",
       "note": [
         {
           "text": ""
         }
       ],
-      "definition[x]": {
-          "definitionReference": {
-				"reference": "",
-				"type": "",
-				"identifier": "",
-				"display": ""
-          },
-          "definitionCanonical": "",
-          "definitionCodeableConcept": {
-				"coding": [
-					{
-						"system": "",
-						"code": "",
-						"display": ""
-					}
-				]
-			},
-          "definitionExpression": {
-			"description": "",
-			"name": "",
-			"language": "",
-			"expression": "",
-			"reference": ""
-		  }
-      },
-      "definition[x]---HoVeR": "Define members of the evidence element using Codes (such as condition, medication, or observation), Expressions ( using an expression language such as FHIRPath or CQL) or DataRequirements (such as Diabetes diagnosis onset in the last year). [1..1]",
-      "method": {
-          "coding": [
-			{
-              "system": "",
-              "code": "",
-              "display": ""
-			}
-		]
-      },
-      "method---HoVeR": "",
-      "device": {
+      "definitionReference": {
         "reference": "",
         "type": "",
-        "identifier": "",
         "display": ""
       },
-      "device---HoVeR": "",
+      "definitionCanonical": "",
+      "definitionCodeableConcept": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": ""
+          }
+        ],
+        "text": ""
+      },
+      "definitionId": "",
+      "typeCodeableConcept": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": ""
+          }
+        ],
+        "text": ""
+      },
+      "typeReference": {
+        "reference": "",
+        "type": "EvidenceVariable",
+        "display": ""
+      },
+      "typeId": "",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "",
+            "version": "",
+            "code": "",
+            "display": ""
+          }
+        ],
+        "text": ""
+      },
+      "valueBoolean": "",
+      "valueQuantity": {
+        "value": -0,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "valueRange": {
+        "low": {
+          "value": -0,
+          "unit": "",
+          "system": "",
+          "code": ""
+        },
+        "high": {
+          "value": -0,
+          "unit": "",
+          "system": "",
+          "code": ""
+        }
+      },
+      "valueId": "",
+      "method": {
+        "coding": [
+          {
+            "system": "http://build.fhir.org/codesystem-characteristic-method.html",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "device": {
+        "reference": "",
+        "type": "Device",
+        "display": ""
+      },
       "exclude": "",
-      "exclude---HoVeR": "When true, members with this characteristic are excluded from the element. [0..1]",
-      "timeFromStart": {
-		"description": "",
-		"quantity": {
-			"value": -0.0,
-			"comparator": "",
-			"unit": "",
-			"system": "",
-			"code": ""
-		},
-		"range": {
-			"low": {
-				"value": -0.0,
-				"unit": "",
-				"system": "",
-				"code": ""
-			},
-			"high": {
-				"value": -0.0,
-				"unit": "",
-				"system": "",
-				"code": ""
-			}
-		},
-		"note": [{
-			"text": ""
-		}]
-	  },
-      "timeFromStart---HoVeR": "Indicates duration from the participant's study entry. [0..1]",
+      "offset": {
+        "coding": [
+          {
+            "system": "http://build.fhir.org/codesystem-characteristic-method.html",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "timeFromEvent": [
+        {
+          "description": "",
+          "eventCodeableConcept": {
+            "coding": [
+              {
+                "system": "",
+                "version": "",
+                "code": "",
+                "display": ""
+              }
+            ],
+            "text": ""
+          },
+          "eventReference": {
+            "reference": "",
+            "type": "EvidenceVariable",
+            "display": ""
+          },
+          "eventDateTime": "",
+          "eventId": "",
+          "quantity": {
+            "value": -0,
+            "comparator": "",
+            "unit": "",
+            "system": "",
+            "code": ""
+          },
+          "range": {
+            "low": {
+              "value": -0,
+              "unit": "",
+              "system": "",
+              "code": ""
+            },
+            "high": {
+              "value": -0,
+              "unit": "",
+              "system": "",
+              "code": ""
+            }
+          },
+          "note": [
+            {
+              "text": ""
+            }
+          ]
+        }
+      ],
       "groupMeasure": "",
-      "groupMeasure---HoVeR": "Indicates how elements are aggregated within the study effective period. [0..1]"
-  }],
-  "characteristic---HoVeR": "	What defines the members of the evidence element. [0..*]"
+      "combination": {
+        "code": "",
+        "threshold": -0,
+        "characteristic": [
+          {
+            "linkId": "",
+            "description": "",
+            "note": [
+              {
+                "text": ""
+              }
+            ],
+            "definitionReference": {
+              "reference": "",
+              "type": "",
+              "display": ""
+            },
+            "definitionCanonical": "",
+            "definitionCodeableConcept": {
+              "coding": [
+                {
+                  "system": "",
+                  "version": "",
+                  "code": "",
+                  "display": ""
+                }
+              ],
+              "text": ""
+            },
+            "definitionId": "",
+            "typeCodeableConcept": {
+              "coding": [
+                {
+                  "system": "",
+                  "version": "",
+                  "code": "",
+                  "display": ""
+                }
+              ],
+              "text": ""
+            },
+            "typeReference": {
+              "reference": "",
+              "type": "EvidenceVariable",
+              "display": ""
+            },
+            "typeId": "",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "",
+                  "version": "",
+                  "code": "",
+                  "display": ""
+                }
+              ],
+              "text": ""
+            },
+            "valueBoolean": "",
+            "valueQuantity": {
+              "value": -0,
+              "comparator": "",
+              "unit": "",
+              "system": "",
+              "code": ""
+            },
+            "valueRange": {
+              "low": {
+                "value": -0,
+                "unit": "",
+                "system": "",
+                "code": ""
+              },
+              "high": {
+                "value": -0,
+                "unit": "",
+                "system": "",
+                "code": ""
+              }
+            },
+            "valueId": "",
+            "method": {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/codesystem-characteristic-method.html",
+                  "version": "",
+                  "code": "",
+                  "display": "",
+                  "userSelected": ""
+                }
+              ],
+              "text": ""
+            },
+            "device": {
+              "reference": "",
+              "type": "Device",
+              "display": ""
+            },
+            "exclude": "",
+            "offset": {
+              "coding": [
+                {
+                  "system": "http://build.fhir.org/codesystem-characteristic-method.html",
+                  "version": "",
+                  "code": "",
+                  "display": "",
+                  "userSelected": ""
+                }
+              ],
+              "text": ""
+            },
+            "timeFromEvent": [
+              {
+                "description": "",
+                "eventCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "",
+                      "version": "",
+                      "code": "",
+                      "display": ""
+                    }
+                  ],
+                  "text": ""
+                },
+                "eventReference": {
+                  "reference": "",
+                  "type": "EvidenceVariable",
+                  "display": ""
+                },
+                "eventDateTime": "",
+                "eventId": "",
+                "quantity": {
+                  "value": -0,
+                  "comparator": "",
+                  "unit": "",
+                  "system": "",
+                  "code": ""
+                },
+                "range": {
+                  "low": {
+                    "value": -0,
+                    "unit": "",
+                    "system": "",
+                    "code": ""
+                  },
+                  "high": {
+                    "value": -0,
+                    "unit": "",
+                    "system": "",
+                    "code": ""
+                  }
+                },
+                "note": [
+                  {
+                    "text": ""
+                  }
+                ]
+              }
+            ],
+            "groupMeasure": "",
+            "combination": {
+              "code": "",
+              "threshold": -0,
+              "charateristic": [
+                ""
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "handling": "",
+  "category": [
+    {
+      "name": "",
+      "valueCodableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/statistic-type",
+            "version": "",
+            "code": "",
+            "display": "",
+            "userSelected": ""
+          }
+        ],
+        "text": ""
+      },
+      "valueQuantity": {
+        "value": -0,
+        "comparator": "",
+        "unit": "",
+        "system": "",
+        "code": ""
+      },
+      "valueRange": {
+        "low": {
+          "value": -0,
+          "unit": "",
+          "system": "",
+          "code": ""
+        },
+        "high": {
+          "value": -0,
+          "unit": "",
+          "system": "",
+          "code": ""
+        }
+      }
+    }
+  ]
 };
 
 </script>
