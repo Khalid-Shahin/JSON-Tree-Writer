@@ -124,7 +124,7 @@ function load_sql_entry(){
 			if (this.readyState == 4 && this.status == 200) {
 				//console.log("----------------");
 				if (this.responseText) {
-					console.log(this.responsetext);
+					//console.log(this.responsetext);
 					json = JSON.parse(this.responseText);
 					initiatePage();
 				}
