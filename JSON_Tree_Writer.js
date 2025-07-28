@@ -134,7 +134,7 @@ function load_sql_entry(){
 		};
 		xmlhttp.open("GET", decodeURIComponent(sqlRetrieve) + "?" + sqlParameter + "="+sqlEntryNumber,true);
 		xmlhttp.send();
-	} else if ("server" in inputs && "port" in inputs && "resourcetype" in inputs && "resourceid" in inputs && "responseobjectname" in inputs) {
+	} else if ("server" in inputs && "resourcetype" in inputs && "resourceid" in inputs && "responseobjectname" in inputs) {
 		
 		var xmlhttp = new XMLHttpRequest();
 		let serverurl = inputs["server"];
