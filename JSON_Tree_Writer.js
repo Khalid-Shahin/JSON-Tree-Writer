@@ -139,7 +139,7 @@ function load_sql_entry(){
 		var xmlhttp = new XMLHttpRequest();
 		let serverurl = inputs["server"];
 		if (inputs["port"]) {
-			serverurl =  += ":" + inputs["port"];
+			serverurl += ":" + inputs["port"];
 		}
 		xmlhttp.open('POST', serverurl, true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
