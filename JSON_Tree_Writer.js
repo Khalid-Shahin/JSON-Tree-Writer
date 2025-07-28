@@ -137,7 +137,11 @@ function load_sql_entry(){
 	} else if ("server" in inputs && "port" in inputs && "resourcetype" in inputs && "resourceid" in inputs && "responseobjectname" in inputs) {
 		
 		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.open('POST', inputs["server"] + ":" + inputs["port"], true);
+		let serverurl = inputs["server"];
+		if (inputs["port"]) {
+			serverurl =  += ":" + inputs["port"];
+		}
+		xmlhttp.open('POST', serverurl, true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		
 		xmlhttp.onreadystatechange = function() {//Call a function when the state changes.
